@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:ignore="ScrollViewSize">
+
+        <ImageView
+            android:id="@+id/animation_frame_iv"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@drawable/item_animation_frame" />
+
+        <Button
+            android:id="@+id/animation_frame"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="帧动画"
+            tools:ignore="HardcodedText" />
+
+        <Button
+            android:id="@+id/animation_translate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="平移动画"
+            tools:ignore="HardcodedText" />
+
+        <Button
+            android:id="@+id/animation_scale"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="缩放动画"
+            tools:ignore="HardcodedText" />
+
+        <Button
+            android:id="@+id/animation_rotate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="旋转动画"
+            tools:ignore="HardcodedText" />
+
+        <Button
+            android:id="@+id/animation_alpha"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="透明度动画"
+            tools:ignore="HardcodedText" />
+
+        <Button
+            android:id="@+id/animation_set"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="组合动画"
+            tools:ignore="HardcodedText" />
+
+        <Button
+            android:id="@+id/animation_custom_tween"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="自定义补间动画"
+            tools:ignore="HardcodedText" />
+
+        <Button
+            android:id="@+id/animation_property"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="属性动画"
+            tools:ignore="HardcodedText" />
+
+        <Button
+            android:id="@+id/animation_accelerate_interpolator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="AccelerateInterpolator"
+            tools:ignore="HardcodedText" />
+
+        <Button
+            android:id="@+id/animation_accelerate_decelerate_interpolator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="AccelerateDecelerateInterpolator"
+            tools:ignore="HardcodedText" />
+
+        <Button
+            android:id="@+id/animation_anticipate_interpolator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="AnticipateInterpolator"
+            tools:ignore="HardcodedText" />
+
+        <Button
+            android:id="@+id/animation_anticipate_overshoot_interpolator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="AnticipateOvershootInterpolator"
+            tools:ignore="HardcodedText" />
+
+        <Button
+            android:id="@+id/animation_bounce_interpolator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="BounceInterpolator"
+            tools:ignore="HardcodedText" />
+
+        <Button
+            android:id="@+id/animation_cycle_interpolator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="CycleInterpolator"
+            tools:ignore="HardcodedText" />
+
+        <Button
+            android:id="@+id/animation_decelerate_interpolator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="DecelerateInterpolator"
+            tools:ignore="HardcodedText" />
+
+        <Button
+            android:id="@+id/animation_overshoot_interpolator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="OvershootInterpolator"
+            tools:ignore="HardcodedText" />
+
+    </LinearLayout>
+
+</ScrollView>

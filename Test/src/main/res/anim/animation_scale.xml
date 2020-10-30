@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<scale xmlns:android="http://schemas.android.com/apk/res/android"
+    android:duration="1000"
+    android:fromXScale="0.1"
+    android:fromYScale="0.1"
+    android:pivotX="50%"
+    android:pivotY="50%"
+    android:toXScale="1.0"
+    android:toYScale="1.0" />
+
+    <!--duration：持续时间-->
+    <!--fromXScale：开始X(组件宽度)缩放比例-->
+    <!--toXScale：结束X(组件宽度)缩放比例-->
+    <!--pivotX：缩放X中心坐标-->
+    <!--pivotY：缩放Y中心坐标-->
+    <!--fromYScale：开始Y(组件高度)缩放比例-->
+    <!--toYScale：结束Y(组件高度)缩放比例-->

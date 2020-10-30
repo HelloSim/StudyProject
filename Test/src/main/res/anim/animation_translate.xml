@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<translate xmlns:android="http://schemas.android.com/apk/res/android"
+    android:duration="1000"
+    android:fromXDelta="0"
+    android:fromYDelta="0"
+    android:interpolator="@android:anim/bounce_interpolator"
+    android:toXDelta="350"
+    android:toYDelta="0" />
+
+    <!--duration：持续时间-->
+    <!--fromXDelta：开始X坐标-->
+    <!--fromYDelta：开始Y坐标-->
+    <!--toXDelta：结束X坐标-->
+    <!--toYDelta：结束Y坐标-->
+    <!--扩展：除了具体值之外也可以为百分比值，有两种分别是%与%p。负数表示往左，正数表示往右-->
