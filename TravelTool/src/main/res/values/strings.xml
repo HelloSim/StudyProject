@@ -1,3 +1,28 @@
 <resources>
     <string name="app_name">Sim</string>
+
+    <string name="year">年</string>
+    <string name="month">月</string>
+    <string name="day">日</string>
+
+    <string name="cancel">取消</string>
+    <string name="ok">OK</string>
+    <string name="exit">再按一次退出程序</string>
+    <string name="no_more">暂无更多内容！</string>
+
+    <string name="late">迟到</string>
+    <string name="early">早退</string>
+
+    <string name="no">未打卡</string>
+    <string name="success">打卡成功！</string>
+    <string name="failure">打卡失败！</string>
+    <string name="update">更新打卡记录！</string>
+    <string name="only">只能操作当天打卡！</string>
+    <string name="week">周末打卡？</string>
+    <string name="start">上班打卡</string>
+    <string name="end">下班打卡</string>
+
+    <string name="all_record">打卡月记录</string>
+    <string name="add_memo">添加备忘</string>
+
 </resources>

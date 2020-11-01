@@ -1,4 +1,4 @@
-package com.sim.record.activity;
+package com.sim.traveltool.ui.activity;
 
 import android.os.Bundle;
 import android.widget.TextView;
@@ -8,10 +8,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.sim.record.R;
-import com.sim.record.adapter.RecordAdapter;
-import com.sim.record.greendao.DaKaRecordDaoUtil;
-import com.sim.record.greendao.bean.DaKaRecord;
+import com.sim.traveltool.R;
+import com.sim.traveltool.adapter.RecordAdapter;
+import com.sim.traveltool.greendao.bean.DaKaRecord;
 
 import java.util.List;
 
@@ -49,7 +48,7 @@ public class AllRecordActivity extends AppCompatActivity {
         yearAndMonth = getIntent().getStringExtra("yearAndMonth");
         year = yearAndMonth.split("-")[0];
         month = yearAndMonth.split("-")[1];
-        daKaRecordList = DaKaRecordDaoUtil.queryRecordForMonth(year, month);
+//        daKaRecordList = DaKaRecordDaoUtil.queryRecordForMonth(year, month);
         recordAdapter = new RecordAdapter(this, daKaRecordList);
     }
 

@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'org.greenrobot.greendao' // apply plugin
 
 android {
     compileSdkVersion 29
@@ -48,6 +49,13 @@ android {
             outputFileName = "${defaultConfig.versionName}.apk"
         }
     }
+
+    greendao {
+        schemaVersion 1 //数据库版本
+        daoPackage 'com.sim.traveltool.greendao.db'//生成代码到具体包下
+        targetGenDir 'src/main/java' //指定生成代码的目录
+    }
+
 }
 
 dependencies {
@@ -90,4 +98,9 @@ dependencies {
     implementation 'com.github.bumptech.glide:glide:4.9.0'
     implementation('com.github.hotchemi:permissionsdispatcher:3.1.0')
     annotationProcessor 'com.github.hotchemi:permissionsdispatcher-processor:3.1.0'
+
+    implementation 'org.greenrobot:greendao:3.2.2' // add library
+
+    implementation 'com.haibin:calendarview:3.4.6'//日历
+    implementation 'com.sdsmdg.tastytoast:tastytoast:0.1.1'//Toast
 }

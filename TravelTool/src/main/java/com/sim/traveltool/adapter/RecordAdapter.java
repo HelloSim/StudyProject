@@ -1,4 +1,4 @@
-package com.sim.record.adapter;
+package com.sim.traveltool.adapter;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -10,10 +10,11 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.sim.record.R;
-import com.sim.record.greendao.bean.DaKaRecord;
+import com.sim.traveltool.R;
+import com.sim.traveltool.greendao.bean.DaKaRecord;
 
 import java.util.List;
+
 
 /**
  * @Auther Sim

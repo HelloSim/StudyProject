@@ -1,14 +1,14 @@
-package com.sim.record.greendao;
+package com.sim.traveltool.greendao;
 
 import com.haibin.calendarview.Calendar;
-import com.sim.record.greendao.bean.DaKaRecord;
-import com.sim.record.greendao.db.DaKaRecordDao;
-import com.sim.record.utils.TimeUtil;
+import com.sim.traveltool.greendao.bean.DaKaRecord;
+import com.sim.traveltool.greendao.db.DaKaRecordDao;
+import com.sim.traveltool.utils.TimeUtil;
 
 import java.text.SimpleDateFormat;
 import java.util.List;
 
-import static com.sim.record.Application.daKaRecordDao;
+import static com.sim.traveltool.Application.daKaRecordDao;
 
 
 /**

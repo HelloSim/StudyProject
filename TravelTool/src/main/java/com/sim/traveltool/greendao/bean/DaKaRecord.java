@@ -1,4 +1,4 @@
-package com.sim.record.greendao.bean;
+package com.sim.traveltool.greendao.bean;
 
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Generated;

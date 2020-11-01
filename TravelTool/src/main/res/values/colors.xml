@@ -11,4 +11,14 @@
     <color name="unselected">#CCCCCC</color>
     <color name="selected">#ADADAD</color>
     <color name="dark_gray">#777777</color>
+
+    <!--常用颜色-->
+    <color name="red">#FF0000</color>
+    <color name="yellow">#FFFF00</color>
+    <color name="green">#00FF00</color>
+    <color name="pink">#FFC0CB</color>
+    <color name="indigo">#4B0082</color>
+    <color name="orange">#FF6600</color>
+    <color name="transparent">#00000000</color>
+
 </resources>

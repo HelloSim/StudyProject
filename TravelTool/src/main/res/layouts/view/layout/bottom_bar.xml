@@ -27,7 +27,7 @@
             android:id="@+id/bottom_bar_community"
             style="@style/MainActivityBottomNavigationRadioButtonStyle"
             android:drawableTop="@drawable/main_bottom_bar_community_img"
-            android:text="社区" />
+            android:text="打卡" />
 
         <RadioButton
             android:id="@+id/bottom_bar_me"

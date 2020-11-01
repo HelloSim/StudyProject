@@ -14,7 +14,6 @@
             <option value="$PROJECT_DIR$/Test" />
             <option value="$PROJECT_DIR$/TravelTool" />
             <option value="$PROJECT_DIR$/app" />
-            <option value="$PROJECT_DIR$/record" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

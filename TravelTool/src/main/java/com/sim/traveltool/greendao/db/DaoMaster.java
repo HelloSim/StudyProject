@@ -1,4 +1,4 @@
-package com.sim.record.greendao.db;
+package com.sim.traveltool.greendao.db;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;

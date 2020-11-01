@@ -35,6 +35,7 @@
         <activity android:name="com.sim.traveltool.ui.activity.SearchLocationStartActivity" />
         <activity android:name="com.sim.traveltool.ui.activity.SearchLocationEndActivity" />
         <activity android:name="com.sim.traveltool.ui.activity.RouteActivity" />
+        <activity android:name="com.sim.traveltool.ui.activity.AllRecordActivity"/>
 
     </application>
 

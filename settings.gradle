@@ -1,5 +1,4 @@
 include ':Test'
 include ':TravelTool'
-include ':record'
 include ':app'
 rootProject.name = "StudyProject"
