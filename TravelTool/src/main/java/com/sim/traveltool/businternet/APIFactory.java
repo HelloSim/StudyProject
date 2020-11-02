@@ -1,8 +1,8 @@
 package com.sim.traveltool.businternet;
 
-import com.sim.traveltool.bean.BusRealTimeDataBean;
-import com.sim.traveltool.bean.BusRealTimeLineDataBean;
-import com.sim.traveltool.bean.BusRealTimeByLineDataBean;
+import com.sim.traveltool.bean.bus.BusRealTimeDataBean;
+import com.sim.traveltool.bean.bus.BusRealTimeLineDataBean;
+import com.sim.traveltool.bean.bus.BusRealTimeByLineDataBean;
 
 import rx.Observable;
 import rx.Subscriber;

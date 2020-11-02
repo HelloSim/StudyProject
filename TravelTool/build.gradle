@@ -20,7 +20,13 @@ android {
     }
     //封装构建类型配置
     buildTypes {
+        debug {
+            buildConfigField("boolean", "LOG_DEBUG", "true")
+            minifyEnabled false //是否可以移出无用的java代码，默认为false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro' //指定插件使用的混淆文件
+        }
         release {
+            buildConfigField("boolean", "LOG_DEBUG", "false")
             minifyEnabled false //是否可以移出无用的java代码，默认为false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro' //指定插件使用的混淆文件
 //            signingConfig signingConfigs.release //签名配置文件
@@ -52,7 +58,7 @@ android {
 
     greendao {
         schemaVersion 1 //数据库版本
-        daoPackage 'com.sim.traveltool.greendao.db'//生成代码到具体包下
+        daoPackage 'com.sim.traveltool.bean.greendao.db'//生成代码到具体包下
         targetGenDir 'src/main/java' //指定生成代码的目录
     }
 

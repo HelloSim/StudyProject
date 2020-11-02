@@ -1,7 +1,8 @@
-package com.sim.utilsproject.utils;
+package com.sim.traveltool.utils;
 
 import android.app.ActivityManager;
 import android.app.Instrumentation;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
@@ -92,6 +93,25 @@ public class AppUtil {
         PackageManager pm = context.getPackageManager();
         List<PackageInfo> allAppInfo = pm.getInstalledPackages(PackageManager.GET_ACTIVITIES);
         return allAppInfo;
+    }
+
+    /**
+     * 判断activity是否栈顶运行
+     *
+     * @param mContext
+     * @param activityClassName
+     * @return
+     */
+    public static boolean isActivityRunning(Context mContext, String activityClassName) {
+        ActivityManager activityManager = (ActivityManager) mContext.getSystemService(Context.ACTIVITY_SERVICE);
+        List<ActivityManager.RunningTaskInfo> info = activityManager.getRunningTasks(1);
+        if (info != null && info.size() > 0) {
+            ComponentName component = info.get(0).topActivity;
+            if (activityClassName.equals(component.getClassName())) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**

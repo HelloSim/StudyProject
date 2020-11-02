@@ -62,7 +62,7 @@ public class ChooseImageTask {
             Activity activity = (Activity) mContext;
             int mType = builder.mType;
             //这里可以加一步检测权限是否申请
-            PermissionHelper.checkPermission(activity, mType);
+            PermissionUtil.checkPermission(activity, mType);
 
             if (mType == TYPE_GALLERY) {
                 takeImageFromGallery(activity, builder);
@@ -89,7 +89,7 @@ public class ChooseImageTask {
         //校验activity是否存在
         if (takePictureIntent.resolveActivity(activity.getPackageManager()) != null) {
             //判断是否自定义路径并且是否合法
-            Uri fileUri = UriUtils.getUri(activity, new File(builder.mFilePath, builder.mFileName));
+            Uri fileUri = UriUtil.getUri(activity, new File(builder.mFilePath, builder.mFileName));
             takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, fileUri);
             activity.startActivityForResult(takePictureIntent, builder.mType);
         } else {
@@ -185,7 +185,7 @@ public class ChooseImageTask {
             OnSelectListener mOnSelectListener = builder.mOnSelectListener;
             if (mContext instanceof Activity) {
                 Activity activity = (Activity) mContext;
-                Uri fileUri = UriUtils.getUri(activity, new File(builder.mFilePath, builder.mFileName));
+                Uri fileUri = UriUtil.getUri(activity, new File(builder.mFilePath, builder.mFileName));
                 handleImage(activity, fileUri, builder);
             } else {
                 if (mOnSelectListener != null) {
@@ -229,8 +229,8 @@ public class ChooseImageTask {
             OnSelectListener mOnSelectListener = builder.mOnSelectListener;
             if (mContext instanceof Activity) {
                 Activity activity = (Activity) mContext;
-                Uri uri = Uri.fromFile(FileUtils.makeFilePath(builder.mFilePath, builder.mFileName));
-                Bitmap bitmapFormUri = BitmapUtils.getBitmapFromUri(activity, uri);
+                Uri uri = Uri.fromFile(FileUtil.makeFilePath(builder.mFilePath, builder.mFileName));
+                Bitmap bitmapFormUri = BitmapUtil.getBitmapFromUri(activity, uri);
                 //是否去压缩
                 handleImageCompress(bitmapFormUri, builder);
             } else {
@@ -256,9 +256,9 @@ public class ChooseImageTask {
         } else {
             //不裁剪的话  直接输出图片压缩
             File file = new File(builder.mFilePath, builder.mFileName);
-            int bitmapDegree = BitmapUtils.getBitmapDegree(file.getAbsolutePath());
-            Bitmap bitmapFormUri = BitmapUtils.getBitmapFromUri(activity, photoUri);
-            Bitmap bitmap1 = BitmapUtils.rotateBitmap(bitmapFormUri, bitmapDegree);
+            int bitmapDegree = BitmapUtil.getBitmapDegree(file.getAbsolutePath());
+            Bitmap bitmapFormUri = BitmapUtil.getBitmapFromUri(activity, photoUri);
+            Bitmap bitmap1 = BitmapUtil.rotateBitmap(bitmapFormUri, bitmapDegree);
             handleImageCompress(bitmap1, builder);
         }
     }
@@ -278,7 +278,7 @@ public class ChooseImageTask {
             }
             boolean isCompress = builder.isCompress;
             if (isCompress) {
-                mOnSelectListener.onSuccess(BitmapUtils.compressImage(bitmap));
+                mOnSelectListener.onSuccess(BitmapUtil.compressImage(bitmap));
             } else {
                 mOnSelectListener.onSuccess(bitmap);
             }

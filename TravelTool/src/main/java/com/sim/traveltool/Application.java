@@ -4,9 +4,9 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.sim.traveltool.greendao.db.DaKaRecordDao;
-import com.sim.traveltool.greendao.db.DaoMaster;
-import com.sim.traveltool.greendao.db.DaoSession;
+import com.sim.traveltool.bean.greendao.db.DaKaRecordDao;
+import com.sim.traveltool.bean.greendao.db.DaoMaster;
+import com.sim.traveltool.bean.greendao.db.DaoSession;
 
 /**
  * Created by Sim on 2020/4/24

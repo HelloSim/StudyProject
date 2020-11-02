@@ -2,7 +2,7 @@ package com.sim.traveltool.internet;
 
 
 import com.sim.traveltool.bean.UserInfo;
-import com.sim.traveltool.bean.WangYiNewsBean;
+import com.sim.traveltool.bean.news.WangYiNewsBean;
 
 import rx.Observable;
 import rx.Subscriber;

@@ -3,9 +3,11 @@ package com.sim.traveltool.utils;
 import android.annotation.SuppressLint;
 import android.icu.util.Calendar;
 
+import java.io.File;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 /**
  * @Auther Sim
@@ -80,6 +82,53 @@ public class TimeUtil {
             default:
                 return "";
         }
+    }
+
+    public static String timeFormat(long timeMillis, String pattern) {
+        SimpleDateFormat format = new SimpleDateFormat(pattern, Locale.CHINA);
+        return format.format(new Date(timeMillis));
+    }
+
+    public static String formatPhotoDate(long time) {
+        return timeFormat(time, "yyyy-MM-dd");
+    }
+
+    public static String formatPhotoDate(String path) {
+        File file = new File(path);
+        if (file.exists()) {
+            long time = file.lastModified();
+            return formatPhotoDate(time);
+        }
+        return "1970-01-01";
+    }
+
+    public static String getNowTimeAll() {
+        SimpleDateFormat sDateFormat = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss-SSS");
+        return sDateFormat.format(new Date());
+    }
+
+    public static String getNowTimeDayHourMinuteSecond() {
+        SimpleDateFormat sDateFormat = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
+        return sDateFormat.format(new Date());
+    }
+
+    public static String getNowTimeDayHourMinute() {
+        SimpleDateFormat sDateFormat = new SimpleDateFormat("yyyy-MM-dd_HH-mm");
+        return sDateFormat.format(new Date());
+    }
+
+    public static String getNowTimeDay() {
+        SimpleDateFormat sDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        return sDateFormat.format(new Date());
+    }
+
+    public static String getNowTimeHourMinuteSecond() {
+        SimpleDateFormat sDateFormat = new SimpleDateFormat("HH-mm-ss");
+        return sDateFormat.format(new Date());
+    }
+    public static long getCurTimeLong(){//获取时间戳
+        long time= System.currentTimeMillis();
+        return time;
     }
 
 }

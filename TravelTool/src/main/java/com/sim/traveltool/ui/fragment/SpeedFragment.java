@@ -16,9 +16,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.sim.traveltool.R;
-import com.sim.traveltool.adapter.NewsAdapter;
-import com.sim.traveltool.bean.WangYiNewsBean;
-import com.sim.traveltool.ui.activity.NewsDetailActivity;
+import com.sim.traveltool.adapter.news.NewsAdapter;
+import com.sim.traveltool.bean.news.WangYiNewsBean;
+import com.sim.traveltool.ui.activity.news.NewsDetailActivity;
 
 import java.io.Serializable;
 import java.util.ArrayList;

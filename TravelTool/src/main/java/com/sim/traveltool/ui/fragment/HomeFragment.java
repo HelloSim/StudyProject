@@ -21,10 +21,10 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.sim.traveltool.R;
 import com.sim.traveltool.adapter.LoopViewAdapter;
-import com.sim.traveltool.ui.activity.SearchLocationEndActivity;
-import com.sim.traveltool.ui.activity.BusRealTimeSearchActivity;
-import com.sim.traveltool.ui.activity.RouteActivity;
-import com.sim.traveltool.ui.activity.SearchLocationStartActivity;
+import com.sim.traveltool.ui.activity.bus.SearchLocationEndActivity;
+import com.sim.traveltool.ui.activity.bus.BusRealTimeSearchActivity;
+import com.sim.traveltool.ui.activity.bus.RouteActivity;
+import com.sim.traveltool.ui.activity.bus.SearchLocationStartActivity;
 
 import java.util.ArrayList;
 
