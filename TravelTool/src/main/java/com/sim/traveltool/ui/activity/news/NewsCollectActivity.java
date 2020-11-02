@@ -104,7 +104,7 @@ public class NewsCollectActivity extends BaseActivity {
         newsRecyclerView.setAdapter(newsAdapter);
 
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
-        deleteLayout = inflater.inflate(R.layout.popup_delete_collect, null);
+        deleteLayout = inflater.inflate(R.layout.view_popup_delete_collect, null);
         deletePopupWindow = new PopupWindow(context);
         deletePopupWindow.setContentView(deleteLayout);//设置主体布局
         deletePopupWindow.setWidth(ScreenUtil.dip2px(context, deletePupDPWidth));//宽度

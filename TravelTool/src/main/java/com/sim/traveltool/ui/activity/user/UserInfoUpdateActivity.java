@@ -153,7 +153,7 @@ public class UserInfoUpdateActivity extends BaseActivity {
         }
 
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
-        updateNikeNameLayout = inflater.inflate(R.layout.popup_update_nike_name, null);
+        updateNikeNameLayout = inflater.inflate(R.layout.view_popup_update_nike_name, null);
         updateNikeNamePopupWindow = new PopupWindow(context);
         updateNikeNamePopupWindow.setContentView(updateNikeNameLayout);//设置主体布局
         updateNikeNamePopupWindow.setWidth(ScreenUtil.dip2px(context, updateNikeNamePupDPWidth));//宽度
@@ -184,7 +184,7 @@ public class UserInfoUpdateActivity extends BaseActivity {
             }
         });
 
-        updateAutographLayout = inflater.inflate(R.layout.popup_update_autograph, null);
+        updateAutographLayout = inflater.inflate(R.layout.view_popup_update_autograph, null);
         updateAutographNamePopupWindow = new PopupWindow(context);
         updateAutographNamePopupWindow.setContentView(updateAutographLayout);//设置主体布局
         updateAutographNamePopupWindow.setWidth(ScreenUtil.dip2px(context, updateAutographPupDPWidth));//宽度
