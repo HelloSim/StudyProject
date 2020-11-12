@@ -46,7 +46,7 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.ViewHolder
             holder.tv_end.setText("下班打卡");
         } else {
             if (daKaRecordList != null && daKaRecordList.size() > 0) {
-                holder.tv_time.setText(daKaRecordList.get(position - 1).getDay());
+                holder.tv_time.setText(daKaRecordList.get(position - 1).getDay() + "日\t" + daKaRecordList.get(position - 1).getWeek());
                 if (daKaRecordList.get(position - 1).getStartTime() != null) {
                     if (daKaRecordList.get(position - 1).getIsLate().equals("1"))
                         holder.tv_start.setTextColor(Color.BLUE);
