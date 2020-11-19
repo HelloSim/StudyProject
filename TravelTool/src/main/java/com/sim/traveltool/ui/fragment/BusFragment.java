@@ -32,7 +32,7 @@ import java.util.ArrayList;
  * “首页”Fragment（“实时公交搜索”Fragment）
  * Created by Sim on 2020/4/25
  */
-public class HomeFragment extends Fragment implements View.OnClickListener {
+public class BusFragment extends Fragment implements View.OnClickListener {
 
     //轮播图模块
     private ViewPager viewPager;

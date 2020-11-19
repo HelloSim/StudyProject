@@ -31,7 +31,7 @@ import static com.sim.traveltool.ui.activity.BaseActivity.retrofitUtil;
  * “网易”Fragment
  * Created by Sim on 2020/4/27
  */
-public class SpeedFragment extends Fragment {
+public class WangyiFragment extends Fragment {
 
     private RecyclerView newsRecyclerView;
     private ArrayList<WangYiNewsBean.ResultBean> newsList = new ArrayList<>();

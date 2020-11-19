@@ -11,10 +11,10 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.sim.traveltool.R;
-import com.sim.traveltool.ui.fragment.CommunityFragment;
-import com.sim.traveltool.ui.fragment.HomeFragment;
+import com.sim.traveltool.ui.fragment.RecordFragment;
+import com.sim.traveltool.ui.fragment.BusFragment;
 import com.sim.traveltool.ui.fragment.MeFragment;
-import com.sim.traveltool.ui.fragment.SpeedFragment;
+import com.sim.traveltool.ui.fragment.WangyiFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -35,9 +35,9 @@ public class MainActivity extends BaseActivity {
     @BindView(R.id.bottom_bar_me)
     RadioButton barMe;
 
-    private HomeFragment homeFragment;
-    private SpeedFragment speedFragment;
-    private CommunityFragment communityFragment;
+    private BusFragment busFragment;
+    private WangyiFragment wangyiFragment;
+    private RecordFragment recordFragment;
     private MeFragment meFragment;
 
     private FragmentManager mFragmentManager;
@@ -60,14 +60,14 @@ public class MainActivity extends BaseActivity {
         mFragmentManager = getSupportFragmentManager();
         mFragmentTransaction = mFragmentManager.beginTransaction();
 
-        if (homeFragment != null) {
-            mFragmentTransaction.hide(homeFragment);
+        if (busFragment != null) {
+            mFragmentTransaction.hide(busFragment);
         }
-        if (speedFragment != null) {
-            mFragmentTransaction.hide(speedFragment);
+        if (wangyiFragment != null) {
+            mFragmentTransaction.hide(wangyiFragment);
         }
-        if (communityFragment != null) {
-            mFragmentTransaction.hide(communityFragment);
+        if (recordFragment != null) {
+            mFragmentTransaction.hide(recordFragment);
         }
         if (meFragment != null) {
             mFragmentTransaction.hide(meFragment);
@@ -75,27 +75,27 @@ public class MainActivity extends BaseActivity {
 
         switch (v.getId()) {
             case R.id.bottom_bar_home:
-                if (homeFragment == null) {
-                    homeFragment = new HomeFragment();
-                    mFragmentTransaction.add(R.id.frameLayout, homeFragment);
+                if (busFragment == null) {
+                    busFragment = new BusFragment();
+                    mFragmentTransaction.add(R.id.frameLayout, busFragment);
                 } else {
-                    mFragmentTransaction.show(homeFragment);
+                    mFragmentTransaction.show(busFragment);
                 }
                 break;
             case R.id.bottom_bar_speed:
-                if (speedFragment == null) {
-                    speedFragment = new SpeedFragment();
-                    mFragmentTransaction.add(R.id.frameLayout, speedFragment);
+                if (wangyiFragment == null) {
+                    wangyiFragment = new WangyiFragment();
+                    mFragmentTransaction.add(R.id.frameLayout, wangyiFragment);
                 } else {
-                    mFragmentTransaction.show(speedFragment);
+                    mFragmentTransaction.show(wangyiFragment);
                 }
                 break;
             case R.id.bottom_bar_community:
-                if (communityFragment == null) {
-                    communityFragment = new CommunityFragment();
-                    mFragmentTransaction.add(R.id.frameLayout, communityFragment);
+                if (recordFragment == null) {
+                    recordFragment = new RecordFragment();
+                    mFragmentTransaction.add(R.id.frameLayout, recordFragment);
                 } else {
-                    mFragmentTransaction.show(communityFragment);
+                    mFragmentTransaction.show(recordFragment);
                 }
                 break;
             case R.id.bottom_bar_me:

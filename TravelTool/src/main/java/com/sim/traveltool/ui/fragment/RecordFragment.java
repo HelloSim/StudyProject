@@ -4,6 +4,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +22,7 @@ import com.sim.traveltool.R;
 import com.sim.traveltool.bean.record.DaKaRecord;
 import com.sim.traveltool.bean.greendao.DaKaRecordDaoUtil;
 import com.sim.traveltool.ui.activity.record.AllRecordActivity;
+import com.sim.traveltool.utils.HttpUtil;
 import com.sim.traveltool.utils.TimeUtil;
 import com.sim.traveltool.utils.ToastUtil;
 
@@ -31,10 +33,10 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
- * “社区”Fragment
+ * “打卡”Fragment
  * Created by Sim on 2020/4/27
  */
-public class CommunityFragment extends Fragment implements CalendarView.OnMonthChangeListener,
+public class RecordFragment extends Fragment implements CalendarView.OnMonthChangeListener,
         CalendarView.OnCalendarSelectListener {
 
 
@@ -52,8 +54,10 @@ public class CommunityFragment extends Fragment implements CalendarView.OnMonthC
     @BindView(R.id.btn_daka)
     Button btn_daka;
 
-    private DaKaRecord daKaRecord;//当天打卡信息
     private List<DaKaRecord> daKaRecordList;
+    private DaKaRecord daKaRecord;//当天打卡信息
+    private String baseUrl = "http://tool.bitefu.net/jiari?d=";
+    private int isWorkingDay = 0;//0工作日 1 假日 2节日
 
     @Nullable
     @Override
@@ -86,6 +90,19 @@ public class CommunityFragment extends Fragment implements CalendarView.OnMonthC
      * 根据数据进行显示
      */
     private void showInfo(Calendar calendar) {
+        String apiurl = null;
+        apiurl = baseUrl + DaKaRecordDaoUtil.getYMD(calendar);
+        HttpUtil.doGetAsyn(apiurl, new HttpUtil.CallBack() {
+            @Override
+            public void onRequestComplete(String result) {
+                isWorkingDay = Integer.parseInt(result);
+            }
+
+            @Override
+            public void onRequestError(String result) {
+
+            }
+        });
         if (TimeUtil.getHour() < 13 && TimeUtil.getHour() >= 6)
             btn_daka.setText(getString(R.string.start));
         else if (TimeUtil.getHour() >= 13 || TimeUtil.getHour() < 6)
@@ -195,7 +212,7 @@ public class CommunityFragment extends Fragment implements CalendarView.OnMonthC
         showInfo(calendarView.getSelectedCalendar());
     }
 
-    @OnClick({R.id.btn_now, R.id.btn_daka, R.id.tv_now_year_and_month,R.id.all_record})
+    @OnClick({R.id.btn_now, R.id.btn_daka, R.id.tv_now_year_and_month, R.id.all_record})
     public void OnClick(View v) {
         switch (v.getId()) {
             case R.id.btn_now:

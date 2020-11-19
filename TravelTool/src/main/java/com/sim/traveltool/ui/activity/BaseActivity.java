@@ -12,6 +12,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.sim.traveltool.internet.APIFactory;
+import com.sim.traveltool.utils.ToastUtil;
 
 import permissions.dispatcher.NeedsPermission;
 import permissions.dispatcher.OnNeverAskAgain;
@@ -75,7 +76,7 @@ public class BaseActivity extends AppCompatActivity {
     //用户选中了授权窗口中的不再询问复选框后并拒绝了权限请求时需要调用的方法
     @OnNeverAskAgain({Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE})
     public void multiNeverAsk() {
-        Toast.makeText(this, "缺少必要权限软件无法正常使用!如若恢复正常使用，请前往设置进行权限授权", Toast.LENGTH_SHORT).show();
+        ToastUtil.T_Info(this, "缺少必要权限软件无法正常使用!如若恢复正常使用，请前往设置进行权限授权");
     }
 
     @SuppressLint("NeedOnRequestPermissionsResult")

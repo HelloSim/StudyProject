@@ -3,6 +3,7 @@ package com.sim.traveltool.bean.greendao;
 import com.haibin.calendarview.Calendar;
 import com.sim.traveltool.bean.greendao.db.DaKaRecordDao;
 import com.sim.traveltool.bean.record.DaKaRecord;
+import com.sim.traveltool.utils.HttpUtil;
 import com.sim.traveltool.utils.TimeUtil;
 
 import java.text.SimpleDateFormat;
@@ -17,6 +18,16 @@ import static com.sim.traveltool.Application.daKaRecordDao;
  * @Description
  */
 public class DaKaRecordDaoUtil {
+
+    /**
+     * 获取年月日
+     *
+     * @param calendar
+     * @return
+     */
+    public static String getYMD(Calendar calendar) {
+        return String.valueOf(calendar.getYear()) + calendar.getMonth() + calendar.getDay();
+    }
 
     /**
      * 获取年月日
@@ -272,7 +283,8 @@ public class DaKaRecordDaoUtil {
             updataRecordForDayStartNormal(calendar);
         } else {
             daKaRecordDao.insert(new DaKaRecord(getYear(calendar), getMonth(calendar), getDay(calendar),
-                    TimeUtil.getWeek(getYearMonthDay(calendar)), new SimpleDateFormat("HH:mm").format(System.currentTimeMillis()), null,
+                    TimeUtil.getWeek(getYearMonthDay(calendar)), getIsWorkingDay(calendar),
+                    new SimpleDateFormat("HH:mm").format(System.currentTimeMillis()), null,
                     "0", "0", null));
         }
     }
@@ -288,7 +300,8 @@ public class DaKaRecordDaoUtil {
             updataRecordForDayStartLate(calendar);
         } else {
             daKaRecordDao.insert(new DaKaRecord(getYear(calendar), getMonth(calendar), getDay(calendar),
-                    TimeUtil.getWeek(getYearMonthDay(calendar)), new SimpleDateFormat("HH:mm").format(System.currentTimeMillis()), null,
+                    TimeUtil.getWeek(getYearMonthDay(calendar)), getIsWorkingDay(calendar),
+                    new SimpleDateFormat("HH:mm").format(System.currentTimeMillis()), null,
                     "1", "0", null));
         }
     }
@@ -304,7 +317,8 @@ public class DaKaRecordDaoUtil {
             updataRecordForDayEndNormal(calendar);
         } else {
             daKaRecordDao.insert(new DaKaRecord(getYear(calendar), getMonth(calendar), getDay(calendar),
-                    TimeUtil.getWeek(getYearMonthDay(calendar)), null, new SimpleDateFormat("HH:mm").format(System.currentTimeMillis()),
+                    TimeUtil.getWeek(getYearMonthDay(calendar)), getIsWorkingDay(calendar),
+                    null, new SimpleDateFormat("HH:mm").format(System.currentTimeMillis()),
                     "0", "0", null));
         }
     }
@@ -320,9 +334,30 @@ public class DaKaRecordDaoUtil {
             updataRecordForDayEndLeaveEarly(calendar);
         } else {
             daKaRecordDao.insert(new DaKaRecord(getYear(calendar), getMonth(calendar), getDay(calendar),
-                    TimeUtil.getWeek(getYearMonthDay(calendar)), null, new SimpleDateFormat("HH:mm").format(System.currentTimeMillis()),
+                    TimeUtil.getWeek(getYearMonthDay(calendar)), getIsWorkingDay(calendar),
+                    null, new SimpleDateFormat("HH:mm").format(System.currentTimeMillis()),
                     "0", "1", null));
         }
+    }
+
+
+    public static String getIsWorkingDay(Calendar calendar) {
+        String baseUrl = "http://tool.bitefu.net/jiari?d=";
+        String apiurl = null;
+        apiurl = baseUrl + DaKaRecordDaoUtil.getYMD(calendar);
+        final String[] isWorkingDay = new String[1];
+        HttpUtil.doGetAsyn(apiurl, new HttpUtil.CallBack() {
+            @Override
+            public void onRequestComplete(String result) {
+                isWorkingDay[0] = result;
+            }
+
+            @Override
+            public void onRequestError(String result) {
+
+            }
+        });
+        return isWorkingDay[0];
     }
 
 }

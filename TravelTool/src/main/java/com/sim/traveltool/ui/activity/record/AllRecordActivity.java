@@ -21,7 +21,7 @@ import butterknife.ButterKnife;
 /**
  * @Auther Sim
  * @Time 2020/10/22 14:21
- * @Description
+ * @Description 月打卡列表页面
  */
 public class AllRecordActivity extends BaseActivity {
 
