@@ -46,7 +46,7 @@ android {
 
     greendao {
         schemaVersion 1 //数据库版本
-        daoPackage 'com.sim.traveltool.bean.greendao.db'//生成代码到具体包下
+        daoPackage 'com.sim.traveltool.greendao.db'//生成代码到具体包下
         targetGenDir 'src/main/java' //指定生成代码的目录
     }
 

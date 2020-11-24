@@ -23,11 +23,11 @@ public class DaKaRecord {
     private String isLate;//是否迟到：0未迟到、1迟到
     private String isLeaveEarly;//是否早退：0未早退、1早退
     private String other;//其他
-    private String isWorkingDay;//0工作日 1 假日 2节日
+//    private String isWorkingDay;//0工作日 1 假日 2节日
 
-    @Generated(hash = 56501741)
+    @Generated(hash = 17334052)
     public DaKaRecord(Long id, String year, String month, String day, String week, String startTime, String endTime, String isLate,
-            String isLeaveEarly, String other, String isWorkingDay) {
+            String isLeaveEarly, String other) {
         this.id = id;
         this.year = year;
         this.month = month;
@@ -38,7 +38,6 @@ public class DaKaRecord {
         this.isLate = isLate;
         this.isLeaveEarly = isLeaveEarly;
         this.other = other;
-        this.isWorkingDay = isWorkingDay;
     }
 
     @Generated(hash = 187742052)
@@ -51,7 +50,6 @@ public class DaKaRecord {
         this.month = month;
         this.day = day;
         this.week = week;
-        this.isWorkingDay = isWorkingDay;
         this.startTime = startTime;
         this.endTime = endTime;
         this.isLate = isLate;
@@ -137,14 +135,6 @@ public class DaKaRecord {
 
     public void setEndTime(String endTime) {
         this.endTime = endTime;
-    }
-
-    public String getIsWorkingDay() {
-        return this.isWorkingDay;
-    }
-
-    public void setIsWorkingDay(String isWorkingDay) {
-        this.isWorkingDay = isWorkingDay;
     }
 
 }

@@ -1,7 +1,7 @@
-package com.sim.traveltool.bean.greendao;
+package com.sim.traveltool.greendao;
 
 import com.haibin.calendarview.Calendar;
-import com.sim.traveltool.bean.greendao.db.DaKaRecordDao;
+import com.sim.traveltool.greendao.db.DaKaRecordDao;
 import com.sim.traveltool.bean.record.DaKaRecord;
 import com.sim.traveltool.utils.HttpUtil;
 import com.sim.traveltool.utils.TimeUtil;

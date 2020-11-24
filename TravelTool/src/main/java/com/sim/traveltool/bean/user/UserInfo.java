@@ -1,4 +1,4 @@
-package com.sim.traveltool.bean;
+package com.sim.traveltool.bean.user;
 
 import java.io.Serializable;
 

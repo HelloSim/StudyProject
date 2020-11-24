@@ -1,11 +1,11 @@
 package com.sim.traveltool.utils;
 
 import android.annotation.SuppressLint;
-import android.icu.util.Calendar;
 
 import java.io.File;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 

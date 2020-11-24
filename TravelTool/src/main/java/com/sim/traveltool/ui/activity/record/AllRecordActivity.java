@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.sim.traveltool.R;
 import com.sim.traveltool.adapter.record.RecordAdapter;
-import com.sim.traveltool.bean.greendao.DaKaRecordDaoUtil;
+import com.sim.traveltool.greendao.DaKaRecordDaoUtil;
 import com.sim.traveltool.bean.record.DaKaRecord;
 import com.sim.traveltool.ui.activity.BaseActivity;
 

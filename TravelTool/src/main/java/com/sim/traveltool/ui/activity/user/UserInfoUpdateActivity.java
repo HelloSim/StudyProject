@@ -30,7 +30,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.sim.traveltool.R;
-import com.sim.traveltool.bean.UserInfo;
+import com.sim.traveltool.bean.user.UserInfo;
 import com.sim.traveltool.constant.Constant;
 import com.sim.traveltool.ui.activity.BaseActivity;
 import com.sim.traveltool.utils.SPUtil;

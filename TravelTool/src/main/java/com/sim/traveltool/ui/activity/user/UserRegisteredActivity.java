@@ -12,7 +12,7 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 
 import com.sim.traveltool.R;
-import com.sim.traveltool.bean.UserInfo;
+import com.sim.traveltool.bean.user.UserInfo;
 import com.sim.traveltool.constant.Constant;
 import com.sim.traveltool.ui.activity.BaseActivity;
 

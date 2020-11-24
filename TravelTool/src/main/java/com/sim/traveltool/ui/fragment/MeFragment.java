@@ -15,7 +15,7 @@ import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
 import com.sim.traveltool.R;
-import com.sim.traveltool.bean.UserInfo;
+import com.sim.traveltool.bean.user.UserInfo;
 import com.sim.traveltool.ui.activity.news.NewsCollectActivity;
 import com.sim.traveltool.ui.activity.user.UserLogInActivity;
 import com.sim.traveltool.ui.activity.user.UserInfoUpdateActivity;
