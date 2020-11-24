@@ -1,4 +1,4 @@
-package com.sim.traveltool.bean.greendao.db;
+package com.sim.traveltool.greendao.db;
 
 import android.database.Cursor;
 import android.database.sqlite.SQLiteStatement;
@@ -34,7 +34,6 @@ public class DaKaRecordDao extends AbstractDao<DaKaRecord, Long> {
         public final static Property IsLate = new Property(7, String.class, "isLate", false, "IS_LATE");
         public final static Property IsLeaveEarly = new Property(8, String.class, "isLeaveEarly", false, "IS_LEAVE_EARLY");
         public final static Property Other = new Property(9, String.class, "other", false, "OTHER");
-        public final static Property IsWorkingDay = new Property(10, String.class, "isWorkingDay", false, "IS_WORKING_DAY");
     }
 
 
@@ -59,8 +58,7 @@ public class DaKaRecordDao extends AbstractDao<DaKaRecord, Long> {
                 "\"END_TIME\" TEXT," + // 6: endTime
                 "\"IS_LATE\" TEXT," + // 7: isLate
                 "\"IS_LEAVE_EARLY\" TEXT," + // 8: isLeaveEarly
-                "\"OTHER\" TEXT," + // 9: other
-                "\"IS_WORKING_DAY\" TEXT);"); // 10: isWorkingDay
+                "\"OTHER\" TEXT);"); // 9: other
     }
 
     /** Drops the underlying database table. */
@@ -122,11 +120,6 @@ public class DaKaRecordDao extends AbstractDao<DaKaRecord, Long> {
         if (other != null) {
             stmt.bindString(10, other);
         }
- 
-        String isWorkingDay = entity.getIsWorkingDay();
-        if (isWorkingDay != null) {
-            stmt.bindString(11, isWorkingDay);
-        }
     }
 
     @Override
@@ -182,11 +175,6 @@ public class DaKaRecordDao extends AbstractDao<DaKaRecord, Long> {
         if (other != null) {
             stmt.bindString(10, other);
         }
- 
-        String isWorkingDay = entity.getIsWorkingDay();
-        if (isWorkingDay != null) {
-            stmt.bindString(11, isWorkingDay);
-        }
     }
 
     @Override
@@ -206,8 +194,7 @@ public class DaKaRecordDao extends AbstractDao<DaKaRecord, Long> {
             cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6), // endTime
             cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7), // isLate
             cursor.isNull(offset + 8) ? null : cursor.getString(offset + 8), // isLeaveEarly
-            cursor.isNull(offset + 9) ? null : cursor.getString(offset + 9), // other
-            cursor.isNull(offset + 10) ? null : cursor.getString(offset + 10) // isWorkingDay
+            cursor.isNull(offset + 9) ? null : cursor.getString(offset + 9) // other
         );
         return entity;
     }
@@ -224,7 +211,6 @@ public class DaKaRecordDao extends AbstractDao<DaKaRecord, Long> {
         entity.setIsLate(cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7));
         entity.setIsLeaveEarly(cursor.isNull(offset + 8) ? null : cursor.getString(offset + 8));
         entity.setOther(cursor.isNull(offset + 9) ? null : cursor.getString(offset + 9));
-        entity.setIsWorkingDay(cursor.isNull(offset + 10) ? null : cursor.getString(offset + 10));
      }
     
     @Override
