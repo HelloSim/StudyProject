@@ -13,7 +13,7 @@
 
         <TextView
             style="@style/TitleStyle"
-            android:text="出行" />
+            android:text="@string/bus" />
 
     </LinearLayout>
 

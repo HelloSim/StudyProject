@@ -12,7 +12,7 @@
 
         <TextView
             style="@style/TitleStyle"
-            android:text="网易" />
+            android:text="@string/wangyi" />
 
     </LinearLayout>
 

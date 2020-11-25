@@ -53,7 +53,7 @@ public class RecordAllActivity extends BaseActivity {
     }
 
     private void initView() {
-        tv_now_year_and_month.setText(yearAndMonth + getString(R.string.all_record));
+        tv_now_year_and_month.setText(yearAndMonth + "月" + getString(R.string.all_record));
 
         rv_data.setLayoutManager(new LinearLayoutManager(this));
         rv_data.setAdapter(recordAdapter);

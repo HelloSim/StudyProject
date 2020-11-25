@@ -14,7 +14,7 @@
 
         <TextView
             style="@style/TitleStyle"
-            android:text="打卡记录" />
+            android:text="@string/daka" />
 
     </LinearLayout>
 
