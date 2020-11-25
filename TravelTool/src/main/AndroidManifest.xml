@@ -25,17 +25,17 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.sim.traveltool.ui.activity.news.NewsDetailActivity" />
-        <activity android:name="com.sim.traveltool.ui.activity.user.UserLogInActivity" />
-        <activity android:name="com.sim.traveltool.ui.activity.user.UserRegisteredActivity" />
-        <activity android:name="com.sim.traveltool.ui.activity.user.UserInfoUpdateActivity" />
-        <activity android:name="com.sim.traveltool.ui.activity.news.NewsCollectActivity" />
-        <activity android:name="com.sim.traveltool.ui.activity.bus.BusRealTimeSearchActivity" />
-        <activity android:name="com.sim.traveltool.ui.activity.bus.BusRealTimeActivity" />
-        <activity android:name="com.sim.traveltool.ui.activity.bus.SearchLocationStartActivity" />
-        <activity android:name="com.sim.traveltool.ui.activity.bus.SearchLocationEndActivity" />
-        <activity android:name="com.sim.traveltool.ui.activity.bus.RouteActivity" />
-        <activity android:name="com.sim.traveltool.ui.activity.record.AllRecordActivity"/>
+        <activity android:name="com.sim.traveltool.ui.activity.NewsDetailActivity" />
+        <activity android:name="com.sim.traveltool.ui.activity.UserLogInActivity" />
+        <activity android:name="com.sim.traveltool.ui.activity.UserRegisterActivity" />
+        <activity android:name="com.sim.traveltool.ui.activity.UserUpdateActivity" />
+        <activity android:name="com.sim.traveltool.ui.activity.NewsCollectActivity" />
+        <activity android:name="com.sim.traveltool.ui.activity.BusRealTimeSearchActivity" />
+        <activity android:name="com.sim.traveltool.ui.activity.BusRealTimeActivity" />
+        <activity android:name="com.sim.traveltool.ui.activity.BusSearchLocationStartActivity" />
+        <activity android:name="com.sim.traveltool.ui.activity.BusSearchLocationEndActivity" />
+        <activity android:name="com.sim.traveltool.ui.activity.BusRouteActivity" />
+        <activity android:name="com.sim.traveltool.ui.activity.RecordAllActivity"/>
 
     </application>
 

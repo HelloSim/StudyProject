@@ -2,8 +2,10 @@ package com.sim.traveltool.internet;
 
 import android.content.Context;
 
-
-import com.sim.traveltool.bean.HttpResult;
+import com.sim.baselibrary.bean.HttpResult;
+import com.sim.baselibrary.internet.APIException;
+import com.sim.baselibrary.internet.AppUtil;
+import com.sim.baselibrary.internet.RxUtils;
 
 import java.io.File;
 import java.io.IOException;
@@ -34,10 +36,15 @@ public class RetrofitUtil {
     /**
      * 服务器地址
      */
-    private static final String BASE_URL = "https://api.apiopen.top";
+    private static final String USER_BASE_URL = "https://api.apiopen.top";
+    private static final String BUS_BASE_URL = "http://www.zhbuswx.com";
 
-    public APIService apiService;
-    private static Retrofit retrofit = null;
+    private UserAPIService userAPIService;
+    private BusAPIService busAPIService;
+
+    private static Retrofit userRetrofit = null;
+    private static Retrofit busRetrofit = null;
+
     private static OkHttpClient okHttpClient = null;
 
     private Context mContext;
@@ -53,20 +60,26 @@ public class RetrofitUtil {
         this.isUseCache = useCache;
     }
 
-    public APIService getApiService() {
-        if (apiService == null && retrofit != null) {
-            apiService = retrofit.create(APIService.class);
+    public UserAPIService getUserApiService() {
+        if (userAPIService == null && userRetrofit != null) {
+            userAPIService = userRetrofit.create(UserAPIService.class);
         }
-        return apiService;
+        return userAPIService;
+    }
+
+    public BusAPIService getBusAPIService() {
+        if (busAPIService == null && busAPIService != null) {
+            busAPIService = busRetrofit.create(BusAPIService.class);
+        }
+        return busAPIService;
     }
 
     public void init(Context context) {
         this.mContext = context;
         initOKHttp();
         initRetrofit();
-        if (apiService == null && retrofit != null) {
-            apiService = retrofit.create(APIService.class);
-        }
+        getUserApiService();
+        getBusAPIService();
     }
 
     /**
@@ -127,12 +140,19 @@ public class RetrofitUtil {
      * 初始化Retrofit
      */
     private void initRetrofit() {
-        retrofit = new Retrofit.Builder()
-                .baseUrl(BASE_URL)
+        userRetrofit = new Retrofit.Builder()
+                .baseUrl(USER_BASE_URL)
                 .client(okHttpClient)
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .build();
+        busRetrofit = new Retrofit.Builder()
+                .baseUrl(BUS_BASE_URL)
+                .client(okHttpClient)
+                .addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                .build();
+
     }
 
     /**

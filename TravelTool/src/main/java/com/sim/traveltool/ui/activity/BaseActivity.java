@@ -12,7 +12,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.sim.traveltool.internet.APIFactory;
-import com.sim.traveltool.utils.ToastUtil;
+import com.sim.baselibrary.utils.ToastUtil;
 
 import permissions.dispatcher.NeedsPermission;
 import permissions.dispatcher.OnNeverAskAgain;
@@ -29,7 +29,6 @@ import permissions.dispatcher.RuntimePermissions;
 public class BaseActivity extends AppCompatActivity {
 
     public static final APIFactory retrofitUtil = APIFactory.getInstance();
-    public static final com.sim.traveltool.businternet.APIFactory retrofitUtil2 = com.sim.traveltool.businternet.APIFactory.getInstance();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

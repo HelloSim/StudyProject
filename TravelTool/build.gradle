@@ -1,5 +1,4 @@
 apply plugin: 'com.android.application'
-apply plugin: 'org.greenrobot.greendao' // apply plugin
 
 android {
     compileSdkVersion rootProject.ext.android["compileSdkVersion"]
@@ -23,12 +22,14 @@ android {
         debug {
             buildConfigField("boolean", "LOG_DEBUG", "true")
             minifyEnabled false //是否可以移出无用的java代码，默认为false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro' //指定插件使用的混淆文件
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            //指定插件使用的混淆文件
         }
         release {
             buildConfigField("boolean", "LOG_DEBUG", "false")
             minifyEnabled false //是否可以移出无用的java代码，默认为false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro' //指定插件使用的混淆文件
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            //指定插件使用的混淆文件
 //            signingConfig signingConfigs.release //签名配置文件
         }
     }
@@ -37,17 +38,26 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+//    // 如果提示多个重复文件，加这属性
+//    packagingOptions {
+//        exclude 'META-INF/proguard/androidx-annotations.pro'
+//    }
+//    // 用于指定所有aar引用同样版本的support包
+//    configurations.all {
+//        resolutionStrategy.eachDependency { DependencyResolveDetails details ->
+//            def requested = details.requested
+//            if (requested.group == 'com.android.support') {
+//                if (!requested.name.startsWith("multidex")) {
+//                    details.useVersion '28.0.0'
+//                }
+//            }
+//        }
+//    }
     /*指定apk名称*/
     applicationVariants.all { variant ->
         variant.outputs.all {
             outputFileName = "${defaultConfig.versionName}.apk"
         }
-    }
-
-    greendao {
-        schemaVersion 1 //数据库版本
-        daoPackage 'com.sim.traveltool.greendao.db'//生成代码到具体包下
-        targetGenDir 'src/main/java' //指定生成代码的目录
     }
 
 }
@@ -59,42 +69,19 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+    //noinspection GradleCompatible
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation project(":baselibrary")
+    implementation project(":sqlitelibrary")
+
+    api 'com.jakewharton:butterknife:10.0.0'//butterknife
+    annotationProcessor 'com.jakewharton:butterknife-compiler:10.0.0'
 
     implementation('com.github.hotchemi:permissionsdispatcher:3.1.0')
     annotationProcessor 'com.github.hotchemi:permissionsdispatcher-processor:3.1.0'
-    //butterknife
-    implementation 'com.jakewharton:butterknife:10.0.0'
-    annotationProcessor 'com.jakewharton:butterknife-compiler:10.0.0'
-    //glide
-    implementation 'com.github.bumptech.glide:glide:4.9.0'
-    annotationProcessor 'com.github.bumptech.glide:compiler:4.4.0'
-    //eventbus
-    implementation 'org.greenrobot:eventbus:3.1.1'
-    //recyclerview
-    implementation 'androidx.recyclerview:recyclerview:1.2.0-alpha02'
 
-    // 网络请求的封装
-    implementation 'com.squareup.retrofit2:retrofit:2.3.0'//retrofit
-    implementation 'com.google.code.gson:gson:2.8.5'//Gson库
-    //下面两个是RxJava 和RxAndroid 添加这两个依赖 可以直接使用rxbus
-    implementation 'io.reactivex:rxjava:1.1.5'//RxJava
-    implementation 'io.reactivex:rxandroid:1.1.0'//RxAndroid
-    implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
-    //转换器，请求结果转换成Model
-    implementation 'com.squareup.retrofit2:adapter-rxjava:2.1.0'
-    //配合Rxjava 使用
-    implementation 'com.squareup.okhttp3:logging-interceptor:3.4.1'
-    implementation 'com.squareup.okhttp3:okhttp:3.12.0'//okhttp
-
-    //noinspection GradleCompatible
-    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     //一个第三方的图片选择库
     implementation 'com.github.bumptech.glide:glide:4.9.0'
     implementation('com.github.hotchemi:permissionsdispatcher:3.1.0')
     annotationProcessor 'com.github.hotchemi:permissionsdispatcher-processor:3.1.0'
-
-    implementation 'org.greenrobot:greendao:3.2.2' // add library
-
-    implementation 'com.haibin:calendarview:3.4.6'//日历
-    implementation 'com.sdsmdg.tastytoast:tastytoast:0.1.1'//Toast
 }

@@ -1,6 +1,7 @@
 package com.sim.traveltool.ui.activity;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.RadioButton;
@@ -13,7 +14,7 @@ import androidx.fragment.app.FragmentTransaction;
 import com.sim.traveltool.R;
 import com.sim.traveltool.ui.fragment.RecordFragment;
 import com.sim.traveltool.ui.fragment.BusFragment;
-import com.sim.traveltool.ui.fragment.MeFragment;
+import com.sim.traveltool.ui.fragment.UserFragment;
 import com.sim.traveltool.ui.fragment.WangyiFragment;
 
 import butterknife.BindView;
@@ -26,19 +27,19 @@ public class MainActivity extends BaseActivity {
     FrameLayout frameLayout;
     @BindView(R.id.bottom_bar_radioGroup)
     RadioGroup barRadioGroup;
-    @BindView(R.id.bottom_bar_home)
+    @BindView(R.id.bottom_bar_bus)
     RadioButton barHome;
-    @BindView(R.id.bottom_bar_speed)
+    @BindView(R.id.bottom_bar_wangyi)
     RadioButton barSpeed;
-    @BindView(R.id.bottom_bar_community)
+    @BindView(R.id.bottom_bar_record)
     RadioButton barCommunity;
-    @BindView(R.id.bottom_bar_me)
+    @BindView(R.id.bottom_bar_user)
     RadioButton barMe;
 
     private BusFragment busFragment;
     private WangyiFragment wangyiFragment;
     private RecordFragment recordFragment;
-    private MeFragment meFragment;
+    private UserFragment meFragment;
 
     private FragmentManager mFragmentManager;
     private FragmentTransaction mFragmentTransaction;
@@ -55,7 +56,7 @@ public class MainActivity extends BaseActivity {
         barHome.performClick();
     }
 
-    @OnClick({R.id.bottom_bar_radioGroup, R.id.bottom_bar_home, R.id.bottom_bar_speed, R.id.bottom_bar_community, R.id.bottom_bar_me})
+    @OnClick({R.id.bottom_bar_radioGroup, R.id.bottom_bar_bus, R.id.bottom_bar_wangyi, R.id.bottom_bar_record, R.id.bottom_bar_user})
     public void onClick(View v) {
         mFragmentManager = getSupportFragmentManager();
         mFragmentTransaction = mFragmentManager.beginTransaction();
@@ -74,7 +75,7 @@ public class MainActivity extends BaseActivity {
         }
 
         switch (v.getId()) {
-            case R.id.bottom_bar_home:
+            case R.id.bottom_bar_bus:
                 if (busFragment == null) {
                     busFragment = new BusFragment();
                     mFragmentTransaction.add(R.id.frameLayout, busFragment);
@@ -82,7 +83,7 @@ public class MainActivity extends BaseActivity {
                     mFragmentTransaction.show(busFragment);
                 }
                 break;
-            case R.id.bottom_bar_speed:
+            case R.id.bottom_bar_wangyi:
                 if (wangyiFragment == null) {
                     wangyiFragment = new WangyiFragment();
                     mFragmentTransaction.add(R.id.frameLayout, wangyiFragment);
@@ -90,7 +91,7 @@ public class MainActivity extends BaseActivity {
                     mFragmentTransaction.show(wangyiFragment);
                 }
                 break;
-            case R.id.bottom_bar_community:
+            case R.id.bottom_bar_record:
                 if (recordFragment == null) {
                     recordFragment = new RecordFragment();
                     mFragmentTransaction.add(R.id.frameLayout, recordFragment);
@@ -98,9 +99,9 @@ public class MainActivity extends BaseActivity {
                     mFragmentTransaction.show(recordFragment);
                 }
                 break;
-            case R.id.bottom_bar_me:
+            case R.id.bottom_bar_user:
                 if (meFragment == null) {
-                    meFragment = new MeFragment();
+                    meFragment = new UserFragment();
                     mFragmentTransaction.add(R.id.frameLayout, meFragment);
                 } else {
                     mFragmentTransaction.show(meFragment);

@@ -21,10 +21,10 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.sim.traveltool.R;
 import com.sim.traveltool.adapter.LoopViewAdapter;
-import com.sim.traveltool.ui.activity.bus.SearchLocationEndActivity;
-import com.sim.traveltool.ui.activity.bus.BusRealTimeSearchActivity;
-import com.sim.traveltool.ui.activity.bus.RouteActivity;
-import com.sim.traveltool.ui.activity.bus.SearchLocationStartActivity;
+import com.sim.traveltool.ui.activity.BusSearchLocationEndActivity;
+import com.sim.traveltool.ui.activity.BusRealTimeSearchActivity;
+import com.sim.traveltool.ui.activity.BusRouteActivity;
+import com.sim.traveltool.ui.activity.BusSearchLocationStartActivity;
 
 import java.util.ArrayList;
 
@@ -75,7 +75,7 @@ public class BusFragment extends Fragment implements View.OnClickListener {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_home, container, false);
+        View view = inflater.inflate(R.layout.fragment_bus, container, false);
         initView(view);
         initLoopView();
         return view;
@@ -281,41 +281,41 @@ public class BusFragment extends Fragment implements View.OnClickListener {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.ll_real_time:
-                ivStopSign.setImageDrawable(getResources().getDrawable(R.mipmap.ic_home_fragment_stop_sign_gray));
+                ivStopSign.setImageDrawable(getResources().getDrawable(R.mipmap.ic_bus_fragment_stop_sign_gray));
                 llStationContent.setVisibility(View.GONE);
-                ivRoute.setImageDrawable(getResources().getDrawable(R.mipmap.ic_home_fragment_route_gray));
+                ivRoute.setImageDrawable(getResources().getDrawable(R.mipmap.ic_bus_fragment_route_gray));
                 llRouteContent.setVisibility(View.GONE);
-                ivRealTime.setImageDrawable(getResources().getDrawable(R.mipmap.ic_home_fragment_real_time_blue));
+                ivRealTime.setImageDrawable(getResources().getDrawable(R.mipmap.ic_bus_fragment_real_time_blue));
                 llRealTimeContent.setVisibility(View.VISIBLE);
                 break;
             case R.id.ll_route:
-                ivRealTime.setImageDrawable(getResources().getDrawable(R.mipmap.ic_home_fragment_real_time_gray));
+                ivRealTime.setImageDrawable(getResources().getDrawable(R.mipmap.ic_bus_fragment_real_time_gray));
                 llRealTimeContent.setVisibility(View.GONE);
-                ivStopSign.setImageDrawable(getResources().getDrawable(R.mipmap.ic_home_fragment_stop_sign_gray));
+                ivStopSign.setImageDrawable(getResources().getDrawable(R.mipmap.ic_bus_fragment_stop_sign_gray));
                 llStationContent.setVisibility(View.GONE);
-                ivRoute.setImageDrawable(getResources().getDrawable(R.mipmap.ic_home_fragment_route_blue));
+                ivRoute.setImageDrawable(getResources().getDrawable(R.mipmap.ic_bus_fragment_route_blue));
                 llRouteContent.setVisibility(View.VISIBLE);
                 break;
             case R.id.ll_stop_sign:
-                ivRealTime.setImageDrawable(getResources().getDrawable(R.mipmap.ic_home_fragment_real_time_gray));
+                ivRealTime.setImageDrawable(getResources().getDrawable(R.mipmap.ic_bus_fragment_real_time_gray));
                 llRealTimeContent.setVisibility(View.GONE);
-                ivRoute.setImageDrawable(getResources().getDrawable(R.mipmap.ic_home_fragment_route_gray));
+                ivRoute.setImageDrawable(getResources().getDrawable(R.mipmap.ic_bus_fragment_route_gray));
                 llRouteContent.setVisibility(View.GONE);
-                ivStopSign.setImageDrawable(getResources().getDrawable(R.mipmap.ic_home_fragment_stop_sign_blue));
+                ivStopSign.setImageDrawable(getResources().getDrawable(R.mipmap.ic_bus_fragment_stop_sign_blue));
                 llStationContent.setVisibility(View.VISIBLE);
                 break;
             case R.id.tv_search:
                 startActivity(new Intent(getActivity(), BusRealTimeSearchActivity.class));
                 break;
             case R.id.tv_start_station:
-                startActivityForResult(new Intent(getActivity(), SearchLocationStartActivity.class), RESULT_START_STATION);
+                startActivityForResult(new Intent(getActivity(), BusSearchLocationStartActivity.class), RESULT_START_STATION);
                 break;
             case R.id.tv_end_station:
-                startActivityForResult(new Intent(getActivity(), SearchLocationEndActivity.class), RESULT_END_STATION);
+                startActivityForResult(new Intent(getActivity(), BusSearchLocationEndActivity.class), RESULT_END_STATION);
                 break;
             case R.id.btn_route:
                 if (tvStartStation.getText().length() > 0 && tvEndStation.getText().length() > 0) {
-                    Intent intent = new Intent(getActivity(), RouteActivity.class);
+                    Intent intent = new Intent(getActivity(), BusRouteActivity.class);
                     intent.putExtra("tvStartStation", tvStartStation.getText().toString());
                     intent.putExtra("tvEndStation", tvEndStation.getText().toString());
                     startActivity(intent);

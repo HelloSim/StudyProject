@@ -16,9 +16,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.sim.traveltool.R;
-import com.sim.traveltool.adapter.news.NewsAdapter;
-import com.sim.traveltool.bean.news.WangYiNewsBean;
-import com.sim.traveltool.ui.activity.news.NewsDetailActivity;
+import com.sim.traveltool.adapter.NewsAdapter;
+import com.sim.traveltool.bean.NewsWangYiBean;
+import com.sim.traveltool.ui.activity.NewsDetailActivity;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -34,7 +34,7 @@ import static com.sim.traveltool.ui.activity.BaseActivity.retrofitUtil;
 public class WangyiFragment extends Fragment {
 
     private RecyclerView newsRecyclerView;
-    private ArrayList<WangYiNewsBean.ResultBean> newsList = new ArrayList<>();
+    private ArrayList<NewsWangYiBean.ResultBean> newsList = new ArrayList<>();
     private NewsAdapter newsAdapter;
 
     private SwipeRefreshLayout refreshLayout;
@@ -42,7 +42,7 @@ public class WangyiFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_speed, container, false);
+        View view = inflater.inflate(R.layout.fragment_wangyi, container, false);
         initRecyclerView(view);
         getWangYiNew();
         return view;
@@ -108,7 +108,7 @@ public class WangyiFragment extends Fragment {
      * 获取网易新闻的网络请求
      */
     private void getWangYiNew() {
-        retrofitUtil.getWangYiNew(new Subscriber<WangYiNewsBean>() {
+        retrofitUtil.getWangYiNew(new Subscriber<NewsWangYiBean>() {
             @Override
             public void onCompleted() {
                 refreshLayout.setRefreshing(false);
@@ -120,7 +120,7 @@ public class WangyiFragment extends Fragment {
             }
 
             @Override
-            public void onNext(WangYiNewsBean wangYiNewsBean) {
+            public void onNext(NewsWangYiBean wangYiNewsBean) {
                 newsList.addAll(wangYiNewsBean.getResult());
                 newsAdapter.notifyDataSetChanged();
             }

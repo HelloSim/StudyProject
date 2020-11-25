@@ -12,27 +12,27 @@
         android:orientation="horizontal">
 
         <RadioButton
-            android:id="@+id/bottom_bar_home"
+            android:id="@+id/bottom_bar_bus"
             style="@style/MainActivityBottomNavigationRadioButtonStyle"
-            android:drawableTop="@drawable/main_bottom_bar_home_img"
+            android:drawableTop="@drawable/main_bottom_bar_bus_img"
             android:text="出行" />
 
         <RadioButton
-            android:id="@+id/bottom_bar_speed"
+            android:id="@+id/bottom_bar_wangyi"
             style="@style/MainActivityBottomNavigationRadioButtonStyle"
-            android:drawableTop="@drawable/main_bottom_bar_speed_img"
+            android:drawableTop="@drawable/main_bottom_bar_wangyi_img"
             android:text="网易" />
 
         <RadioButton
-            android:id="@+id/bottom_bar_community"
+            android:id="@+id/bottom_bar_record"
             style="@style/MainActivityBottomNavigationRadioButtonStyle"
-            android:drawableTop="@drawable/main_bottom_bar_community_img"
+            android:drawableTop="@drawable/main_bottom_bar_record_img"
             android:text="打卡" />
 
         <RadioButton
-            android:id="@+id/bottom_bar_me"
+            android:id="@+id/bottom_bar_user"
             style="@style/MainActivityBottomNavigationRadioButtonStyle"
-            android:drawableTop="@drawable/main_bottom_bar_me_img"
+            android:drawableTop="@drawable/main_bottom_bar_user_img"
             android:text="我的" />
 
     </RadioGroup>
