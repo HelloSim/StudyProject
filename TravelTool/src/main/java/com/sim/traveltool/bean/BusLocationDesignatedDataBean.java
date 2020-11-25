@@ -5,7 +5,7 @@ import java.util.List;
 /**
  * @Time: 2020/6/18 23:01
  * @Author: HelloSim
- * @Description :
+ * @Description : 位置请求返回的实体类
  */
 public class BusLocationDesignatedDataBean {
 

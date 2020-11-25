@@ -24,8 +24,9 @@ import butterknife.OnClick;
 import rx.Subscriber;
 
 /**
- * 登陆页面
- * Created by Sim on 2020/4/29
+ * @Auther Sim
+ * @Time 2020/4/29 1:05
+ * @Description 登陆页面
  */
 public class UserLogInActivity extends BaseActivity {
 

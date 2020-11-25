@@ -34,8 +34,9 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
- * 网易新闻的收藏页面
- * Created by Sim on 2020/4/30
+ * @Auther Sim
+ * @Time 2020/4/30 1:05
+ * @Description 网易新闻的收藏页面
  */
 public class NewsCollectActivity extends BaseActivity {
 

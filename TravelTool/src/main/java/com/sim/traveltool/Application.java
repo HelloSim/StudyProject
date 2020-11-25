@@ -6,7 +6,9 @@ import android.content.Context;
 import com.sim.traveltool.internet.APIFactory;
 
 /**
- * Created by Sim on 2020/4/24
+ * @Auther Sim
+ * @Time 2020/4/27 1:05
+ * @Description Application
  */
 public class Application extends android.app.Application {
 

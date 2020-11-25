@@ -18,8 +18,9 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
 /**
- * CameraActivity.class中的工具类
- * @author gexinyu
+ * @Auther Sim
+ * @Time 2019/4/22 1:05
+ * @Description CameraActivity.class中的工具类
  */
 public class ChooseImageTask {
 

@@ -4,6 +4,11 @@ import android.util.Log;
 
 import com.sim.baselibrary.BuildConfig;
 
+/**
+ * @Auther Sim
+ * @Time 2019/4/22 1:05
+ * @Description Log工具类
+ */
 public class LogUtil {
 
     public static void v(String tag, String msg) {

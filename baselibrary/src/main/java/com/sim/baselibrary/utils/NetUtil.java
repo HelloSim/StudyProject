@@ -16,6 +16,11 @@ import java.net.NetworkInterface;
 import java.net.SocketException;
 import java.util.Enumeration;
 
+/**
+ * @Auther Sim
+ * @Time 2019/4/22 1:05
+ * @Description Net工具类
+ */
 public class NetUtil {
 
     private static final String TAG = "Sim";

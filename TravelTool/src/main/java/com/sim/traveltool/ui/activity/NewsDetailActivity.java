@@ -25,8 +25,9 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
- * 显示网易新闻的页面
- * Created by Sim on 2020/4/28
+ * @Auther Sim
+ * @Time 2020/4/28 1:05
+ * @Description 显示网易新闻的页面
  */
 public class NewsDetailActivity extends BaseActivity {
 

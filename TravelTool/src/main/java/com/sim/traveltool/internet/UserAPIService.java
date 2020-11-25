@@ -1,6 +1,5 @@
 package com.sim.traveltool.internet;
 
-
 import com.sim.traveltool.bean.UserInfo;
 import com.sim.traveltool.bean.NewsWangYiBean;
 
@@ -9,8 +8,9 @@ import retrofit2.http.Query;
 import rx.Observable;
 
 /**
- * Created by Grugsum on 2019/4/22.
- * 网易、用户 接口API类
+ * @Auther Sim
+ * @Time 2019/4/22 1:05
+ * @Description 网易、用户 接口API类
  */
 public interface UserAPIService {
 

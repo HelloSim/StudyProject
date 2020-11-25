@@ -45,8 +45,9 @@ import butterknife.OnClick;
 import rx.Subscriber;
 
 /**
- * 显示用户信息的页面
- * Created by Sim on 2020/4/29
+ * @Auther Sim
+ * @Time 2020/4/29 1:05
+ * @Description 显示用户信息的页面
  */
 public class UserUpdateActivity extends BaseActivity {
 

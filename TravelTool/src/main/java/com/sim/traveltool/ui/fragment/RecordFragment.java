@@ -32,8 +32,9 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
- * “打卡”Fragment
- * Created by Sim on 2020/4/27
+ * @Auther Sim
+ * @Time 2020/4/27 1:05
+ * @Description “打卡”Fragment
  */
 public class RecordFragment extends Fragment implements CalendarView.OnMonthChangeListener,
         CalendarView.OnCalendarSelectListener {

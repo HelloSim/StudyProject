@@ -27,8 +27,9 @@ import java.io.InputStream;
 import java.io.OutputStream;
 
 /**
- * Bitmap处理的工具类
- * @author gexinyu
+ * @Auther Sim
+ * @Time 2019/4/22 1:05
+ * @Description Bitmap处理的工具类
  */
 public class BitmapUtil {
 

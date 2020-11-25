@@ -22,8 +22,9 @@ import permissions.dispatcher.PermissionRequest;
 import permissions.dispatcher.RuntimePermissions;
 
 /**
- * BaseActivity
- * Created by Sim on 2020/4/24
+ * @Auther Sim
+ * @Time 2020/4/24 1:05
+ * @Description BaseActivity
  */
 @RuntimePermissions
 public class BaseActivity extends AppCompatActivity {

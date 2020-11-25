@@ -16,7 +16,9 @@ import java.lang.reflect.Method;
 import java.util.List;
 
 /**
- * Created by Sim on 2020/1/18
+ * @Auther Sim
+ * @Time 2019/4/22 1:05
+ * @Description App常用工具类
  */
 public class AppUtil {
 

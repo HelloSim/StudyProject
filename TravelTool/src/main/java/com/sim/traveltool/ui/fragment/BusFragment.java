@@ -29,8 +29,9 @@ import com.sim.traveltool.ui.activity.BusSearchLocationStartActivity;
 import java.util.ArrayList;
 
 /**
- * “首页”Fragment（“实时公交搜索”Fragment）
- * Created by Sim on 2020/4/25
+ * @Auther Sim
+ * @Time 2020/4/25 1:05
+ * @Description “首页”Fragment（“实时公交搜索”Fragment）
  */
 public class BusFragment extends Fragment implements View.OnClickListener {
 

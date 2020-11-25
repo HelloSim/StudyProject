@@ -5,6 +5,11 @@ import android.widget.Toast;
 
 import com.sdsmdg.tastytoast.TastyToast;
 
+/**
+ * @Auther Sim
+ * @Time 2019/4/22 1:05
+ * @Description Toast工具类
+ */
 public class ToastUtil {
     /**
      * Toast实例，用于对本页出现的所有Toast进行处理

@@ -6,10 +6,10 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
 /**
- * Created by Grugsum on 2017.3.29.
- * 联网，SD卡查询
+ * @Auther Sim
+ * @Time 2019/4/22 1:05
+ * @Description 联网，SD卡查询
  */
-
 public class AppUtil {
 
     /**

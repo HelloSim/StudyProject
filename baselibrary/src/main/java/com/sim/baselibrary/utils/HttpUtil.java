@@ -18,9 +18,10 @@ import java.net.URL;
 import java.util.Map;
 
 /**
- * Created by Sim on 2020/1/13
+ * @Auther Sim
+ * @Time 2019/4/22 1:05
+ * @Description 网络请求工具类
  */
-
 public class HttpUtil {
 
     //超时时间

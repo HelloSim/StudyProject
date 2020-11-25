@@ -3,8 +3,9 @@ package com.sim.traveltool.bean;
 import java.io.Serializable;
 
 /**
- * 用户登陆返回的数据bean类
- * Created by Sim on 2020/4/29
+ * @Auther Sim
+ * @Time 2020/4/29 1:05
+ * @Description 用户登陆返回的数据bean类
  */
 public class UserInfo implements Serializable {
 

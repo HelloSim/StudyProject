@@ -17,8 +17,9 @@ import com.sim.traveltool.bean.NewsWangYiBean;
 import java.util.ArrayList;
 
 /**
- * 新闻列表界面的RecyclerView适配器
- * Created by Sim on 2020/4/27
+ * @Auther Sim
+ * @Time 2020/4/27 1:05
+ * @Description 新闻列表界面的RecyclerView适配器
  */
 public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
 

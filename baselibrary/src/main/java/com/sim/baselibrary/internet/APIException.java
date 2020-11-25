@@ -1,10 +1,10 @@
 package com.sim.baselibrary.internet;
 
 /**
- * Created by Grugsum on 2019/4/22.
- * 自定义异常处理
+ * @Auther Sim
+ * @Time 2019/4/22 1:05
+ * @Description 自定义异常处理
  */
-
 public class APIException extends RuntimeException {
 
     public String code;

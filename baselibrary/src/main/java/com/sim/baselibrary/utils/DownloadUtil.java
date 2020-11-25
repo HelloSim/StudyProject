@@ -11,6 +11,11 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
+/**
+ * @Auther Sim
+ * @Time 2019/4/22 1:05
+ * @Description 下载工具类
+ */
 public class DownloadUtil {
     private static DownloadUtil downloadUtil;
     private final OkHttpClient okHttpClient;

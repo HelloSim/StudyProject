@@ -19,7 +19,7 @@ import java.util.List;
 /**
  * @Auther Sim
  * @Time 2020/10/22 14:44
- * @Description
+ * @Description 月打卡列表的适配器
  */
 public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.ViewHolder> {
 

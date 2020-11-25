@@ -16,7 +16,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * CameraActivity.class中的权限工具类
+ * @Auther Sim
+ * @Time 2019/4/22 1:05
+ * @Description CameraActivity.class中的权限工具类
  */
 public class PermissionUtil {
 

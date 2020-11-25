@@ -28,8 +28,9 @@ import rx.Subscriber;
 import static com.sim.traveltool.ui.activity.BaseActivity.retrofitUtil;
 
 /**
- * “网易”Fragment
- * Created by Sim on 2020/4/27
+ * @Auther Sim
+ * @Time 2020/4/27 1:05
+ * @Description “网易”Fragment
  */
 public class WangyiFragment extends Fragment {
 

@@ -27,10 +27,10 @@ import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
 /**
- * Created by Grugsum on 2019/4/22.
- * 初始化OKHttpClient、Retrofit，切换线程
+ * @Auther Sim
+ * @Time 2019/4/22 1:05
+ * @Description 初始化OKHttpClient、Retrofit，切换线程
  */
-
 public class RetrofitUtil {
 
     /**

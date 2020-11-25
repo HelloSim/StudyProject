@@ -1,8 +1,9 @@
 package com.sim.baselibrary.bean;
 
 /**
- * EventBus用到的bean类
- * Created by Sim on 2020/4/28
+ * @Auther Sim
+ * @Time 2020/4/28 1:05
+ * @Description EventBus用到的bean类
  */
 public class EventBusMsg {
 

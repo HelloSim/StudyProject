@@ -16,10 +16,10 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatImageView;
 
 /**
- * Created by Grugsum on 2019/5/1.
- * 圆形ImageView
+ * @Auther Sim
+ * @Time 2019/5/1 1:05
+ * @Description 圆形ImageView
  */
-
 public class CircleImageView extends AppCompatImageView {
 
     private int borderColor;

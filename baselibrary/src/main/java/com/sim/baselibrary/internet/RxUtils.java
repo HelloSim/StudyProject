@@ -14,7 +14,9 @@ import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 
 /**
- * Created by Grugsum on 2019/4/22.
+ * @Auther Sim
+ * @Time 2019/4/22 1:05
+ * @Description 证书相关
  */
 public class RxUtils {
     @SuppressLint("TrulyRandom")

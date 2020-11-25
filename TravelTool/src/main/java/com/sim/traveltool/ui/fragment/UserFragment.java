@@ -25,8 +25,9 @@ import com.google.gson.Gson;
 import static android.app.Activity.RESULT_OK;
 
 /**
- * “我的”Fragment
- * Created by Sim on 2020/4/27
+ * @Auther Sim
+ * @Time 2020/4/27 1:05
+ * @Description “我的”Fragment
  */
 public class UserFragment extends Fragment implements View.OnClickListener {
 
