@@ -16,8 +16,6 @@ import com.sim.traveltool.R;
 import com.sim.traveltool.adapter.BusRouteAdapter;
 import com.sim.traveltool.bean.BusLocationDesignatedDataBean;
 import com.sim.traveltool.bean.BusRouteDataBean;
-import com.sim.traveltool.ui.activity.BaseActivity;
-import com.sim.baselibrary.utils.HttpUtil;
 import com.sim.baselibrary.utils.ToastUtil;
 import com.google.gson.Gson;
 
@@ -26,6 +24,7 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import rx.Subscriber;
 
 /**
  * @Time: 2020/6/10 22:57
@@ -48,6 +47,8 @@ public class BusRouteActivity extends BaseActivity {
     private String origin;//用作请求的起始位置
     private String destination;//用作请求的终点位置
 
+
+    private BusLocationDesignatedDataBean busLocationDesignatedDataBean;
     private ArrayList<BusRouteDataBean.RouteBean.TransitsBean> routeDataList = new ArrayList<>();
     private ArrayList<BusLocationDesignatedDataBean.PoisBean> startLocationList = new ArrayList<>();
     private ArrayList<BusLocationDesignatedDataBean.PoisBean> endLocationList = new ArrayList<>();
@@ -91,48 +92,31 @@ public class BusRouteActivity extends BaseActivity {
      * @param location
      */
     private void getLocation(boolean isStart, String location) {
-        try {
-            String apiurl = null;
-            apiurl = "http://restapi.amap.com/v3/place/text?" +
-                    "s=rsv3" +
-                    "children=" +
-                    "&key=ceb54024fae4694f734b1006e8dc8324" +
-                    "&extensions=all" +
-                    "&page=1" +
-                    "&offset=10" +
-                    "&city=珠海" +
-                    "&language=zh_cn" +
-                    "&callback=" +
-                    "&platform=JS" +
-                    "&logversion=2.0" +
-                    "&sdkversion=1.3" +
-                    "&appname=http://www.zhbuswx.com/busline/BusQuery.html?v=2.01#/" +
-                    "&csid=759CACE2-2197-4E0A-ADCB-1456B16775DA" +
-                    "&keywords=" + location;
-            HttpUtil.doGetAsyn(apiurl, new HttpUtil.CallBack() {
-                @Override
-                public void onRequestComplete(String result) {
-                    BusLocationDesignatedDataBean locationDesignatedDataBean = stringToBean(result, BusLocationDesignatedDataBean.class);
-                    if (isStart) {//起点
-                        startLocationList.addAll(locationDesignatedDataBean.getPois());
-                        origin = String.valueOf(startLocationList.get(0).getLocation());
-                    } else {//终点
-                        endLocationList.addAll(locationDesignatedDataBean.getPois());
-                        destination = String.valueOf(endLocationList.get(0).getLocation());
-                    }
-                    if (origin != null && destination != null) {
-                        getRoute(origin, destination);
-                    }
+        retrofitUtil.getLocation(new Subscriber<BusLocationDesignatedDataBean>() {
+            @Override
+            public void onCompleted() {
+                if (isStart) {//起点
+                    startLocationList.addAll(busLocationDesignatedDataBean.getPois());
+                    origin = String.valueOf(startLocationList.get(0).getLocation());
+                } else {//终点
+                    endLocationList.addAll(busLocationDesignatedDataBean.getPois());
+                    destination = String.valueOf(endLocationList.get(0).getLocation());
                 }
+                if (origin != null && destination != null) {
+                    getRoute(origin, destination);
+                }
+            }
 
-                @Override
-                public void onRequestError(String result) {
-                    Log.i("Sim", "getLocation.onRequestError: " + result);
-                }
-            });
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+            @Override
+            public void onError(Throwable e) {
+                Log.d(TAG, "onError: " + e);
+            }
+
+            @Override
+            public void onNext(BusLocationDesignatedDataBean dataBean) {
+                busLocationDesignatedDataBean = dataBean;
+            }
+        }, location);
     }
 
     /**
@@ -141,51 +125,29 @@ public class BusRouteActivity extends BaseActivity {
      * @param origin
      * @param destination
      */
+    BusRouteDataBean busRouteDataBean;
+
     private void getRoute(String origin, String destination) {
-        try {
-            String apiurl = null;
-            apiurl = "http://restapi.amap.com/v3/direction/transit/integrated?" +
-                    "origin=" + origin +
-                    "&destination=" + destination +
-                    "&city=珠海" +
-                    "&strategy=0" +
-                    "&nightflag=0" +
-                    "&extensions=" +
-                    "&s=rsv3" +
-                    "&cityd=珠海" +
-                    "&key=ceb54024fae4694f734b1006e8dc8324" +
-                    "&callback=" +
-                    "&platform=JS" +
-                    "&logversion=2.0" +
-                    "&sdkversion=1.3" +
-                    "&appname=http://www.zhbuswx.com/busline/BusQuery.html?v=2.01#/" +
-                    "&csid=759CACE2-2197-4E0A-ADCB-1456B16775DA";
-            HttpUtil.doGetAsyn(apiurl, new HttpUtil.CallBack() {
-                @Override
-                public void onRequestComplete(String result) {
-                    BusRouteDataBean routeDataBean = stringToBean(result, BusRouteDataBean.class);
-                    routeDataList.addAll(routeDataBean.getRoute().getTransits());
-
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            if (routeDataList == null || routeDataList.size() == 0) {
-                                ToastUtil.toast(context, "未查询到换乘信息！");
-                                finish();
-                            }
-                            routeAdapter.notifyDataSetChanged();
-                        }
-                    });
+        retrofitUtil.getRoute(new Subscriber<BusRouteDataBean>() {
+            @Override
+            public void onCompleted() {
+                if (routeDataList == null || routeDataList.size() == 0) {
+                    ToastUtil.toast(context, "未查询到换乘信息！");
+                    finish();
                 }
+                routeAdapter.notifyDataSetChanged();
+            }
 
-                @Override
-                public void onRequestError(String result) {
-                    Log.i("Sim", "getLocation.onRequestError: " + result);
-                }
-            });
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+            @Override
+            public void onError(Throwable e) {
+                Log.d(TAG, "onError: " + e);
+            }
+
+            @Override
+            public void onNext(BusRouteDataBean dataBean) {
+                routeDataList.addAll(dataBean.getRoute().getTransits());
+            }
+        }, origin, destination);
     }
 
     /**

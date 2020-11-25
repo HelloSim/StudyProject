@@ -2,9 +2,11 @@ package com.sim.traveltool.internet;
 
 
 import com.sim.traveltool.bean.BusLocationDataBean;
+import com.sim.traveltool.bean.BusLocationDesignatedDataBean;
 import com.sim.traveltool.bean.BusRealTimeByLineDataBean;
 import com.sim.traveltool.bean.BusRealTimeDataBean;
 import com.sim.traveltool.bean.BusRealTimeLineDataBean;
+import com.sim.traveltool.bean.BusRouteDataBean;
 import com.sim.traveltool.bean.NewsWangYiBean;
 import com.sim.traveltool.bean.UserInfo;
 
@@ -32,8 +34,8 @@ public class APIFactory extends RetrofitUtil {
     /**
      * 搜索位置的网络请求
      */
-    public void getStartLocation(Subscriber<BusLocationDataBean> subscriber, String keywords) {
-        Observable observable = getRouteAPIService().getStartLocation("rsv3", "ceb54024fae4694f734b1006e8dc8324", "0756",
+    public void getStartOrEndLocation(Subscriber<BusLocationDataBean> subscriber, String keywords) {
+        Observable observable = getRouteAPIService().getStartOrEndLocation("rsv3", "ceb54024fae4694f734b1006e8dc8324", "0756",
                 "false", "", "JS", "2.0", "1.3", "http://www.zhbuswx.com/busline/BusQuery.html?v=2.01#/",
                 "759CACE2-2197-4E0A-ADCB-1456B16775DA", keywords);
         toSubscribe(observable, subscriber);
@@ -42,7 +44,7 @@ public class APIFactory extends RetrofitUtil {
     /**
      * 起始位置和终点位置的位置信息请求
      */
-    public void getLocation(Subscriber<BusLocationDataBean> subscriber, String keywords) {
+    public void getLocation(Subscriber<BusLocationDesignatedDataBean> subscriber, String keywords) {
         Observable observable = getRouteAPIService().getLocation("rsv3", "", "ceb54024fae4694f734b1006e8dc8324",
                 "all", "1", "10", "珠海", "zh_cn", "", "JS",
                 "2.0", "1.3", "http://www.zhbuswx.com/busline/BusQuery.html?v=2.01#/",
@@ -53,7 +55,7 @@ public class APIFactory extends RetrofitUtil {
     /**
      * 出行方案的网络请求
      */
-    public void getRoute(Subscriber<BusLocationDataBean> subscriber, String origin, String destination) {
+    public void getRoute(Subscriber<BusRouteDataBean> subscriber, String origin, String destination) {
         Observable observable = getRouteAPIService().getRoute(origin, destination, "珠海", "0", "0",
                 "", "rsv3", "珠海", "ceb54024fae4694f734b1006e8dc8324", "", "JS",
                 "2.0", "1.3", "http://www.zhbuswx.com/busline/BusQuery.html?v=2.01#/",

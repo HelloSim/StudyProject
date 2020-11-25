@@ -31,8 +31,8 @@ public interface RouteAPIService {
      * @param keywords
      * @return
      */
-    @GET("/v3/direction/transit/integrated")
-    Observable<BusLocationDataBean> getStartLocation(@Query("s") String s, @Query("key") String key,
+    @GET("/v3/assistant/inputtips")
+    Observable<BusLocationDataBean> getStartOrEndLocation(@Query("s") String s, @Query("key") String key,
                                                      @Query("city") String city, @Query("citylimit") String citylimit,
                                                      @Query("callback") String callback, @Query("platform") String platform,
                                                      @Query("logversion") String logversion, @Query("sdkversion") String sdkversion,

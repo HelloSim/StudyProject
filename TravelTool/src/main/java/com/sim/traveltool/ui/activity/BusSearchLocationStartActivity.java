@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -16,15 +17,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.sim.traveltool.R;
 import com.sim.traveltool.adapter.BusStationNameAdapter;
 import com.sim.traveltool.bean.BusLocationDataBean;
-import com.sim.traveltool.ui.activity.BaseActivity;
-import com.sim.baselibrary.utils.HttpUtil;
-import com.google.gson.Gson;
 
 import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import rx.Subscriber;
 
 /**
  * @Time: 2020/6/10 11:54
@@ -101,54 +100,23 @@ public class BusSearchLocationStartActivity extends BaseActivity {
      */
     public void getStartLocation(String keywords) {
         startLocationDataBeanList.clear();
-        try {
-            String apiurl = null;
-            apiurl = "http://restapi.amap.com/v3/assistant/inputtips?" +
-                    "s=rsv3" +
-                    "&key=ceb54024fae4694f734b1006e8dc8324" +
-                    "&city=0756" +
-                    "&citylimit=false" +
-                    "&callback=" +
-                    "&platform=JS" +
-                    "&logversion=2.0" +
-                    "&sdkversion=1.3" +
-                    "&appname=http://www.zhbuswx.com/busline/BusQuery.html?v=2.01#/" +
-                    "&csid=759CACE2-2197-4E0A-ADCB-1456B16775DA" +
-                    "&keywords=" + keywords;
-            HttpUtil.doGetAsyn(apiurl, new HttpUtil.CallBack() {
-                @Override
-                public void onRequestComplete(String result) {
-                    BusLocationDataBean locationDataBean = stringToBean(result, BusLocationDataBean.class);
-                    startLocationDataBeanList.addAll(locationDataBean.getTips());
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            stationNameAdapter.notifyDataSetChanged();
-                            rlDatal.setVisibility(View.VISIBLE);
-                        }
-                    });
-                }
+        retrofitUtil.getStartOrEndLocation(new Subscriber<BusLocationDataBean>() {
+            @Override
+            public void onCompleted() {
+                stationNameAdapter.notifyDataSetChanged();
+                rlDatal.setVisibility(View.VISIBLE);
+            }
 
-                @Override
-                public void onRequestError(String result) {
+            @Override
+            public void onError(Throwable e) {
+                Log.d("Sim", "onError: " + e);
+            }
 
-                }
-            });
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    /**
-     * 转成bean
-     */
-    public static <T> T stringToBean(String gsonString, Class<T> cls) {
-        Gson gson = new Gson();
-        T t = null;
-        if (gson != null) {
-            t = gson.fromJson(gsonString, cls);
-        }
-        return t;
+            @Override
+            public void onNext(BusLocationDataBean busLocationDataBean) {
+                startLocationDataBeanList.addAll(busLocationDataBean.getTips());
+            }
+        }, keywords);
     }
 
     @OnClick({R.id.back})
