@@ -1,4 +1,4 @@
-package com.sim.traveltool.ui.activity.news;
+package com.sim.traveltool.ui.activity;
 
 import android.app.Activity;
 import android.content.Context;
@@ -18,11 +18,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.sim.traveltool.R;
-import com.sim.traveltool.adapter.news.NewsAdapter;
-import com.sim.traveltool.bean.news.WangYiNewsBean;
-import com.sim.traveltool.ui.activity.BaseActivity;
-import com.sim.traveltool.utils.SPUtil;
-import com.sim.traveltool.utils.ScreenUtil;
+import com.sim.traveltool.adapter.NewsAdapter;
+import com.sim.traveltool.bean.NewsWangYiBean;
+import com.sim.baselibrary.utils.SPUtil;
+import com.sim.baselibrary.utils.ScreenUtil;
 import com.google.gson.Gson;
 
 import java.io.Serializable;
@@ -50,8 +49,8 @@ public class NewsCollectActivity extends BaseActivity {
     RecyclerView newsRecyclerView;
 
     private String fileName = "collect";
-    private Map<String, WangYiNewsBean.ResultBean> newsMap;
-    private ArrayList<WangYiNewsBean.ResultBean> newsList = new ArrayList<>();
+    private Map<String, NewsWangYiBean.ResultBean> newsMap;
+    private ArrayList<NewsWangYiBean.ResultBean> newsList = new ArrayList<>();
     private NewsAdapter newsAdapter;
 
     private PopupWindow deletePopupWindow;//弹窗
@@ -75,11 +74,11 @@ public class NewsCollectActivity extends BaseActivity {
 
     private void initDate() {
         Gson gson = new Gson();
-        newsMap = (Map<String, WangYiNewsBean.ResultBean>) SPUtil.getAll(context, fileName);
+        newsMap = (Map<String, NewsWangYiBean.ResultBean>) SPUtil.getAll(context, fileName);
         Iterator it = newsMap.keySet().iterator();
         while (it.hasNext()) {
             String key = it.next().toString();
-            newsList.add(gson.fromJson(String.valueOf(newsMap.get(key)), WangYiNewsBean.ResultBean.class));
+            newsList.add(gson.fromJson(String.valueOf(newsMap.get(key)), NewsWangYiBean.ResultBean.class));
         }
     }
 
