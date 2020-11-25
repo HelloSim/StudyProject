@@ -1,6 +1,7 @@
 package com.sim.traveltool.internet;
 
 
+import com.sim.traveltool.bean.BusLocationDataBean;
 import com.sim.traveltool.bean.BusRealTimeByLineDataBean;
 import com.sim.traveltool.bean.BusRealTimeDataBean;
 import com.sim.traveltool.bean.BusRealTimeLineDataBean;
@@ -29,12 +30,40 @@ public class APIFactory extends RetrofitUtil {
     }
 
     /**
+     * 搜索位置的网络请求
+     */
+    public void getStartLocation(Subscriber<BusLocationDataBean> subscriber, String keywords) {
+        Observable observable = getRouteAPIService().getStartLocation("rsv3", "ceb54024fae4694f734b1006e8dc8324", "0756",
+                "false", "", "JS", "2.0", "1.3", "http://www.zhbuswx.com/busline/BusQuery.html?v=2.01#/",
+                "759CACE2-2197-4E0A-ADCB-1456B16775DA", keywords);
+        toSubscribe(observable, subscriber);
+    }
+
+    /**
+     * 起始位置和终点位置的位置信息请求
+     */
+    public void getLocation(Subscriber<BusLocationDataBean> subscriber, String keywords) {
+        Observable observable = getRouteAPIService().getLocation("rsv3", "", "ceb54024fae4694f734b1006e8dc8324",
+                "all", "1", "10", "珠海", "zh_cn", "", "JS",
+                "2.0", "1.3", "http://www.zhbuswx.com/busline/BusQuery.html?v=2.01#/",
+                "759CACE2-2197-4E0A-ADCB-1456B16775DA", keywords);
+        toSubscribe(observable, subscriber);
+    }
+
+    /**
+     * 出行方案的网络请求
+     */
+    public void getRoute(Subscriber<BusLocationDataBean> subscriber, String origin, String destination) {
+        Observable observable = getRouteAPIService().getRoute(origin, destination, "珠海", "0", "0",
+                "", "rsv3", "珠海", "ceb54024fae4694f734b1006e8dc8324", "", "JS",
+                "2.0", "1.3", "http://www.zhbuswx.com/busline/BusQuery.html?v=2.01#/",
+                "759CACE2-2197-4E0A-ADCB-1456B16775DA");
+        toSubscribe(observable, subscriber);
+    }
+
+
+    /**
      * 实时公交路线查询
-     *
-     * @param subscriber
-     * @param handlerName
-     * @param key
-     * @param time
      */
     public void getLineListByLineName(Subscriber<BusRealTimeLineDataBean> subscriber, String handlerName, String key, String time) {
         Observable observable = getBusAPIService().getLineListByLineName(handlerName, key, time);
@@ -43,11 +72,6 @@ public class APIFactory extends RetrofitUtil {
 
     /**
      * 公交路线查询
-     *
-     * @param subscriber
-     * @param handlerName
-     * @param lineId
-     * @param time
      */
     public void getStationList(Subscriber<BusRealTimeByLineDataBean> subscriber, String handlerName, String lineId, String time) {
         Observable observable = getBusAPIService().getStationList(handlerName, lineId, time);
@@ -56,12 +80,6 @@ public class APIFactory extends RetrofitUtil {
 
     /**
      * 实时公交查询
-     *
-     * @param subscriber
-     * @param handlerName
-     * @param lineName
-     * @param fromStation
-     * @param time
      */
     public void getBusListOnRoad(Subscriber<BusRealTimeDataBean> subscriber, String handlerName, String lineName, String fromStation, String time) {
         Observable observable = getBusAPIService().getBusListOnRoad(handlerName, lineName, fromStation, time);
@@ -71,10 +89,6 @@ public class APIFactory extends RetrofitUtil {
 
     /**
      * NewsData的网络请求
-     *
-     * @param subscriber
-     * @param page
-     * @param count
      */
     public void getWangYiNew(Subscriber<NewsWangYiBean> subscriber, String page, String count) {
         Observable observable = getUserApiService().getWangYiNews(page, count);
@@ -84,11 +98,6 @@ public class APIFactory extends RetrofitUtil {
 
     /**
      * 用户登录的网络请求
-     *
-     * @param subscriber
-     * @param apikey
-     * @param name
-     * @param passwd
      */
     public void logIn(Subscriber<UserInfo> subscriber, String apikey, String name, String passwd) {
         Observable observable = getUserApiService().logIn(apikey, name, passwd);
@@ -97,18 +106,6 @@ public class APIFactory extends RetrofitUtil {
 
     /**
      * 用户注册的网络请求
-     *
-     * @param subscriber
-     * @param apikey
-     * @param name
-     * @param passwd
-     * @param headerImg
-     * @param nikeName
-     * @param autograph
-     * @param phone
-     * @param email
-     * @param remarks
-     * @param vipGrade
      */
     public void registerUser(Subscriber<UserInfo> subscriber, String apikey, String name, String passwd,
                              String headerImg, String nikeName, String autograph,
@@ -119,18 +116,6 @@ public class APIFactory extends RetrofitUtil {
 
     /**
      * 用户更新的网络请求
-     *
-     * @param subscriber
-     * @param apikey
-     * @param name
-     * @param passwd
-     * @param headerImg
-     * @param nikeName
-     * @param autograph
-     * @param phone
-     * @param email
-     * @param remarks
-     * @param vipGrade
      */
     public void updateUserInfo(Subscriber<UserInfo> subscriber, String apikey, String name, String passwd,
                                String headerImg, String nikeName, String autograph,

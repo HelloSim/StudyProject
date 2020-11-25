@@ -38,12 +38,15 @@ public class RetrofitUtil {
      */
     private static final String USER_BASE_URL = "https://api.apiopen.top";
     private static final String BUS_BASE_URL = "http://www.zhbuswx.com";
+    private static final String ROUTE_BASE_URL = "http://restapi.amap.com";
 
     private UserAPIService userAPIService;
     private BusAPIService busAPIService;
+    private RouteAPIService routeAPIService;
 
     private static Retrofit userRetrofit = null;
     private static Retrofit busRetrofit = null;
+    private static Retrofit routeRetrofit = null;
 
     private static OkHttpClient okHttpClient = null;
 
@@ -68,10 +71,17 @@ public class RetrofitUtil {
     }
 
     public BusAPIService getBusAPIService() {
-        if (busAPIService == null && busAPIService != null) {
+        if (busAPIService == null && busRetrofit != null) {
             busAPIService = busRetrofit.create(BusAPIService.class);
         }
         return busAPIService;
+    }
+
+    public RouteAPIService getRouteAPIService() {
+        if (routeAPIService == null && routeRetrofit != null) {
+            routeAPIService = routeRetrofit.create(RouteAPIService.class);
+        }
+        return routeAPIService;
     }
 
     public void init(Context context) {
@@ -80,6 +90,7 @@ public class RetrofitUtil {
         initRetrofit();
         getUserApiService();
         getBusAPIService();
+        getRouteAPIService();
     }
 
     /**
@@ -152,7 +163,12 @@ public class RetrofitUtil {
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .build();
-
+        routeRetrofit = new Retrofit.Builder()
+                .baseUrl(ROUTE_BASE_URL)
+                .client(okHttpClient)
+                .addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                .build();
     }
 
     /**

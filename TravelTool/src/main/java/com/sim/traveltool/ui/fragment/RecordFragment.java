@@ -20,7 +20,7 @@ import com.haibin.calendarview.CalendarView;
 import com.sim.baselibrary.utils.HttpUtil;
 import com.sim.baselibrary.utils.TimeUtil;
 import com.sim.baselibrary.utils.ToastUtil;
-import com.sim.sqlitelibrary.DaKaRecordDaoUtil;
+import com.sim.traveltool.db.DaKaRecordDaoUtil;
 import com.sim.sqlitelibrary.bean.DaKaRecord;
 import com.sim.traveltool.R;
 import com.sim.traveltool.ui.activity.RecordAllActivity;

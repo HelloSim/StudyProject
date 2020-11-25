@@ -10,12 +10,17 @@ import rx.Observable;
 
 /**
  * Created by Grugsum on 2019/4/22.
- * 接口API类
+ * Bus 接口API类
  */
 public interface BusAPIService {
 
     /**
      * 实时公交路线查询
+     *
+     * @param handlerName
+     * @param key
+     * @param time
+     * @return
      */
     @GET("/Handlers/BusQuery.ashx")
     Observable<BusRealTimeLineDataBean> getLineListByLineName(@Query("handlerName") String handlerName, @Query("key") String key,
@@ -23,6 +28,11 @@ public interface BusAPIService {
 
     /**
      * 公交路线查询
+     *
+     * @param handlerName
+     * @param lineId
+     * @param time
+     * @return
      */
     @GET("/Handlers/BusQuery.ashx")
     Observable<BusRealTimeByLineDataBean> getStationList(@Query("handlerName") String handlerName, @Query("lineId") String lineId,
@@ -30,6 +40,12 @@ public interface BusAPIService {
 
     /**
      * 实时公交查询
+     *
+     * @param handlerName
+     * @param lineName
+     * @param fromStation
+     * @param time
+     * @return
      */
     @GET("/Handlers/BusQuery.ashx")
     Observable<BusRealTimeDataBean> getBusListOnRoad(@Query("handlerName") String handlerName, @Query("lineName") String lineName,

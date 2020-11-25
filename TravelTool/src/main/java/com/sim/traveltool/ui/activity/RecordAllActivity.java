@@ -7,11 +7,10 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.sim.sqlitelibrary.DaKaRecordDaoUtil;
+import com.sim.traveltool.db.DaKaRecordDaoUtil;
 import com.sim.sqlitelibrary.bean.DaKaRecord;
 import com.sim.traveltool.R;
 import com.sim.traveltool.adapter.RecordAdapter;
-import com.sim.traveltool.ui.activity.BaseActivity;
 
 import java.util.List;
 

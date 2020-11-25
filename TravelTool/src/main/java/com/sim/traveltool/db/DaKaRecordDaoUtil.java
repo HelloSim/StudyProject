@@ -1,4 +1,4 @@
-package com.sim.sqlitelibrary;
+package com.sim.traveltool.db;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
@@ -31,7 +31,7 @@ public class DaKaRecordDaoUtil {
         return instance;
     }
 
-    public DaKaRecordDao daKaRecordDao;
+    private DaKaRecordDao daKaRecordDao;
 
     public void init(Context context) {
         DaoMaster.DevOpenHelper devOpenHelper = new DaoMaster.DevOpenHelper(context, "DaKaRecord.db");
