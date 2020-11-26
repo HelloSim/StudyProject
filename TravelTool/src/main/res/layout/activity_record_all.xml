@@ -19,7 +19,13 @@
 
     </LinearLayout>
 
-    <RelativeLayout
+    <com.bin.david.form.core.SmartTable
+        android:id="@+id/table_data"
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"/>
+
+    <!--<RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -41,6 +47,6 @@
         android:id="@+id/rv_data"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/transparent" />
+        android:background="@color/transparent" />-->
 
 </LinearLayout>
