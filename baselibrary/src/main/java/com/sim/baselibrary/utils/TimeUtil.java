@@ -5,8 +5,11 @@ import android.annotation.SuppressLint;
 import java.io.File;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.List;
 import java.util.Locale;
 
 /**
@@ -24,26 +27,56 @@ public class TimeUtil {
         return calendar;
     }
 
+    /**
+     * 获取当前年份
+     *
+     * @return
+     */
     public static int getYear() {
         return calendar.get(Calendar.YEAR);
     }
 
+    /**
+     * 获取当前月份
+     *
+     * @return
+     */
     public static int getMonth() {
         return calendar.get(Calendar.MONTH) + 1;
     }
 
+    /**
+     * 获取当天日期
+     *
+     * @return
+     */
     public static int getDay() {
         return calendar.get(Calendar.DAY_OF_MONTH);
     }
 
+    /**
+     * 获取当前小时
+     *
+     * @return
+     */
     public static int getHour() {
         return calendar.get(Calendar.HOUR_OF_DAY);
     }
 
+    /**
+     * 获取当前分钟
+     *
+     * @return
+     */
     public static int getMinute() {
         return calendar.get(Calendar.MINUTE);
     }
 
+    /**
+     * 获取当前秒
+     *
+     * @return
+     */
     public static int getSecond() {
         return calendar.get(Calendar.SECOND);
     }
@@ -82,6 +115,39 @@ public class TimeUtil {
             default:
                 return "";
         }
+    }
+
+    /**
+     * 获取指定年月的所有周六日
+     *
+     * @param year  2020
+     * @param month 11
+     */
+    public static void getWeekDate(int year, int month) {
+        month--;
+        Calendar calendar = new GregorianCalendar(year, month, 1);
+        int i = 1;
+        while (calendar.get(Calendar.MONTH) < month + 1) {
+            calendar.set(Calendar.WEEK_OF_YEAR, i++);
+            calendar.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY);
+            if (calendar.get(Calendar.MONTH) == month) {
+                System.out.println(calendar.getTime());
+            }
+            calendar.set(Calendar.DAY_OF_WEEK, Calendar.SATURDAY);
+            if (calendar.get(Calendar.MONTH) == month) {
+                System.out.println(calendar.getTime());
+            }
+        }
+    }
+
+    /**
+     * 获取当月天数
+     *
+     * @return
+     */
+    public static int getDayListOfMonth() {
+        Calendar calendar = Calendar.getInstance(Locale.CHINA);
+        return calendar.getActualMaximum(Calendar.DATE);
     }
 
     public static String timeFormat(long timeMillis, String pattern) {
@@ -126,8 +192,9 @@ public class TimeUtil {
         SimpleDateFormat sDateFormat = new SimpleDateFormat("HH-mm-ss");
         return sDateFormat.format(new Date());
     }
-    public static long getCurTimeLong(){//获取时间戳
-        long time= System.currentTimeMillis();
+
+    public static long getCurTimeLong() {//获取时间戳
+        long time = System.currentTimeMillis();
         return time;
     }
 
