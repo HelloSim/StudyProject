@@ -22,8 +22,20 @@
 
     <com.bin.david.form.core.SmartTable
         android:id="@+id/table_data"
-        android:layout_gravity="center"
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:visibility="visible"/>
+
+    <TextView
+        android:id="@+id/no_record"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:text="本月无打卡记录"
+        android:textSize="24sp"
+        android:visibility="gone"/>
+
 
 </LinearLayout>
