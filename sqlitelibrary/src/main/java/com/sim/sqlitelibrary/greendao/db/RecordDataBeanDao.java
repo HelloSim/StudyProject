@@ -29,12 +29,11 @@ public class RecordDataBeanDao extends AbstractDao<RecordDataBean, Long> {
         public final static Property Month = new Property(2, String.class, "month", false, "MONTH");
         public final static Property Day = new Property(3, String.class, "day", false, "DAY");
         public final static Property Week = new Property(4, String.class, "week", false, "WEEK");
-        public final static Property IsWorkingDay = new Property(5, String.class, "isWorkingDay", false, "IS_WORKING_DAY");
-        public final static Property StartTime = new Property(6, String.class, "startTime", false, "START_TIME");
-        public final static Property EndTime = new Property(7, String.class, "endTime", false, "END_TIME");
-        public final static Property IsLate = new Property(8, String.class, "isLate", false, "IS_LATE");
-        public final static Property IsLeaveEarly = new Property(9, String.class, "isLeaveEarly", false, "IS_LEAVE_EARLY");
-        public final static Property Other = new Property(10, String.class, "other", false, "OTHER");
+        public final static Property StartTime = new Property(5, String.class, "startTime", false, "START_TIME");
+        public final static Property EndTime = new Property(6, String.class, "endTime", false, "END_TIME");
+        public final static Property IsLate = new Property(7, String.class, "isLate", false, "IS_LATE");
+        public final static Property IsLeaveEarly = new Property(8, String.class, "isLeaveEarly", false, "IS_LEAVE_EARLY");
+        public final static Property Other = new Property(9, String.class, "other", false, "OTHER");
     }
 
 
@@ -55,12 +54,11 @@ public class RecordDataBeanDao extends AbstractDao<RecordDataBean, Long> {
                 "\"MONTH\" TEXT," + // 2: month
                 "\"DAY\" TEXT," + // 3: day
                 "\"WEEK\" TEXT," + // 4: week
-                "\"IS_WORKING_DAY\" TEXT," + // 5: isWorkingDay
-                "\"START_TIME\" TEXT," + // 6: startTime
-                "\"END_TIME\" TEXT," + // 7: endTime
-                "\"IS_LATE\" TEXT," + // 8: isLate
-                "\"IS_LEAVE_EARLY\" TEXT," + // 9: isLeaveEarly
-                "\"OTHER\" TEXT);"); // 10: other
+                "\"START_TIME\" TEXT," + // 5: startTime
+                "\"END_TIME\" TEXT," + // 6: endTime
+                "\"IS_LATE\" TEXT," + // 7: isLate
+                "\"IS_LEAVE_EARLY\" TEXT," + // 8: isLeaveEarly
+                "\"OTHER\" TEXT);"); // 9: other
     }
 
     /** Drops the underlying database table. */
@@ -98,34 +96,29 @@ public class RecordDataBeanDao extends AbstractDao<RecordDataBean, Long> {
             stmt.bindString(5, week);
         }
  
-        String isWorkingDay = entity.getIsWorkingDay();
-        if (isWorkingDay != null) {
-            stmt.bindString(6, isWorkingDay);
-        }
- 
         String startTime = entity.getStartTime();
         if (startTime != null) {
-            stmt.bindString(7, startTime);
+            stmt.bindString(6, startTime);
         }
  
         String endTime = entity.getEndTime();
         if (endTime != null) {
-            stmt.bindString(8, endTime);
+            stmt.bindString(7, endTime);
         }
  
         String isLate = entity.getIsLate();
         if (isLate != null) {
-            stmt.bindString(9, isLate);
+            stmt.bindString(8, isLate);
         }
  
         String isLeaveEarly = entity.getIsLeaveEarly();
         if (isLeaveEarly != null) {
-            stmt.bindString(10, isLeaveEarly);
+            stmt.bindString(9, isLeaveEarly);
         }
  
         String other = entity.getOther();
         if (other != null) {
-            stmt.bindString(11, other);
+            stmt.bindString(10, other);
         }
     }
 
@@ -158,34 +151,29 @@ public class RecordDataBeanDao extends AbstractDao<RecordDataBean, Long> {
             stmt.bindString(5, week);
         }
  
-        String isWorkingDay = entity.getIsWorkingDay();
-        if (isWorkingDay != null) {
-            stmt.bindString(6, isWorkingDay);
-        }
- 
         String startTime = entity.getStartTime();
         if (startTime != null) {
-            stmt.bindString(7, startTime);
+            stmt.bindString(6, startTime);
         }
  
         String endTime = entity.getEndTime();
         if (endTime != null) {
-            stmt.bindString(8, endTime);
+            stmt.bindString(7, endTime);
         }
  
         String isLate = entity.getIsLate();
         if (isLate != null) {
-            stmt.bindString(9, isLate);
+            stmt.bindString(8, isLate);
         }
  
         String isLeaveEarly = entity.getIsLeaveEarly();
         if (isLeaveEarly != null) {
-            stmt.bindString(10, isLeaveEarly);
+            stmt.bindString(9, isLeaveEarly);
         }
  
         String other = entity.getOther();
         if (other != null) {
-            stmt.bindString(11, other);
+            stmt.bindString(10, other);
         }
     }
 
@@ -202,12 +190,11 @@ public class RecordDataBeanDao extends AbstractDao<RecordDataBean, Long> {
             cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // month
             cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3), // day
             cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4), // week
-            cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5), // isWorkingDay
-            cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6), // startTime
-            cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7), // endTime
-            cursor.isNull(offset + 8) ? null : cursor.getString(offset + 8), // isLate
-            cursor.isNull(offset + 9) ? null : cursor.getString(offset + 9), // isLeaveEarly
-            cursor.isNull(offset + 10) ? null : cursor.getString(offset + 10) // other
+            cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5), // startTime
+            cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6), // endTime
+            cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7), // isLate
+            cursor.isNull(offset + 8) ? null : cursor.getString(offset + 8), // isLeaveEarly
+            cursor.isNull(offset + 9) ? null : cursor.getString(offset + 9) // other
         );
         return entity;
     }
@@ -219,12 +206,11 @@ public class RecordDataBeanDao extends AbstractDao<RecordDataBean, Long> {
         entity.setMonth(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
         entity.setDay(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
         entity.setWeek(cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4));
-        entity.setIsWorkingDay(cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5));
-        entity.setStartTime(cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6));
-        entity.setEndTime(cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7));
-        entity.setIsLate(cursor.isNull(offset + 8) ? null : cursor.getString(offset + 8));
-        entity.setIsLeaveEarly(cursor.isNull(offset + 9) ? null : cursor.getString(offset + 9));
-        entity.setOther(cursor.isNull(offset + 10) ? null : cursor.getString(offset + 10));
+        entity.setStartTime(cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5));
+        entity.setEndTime(cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6));
+        entity.setIsLate(cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7));
+        entity.setIsLeaveEarly(cursor.isNull(offset + 8) ? null : cursor.getString(offset + 8));
+        entity.setOther(cursor.isNull(offset + 9) ? null : cursor.getString(offset + 9));
      }
     
     @Override

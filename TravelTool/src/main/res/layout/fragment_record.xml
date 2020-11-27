@@ -16,14 +16,6 @@
             style="@style/TitleStyle"
             android:text="@string/daka" />
 
-    </LinearLayout>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:orientation="horizontal"
-        android:padding="10dp">
-
         <Button
             android:id="@+id/all_record"
             android:layout_width="wrap_content"
@@ -34,7 +26,15 @@
             android:textSize="18sp"
             android:text="月记录"/>
 
-        <Button
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:orientation="horizontal"
+        android:padding="10dp">
+
+        <!--<Button
             android:id="@+id/btn_now"
             android:layout_width="50dp"
             android:layout_height="match_parent"
@@ -44,7 +44,7 @@
             android:background="@drawable/button_bg_blue_retangle"
             android:textColor="@color/white"
             android:textSize="18sp"
-            android:text="今"/>
+            android:text="今"/>-->
 
         <TextView
             android:id="@+id/tv_now_year_and_month"
@@ -116,13 +116,24 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
-        android:gravity="center"
         android:orientation="vertical">
+
+        <Button
+            android:id="@+id/btn_updata_other"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/button_bg_blue_retangle"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:text="添加备忘"/>
 
         <Button
             android:id="@+id/btn_daka"
             android:layout_width="120dp"
             android:layout_height="120dp"
+            android:layout_centerInParent="true"
             android:background="@drawable/draw_circle_blue"
             android:textColor="@color/white"
             android:textSize="22sp"

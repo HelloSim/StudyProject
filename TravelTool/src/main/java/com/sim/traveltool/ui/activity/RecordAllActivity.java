@@ -14,13 +14,11 @@ import com.bin.david.form.data.column.Column;
 import com.bin.david.form.data.format.bg.ICellBackgroundFormat;
 import com.bin.david.form.data.format.tip.MultiLineBubbleTip;
 import com.bin.david.form.data.style.FontStyle;
-import com.bin.david.form.data.table.TableData;
 import com.bin.david.form.utils.DensityUtils;
-import com.sim.baselibrary.utils.ToastUtil;
-import com.sim.traveltool.bean.UserInfo;
-import com.sim.traveltool.db.DaKaRecordDaoUtil;
-import com.sim.sqlitelibrary.bean.DaKaRecord;
+import com.haibin.calendarview.Calendar;
+import com.sim.sqlitelibrary.bean.RecordDataBean;
 import com.sim.traveltool.R;
+import com.sim.traveltool.db.RecoedDataDaoUtil;
 
 import java.util.List;
 
@@ -34,18 +32,11 @@ import butterknife.ButterKnife;
  */
 public class RecordAllActivity extends BaseActivity {
 
-    //    @BindView(R.id.tv_now_year_and_month)
-//    TextView tv_now_year_and_month;
-//    @BindView(R.id.rv_data)
-//    RecyclerView rv_data;
     @BindView(R.id.table_data)
-    SmartTable<DaKaRecord> table;
+    SmartTable<RecordDataBean> table;
 
-    private String yearAndMonth;
-    private String year;
-    private String month;
-    private List<DaKaRecord> daKaRecordList;
-//    private RecordAdapter recordAdapter;
+    private Calendar calendar;
+    private List<RecordDataBean> recordDataBeanList;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -58,13 +49,12 @@ public class RecordAllActivity extends BaseActivity {
     }
 
     private void initData() {
-        yearAndMonth = getIntent().getStringExtra("yearAndMonth");
-        year = yearAndMonth.split("-")[0];
-        month = yearAndMonth.split("-")[1];
-        daKaRecordList = DaKaRecordDaoUtil.getInstance().queryRecordForMonth(this, year, month);
-//        recordAdapter = new RecordAdapter(this, daKaRecordList);
+        calendar = (Calendar) getIntent().getSerializableExtra("calendar");
+        recordDataBeanList = RecoedDataDaoUtil.getInstance().queryRecordForMonth(this, calendar);
+        table.setData(recordDataBeanList);
+    }
 
-        table.setData(daKaRecordList);
+    private void initView() {
 //        table.setZoom(true, 2, 1);//设置放大最大和最小值
         table.getConfig().setShowXSequence(false);//是否显示顶部序号列
         table.getConfig().setShowYSequence(false);//是否显示左侧序号列
@@ -94,8 +84,9 @@ public class RecordAllActivity extends BaseActivity {
 
             @Override
             public String[] format(Column column, int position) {
-                DaKaRecord daKaRecord = daKaRecordList.get(position);
-                String[] strings = {column.getColumnName() + ":", String.valueOf(column.getDatas().get(position))};
+                String[] strings = {RecoedDataDaoUtil.getInstance().getYearMonth(RecordAllActivity.this, calendar)+"-"+
+                        table.getTableData().getColumns().get(0).getDatas().get(position) + ":",
+                        String.valueOf(column.getDatas().get(position))};
                 return strings;
             }
         };
@@ -124,13 +115,6 @@ public class RecordAllActivity extends BaseActivity {
 //                }
 //            }
 //        });//点击事件
-    }
-
-    private void initView() {
-//        tv_now_year_and_month.setText(yearAndMonth + "月" + getString(R.string.all_record));
-
-//        rv_data.setLayoutManager(new LinearLayoutManager(this));
-//        rv_data.setAdapter(recordAdapter);
     }
 
 }

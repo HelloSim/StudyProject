@@ -8,7 +8,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -17,11 +19,10 @@ import androidx.fragment.app.Fragment;
 
 import com.haibin.calendarview.Calendar;
 import com.haibin.calendarview.CalendarView;
-import com.sim.baselibrary.utils.HttpUtil;
 import com.sim.baselibrary.utils.TimeUtil;
 import com.sim.baselibrary.utils.ToastUtil;
-import com.sim.traveltool.db.DaKaRecordDaoUtil;
-import com.sim.sqlitelibrary.bean.DaKaRecord;
+import com.sim.sqlitelibrary.bean.RecordDataBean;
+import com.sim.traveltool.db.RecoedDataDaoUtil;
 import com.sim.traveltool.R;
 import com.sim.traveltool.ui.activity.RecordAllActivity;
 
@@ -42,8 +43,6 @@ public class RecordFragment extends Fragment implements CalendarView.OnMonthChan
 
     @BindView(R.id.tv_now_year_and_month)
     TextView tv_now_year_and_month;
-    @BindView(R.id.btn_now)
-    Button btn_now;
     @BindView(R.id.calendarView)
     CalendarView calendarView;
 
@@ -53,11 +52,11 @@ public class RecordFragment extends Fragment implements CalendarView.OnMonthChan
     TextView tv_record_time_end;
     @BindView(R.id.btn_daka)
     Button btn_daka;
+    @BindView(R.id.btn_updata_other)
+    Button btn_updata_other;
 
-    private List<DaKaRecord> daKaRecordList;
-    private DaKaRecord daKaRecord;//当天打卡信息
-    private String baseUrl = "http://tool.bitefu.net/jiari?d=";
-    private int isWorkingDay = 0;//0工作日 1 假日 2节日
+    private List<RecordDataBean> recordDataBeanList;
+    private RecordDataBean recordDataBean;//当天打卡信息
 
     @Nullable
     @Override
@@ -65,6 +64,7 @@ public class RecordFragment extends Fragment implements CalendarView.OnMonthChan
         View view = inflater.inflate(R.layout.fragment_record, container, false);
         ButterKnife.bind(this, view);
         initView();
+        initData();
         return view;
     }
 
@@ -82,38 +82,31 @@ public class RecordFragment extends Fragment implements CalendarView.OnMonthChan
         //日期选择事件监听
         calendarView.setOnCalendarSelectListener(this);
 
-        tv_now_year_and_month.setText(DaKaRecordDaoUtil.getInstance().getYearMonth(getContext(), calendarView.getSelectedCalendar()));
+        tv_now_year_and_month.setText(RecoedDataDaoUtil.getInstance().getYearMonth(getContext(), calendarView.getSelectedCalendar()));
         showInfo(calendarView.getSelectedCalendar());
+    }
+
+    private void initData() {
+        //数据库插入本月所有日期条目
+        RecoedDataDaoUtil.getInstance().insertDataForMonth(getContext(), calendarView.getSelectedCalendar());
     }
 
     /**
      * 根据数据进行显示
      */
     private void showInfo(Calendar calendar) {
-        String apiurl = null;
-        apiurl = baseUrl + DaKaRecordDaoUtil.getInstance().getYMD(getContext(), calendar);
-        HttpUtil.doGetAsyn(apiurl, new HttpUtil.CallBack() {
-            @Override
-            public void onRequestComplete(String result) {
-                isWorkingDay = Integer.parseInt(result);
-            }
-
-            @Override
-            public void onRequestError(String result) {
-
-            }
-        });
         if (TimeUtil.getHour() < 13 && TimeUtil.getHour() >= 6)
             btn_daka.setText(getString(R.string.start));
         else if (TimeUtil.getHour() >= 13 || TimeUtil.getHour() < 6)
             btn_daka.setText(getString(R.string.end));
 
-        daKaRecordList = DaKaRecordDaoUtil.getInstance().queryRecordForDay(getContext(), calendar);
-        if (daKaRecordList != null && daKaRecordList.size() != 0) {
-            daKaRecord = daKaRecordList.get(0);
-            if (daKaRecord.getStartTime() != null) {
-                tv_record_time_start.setText(daKaRecord.getStartTime());
-                if (daKaRecord.getIsLate().equals("1")) {
+        recordDataBeanList = RecoedDataDaoUtil.getInstance().queryRecordForDay(getContext(), calendar);
+        if (recordDataBeanList != null && recordDataBeanList.size() != 0) {
+            recordDataBean = recordDataBeanList.get(0);
+
+            if (recordDataBean.getStartTime() != null) {
+                tv_record_time_start.setText(recordDataBean.getStartTime());
+                if (recordDataBean.getIsLate().equals("1")) {
                     tv_record_time_start.setTextColor(Color.BLUE);
                 } else {
                     tv_record_time_start.setTextColor(Color.WHITE);
@@ -122,9 +115,9 @@ public class RecordFragment extends Fragment implements CalendarView.OnMonthChan
             } else {
                 tv_record_time_start.setText(getString(R.string.no));
             }
-            if (daKaRecord.getEndTime() != null) {
-                tv_record_time_end.setText(daKaRecord.getEndTime());
-                if (daKaRecord.getIsLeaveEarly().equals("1")) {
+            if (recordDataBean.getEndTime() != null) {
+                tv_record_time_end.setText(recordDataBean.getEndTime());
+                if (recordDataBean.getIsLeaveEarly().equals("1")) {
                     tv_record_time_end.setTextColor(Color.RED);
                 } else {
                     tv_record_time_end.setTextColor(Color.WHITE);
@@ -149,28 +142,24 @@ public class RecordFragment extends Fragment implements CalendarView.OnMonthChan
         if (isStart) {//上班卡
             if (tv_record_time_start.getText().equals(getString(R.string.no))) {
                 if (TimeUtil.getHour() > 9 || (TimeUtil.getHour() == 9 && TimeUtil.getMinute() > 30)) {
-                    DaKaRecordDaoUtil.getInstance().insertStartLate(getContext(), calendarView.getSelectedCalendar());
+                    RecoedDataDaoUtil.getInstance().insertStartLate(getContext(), calendarView.getSelectedCalendar());
                     ToastUtil.T_Info(getContext(), (getString(R.string.success) + getString(R.string.late)));
                 } else {
-                    DaKaRecordDaoUtil.getInstance().insertStartNormal(getContext(), calendarView.getSelectedCalendar());
+                    RecoedDataDaoUtil.getInstance().insertStartNormal(getContext(), calendarView.getSelectedCalendar());
                     ToastUtil.T_Success(getContext(), (getString(R.string.success)));
                 }
             } else {
                 new AlertDialog.Builder(getContext())
                         .setMessage(getString(R.string.update))
-                        .setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                            }
-                        })
+                        .setNegativeButton(getString(R.string.cancel), null)
                         .setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 if (TimeUtil.getHour() > 9 || (TimeUtil.getHour() == 9 && TimeUtil.getMinute() > 30)) {
-                                    DaKaRecordDaoUtil.getInstance().updataRecordForDayStartLate(getContext(), calendarView.getSelectedCalendar());
+                                    RecoedDataDaoUtil.getInstance().updataRecordForDayStartLate(getContext(), calendarView.getSelectedCalendar());
                                     ToastUtil.T_Info(getContext(), (getString(R.string.success) + getString(R.string.late)));
                                 } else {
-                                    DaKaRecordDaoUtil.getInstance().updataRecordForDayStartNormal(getContext(), calendarView.getSelectedCalendar());
+                                    RecoedDataDaoUtil.getInstance().updataRecordForDayStartNormal(getContext(), calendarView.getSelectedCalendar());
                                     ToastUtil.T_Success(getContext(), (getString(R.string.success)));
                                 }
                                 showInfo(calendarView.getSelectedCalendar());
@@ -180,28 +169,24 @@ public class RecordFragment extends Fragment implements CalendarView.OnMonthChan
         } else {//下班卡
             if (tv_record_time_end.getText().equals(getString(R.string.no))) {
                 if (TimeUtil.getHour() < 18 || (TimeUtil.getHour() == 18 && TimeUtil.getMinute() < 30)) {
-                    DaKaRecordDaoUtil.getInstance().insertEndLeaveEarly(getContext(), calendarView.getSelectedCalendar());
+                    RecoedDataDaoUtil.getInstance().insertEndLeaveEarly(getContext(), calendarView.getSelectedCalendar());
                     ToastUtil.T_Info(getContext(), (getString(R.string.success) + getString(R.string.early)));
                 } else {
-                    DaKaRecordDaoUtil.getInstance().insertEndNormal(getContext(), calendarView.getSelectedCalendar());
+                    RecoedDataDaoUtil.getInstance().insertEndNormal(getContext(), calendarView.getSelectedCalendar());
                     ToastUtil.T_Success(getContext(), (getString(R.string.success)));
                 }
             } else {
                 new AlertDialog.Builder(getContext())
                         .setMessage(getString(R.string.update))
-                        .setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                            }
-                        })
+                        .setNegativeButton(getString(R.string.cancel), null)
                         .setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 if (TimeUtil.getHour() < 18 || (TimeUtil.getHour() == 18 && TimeUtil.getMinute() < 30)) {
-                                    DaKaRecordDaoUtil.getInstance().updataRecordForDayEndLeaveEarly(getContext(), calendarView.getSelectedCalendar());
+                                    RecoedDataDaoUtil.getInstance().updataRecordForDayEndLeaveEarly(getContext(), calendarView.getSelectedCalendar());
                                     ToastUtil.T_Info(getContext(), (getString(R.string.success) + getString(R.string.early)));
                                 } else {
-                                    DaKaRecordDaoUtil.getInstance().updataRecordForDayEndNormal(getContext(), calendarView.getSelectedCalendar());
+                                    RecoedDataDaoUtil.getInstance().updataRecordForDayEndNormal(getContext(), calendarView.getSelectedCalendar());
                                     ToastUtil.T_Success(getContext(), (getString(R.string.success)));
                                 }
                                 showInfo(calendarView.getSelectedCalendar());
@@ -212,12 +197,9 @@ public class RecordFragment extends Fragment implements CalendarView.OnMonthChan
         showInfo(calendarView.getSelectedCalendar());
     }
 
-    @OnClick({R.id.btn_now, R.id.btn_daka, R.id.tv_now_year_and_month, R.id.all_record})
+    @OnClick({R.id.btn_daka, R.id.tv_now_year_and_month, R.id.all_record, R.id.btn_updata_other})
     public void OnClick(View v) {
         switch (v.getId()) {
-            case R.id.btn_now:
-                calendarView.scrollToCurrent(true);
-                break;
             case R.id.btn_daka:
                 if (calendarView.getSelectedCalendar().isCurrentDay()) {//是否当天
                     if (!calendarView.getSelectedCalendar().isWeekend()) {//是否周末
@@ -228,11 +210,7 @@ public class RecordFragment extends Fragment implements CalendarView.OnMonthChan
                     } else {
                         new AlertDialog.Builder(getContext())
                                 .setMessage(getString(R.string.week))
-                                .setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                    }
-                                })
+                                .setNegativeButton(getString(R.string.cancel), null)
                                 .setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
@@ -244,16 +222,30 @@ public class RecordFragment extends Fragment implements CalendarView.OnMonthChan
                                 }).create().show();
                     }
                 } else {
+                    calendarView.scrollToCurrent(true);
                     ToastUtil.T_Error(getContext(), getString(R.string.only));
                 }
 
                 break;
             case R.id.all_record:
                 Intent intent = new Intent(getContext(), RecordAllActivity.class);
-                intent.putExtra("yearAndMonth", DaKaRecordDaoUtil.getInstance().getYearMonth(getContext(), calendarView.getSelectedCalendar()));
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("calendar", calendarView.getSelectedCalendar());
+                intent.putExtras(bundle);
                 startActivity(intent);
                 break;
-            case R.id.tv_now_year_and_month:
+            case R.id.btn_updata_other:
+                final EditText et = new EditText(getContext());
+                new AlertDialog.Builder(getContext()).setTitle("添加备忘")
+                        .setIcon(android.R.drawable.sym_def_app_icon)
+                        .setView(et)
+                        .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                RecoedDataDaoUtil.getInstance().updataRecordOtherForDay(getContext(), calendarView.getSelectedCalendar(), et.getText().toString());
+                            }
+                        })
+                        .setNegativeButton("取消",null).show();
                 break;
         }
     }
@@ -282,11 +274,6 @@ public class RecordFragment extends Fragment implements CalendarView.OnMonthChan
      */
     @Override
     public void onCalendarSelect(Calendar calendar, boolean isClick) {
-        if (calendar.isCurrentDay()) {
-            btn_now.setVisibility(View.GONE);
-        } else {
-            btn_now.setVisibility(View.VISIBLE);
-        }
         showInfo(calendar);
     }
 

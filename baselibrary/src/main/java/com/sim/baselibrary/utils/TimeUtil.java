@@ -1,6 +1,7 @@
 package com.sim.baselibrary.utils;
 
 import android.annotation.SuppressLint;
+import android.util.Log;
 
 import java.io.File;
 import java.text.ParseException;
@@ -148,6 +149,23 @@ public class TimeUtil {
     public static int getDayListOfMonth() {
         Calendar calendar = Calendar.getInstance(Locale.CHINA);
         return calendar.getActualMaximum(Calendar.DATE);
+    }
+
+    /**
+     * 根据年 月 获取对应的月份 天数
+     *
+     * @param year
+     * @param month
+     * @return
+     */
+    public static int getDaysByYearMonth(int year, int month) {
+        Calendar a = Calendar.getInstance();
+        a.set(Calendar.YEAR, year);
+        a.set(Calendar.MONTH, month - 1);
+        a.set(Calendar.DATE, 1);
+        a.roll(Calendar.DATE, -1);
+        int maxDate = a.get(Calendar.DATE);
+        return maxDate;
     }
 
     public static String timeFormat(long timeMillis, String pattern) {
