@@ -21,6 +21,7 @@ import com.sim.sqlitelibrary.bean.RecordDataBean;
 import com.sim.traveltool.R;
 import com.sim.traveltool.db.RecordDataDaoUtil;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -74,6 +75,7 @@ public class RecordAllActivity extends BaseActivity {
         }
         List<String> finalDayColum = dayColum;
         table.setZoom(true, 2, 1);//设置放大最大和最小值
+        ArrayList list = new ArrayList();
         table.getConfig()
                 .setShowXSequence(false)//是否显示顶部序号列
                 .setShowYSequence(false)//是否显示左侧序号列
@@ -82,34 +84,20 @@ public class RecordAllActivity extends BaseActivity {
                 .setContentCellBackgroundFormat(new BaseCellBackgroundFormat<CellInfo>() {
                     @Override
                     public int getBackGroundColor(CellInfo cellInfo) {
-                        if (cellInfo.value.equals(getString(R.string.record_no))) {
-                            switch (TimeUtil.getWeek(RecordDataDaoUtil.getInstance().getYearMonth(RecordAllActivity.this, calendar) + "-" + finalDayColum.get(cellInfo.row))) {
-                                case "星期六":
-                                case "星期日":
-                                    return TableConfig.INVALID_COLOR;
-                                default:
-                                    return Color.WHITE;
-                            }
-                        } else {
-                            if (cellInfo.col == 2) {
-                                int hour = Integer.parseInt(cellInfo.value.split(":", 2)[0]);
-                                int minute = Integer.parseInt(cellInfo.value.split(":", 2)[1]);
-                                if (hour > 9 || (hour == 9 && minute > 30)) {
-                                    return TableConfig.INVALID_COLOR;
-                                } else {
-                                    return Color.WHITE;
-                                }
-                            } else if (cellInfo.col == 3) {
-                                int hour = Integer.parseInt(cellInfo.value.split(":", 2)[0]);
-                                int minute = Integer.parseInt(cellInfo.value.split(":", 2)[1]);
-                                if (hour < 18 || (hour == 18 && minute < 30)) {
-                                    return TableConfig.INVALID_COLOR;
-                                } else {
-                                    return Color.WHITE;
-                                }
-                            }
-                            return TableConfig.INVALID_COLOR; //返回无效颜色，不会绘制
+                        switch (cellInfo.value) {
+                            case "星期一":
+                            case "星期二":
+                            case "星期三":
+                            case "星期四":
+                            case "星期五":
+                                list.add(cellInfo.row);
                         }
+                        for (int i = 0; i < list.size(); i++) {
+                            if (cellInfo.row == (int) list.get(i)) {
+                                return TableConfig.INVALID_COLOR;
+                            }
+                        }
+                        return Color.GRAY;
                     }
                 });
 
