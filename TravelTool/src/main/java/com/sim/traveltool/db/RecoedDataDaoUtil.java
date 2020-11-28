@@ -110,8 +110,27 @@ public class RecoedDataDaoUtil {
 
     /**
      * ---------------------------------------------------------------------------------------------
-     * 数据库查询操作
+     * 数据库操作
      */
+
+    /**
+     * 插入当月所有的天数的数据库数据
+     *
+     * @param calendar
+     */
+    public void insertDataForMonth(Context context, Calendar calendar) {
+        if (recordDataBeanDao == null) init(context);
+        List<RecordDataBean> list = queryRecordForMonth(context, calendar);
+        if (list == null || list.size() <= 0) {
+            int dayForMonth = TimeUtil.getDaysByYearMonth(Integer.parseInt(RecoedDataDaoUtil.getInstance().getYear(context, calendar)),
+                    Integer.parseInt(RecoedDataDaoUtil.getInstance().getMonth(context, calendar)));
+            for (int i = 1; i <= dayForMonth; i++) {
+                recordDataBeanDao.insert(new RecordDataBean(getYear(context, calendar), getMonth(context, calendar),
+                        String.valueOf(i), TimeUtil.getWeek(getYearMonth(context, calendar) + "-" + i),
+                        context.getString(R.string.record_no), context.getString(R.string.record_no), false, false, null));
+            }
+        }
+    }
 
     /**
      * 查询指定年份月份的打卡记录
@@ -142,183 +161,67 @@ public class RecoedDataDaoUtil {
                 .build().list();
     }
 
-
-    /**
-     *  ---------------------------------------------------------------------------------------------
-     * 数据库修改操作
-     * /
-
-     /**
-     *
-     */
-     public void updataRecordOtherForDay(Context context, Calendar calendar,String other){
-         if (recordDataBeanDao == null) init(context);
-         List<RecordDataBean> list = queryRecordForDay(context, calendar);
-         if (list != null && list.size() != 0) {
-             RecordDataBean recordDataBean = list.get(0);
-             recordDataBean.setOther(other);
-             recordDataBeanDao.update(recordDataBean);
-         }
-     }
-
     /**
      * 修改指定日期的正常的上班卡记录
      *
+     * @param context
      * @param calendar
+     * @return 返回是否迟到
      */
-    public void updataRecordForDayStartNormal(Context context, Calendar calendar) {
+    public boolean updataStartTime(Context context, Calendar calendar) {
+        boolean isLate = TimeUtil.getHour() > 9 || (TimeUtil.getHour() == 9 && TimeUtil.getMinute() > 30);
         if (recordDataBeanDao == null) init(context);
+        if (queryRecordForMonth(context, calendar) == null || queryRecordForMonth(context, calendar).size() == 0) {
+            insertDataForMonth(context, calendar);
+        }
         List<RecordDataBean> list = queryRecordForDay(context, calendar);
         if (list != null && list.size() != 0) {
             RecordDataBean recordDataBean = list.get(0);
             recordDataBean.setStartTime(new SimpleDateFormat("HH:mm").format(System.currentTimeMillis()));
-            recordDataBean.setIsLate("0");
+            recordDataBean.setIsLate(isLate);
             recordDataBeanDao.update(recordDataBean);
         }
-    }
-
-    /**
-     * 修改指定日期的迟到的上班卡记录
-     *
-     * @param calendar
-     */
-    public void updataRecordForDayStartLate(Context context, Calendar calendar) {
-        if (recordDataBeanDao == null) init(context);
-        List<RecordDataBean> list = queryRecordForDay(context, calendar);
-        if (list != null && list.size() != 0) {
-            RecordDataBean recordDataBean = list.get(0);
-            recordDataBean.setStartTime(new SimpleDateFormat("HH:mm").format(System.currentTimeMillis()));
-            recordDataBean.setIsLate("1");
-            recordDataBeanDao.update(recordDataBean);
-        }
+        return isLate;
     }
 
     /**
      * 修改指定日期的正常的下班卡记录
      *
+     * @param context
      * @param calendar
+     * @return 返回是否早退
      */
-    public void updataRecordForDayEndNormal(Context context, Calendar calendar) {
+    public boolean updataEndTime(Context context, Calendar calendar) {
+        boolean isLeaveEarly = TimeUtil.getHour() < 18 || (TimeUtil.getHour() == 18 && TimeUtil.getMinute() < 30);
         if (recordDataBeanDao == null) init(context);
         List<RecordDataBean> list = queryRecordForDay(context, calendar);
         if (list != null && list.size() != 0) {
             RecordDataBean recordDataBean = list.get(0);
             recordDataBean.setEndTime(new SimpleDateFormat("HH:mm").format(System.currentTimeMillis()));
-            recordDataBean.setIsLeaveEarly("0");
+            recordDataBean.setIsLeaveEarly(isLeaveEarly);
+            recordDataBean.setIsLeaveEarly(false);
             recordDataBeanDao.update(recordDataBean);
         }
+        return isLeaveEarly;
     }
 
     /**
-     * 修改指定日期的早退的下班卡记录
+     * 修改工作日备忘
      *
+     * @param context
      * @param calendar
+     * @param other
      */
-    public void updataRecordForDayEndLeaveEarly(Context context, Calendar calendar) {
+    public void updataRecordOther(Context context, Calendar calendar, String other) {
         if (recordDataBeanDao == null) init(context);
+        if (queryRecordForMonth(context, calendar) == null || queryRecordForMonth(context, calendar).size() == 0) {
+            insertDataForMonth(context, calendar);
+        }
         List<RecordDataBean> list = queryRecordForDay(context, calendar);
         if (list != null && list.size() != 0) {
             RecordDataBean recordDataBean = list.get(0);
-            recordDataBean.setEndTime(new SimpleDateFormat("HH:mm").format(System.currentTimeMillis()));
-            recordDataBean.setIsLeaveEarly("1");
+            recordDataBean.setOther(other);
             recordDataBeanDao.update(recordDataBean);
-        }
-    }
-
-
-    /**
-     * ---------------------------------------------------------------------------------------------
-     * 数据库插入操作
-     */
-
-    /**
-     * 修改或插入正常的上班卡记录
-     *
-     * @param calendar
-     */
-    public void insertStartNormal(Context context, Calendar calendar) {
-        if (recordDataBeanDao == null) init(context);
-        List<RecordDataBean> list = queryRecordForDay(context, calendar);
-        if (list != null && list.size() > 0) {
-            updataRecordForDayStartNormal(context, calendar);
-        } else {
-            recordDataBeanDao.insert(new RecordDataBean(getYear(context, calendar), getMonth(context, calendar),
-                    getDay(context, calendar), TimeUtil.getWeek(getYearMonthDay(context, calendar)),
-                    new SimpleDateFormat("HH:mm").format(System.currentTimeMillis()), null,
-                    "0", "0", null));
-        }
-    }
-
-    /**
-     * 修改或插入迟到的上班卡记录
-     *
-     * @param calendar
-     */
-    public void insertStartLate(Context context, Calendar calendar) {
-        if (recordDataBeanDao == null) init(context);
-        List<RecordDataBean> list = queryRecordForDay(context, calendar);
-        if (list != null && list.size() > 0) {
-            updataRecordForDayStartLate(context, calendar);
-        } else {
-            recordDataBeanDao.insert(new RecordDataBean(getYear(context, calendar), getMonth(context, calendar),
-                    getDay(context, calendar), TimeUtil.getWeek(getYearMonthDay(context, calendar)),
-                    new SimpleDateFormat("HH:mm").format(System.currentTimeMillis()), null,
-                    "1", "0", null));
-        }
-    }
-
-    /**
-     * 修改或插入正常的下班卡记录
-     *
-     * @param calendar
-     */
-    public void insertEndNormal(Context context, Calendar calendar) {
-        if (recordDataBeanDao == null) init(context);
-        List<RecordDataBean> list = queryRecordForDay(context, calendar);
-        if (list != null && list.size() > 0) {
-            updataRecordForDayEndNormal(context, calendar);
-        } else {
-            recordDataBeanDao.insert(new RecordDataBean(getYear(context, calendar), getMonth(context, calendar),
-                    getDay(context, calendar), TimeUtil.getWeek(getYearMonthDay(context, calendar)),
-                    null, new SimpleDateFormat("HH:mm").format(System.currentTimeMillis()),
-                    "0", "0", null));
-        }
-    }
-
-    /**
-     * 修改或插入早退的下班卡记录
-     *
-     * @param calendar
-     */
-    public void insertEndLeaveEarly(Context context, Calendar calendar) {
-        if (recordDataBeanDao == null) init(context);
-        List<RecordDataBean> list = queryRecordForDay(context, calendar);
-        if (list != null && list.size() > 0) {
-            updataRecordForDayEndLeaveEarly(context, calendar);
-        } else {
-            recordDataBeanDao.insert(new RecordDataBean(getYear(context, calendar), getMonth(context, calendar),
-                    getDay(context, calendar), TimeUtil.getWeek(getYearMonthDay(context, calendar)),
-                    null, new SimpleDateFormat("HH:mm").format(System.currentTimeMillis()),
-                    "0", "1", null));
-        }
-    }
-
-    /**
-     * 插入当月所有的天数的数据库数据
-     *
-     * @param calendar
-     */
-    public void insertDataForMonth(Context context, Calendar calendar) {
-        if (recordDataBeanDao == null) init(context);
-        List<RecordDataBean> list = queryRecordForMonth(context, calendar);
-        if (list == null || list.size() <= 0) {
-            int dayForMonth = TimeUtil.getDaysByYearMonth(Integer.parseInt(RecoedDataDaoUtil.getInstance().getYear(context, calendar)),
-                    Integer.parseInt(RecoedDataDaoUtil.getInstance().getMonth(context, calendar)));
-            for (int i = 1; i <= dayForMonth; i++) {
-                recordDataBeanDao.insert(new RecordDataBean(getYear(context, calendar), getMonth(context, calendar),
-                        String.valueOf(i), TimeUtil.getWeek(getYearMonth(context, calendar) + "-" + i),
-                        context.getString(R.string.no), context.getString(R.string.no), "0", "0", null));
-            }
         }
     }
 

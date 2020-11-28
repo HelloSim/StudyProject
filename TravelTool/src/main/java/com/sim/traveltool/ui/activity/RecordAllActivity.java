@@ -54,7 +54,7 @@ public class RecordAllActivity extends BaseActivity {
 
     private void initData() {
         calendar = (Calendar) getIntent().getSerializableExtra("calendar");
-        title.setText(RecoedDataDaoUtil.getInstance().getMonth(this, calendar) + "月" + getString(R.string.all_record));
+        title.setText(RecoedDataDaoUtil.getInstance().getMonth(this, calendar) + "月" + getString(R.string.record_all));
         recordDataBeanList = RecoedDataDaoUtil.getInstance().queryRecordForMonth(this, calendar);
         if (recordDataBeanList != null && recordDataBeanList.size() > 0) {
             table.setData(recordDataBeanList);
@@ -82,7 +82,7 @@ public class RecordAllActivity extends BaseActivity {
                 .setContentCellBackgroundFormat(new BaseCellBackgroundFormat<CellInfo>() {
                     @Override
                     public int getBackGroundColor(CellInfo cellInfo) {
-                        if (cellInfo.value.equals("未打卡")) {
+                        if (cellInfo.value.equals(getString(R.string.record_no))) {
                             switch (TimeUtil.getWeek(RecoedDataDaoUtil.getInstance().getYearMonth(RecordAllActivity.this, calendar) + "-" + finalDayColum.get(cellInfo.row))) {
                                 case "星期六":
                                 case "星期日":

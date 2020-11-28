@@ -37,17 +37,21 @@ public class RecordDataBean {
     @SmartColumn(id = 4, name = "下班卡时间")
     private String endTime;//下班卡时间
 
-    private String isLate;//是否迟到：0未迟到、1迟到
+    private boolean isLate;//是否迟到
 
-    private String isLeaveEarly;//是否早退：0未早退、1早退
+    private boolean isLeaveEarly;//是否早退
 
     @SmartColumn(id = 5, name = "其他")
     private String other;//其他
 
-    @Generated(hash = 1816004749)
-    public RecordDataBean(Long id, String year, String month, String day, String week,
-            String startTime, String endTime, String isLate, String isLeaveEarly,
-            String other) {
+    @Generated(hash = 1002308030)
+    public RecordDataBean() {
+    }
+
+    @Generated(hash = 1950087844)
+    public RecordDataBean(Long id, String year, String month, String day,
+            String week, String startTime, String endTime, boolean isLate,
+            boolean isLeaveEarly, String other) {
         this.id = id;
         this.year = year;
         this.month = month;
@@ -62,7 +66,7 @@ public class RecordDataBean {
 
     public RecordDataBean(String year, String month, String day,
                           String week, String startTime, String endTime,
-                          String isLate, String isLeaveEarly, String other) {
+                          boolean isLate, boolean isLeaveEarly, String other) {
         this.year = year;
         this.month = month;
         this.day = day;
@@ -72,10 +76,6 @@ public class RecordDataBean {
         this.isLate = isLate;
         this.isLeaveEarly = isLeaveEarly;
         this.other = other;
-    }
-
-    @Generated(hash = 1002308030)
-    public RecordDataBean() {
     }
 
     public Long getId() {
@@ -134,19 +134,19 @@ public class RecordDataBean {
         this.endTime = endTime;
     }
 
-    public String getIsLate() {
+    public boolean getIsLate() {
         return this.isLate;
     }
 
-    public void setIsLate(String isLate) {
+    public void setIsLate(boolean isLate) {
         this.isLate = isLate;
     }
 
-    public String getIsLeaveEarly() {
+    public boolean getIsLeaveEarly() {
         return this.isLeaveEarly;
     }
 
-    public void setIsLeaveEarly(String isLeaveEarly) {
+    public void setIsLeaveEarly(boolean isLeaveEarly) {
         this.isLeaveEarly = isLeaveEarly;
     }
 

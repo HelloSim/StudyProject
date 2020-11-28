@@ -282,27 +282,27 @@ public class BusFragment extends Fragment implements View.OnClickListener {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.ll_real_time:
-                ivStopSign.setImageDrawable(getResources().getDrawable(R.mipmap.ic_bus_fragment_stop_sign_gray));
+                ivStopSign.setImageDrawable(getResources().getDrawable(R.mipmap.ic_bus_stop_sign_gray));
                 llStationContent.setVisibility(View.GONE);
-                ivRoute.setImageDrawable(getResources().getDrawable(R.mipmap.ic_bus_fragment_route_gray));
+                ivRoute.setImageDrawable(getResources().getDrawable(R.mipmap.ic_bus_route_gray));
                 llRouteContent.setVisibility(View.GONE);
-                ivRealTime.setImageDrawable(getResources().getDrawable(R.mipmap.ic_bus_fragment_real_time_blue));
+                ivRealTime.setImageDrawable(getResources().getDrawable(R.mipmap.ic_bus_real_time_blue));
                 llRealTimeContent.setVisibility(View.VISIBLE);
                 break;
             case R.id.ll_route:
-                ivRealTime.setImageDrawable(getResources().getDrawable(R.mipmap.ic_bus_fragment_real_time_gray));
+                ivRealTime.setImageDrawable(getResources().getDrawable(R.mipmap.ic_bus_real_time_gray));
                 llRealTimeContent.setVisibility(View.GONE);
-                ivStopSign.setImageDrawable(getResources().getDrawable(R.mipmap.ic_bus_fragment_stop_sign_gray));
+                ivStopSign.setImageDrawable(getResources().getDrawable(R.mipmap.ic_bus_stop_sign_gray));
                 llStationContent.setVisibility(View.GONE);
-                ivRoute.setImageDrawable(getResources().getDrawable(R.mipmap.ic_bus_fragment_route_blue));
+                ivRoute.setImageDrawable(getResources().getDrawable(R.mipmap.ic_bus_route_blue));
                 llRouteContent.setVisibility(View.VISIBLE);
                 break;
             case R.id.ll_stop_sign:
-                ivRealTime.setImageDrawable(getResources().getDrawable(R.mipmap.ic_bus_fragment_real_time_gray));
+                ivRealTime.setImageDrawable(getResources().getDrawable(R.mipmap.ic_bus_real_time_gray));
                 llRealTimeContent.setVisibility(View.GONE);
-                ivRoute.setImageDrawable(getResources().getDrawable(R.mipmap.ic_bus_fragment_route_gray));
+                ivRoute.setImageDrawable(getResources().getDrawable(R.mipmap.ic_bus_route_gray));
                 llRouteContent.setVisibility(View.GONE);
-                ivStopSign.setImageDrawable(getResources().getDrawable(R.mipmap.ic_bus_fragment_stop_sign_blue));
+                ivStopSign.setImageDrawable(getResources().getDrawable(R.mipmap.ic_bus_stop_sign_blue));
                 llStationContent.setVisibility(View.VISIBLE);
                 break;
             case R.id.tv_search:
