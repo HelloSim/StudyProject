@@ -19,7 +19,7 @@ import com.haibin.calendarview.Calendar;
 import com.sim.baselibrary.utils.TimeUtil;
 import com.sim.sqlitelibrary.bean.RecordDataBean;
 import com.sim.traveltool.R;
-import com.sim.traveltool.db.RecoedDataDaoUtil;
+import com.sim.traveltool.db.RecordDataDaoUtil;
 
 import java.util.List;
 
@@ -54,8 +54,8 @@ public class RecordAllActivity extends BaseActivity {
 
     private void initData() {
         calendar = (Calendar) getIntent().getSerializableExtra("calendar");
-        title.setText(RecoedDataDaoUtil.getInstance().getMonth(this, calendar) + "月" + getString(R.string.record_all));
-        recordDataBeanList = RecoedDataDaoUtil.getInstance().queryRecordForMonth(this, calendar);
+        title.setText(RecordDataDaoUtil.getInstance().getMonth(this, calendar) + "月" + getString(R.string.record_all));
+        recordDataBeanList = RecordDataDaoUtil.getInstance().queryRecordForMonth(this, calendar);
         if (recordDataBeanList != null && recordDataBeanList.size() > 0) {
             table.setData(recordDataBeanList);
             initView();
@@ -83,7 +83,7 @@ public class RecordAllActivity extends BaseActivity {
                     @Override
                     public int getBackGroundColor(CellInfo cellInfo) {
                         if (cellInfo.value.equals(getString(R.string.record_no))) {
-                            switch (TimeUtil.getWeek(RecoedDataDaoUtil.getInstance().getYearMonth(RecordAllActivity.this, calendar) + "-" + finalDayColum.get(cellInfo.row))) {
+                            switch (TimeUtil.getWeek(RecordDataDaoUtil.getInstance().getYearMonth(RecordAllActivity.this, calendar) + "-" + finalDayColum.get(cellInfo.row))) {
                                 case "星期六":
                                 case "星期日":
                                     return TableConfig.INVALID_COLOR;
@@ -122,7 +122,7 @@ public class RecordAllActivity extends BaseActivity {
 
             @Override
             public String[] format(Column column, int position) {
-                String[] strings = {RecoedDataDaoUtil.getInstance().getYearMonth(RecordAllActivity.this, calendar) + "-" +
+                String[] strings = {RecordDataDaoUtil.getInstance().getYearMonth(RecordAllActivity.this, calendar) + "-" +
                         table.getTableData().getColumns().get(0).getDatas().get(position) + ":",
                         String.valueOf(column.getDatas().get(position))};
                 return strings;

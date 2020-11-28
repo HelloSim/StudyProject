@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -22,7 +21,7 @@ import com.haibin.calendarview.CalendarView;
 import com.sim.baselibrary.utils.TimeUtil;
 import com.sim.baselibrary.utils.ToastUtil;
 import com.sim.sqlitelibrary.bean.RecordDataBean;
-import com.sim.traveltool.db.RecoedDataDaoUtil;
+import com.sim.traveltool.db.RecordDataDaoUtil;
 import com.sim.traveltool.R;
 import com.sim.traveltool.ui.activity.RecordAllActivity;
 
@@ -82,13 +81,13 @@ public class RecordFragment extends Fragment implements CalendarView.OnMonthChan
         //日期选择事件监听
         calendarView.setOnCalendarSelectListener(this);
 
-        tv_now_year_and_month.setText(RecoedDataDaoUtil.getInstance().getYearMonth(getContext(), calendarView.getSelectedCalendar()));
+        tv_now_year_and_month.setText(RecordDataDaoUtil.getInstance().getYearMonth(getContext(), calendarView.getSelectedCalendar()));
         showInfo(calendarView.getSelectedCalendar());
     }
 
     private void initData() {
         //数据库插入本月所有日期条目
-        RecoedDataDaoUtil.getInstance().insertDataForMonth(getContext(), calendarView.getSelectedCalendar());
+        RecordDataDaoUtil.getInstance().insertDataForMonth(getContext(), calendarView.getSelectedCalendar());
     }
 
     /**
@@ -100,7 +99,7 @@ public class RecordFragment extends Fragment implements CalendarView.OnMonthChan
         else if (TimeUtil.getHour() >= 13 || TimeUtil.getHour() < 6)
             btn_record.setText(getString(R.string.record_end));
 
-        recordDataBeanList = RecoedDataDaoUtil.getInstance().queryRecordForDay(getContext(), calendar);
+        recordDataBeanList = RecordDataDaoUtil.getInstance().queryRecordForDay(getContext(), calendar);
         if (recordDataBeanList != null && recordDataBeanList.size() != 0) {
             recordDataBean = recordDataBeanList.get(0);
 
@@ -142,7 +141,7 @@ public class RecordFragment extends Fragment implements CalendarView.OnMonthChan
         switch (type) {
             case 1://上班卡
                 if (tv_record_time_start.getText().equals(getString(R.string.record_no))) {
-                    if (RecoedDataDaoUtil.getInstance().updataStartTime(getContext(), calendarView.getSelectedCalendar())) {
+                    if (RecordDataDaoUtil.getInstance().updataStartTime(getContext(), calendarView.getSelectedCalendar())) {
                         ToastUtil.T_Info(getContext(), (getString(R.string.record_success) + getString(R.string.late)));
                     } else {
                         ToastUtil.T_Info(getContext(), (getString(R.string.record_success)));
@@ -155,7 +154,7 @@ public class RecordFragment extends Fragment implements CalendarView.OnMonthChan
                             .setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-                                    if (RecoedDataDaoUtil.getInstance().updataStartTime(getContext(), calendarView.getSelectedCalendar())) {
+                                    if (RecordDataDaoUtil.getInstance().updataStartTime(getContext(), calendarView.getSelectedCalendar())) {
                                         ToastUtil.T_Info(getContext(), (getString(R.string.record_success) + getString(R.string.late)));
                                     } else {
                                         ToastUtil.T_Info(getContext(), getString(R.string.record_success));
@@ -167,7 +166,7 @@ public class RecordFragment extends Fragment implements CalendarView.OnMonthChan
                 break;
             case 2://下班卡
                 if (tv_record_time_end.getText().equals(getString(R.string.record_no))) {
-                    if (RecoedDataDaoUtil.getInstance().updataEndTime(getContext(), calendarView.getSelectedCalendar())) {
+                    if (RecordDataDaoUtil.getInstance().updataEndTime(getContext(), calendarView.getSelectedCalendar())) {
                         ToastUtil.T_Info(getContext(), getString(R.string.record_success) + getString(R.string.leave_early));
                     } else {
                         ToastUtil.T_Info(getContext(), getString(R.string.record_success));
@@ -180,7 +179,7 @@ public class RecordFragment extends Fragment implements CalendarView.OnMonthChan
                             .setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-                                    if (RecoedDataDaoUtil.getInstance().updataEndTime(getContext(), calendarView.getSelectedCalendar())) {
+                                    if (RecordDataDaoUtil.getInstance().updataEndTime(getContext(), calendarView.getSelectedCalendar())) {
                                         ToastUtil.T_Info(getContext(), getString(R.string.record_success) + getString(R.string.leave_early));
                                     } else {
                                         ToastUtil.T_Info(getContext(), getString(R.string.record_success));
@@ -240,7 +239,7 @@ public class RecordFragment extends Fragment implements CalendarView.OnMonthChan
                         .setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
-                                RecoedDataDaoUtil.getInstance().updataRecordOther(getContext(), calendarView.getSelectedCalendar(), et.getText().toString());
+                                RecordDataDaoUtil.getInstance().updataRecordOther(getContext(), calendarView.getSelectedCalendar(), et.getText().toString());
                             }
                         }).show();
                 break;

@@ -19,15 +19,15 @@ import java.util.List;
  * @Time 2020/11/26 22:44
  * @Description 新的数据库打卡表操作工具类。使用前必先init
  */
-public class RecoedDataDaoUtil {
+public class RecordDataDaoUtil {
 
     //类加载时就初始化
-    private static final RecoedDataDaoUtil instance = new RecoedDataDaoUtil();
+    private static final RecordDataDaoUtil instance = new RecordDataDaoUtil();
 
-    private RecoedDataDaoUtil() {
+    private RecordDataDaoUtil() {
     }
 
-    public static RecoedDataDaoUtil getInstance() {
+    public static RecordDataDaoUtil getInstance() {
         return instance;
     }
 
@@ -122,8 +122,8 @@ public class RecoedDataDaoUtil {
         if (recordDataBeanDao == null) init(context);
         List<RecordDataBean> list = queryRecordForMonth(context, calendar);
         if (list == null || list.size() <= 0) {
-            int dayForMonth = TimeUtil.getDaysByYearMonth(Integer.parseInt(RecoedDataDaoUtil.getInstance().getYear(context, calendar)),
-                    Integer.parseInt(RecoedDataDaoUtil.getInstance().getMonth(context, calendar)));
+            int dayForMonth = TimeUtil.getDaysByYearMonth(Integer.parseInt(RecordDataDaoUtil.getInstance().getYear(context, calendar)),
+                    Integer.parseInt(RecordDataDaoUtil.getInstance().getMonth(context, calendar)));
             for (int i = 1; i <= dayForMonth; i++) {
                 recordDataBeanDao.insert(new RecordDataBean(getYear(context, calendar), getMonth(context, calendar),
                         String.valueOf(i), TimeUtil.getWeek(getYearMonth(context, calendar) + "-" + i),
