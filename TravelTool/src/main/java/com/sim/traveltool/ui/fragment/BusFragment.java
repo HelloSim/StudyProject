@@ -21,10 +21,9 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.sim.traveltool.R;
 import com.sim.traveltool.adapter.LoopViewAdapter;
-import com.sim.traveltool.ui.activity.BusSearchLocationEndActivity;
+import com.sim.traveltool.ui.activity.BusRouteSearchLocationActivity;
 import com.sim.traveltool.ui.activity.BusRealTimeSearchActivity;
 import com.sim.traveltool.ui.activity.BusRouteActivity;
-import com.sim.traveltool.ui.activity.BusSearchLocationStartActivity;
 
 import java.util.ArrayList;
 
@@ -309,10 +308,10 @@ public class BusFragment extends Fragment implements View.OnClickListener {
                 startActivity(new Intent(getActivity(), BusRealTimeSearchActivity.class));
                 break;
             case R.id.tv_start_station:
-                startActivityForResult(new Intent(getActivity(), BusSearchLocationStartActivity.class), RESULT_START_STATION);
+                startActivityForResult(new Intent(getActivity(), BusRouteSearchLocationActivity.class), RESULT_START_STATION);
                 break;
             case R.id.tv_end_station:
-                startActivityForResult(new Intent(getActivity(), BusSearchLocationEndActivity.class), RESULT_END_STATION);
+                startActivityForResult(new Intent(getActivity(), BusRouteSearchLocationActivity.class), RESULT_END_STATION);
                 break;
             case R.id.btn_route:
                 if (tvStartStation.getText().length() > 0 && tvEndStation.getText().length() > 0) {

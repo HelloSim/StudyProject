@@ -17,8 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.sim.traveltool.R;
 import com.sim.traveltool.adapter.BusStationListAdapter;
 import com.sim.traveltool.bean.BusRealTimeDataBean;
-import com.sim.traveltool.bean.BusRealTimeByLineDataBean;
-import com.sim.traveltool.ui.activity.BaseActivity;
+import com.sim.traveltool.bean.BusRealTimeBusStopDataBean;
 
 import java.util.ArrayList;
 
@@ -63,7 +62,7 @@ public class BusRealTimeActivity extends BaseActivity {
     private String endTime;//结束运营时间
     private String price;//公交乘坐价格
 
-    private ArrayList<BusRealTimeByLineDataBean.DataBean> stationList = new ArrayList<>();
+    private ArrayList<BusRealTimeBusStopDataBean.DataBean> stationList = new ArrayList<>();
     private ArrayList<BusRealTimeDataBean.DataBean> busListOnRoadListList = new ArrayList<>();
 
     private BusStationListAdapter stationListAdapter;
@@ -137,7 +136,7 @@ public class BusRealTimeActivity extends BaseActivity {
      */
     private void getStationList(String lineId) {
         stationList.clear();
-        retrofitUtil.getStationList(new Subscriber<BusRealTimeByLineDataBean>() {
+        retrofitUtil.getStationList(new Subscriber<BusRealTimeBusStopDataBean>() {
             @Override
             public void onCompleted() {
                 if (stationList != null) {
@@ -153,7 +152,7 @@ public class BusRealTimeActivity extends BaseActivity {
             }
 
             @Override
-            public void onNext(BusRealTimeByLineDataBean data) {
+            public void onNext(BusRealTimeBusStopDataBean data) {
                 if (data.getFlag() == 1002) {
                     stationList.addAll(data.getData());
                 }

@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.sim.traveltool.R;
 import com.sim.traveltool.bean.BusRealTimeDataBean;
-import com.sim.traveltool.bean.BusRealTimeByLineDataBean;
+import com.sim.traveltool.bean.BusRealTimeBusStopDataBean;
 
 import java.util.ArrayList;
 
@@ -23,11 +23,11 @@ import java.util.ArrayList;
 public class BusStationListAdapter extends RecyclerView.Adapter<BusStationListAdapter.ViewHolder> {
 
     private Context mContext;
-    private ArrayList<BusRealTimeByLineDataBean.DataBean> stationList = new ArrayList<>();
+    private ArrayList<BusRealTimeBusStopDataBean.DataBean> stationList = new ArrayList<>();
     private ArrayList<BusRealTimeDataBean.DataBean> busListOnRoadListList = new ArrayList<>();
 
 
-    public BusStationListAdapter(Context mContext, ArrayList<BusRealTimeByLineDataBean.DataBean> stationList, ArrayList<BusRealTimeDataBean.DataBean> busListOnRoadListList) {
+    public BusStationListAdapter(Context mContext, ArrayList<BusRealTimeBusStopDataBean.DataBean> stationList, ArrayList<BusRealTimeDataBean.DataBean> busListOnRoadListList) {
         this.mContext = mContext;
         this.stationList = stationList;
         this.busListOnRoadListList = busListOnRoadListList;

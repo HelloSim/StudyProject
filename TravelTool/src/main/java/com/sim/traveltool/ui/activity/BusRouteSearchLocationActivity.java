@@ -28,9 +28,9 @@ import rx.Subscriber;
 /**
  * @Time: 2020/6/10 11:54
  * @Author: HelloSim
- * @Description :终点位置的搜素页面
+ * @Description :位置的搜素页面
  */
-public class BusSearchLocationEndActivity extends BaseActivity {
+public class BusRouteSearchLocationActivity extends BaseActivity {
 
     @BindView(R.id.back)
     ImageView back;
@@ -39,20 +39,25 @@ public class BusSearchLocationEndActivity extends BaseActivity {
     @BindView(R.id.rl_data)
     RecyclerView rlDatal;
 
-    private final int RESULT_END_STATION = 1002;
+    private int searchType;
 
     private Context context;
     private BusStationNameAdapter stationNameAdapter;
 
     private ArrayList<BusLocationDataBean.TipsBean> startLocationDataBeanList = new ArrayList<>();
-
+    
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bus_search_location);
         ButterKnife.bind(this);
         context = this;
+        initData();
         initView();
+    }
+
+    private void initData() {
+        searchType = getIntent().getIntExtra("searchType",1001);
     }
 
     private void initView() {
@@ -62,13 +67,13 @@ public class BusSearchLocationEndActivity extends BaseActivity {
             public void onItemClick(View view, int i) {
                 Intent intent = new Intent();
                 intent.putExtra("name", String.valueOf(startLocationDataBeanList.get(i).getName()));
-                setResult(RESULT_END_STATION, intent);
+                setResult(searchType, intent);
                 finish();
             }
         });
         rlDatal.setLayoutManager(new LinearLayoutManager(this));
         rlDatal.setAdapter(stationNameAdapter);
-        //监听EditText内容变化进行网络请求
+        //editext的内容变化监听
         tvSearch.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -85,7 +90,7 @@ public class BusSearchLocationEndActivity extends BaseActivity {
                 if (editable == null || editable.toString().equals("")) {
                     rlDatal.setVisibility(View.GONE);
                 } else {
-                    //这里请求数据
+                    //内容变化请求数据
                     getStartLocation(editable.toString());
                 }
             }
@@ -93,7 +98,7 @@ public class BusSearchLocationEndActivity extends BaseActivity {
     }
 
     /**
-     * 位置搜索的网络请求
+     * 搜索位置的网络请求
      *
      * @param keywords
      */

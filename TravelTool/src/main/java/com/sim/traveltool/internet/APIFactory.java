@@ -3,7 +3,7 @@ package com.sim.traveltool.internet;
 
 import com.sim.traveltool.bean.BusLocationDataBean;
 import com.sim.traveltool.bean.BusLocationDesignatedDataBean;
-import com.sim.traveltool.bean.BusRealTimeByLineDataBean;
+import com.sim.traveltool.bean.BusRealTimeBusStopDataBean;
 import com.sim.traveltool.bean.BusRealTimeDataBean;
 import com.sim.traveltool.bean.BusRealTimeLineDataBean;
 import com.sim.traveltool.bean.BusRouteDataBean;
@@ -75,7 +75,7 @@ public class APIFactory extends RetrofitUtil {
     /**
      * 公交路线查询
      */
-    public void getStationList(Subscriber<BusRealTimeByLineDataBean> subscriber, String handlerName, String lineId, String time) {
+    public void getStationList(Subscriber<BusRealTimeBusStopDataBean> subscriber, String handlerName, String lineId, String time) {
         Observable observable = getBusAPIService().getStationList(handlerName, lineId, time);
         toSubscribe(observable, subscriber);
     }

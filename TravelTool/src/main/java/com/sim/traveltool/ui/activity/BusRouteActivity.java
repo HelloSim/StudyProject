@@ -150,25 +150,4 @@ public class BusRouteActivity extends BaseActivity {
         }, origin, destination);
     }
 
-    /**
-     * 转成bean
-     */
-    public static <T> T stringToBean(String gsonString, Class<T> cls) {
-        Gson gson = new Gson();
-        T t = null;
-        if (gson != null) {
-            t = gson.fromJson(gsonString, cls);
-        }
-        return t;
-    }
-
-    @OnClick({R.id.back})
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.back:
-                finish();
-                break;
-        }
-    }
-
 }
