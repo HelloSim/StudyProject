@@ -18,17 +18,17 @@ android {
             keyPassword "yclyml0719"
             storePassword "yclyml0719"
         }
-        debug {
-            storeFile file("HelloSim.jks")
-            keyAlias "HelloSim"
-            keyPassword "yclyml0719"
-            storePassword "yclyml0719"
-        }
+//        debug {
+//            storeFile file("HelloSim.jks")
+//            keyAlias "HelloSim"
+//            keyPassword "yclyml0719"
+//            storePassword "yclyml0719"
+//        }
     }
     //指定apk名称
     applicationVariants.all { variant ->
         variant.outputs.all {
-            outputFileName = "出行工具${defaultConfig.versionName}.apk"
+            outputFileName = "TravelTool${defaultConfig.versionName}.apk"
         }
     }
     //封装构建类型配置
@@ -38,6 +38,7 @@ android {
             minifyEnabled false //是否可以移出无用的java代码，默认为false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             //指定插件使用的混淆文件
+//            signingConfig signingConfigs.debug //签名配置文件
         }
         release {
             buildConfigField("boolean", "LOG_DEBUG", "false")
