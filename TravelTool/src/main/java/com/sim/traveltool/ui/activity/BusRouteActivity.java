@@ -150,4 +150,13 @@ public class BusRouteActivity extends BaseActivity {
         }, origin, destination);
     }
 
+    @OnClick({R.id.back})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.back:
+                finish();
+                break;
+        }
+    }
+
 }
