@@ -7,14 +7,28 @@ android {
         applicationId "com.sim.traveltool"
         minSdkVersion rootProject.ext.android["minSdkVersion"]
         targetSdkVersion rootProject.ext.android["targetSdkVersion"]
-        versionCode rootProject.ext.android["versionCode"]
-        versionName rootProject.ext.android["versionName"]
+        versionCode 2
+        versionName "2.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
-    /*指定apk名称*/
+    signingConfigs {
+        release {
+            storeFile file("HelloSim.jks")
+            keyAlias "HelloSim"
+            keyPassword "yclyml0719"
+            storePassword "yclyml0719"
+        }
+        debug {
+            storeFile file("HelloSim.jks")
+            keyAlias "HelloSim"
+            keyPassword "yclyml0719"
+            storePassword "yclyml0719"
+        }
+    }
+    //指定apk名称
     applicationVariants.all { variant ->
         variant.outputs.all {
-            outputFileName = "${defaultConfig.versionName}.apk"
+            outputFileName = "出行工具${defaultConfig.versionName}.apk"
         }
     }
     //封装构建类型配置
@@ -30,7 +44,7 @@ android {
             minifyEnabled false //是否可以移出无用的java代码，默认为false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             //指定插件使用的混淆文件
-//            signingConfig signingConfigs.release //签名配置文件
+            signingConfig signingConfigs.release //签名配置文件
         }
     }
     //设置JDK1.8
@@ -53,12 +67,6 @@ android {
 //            }
 //        }
 //    }
-    /*指定apk名称*/
-    applicationVariants.all { variant ->
-        variant.outputs.all {
-            outputFileName = "${defaultConfig.versionName}.apk"
-        }
-    }
 
 }
 
