@@ -1,5 +1,6 @@
 package com.sim.traveltool.bean;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -7,7 +8,7 @@ import java.util.List;
  * @Author: HelloSim
  * @Description :出行路线搜索返回的数据bean类
  */
-public class BusRouteDataBean {
+public class BusRouteDataBean implements Serializable {
 
     /**
      * status : 1
@@ -63,7 +64,7 @@ public class BusRouteDataBean {
         this.route = route;
     }
 
-    public static class RouteBean {
+    public static class RouteBean implements Serializable {
         /**
          * origin : 113.351585,22.131067
          * destination : 113.511168,22.219927
@@ -118,7 +119,7 @@ public class BusRouteDataBean {
             this.transits = transits;
         }
 
-        public static class TransitsBean {
+        public static class TransitsBean implements Serializable {
             /**
              * cost : 1.0
              * duration : 3168
@@ -193,7 +194,7 @@ public class BusRouteDataBean {
                 this.segments = segments;
             }
 
-            public static class SegmentsBean {
+            public static class SegmentsBean implements Serializable {
                 /**
                  * taxi : []
                  * walking : {"origin":"113.351578,22.131073","destination":"113.352592,22.131571","distance":"463","duration":"396","steps":[{"instruction":"沿珠海大道步行77米右转","road":"珠海大道","distance":"77","duration":[],"polyline":"113.351578,22.131073;113.351158,22.130751;113.350998,22.130625","action":"右转","assistant_action":[]},{"instruction":"步行175米右转","road":[],"distance":"175","duration":[],"polyline":"113.350990,22.130621;113.350845,22.130781;113.350639,22.130625;113.351128,22.130125;113.351318,22.130251;113.351158,22.130444","action":"右转","assistant_action":[]},{"instruction":"沿珠海大道步行38米右转","road":"珠海大道","distance":"38","duration":[],"polyline":"113.351166,22.130444;113.351242,22.130512;113.351456,22.130682","action":"右转","assistant_action":[]},{"instruction":"沿科技路步行34米左转","road":"科技路","distance":"34","duration":[],"polyline":"113.351456,22.130682;113.351555,22.130690;113.351646,22.130690;113.351776,22.130651","action":"左转","assistant_action":[]},{"instruction":"步行14米左转","road":[],"distance":"14","duration":[],"polyline":"113.351776,22.130646;113.351875,22.130733","action":"左转","assistant_action":[]},{"instruction":"沿科技路步行31米右转","road":"科技路","distance":"31","duration":[],"polyline":"113.351883,22.130733;113.351868,22.130764;113.351860,22.130842;113.351891,22.131016","action":"右转","assistant_action":[]},{"instruction":"沿珠海大道步行94米到达省科干学院","road":"珠海大道","distance":"94","duration":[],"polyline":"113.351891,22.131016;113.352592,22.131571","action":[],"assistant_action":"到达省科干学院"}]}
@@ -203,14 +204,14 @@ public class BusRouteDataBean {
                  * railway : {"spaces":[]}
                  */
 
-                private Object walking;
+                private WalkingBean walking;
                 private BusBean bus;
                 private RailwayBean railway;
                 private Object taxi;
                 private Object entrance;
                 private Object exit;
 
-                public Object getWalking() {
+                public WalkingBean getWalking() {
                     return walking;
                 }
 
@@ -258,7 +259,7 @@ public class BusRouteDataBean {
                     this.exit = exit;
                 }
 
-                public static class WalkingBean {
+                public static class WalkingBean implements Serializable {
                     /**
                      * origin : 113.351578,22.131073
                      * destination : 113.352592,22.131571
@@ -313,7 +314,7 @@ public class BusRouteDataBean {
                         this.steps = steps;
                     }
 
-                    public static class StepsBean {
+                    public static class StepsBean implements Serializable {
                         /**
                          * instruction : 沿珠海大道步行77米右转
                          * road : 珠海大道
@@ -390,7 +391,7 @@ public class BusRouteDataBean {
                     }
                 }
 
-                public static class BusBean {
+                public static class BusBean implements Serializable {
                     private List<BuslinesBean> buslines;
 
                     public List<BuslinesBean> getBuslines() {
@@ -401,7 +402,7 @@ public class BusRouteDataBean {
                         this.buslines = buslines;
                     }
 
-                    public static class BuslinesBean {
+                    public static class BuslinesBean implements Serializable {
                         /**
                          * departure_stop : {"name":"省科干学院","id":"440400010866016","location":"113.352455,22.131453"}
                          * arrival_stop : {"name":"南屏","id":"440400010866037","location":"113.511415,22.218589"}
@@ -536,7 +537,7 @@ public class BusRouteDataBean {
                             this.via_stops = via_stops;
                         }
 
-                        public static class DepartureStopBean {
+                        public static class DepartureStopBean implements Serializable {
                             /**
                              * name : 省科干学院
                              * id : 440400010866016
@@ -572,7 +573,7 @@ public class BusRouteDataBean {
                             }
                         }
 
-                        public static class ArrivalStopBean {
+                        public static class ArrivalStopBean implements Serializable {
                             /**
                              * name : 南屏
                              * id : 440400010866037
@@ -608,7 +609,7 @@ public class BusRouteDataBean {
                             }
                         }
 
-                        public static class ViaStopsBean {
+                        public static class ViaStopsBean implements Serializable {
                             /**
                              * name : 艺术学院
                              * id : 440400010866017
@@ -646,7 +647,7 @@ public class BusRouteDataBean {
                     }
                 }
 
-                public static class RailwayBean {
+                public static class RailwayBean implements Serializable {
                     private Object spaces;
 
                     public Object getSpaces() {

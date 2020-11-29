@@ -33,6 +33,7 @@ import butterknife.ButterKnife;
  * @Description 月打卡列表页面
  */
 public class RecordAllActivity extends BaseActivity {
+    private static final String TAG = "Sim_RecordAllActivity";
 
     @BindView(R.id.title)
     TextView title;

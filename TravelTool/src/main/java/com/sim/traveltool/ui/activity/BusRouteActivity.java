@@ -2,6 +2,7 @@ package com.sim.traveltool.ui.activity;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -32,7 +33,7 @@ import rx.Subscriber;
  * @Description :显示出行方案的页面
  */
 public class BusRouteActivity extends BaseActivity {
-    private static final String TAG = "RouteActivity";
+    private static final String TAG = "Sim_RouteActivity";
     private Context context;
 
     @BindView(R.id.back)
@@ -82,6 +83,18 @@ public class BusRouteActivity extends BaseActivity {
 
         routeAdapter = new BusRouteAdapter(context, routeDataList);
         rlLocationList.setLayoutManager(new LinearLayoutManager(this));
+        routeAdapter.setOnItemClickListerer(new BusRouteAdapter.onItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                Intent intent = new Intent(context, BusRouteDetailActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("data", routeDataList.get(position));
+                bundle.putString("tvStartLocation", tvStartLocation);
+                bundle.putString("tvEndLocation", tvEndLocation);
+                intent.putExtras(bundle);
+                startActivity(intent);
+            }
+        });
         rlLocationList.setAdapter(routeAdapter);
     }
 

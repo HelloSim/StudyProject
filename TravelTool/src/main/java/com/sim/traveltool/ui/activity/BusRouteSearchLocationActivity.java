@@ -31,6 +31,7 @@ import rx.Subscriber;
  * @Description :位置的搜素页面
  */
 public class BusRouteSearchLocationActivity extends BaseActivity {
+    private static final String TAG = "Sim_BusRouteSearchLocationActivity";
 
     @BindView(R.id.back)
     ImageView back;

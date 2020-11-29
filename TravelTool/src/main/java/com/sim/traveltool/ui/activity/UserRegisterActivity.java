@@ -27,6 +27,7 @@ import rx.Subscriber;
  * @Description 用户注册页面
  */
 public class UserRegisterActivity extends BaseActivity {
+    private static final String TAG = "Sim_UserRegisterActivity";
 
     private Context context;
 

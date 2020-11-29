@@ -22,6 +22,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class MainActivity extends BaseActivity {
+    private static final String TAG = "Sim_MainActivity";
 
     @BindView(R.id.frameLayout)
     FrameLayout frameLayout;

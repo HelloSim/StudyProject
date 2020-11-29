@@ -1,6 +1,7 @@
 package com.sim.traveltool.internet;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.sim.baselibrary.bean.HttpResult;
 import com.sim.baselibrary.internet.APIException;
@@ -32,6 +33,7 @@ import rx.schedulers.Schedulers;
  * @Description 初始化OKHttpClient、Retrofit，切换线程
  */
 public class RetrofitUtil {
+    private static final String TAG = "Sim_RetrofitUtil";
 
     /**
      * 服务器地址
@@ -106,14 +108,14 @@ public class RetrofitUtil {
                 Request request = chain.request();
                 if (!AppUtil.isNetworkConnected(mContext) || isUseCache) {//如果网络不可用或者设置只用网络
                     request = request.newBuilder().cacheControl(CacheControl.FORCE_CACHE).build();
-//                    Log.d("OkHttp", "网络不可用请求拦截");
+                    Log.d(TAG, "网络不可用请求拦截");
                 } else if (AppUtil.isNetworkConnected(mContext) && !isUseCache) {//网络可用
                     request = request.newBuilder().cacheControl(CacheControl.FORCE_NETWORK).build();
-//                    Log.d("OkHttp", "网络可用请求拦截");
+                    Log.d(TAG, "网络可用请求拦截");
                 }
                 Response response = chain.proceed(request);
                 if (AppUtil.isNetworkConnected(mContext)) {//如果网络可用
-//                    Log.d("OkHttp", "网络可用响应拦截");
+                    Log.d(TAG, "网络可用响应拦截");
                     response = response.newBuilder()
                             //覆盖服务器响应头的Cache-Control,用我们自己的,因为服务器响应回来的可能不支持缓存
                             .header("Cache-Control", "public,max-age=" + maxCacheTime)

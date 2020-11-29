@@ -33,6 +33,7 @@ import static com.sim.traveltool.ui.activity.BaseActivity.retrofitUtil;
  * @Description “网易”Fragment
  */
 public class WangyiFragment extends Fragment {
+    private static final String TAG = "Sim_WangyiFragment";
 
     private RecyclerView newsRecyclerView;
     private ArrayList<NewsWangYiBean.ResultBean> newsList = new ArrayList<>();
@@ -117,7 +118,7 @@ public class WangyiFragment extends Fragment {
 
             @Override
             public void onError(Throwable e) {
-                Log.d("Sim", "getWangYiNewOnError: " + e);
+                Log.d(TAG, "getWangYiNewOnError: " + e);
             }
 
             @Override

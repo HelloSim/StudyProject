@@ -28,6 +28,7 @@ import permissions.dispatcher.RuntimePermissions;
  */
 @RuntimePermissions
 public class BaseActivity extends AppCompatActivity {
+    private static final String TAG = "Sim_BaseActivity";
 
     public static final APIFactory retrofitUtil = APIFactory.getInstance();
 

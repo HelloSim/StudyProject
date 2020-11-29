@@ -29,6 +29,7 @@ import rx.Subscriber;
  * @Description 登陆页面
  */
 public class UserLogInActivity extends BaseActivity {
+    private static final String TAG = "Sim_UserLogInActivity";
 
     private Context context;
 
@@ -102,7 +103,7 @@ public class UserLogInActivity extends BaseActivity {
 
             @Override
             public void onError(Throwable e) {
-                Log.d("Sim", "getWangYiNewOnError: " + e);
+                Log.d(TAG, "getWangYiNewOnError: " + e);
             }
 
             @Override

@@ -31,6 +31,7 @@ import rx.Subscriber;
  * @Description :实时公交的搜索页面
  */
 public class BusRealTimeSearchActivity extends BaseActivity {
+    private static final String TAG = "Sim_BusRealTimeSearchActivity";
 
     @BindView(R.id.back)
     ImageView back;

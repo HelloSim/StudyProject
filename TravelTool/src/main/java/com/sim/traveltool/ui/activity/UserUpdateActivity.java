@@ -50,6 +50,7 @@ import rx.Subscriber;
  * @Description 显示用户信息的页面
  */
 public class UserUpdateActivity extends BaseActivity {
+    private static final String TAG = "Sim_UserUpdateActivity";
 
     private Context context;
 

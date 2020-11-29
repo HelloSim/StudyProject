@@ -30,6 +30,7 @@ import butterknife.OnClick;
  * @Description 显示网易新闻的页面
  */
 public class NewsDetailActivity extends BaseActivity {
+    private static final String TAG = "Sim_NewsDetailActivity";
 
     private Context context;
 

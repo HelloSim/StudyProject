@@ -32,6 +32,7 @@ import rx.Subscriber;
  * @Description :显示实时公交位置的页面
  */
 public class BusRealTimeActivity extends BaseActivity {
+    private static final String TAG = "Sim_BusRealTimeActivity";
 
     @BindView(R.id.rl_station_list)
     RecyclerView rlstationList;

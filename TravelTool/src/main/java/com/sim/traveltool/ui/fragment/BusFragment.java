@@ -33,6 +33,7 @@ import java.util.ArrayList;
  * @Description “首页”Fragment（“实时公交搜索”Fragment）
  */
 public class BusFragment extends Fragment implements View.OnClickListener {
+    private static final String TAG = "Sim_BusFragment";
 
     //轮播图模块
     private ViewPager viewPager;
@@ -69,8 +70,6 @@ public class BusFragment extends Fragment implements View.OnClickListener {
 
     private final int RESULT_START_STATION = 1001;
     private final int RESULT_END_STATION = 1002;
-    private String origin;
-    private String destination;
 
     @Nullable
     @Override

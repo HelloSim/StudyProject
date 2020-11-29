@@ -30,6 +30,7 @@ import static android.app.Activity.RESULT_OK;
  * @Description “我的”Fragment
  */
 public class UserFragment extends Fragment implements View.OnClickListener {
+    private static final String TAG = "Sim_UserFragment";
 
     private RelativeLayout userLogIn;
     private RelativeLayout userDetail;

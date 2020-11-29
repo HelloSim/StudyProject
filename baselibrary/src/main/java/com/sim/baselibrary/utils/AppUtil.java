@@ -21,6 +21,7 @@ import java.util.List;
  * @Description App常用工具类
  */
 public class AppUtil {
+    private static final String TAG = "AppUtil";
 
     /**
      * 打开指定APP
