@@ -94,41 +94,29 @@ public class RecordFragment extends Fragment implements CalendarView.OnMonthChan
      * 根据数据进行显示
      */
     private void showInfo(Calendar calendar) {
-        if (TimeUtil.getHour() < 13 && TimeUtil.getHour() >= 6)
-            btn_record.setText(getString(R.string.record_start));
-        else if (TimeUtil.getHour() >= 13 || TimeUtil.getHour() < 6)
-            btn_record.setText(getString(R.string.record_end));
-
         recordDataBeanList = RecordDataDaoUtil.getInstance().queryRecordForDay(getContext(), calendar);
         if (recordDataBeanList != null && recordDataBeanList.size() != 0) {
             recordDataBean = recordDataBeanList.get(0);
-
-            if (recordDataBean.getStartTime() != null && !recordDataBean.getStartTime().equals(getString(R.string.record_no))) {
-                tv_record_time_start.setText(recordDataBean.getStartTime());
-                if (recordDataBean.getIsLate()) {
-                    tv_record_time_start.setTextColor(Color.RED);
+            tv_record_time_start.setText(recordDataBean.getStartTime());
+            tv_record_time_end.setText(recordDataBean.getEndTime());
+            tv_record_time_start.setTextColor(recordDataBean.getIsLate() ? Color.RED : Color.WHITE);
+            tv_record_time_end.setTextColor(recordDataBean.getIsLeaveEarly() ? Color.RED : Color.WHITE);
+            if (tv_record_time_end.getText().equals(getString(R.string.record_no))) {//是否已打下班卡
+                if (tv_record_time_start.getText().equals(getString(R.string.record_no))) {//是否已打上班卡
+                    if (TimeUtil.getHour() >= 14) {
+                        btn_record.setText(getString(R.string.record_end));
+                    } else {
+                        btn_record.setText(getString(R.string.record_start));
+                    }
                 } else {
-                    tv_record_time_start.setTextColor(Color.WHITE);
+                    btn_record.setText(getString(R.string.record_end));
                 }
+            } else {
                 btn_record.setText(getString(R.string.record_end));
-            } else {
-                tv_record_time_start.setText(getString(R.string.record_no));
-            }
-            if (recordDataBean.getEndTime() != null) {
-                tv_record_time_end.setText(recordDataBean.getEndTime());
-                if (recordDataBean.getIsLeaveEarly()) {
-                    tv_record_time_end.setTextColor(Color.RED);
-                } else {
-                    tv_record_time_end.setTextColor(Color.WHITE);
-                }
-            } else {
-                tv_record_time_end.setText(getString(R.string.record_no));
             }
         } else {
             tv_record_time_start.setText(getString(R.string.record_no));
-            tv_record_time_start.setTextColor(Color.WHITE);
             tv_record_time_end.setText(getString(R.string.record_no));
-            tv_record_time_end.setTextColor(Color.WHITE);
         }
     }
 

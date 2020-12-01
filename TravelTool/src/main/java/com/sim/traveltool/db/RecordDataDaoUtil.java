@@ -199,7 +199,6 @@ public class RecordDataDaoUtil {
             RecordDataBean recordDataBean = list.get(0);
             recordDataBean.setEndTime(new SimpleDateFormat("HH:mm").format(System.currentTimeMillis()));
             recordDataBean.setIsLeaveEarly(isLeaveEarly);
-            recordDataBean.setIsLeaveEarly(false);
             recordDataBeanDao.update(recordDataBean);
         }
         return isLeaveEarly;
