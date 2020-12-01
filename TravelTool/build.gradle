@@ -48,6 +48,11 @@ android {
             signingConfig signingConfigs.release //签名配置文件
         }
     }
+//    //程序在编译的时候会检查lint，有任何错误提示会停止build，我们可以关闭这个开关
+//    lintOptions {
+//        abortOnError false//即使报错也不会停止打包
+//        checkReleaseBuilds false//打包release版本的时候进行检测
+//    }
     //设置JDK1.8
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8

@@ -103,7 +103,7 @@ public class RecordFragment extends Fragment implements CalendarView.OnMonthChan
         if (recordDataBeanList != null && recordDataBeanList.size() != 0) {
             recordDataBean = recordDataBeanList.get(0);
 
-            if (recordDataBean.getStartTime() != null) {
+            if (recordDataBean.getStartTime() != null && !recordDataBean.getStartTime().equals(getString(R.string.record_no))) {
                 tv_record_time_start.setText(recordDataBean.getStartTime());
                 if (recordDataBean.getIsLate()) {
                     tv_record_time_start.setTextColor(Color.RED);
