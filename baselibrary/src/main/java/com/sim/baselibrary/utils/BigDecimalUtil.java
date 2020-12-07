@@ -1,11 +1,11 @@
-package com.sim.test.utils;
+package com.sim.baselibrary.utils;
 
 import java.math.BigDecimal;
 
 /**
- * @Time: 2020/9/21 23:31
- * @Author: HelloSim
- * @Description :提供精确的浮点数运算(包括加、减、乘、除、四舍五入)工具类
+ * @Auther Sim
+ * @Time 2019/4/22 1:05
+ * @Description 提供精确的浮点数运算(包括加、减、乘、除、四舍五入)工具类
  */
 public class BigDecimalUtil {
     // 除法运算默认精度

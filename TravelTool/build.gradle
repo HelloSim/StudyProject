@@ -7,8 +7,8 @@ android {
         applicationId "com.sim.traveltool"
         minSdkVersion rootProject.ext.android["minSdkVersion"]
         targetSdkVersion rootProject.ext.android["targetSdkVersion"]
-        versionCode 3
-        versionName "2.1"
+        versionCode 4
+        versionName "3.1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     signingConfigs {
