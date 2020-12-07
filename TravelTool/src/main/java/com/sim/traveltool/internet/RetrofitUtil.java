@@ -21,6 +21,8 @@ import okhttp3.Response;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.http.GET;
+import retrofit2.http.Query;
 import rx.Observable;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
@@ -38,6 +40,12 @@ public class RetrofitUtil {
     /**
      * 服务器地址
      */
+//    private static final String BASE_URL = "https://homepage-api.smzdm.com";
+//    /**
+//     * Home的Data请求API
+//     */
+//    @GET("v1/home")
+//    Observable <SmzdmDataBean> getHome(@Query("page") String page, @Query("limit") String limit, @Query("time") String time);
     private static final String USER_BASE_URL = "https://api.apiopen.top";
     private static final String BUS_BASE_URL = "http://www.zhbuswx.com";
     private static final String ROUTE_BASE_URL = "http://restapi.amap.com";
@@ -99,6 +107,7 @@ public class RetrofitUtil {
      * 初始化OKHttpClient
      */
     private void initOKHttp() {
+        // 缓存 http://www.jianshu.com/p/93153b34310e
         OkHttpClient.Builder builder = new OkHttpClient.Builder();
         File cacheFile = new File(AppUtil.getCacheDir(mContext), "httpCache");
         Cache cache = new Cache(cacheFile, 1024 * 1024 * 50);
@@ -117,6 +126,12 @@ public class RetrofitUtil {
                 if (AppUtil.isNetworkConnected(mContext)) {//如果网络可用
                     Log.d(TAG, "网络可用响应拦截");
                     response = response.newBuilder()
+//                            //移除旧的
+//                            .removeHeader("User-Agent")
+//                            //添加User-Agent
+//                            .addHeader("User-Agent", "smzdm_android_V9.4.1 rv:531 (M5 Note;Android7.0;zh)smzdmapp")
+//                            .addHeader("Cookie", "smzdm_version=9.4.1;device_type=MeizuM5+Note;client_id=c28544ee8b1aadd14917d4bb259a5800.1556553428584;rs_id2=;rs_id4=;imei=;login=0;smzdm_id=;session_id=c28544ee8b1aadd14917d4bb259a5800.1556553429515;partner_name=meizu;android_id=d405ef5f6cf955607bd83d8e513ef081;partner_id=14;rs_id1=;rs_id3=;pid=9Jd9raKWVDNqWUZR8JCwticG2QBPx7NU8MzInof1iXhzbfQDpoHn1A%3D%3D;smzdm_user_source=d405ef5f6cf955607bd83d8e513ef081;new_device_id=d405ef5f6cf955607bd83d8e513ef081;device_smzdm_version_code=531;mac=A4%3A44%3AD1%3AF3%3A57%3A2A;rs_id5=;network=1;device_system_version=7.0;device_id=c28544ee8b1aadd14917d4bb259a5800;device_push=0;sessionID=c28544ee8b1aadd14917d4bb259a5800.1556553429515;device_smzdm=android;device_s=d405ef5f6cf955607bd83d8e513ef081;device_smzdm_version=9.4.1;")
+//                            .build();
                             //覆盖服务器响应头的Cache-Control,用我们自己的,因为服务器响应回来的可能不支持缓存
                             .header("Cache-Control", "public,max-age=" + maxCacheTime)
                             .removeHeader("Pragma")

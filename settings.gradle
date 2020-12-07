@@ -1,6 +1,4 @@
 include ':baselibrary'
 include ':sqlitelibrary'
-include ':Test'
 include ':TravelTool'
-include ':app'
 rootProject.name = "StudyProject"
