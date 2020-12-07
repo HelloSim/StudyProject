@@ -169,11 +169,11 @@ public class BusRealTimeActivity extends BaseActivity {
      */
     private void getBusListOnRoad(String lineName, String fromStation) {
         busListOnRoadListList.clear();
-        ivRefresh.setImageDrawable(getResources().getDrawable(R.mipmap.ic_refresh_gray));
+        ivRefresh.setImageDrawable(getResources().getDrawable(R.mipmap.ic_bus_refresh_gray));
         retrofitUtil.getBusListOnRoad(new Subscriber<BusRealTimeDataBean>() {
             @Override
             public void onCompleted() {
-                ivRefresh.setImageDrawable(getResources().getDrawable(R.mipmap.ic_refresh_blue));
+                ivRefresh.setImageDrawable(getResources().getDrawable(R.mipmap.ic_bus_refresh_blue));
                 //30s做一次更新查询
                 handler.sendEmptyMessageDelayed(REFRESH, 30000);
                 if (stationListAdapter == null) {

@@ -1,20 +1,29 @@
 package com.sim.traveltool.ui.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.bumptech.glide.Glide;
+import com.google.gson.Gson;
+import com.sim.baselibrary.utils.SPUtil;
+import com.sim.baselibrary.utils.ToastUtil;
 import com.sim.traveltool.R;
+import com.sim.traveltool.bean.UserInfo;
 import com.sim.traveltool.ui.fragment.RecordFragment;
 import com.sim.traveltool.ui.fragment.BusFragment;
-import com.sim.traveltool.ui.fragment.UserFragment;
 import com.sim.traveltool.ui.fragment.WangyiFragment;
 
 import butterknife.BindView;
@@ -34,13 +43,36 @@ public class MainActivity extends BaseActivity {
     RadioButton barSpeed;
     @BindView(R.id.bottom_bar_record)
     RadioButton barCommunity;
-    @BindView(R.id.bottom_bar_user)
-    RadioButton barMe;
+
+    @BindView(R.id.dl_drawer)
+    DrawerLayout dl_drawer;
+    @BindView(R.id.user_log_in)
+    RelativeLayout userLogIn;
+    @BindView(R.id.user_detail)
+    RelativeLayout userDetail;
+    @BindView(R.id.user_collect)
+    RelativeLayout userCollect;
+    @BindView(R.id.user_setting)
+    RelativeLayout userSetting;
+    @BindView(R.id.user_image)
+    ImageView userImage;
+    @BindView(R.id.user_nike_name)
+    TextView userNikeName;
+    @BindView(R.id.user_autograph)
+    TextView userAutograph;
+
+    private String spName = "userState";
+    private String spStateKey = "isLogIn";
+    private String spUserInfoKey = "userInfo";
+    private boolean isLogIn = false;
+
+    private UserInfo userInfo;
+
+    private final int LogInNum = 1001;
 
     private BusFragment busFragment;
     private WangyiFragment wangyiFragment;
     private RecordFragment recordFragment;
-    private UserFragment meFragment;
 
     private FragmentManager mFragmentManager;
     private FragmentTransaction mFragmentTransaction;
@@ -50,18 +82,62 @@ public class MainActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+        initData();
         initView();
+    }
+
+    private void initData() {
+        if (!SPUtil.contains(this, spName, spStateKey)) {
+            SPUtil.put(this, spName, spStateKey, isLogIn);
+        } else {
+            isLogIn = (boolean) SPUtil.get(this, spName, spStateKey, false);
+        }
     }
 
     private void initView() {
         barHome.performClick();
+        userImage = findViewById(R.id.user_image);
+        userNikeName = findViewById(R.id.user_nike_name);
+        userAutograph = findViewById(R.id.user_autograph);
+        if (isLogIn) {
+            userLogIn.setVisibility(View.GONE);
+            userDetail.setVisibility(View.VISIBLE);
+            if (SPUtil.contains(this, spName, spUserInfoKey)) {
+                userInfo = new Gson().fromJson((String) SPUtil.get(this, spName, spUserInfoKey, ""), UserInfo.class);
+                if (userInfo != null) {
+                    if (userInfo.getResult().getHeaderImg() != null) {
+                        Glide.with(this).load(userInfo.getResult().getHeaderImg()).into(userImage);
+                    }
+                    if (userInfo.getResult().getName() != null) {
+                        userNikeName.setText(userInfo.getResult().getName());
+                    }
+                    if (userInfo.getResult().getAutograph() != null) {
+                        userAutograph.setText(userInfo.getResult().getAutograph());
+                    }
+                } else {
+                    isLogIn = false;
+                    userDetail.setVisibility(View.GONE);
+                    userLogIn.setVisibility(View.VISIBLE);
+                }
+            } else {
+                isLogIn = false;
+                userDetail.setVisibility(View.GONE);
+                userLogIn.setVisibility(View.VISIBLE);
+            }
+        } else {
+            userDetail.setVisibility(View.GONE);
+            userLogIn.setVisibility(View.VISIBLE);
+        }
     }
 
-    @OnClick({R.id.bottom_bar_radioGroup, R.id.bottom_bar_bus, R.id.bottom_bar_wangyi, R.id.bottom_bar_record, R.id.bottom_bar_user})
-    public void onClick(View v) {
+    /**
+     * 隐藏所有的fragment再显示需要的fragment
+     *
+     * @param type 1:公交fragment     2：网易fragment    3：打卡fragment
+     */
+    private void hideAllFragment(int type) {
         mFragmentManager = getSupportFragmentManager();
         mFragmentTransaction = mFragmentManager.beginTransaction();
-
         if (busFragment != null) {
             mFragmentTransaction.hide(busFragment);
         }
@@ -71,12 +147,8 @@ public class MainActivity extends BaseActivity {
         if (recordFragment != null) {
             mFragmentTransaction.hide(recordFragment);
         }
-        if (meFragment != null) {
-            mFragmentTransaction.hide(meFragment);
-        }
-
-        switch (v.getId()) {
-            case R.id.bottom_bar_bus:
+        switch (type) {
+            case 1:
                 if (busFragment == null) {
                     busFragment = new BusFragment();
                     mFragmentTransaction.add(R.id.frameLayout, busFragment);
@@ -84,7 +156,7 @@ public class MainActivity extends BaseActivity {
                     mFragmentTransaction.show(busFragment);
                 }
                 break;
-            case R.id.bottom_bar_wangyi:
+            case 2:
                 if (wangyiFragment == null) {
                     wangyiFragment = new WangyiFragment();
                     mFragmentTransaction.add(R.id.frameLayout, wangyiFragment);
@@ -92,7 +164,7 @@ public class MainActivity extends BaseActivity {
                     mFragmentTransaction.show(wangyiFragment);
                 }
                 break;
-            case R.id.bottom_bar_record:
+            case 3:
                 if (recordFragment == null) {
                     recordFragment = new RecordFragment();
                     mFragmentTransaction.add(R.id.frameLayout, recordFragment);
@@ -100,16 +172,74 @@ public class MainActivity extends BaseActivity {
                     mFragmentTransaction.show(recordFragment);
                 }
                 break;
-            case R.id.bottom_bar_user:
-                if (meFragment == null) {
-                    meFragment = new UserFragment();
-                    mFragmentTransaction.add(R.id.frameLayout, meFragment);
-                } else {
-                    mFragmentTransaction.show(meFragment);
-                }
-                break;
         }
         mFragmentTransaction.commit();
+    }
+
+    @OnClick({R.id.bottom_bar_radioGroup, R.id.bottom_bar_bus, R.id.bottom_bar_wangyi, R.id.bottom_bar_record,
+            R.id.user_log_in, R.id.user_detail, R.id.user_collect, R.id.user_setting})
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.bottom_bar_bus:
+                hideAllFragment(1);
+                break;
+            case R.id.bottom_bar_wangyi:
+                hideAllFragment(2);
+                break;
+            case R.id.bottom_bar_record:
+                hideAllFragment(3);
+                break;
+            case R.id.user_log_in:
+                dl_drawer.close();
+                startActivityForResult(new Intent(this, UserLogInActivity.class), LogInNum);
+                break;
+            case R.id.user_detail:
+                dl_drawer.close();
+                startActivityForResult(new Intent(this, UserUpdateActivity.class), LogInNum);
+                break;
+            case R.id.user_collect:
+                if (isLogIn) {
+                    dl_drawer.close();
+                    startActivity(new Intent(this, NewsCollectActivity.class));
+                } else {
+                    ToastUtil.T_Error(this, "未登录！");
+                }
+                break;
+            case R.id.user_setting:
+                dl_drawer.close();
+                break;
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK && requestCode == LogInNum) {
+            isLogIn = (boolean) SPUtil.get(this, spName, spStateKey, false);
+            if (isLogIn) {
+                userLogIn.setVisibility(View.GONE);
+                userDetail.setVisibility(View.VISIBLE);
+                if (SPUtil.contains(this, spName, spUserInfoKey)) {
+                    userInfo = new Gson().fromJson((String) SPUtil.get(this, spName, spUserInfoKey, ""), UserInfo.class);
+                    if (userInfo.getResult().getHeaderImg() != null) {
+                        Glide.with(this).load(userInfo.getResult().getHeaderImg()).into(userImage);
+                    }
+                    if (userInfo.getResult().getName() != null) {
+                        userNikeName.setText(userInfo.getResult().getName());
+                    }
+                    if (userInfo.getResult().getAutograph() != null) {
+                        userAutograph.setText(userInfo.getResult().getAutograph());
+                    }
+                } else {
+                    isLogIn = false;
+                    userDetail.setVisibility(View.GONE);
+                    userLogIn.setVisibility(View.VISIBLE);
+                }
+            } else {
+                userDetail.setVisibility(View.GONE);
+                userLogIn.setVisibility(View.VISIBLE);
+            }
+        }
     }
 
     /**

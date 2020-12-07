@@ -16,7 +16,6 @@ import com.bin.david.form.data.format.tip.MultiLineBubbleTip;
 import com.bin.david.form.data.style.FontStyle;
 import com.bin.david.form.utils.DensityUtils;
 import com.haibin.calendarview.Calendar;
-import com.sim.baselibrary.utils.TimeUtil;
 import com.sim.sqlitelibrary.bean.RecordDataBean;
 import com.sim.traveltool.R;
 import com.sim.traveltool.db.RecordDataDaoUtil;
@@ -103,7 +102,7 @@ public class RecordAllActivity extends BaseActivity {
                 });
 
         FontStyle fontStyle = new FontStyle();
-        MultiLineBubbleTip<Column> tip = new MultiLineBubbleTip<Column>(this, R.mipmap.round_rect, R.mipmap.triangle, fontStyle) {
+        MultiLineBubbleTip<Column> tip = new MultiLineBubbleTip<Column>(this, R.mipmap.ic_round_rect, R.mipmap.ic_triangle, fontStyle) {
             @Override
             public boolean isShowTip(Column column, int position) {
                 return true;

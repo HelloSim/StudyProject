@@ -11,6 +11,10 @@
     <string name="record">打卡</string>
     <string name="user">我的</string>
 
+    <string name="user_login">用户登录</string>
+    <string name="user_detail">收藏</string>
+    <string name="user_setting">设置</string>
+
     <string name="year">年</string>
     <string name="month">月</string>
     <string name="day">日</string>

@@ -65,7 +65,7 @@
                 android:layout_width="25dp"
                 android:layout_height="25dp"
                 android:layout_marginRight="5dp"
-                android:src="@mipmap/ic_walk" />
+                android:src="@mipmap/ic_bus_walk" />
 
             <TextView
                 android:id="@+id/tv_item_walk"

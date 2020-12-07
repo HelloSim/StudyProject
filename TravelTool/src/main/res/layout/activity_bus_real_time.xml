@@ -33,7 +33,7 @@
             android:layout_centerVertical="true"
             android:layout_alignParentRight="true"
             android:layout_marginRight="20dp"
-            android:src="@mipmap/ic_refresh_blue"/>
+            android:src="@mipmap/ic_bus_refresh_blue"/>
 
     </RelativeLayout>
 

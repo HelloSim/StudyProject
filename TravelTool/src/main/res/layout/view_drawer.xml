@@ -32,7 +32,8 @@
             android:padding="20dp"
             android:visibility="visible">
 
-            <com.sim.baselibrary.views.CircleImageView
+<!--            <com.sim.baselibrary.views.CircleImageView-->
+            <ImageView
                 android:id="@+id/user_image_default"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
