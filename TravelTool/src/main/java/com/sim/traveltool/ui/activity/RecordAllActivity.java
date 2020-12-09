@@ -25,6 +25,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * @Auther Sim
@@ -141,6 +142,15 @@ public class RecordAllActivity extends BaseActivity {
 //                }
 //            }
 //        });//点击事件
+    }
+
+    @OnClick({R.id.back})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.back:
+                finish();
+                break;
+        }
     }
 
 }
