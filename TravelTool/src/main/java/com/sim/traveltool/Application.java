@@ -3,8 +3,13 @@ package com.sim.traveltool;
 import android.annotation.SuppressLint;
 import android.content.Context;
 
+import androidx.multidex.MultiDex;
+
 import com.sim.baselibrary.utils.CrashHandler;
 import com.sim.traveltool.internet.APIFactory;
+import com.tencent.bugly.Bugly;
+import com.tencent.bugly.beta.Beta;
+import com.tencent.bugly.crashreport.CrashReport;
 
 /**
  * @Auther Sim
@@ -22,6 +27,16 @@ public class Application extends android.app.Application {
         context = this;
         CrashHandler.getInstance().init(context);
         APIFactory.getInstance().init(this);
+        Bugly.init(this, AppHelper.Bugly_APPID, false);
+    }
+
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(base);
+        // you must install multiDex whatever tinker is installed!
+        MultiDex.install(base);
+        // 安装tinker
+        Beta.installTinker();
     }
 
 }
