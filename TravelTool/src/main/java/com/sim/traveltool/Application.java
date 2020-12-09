@@ -3,6 +3,7 @@ package com.sim.traveltool;
 import android.annotation.SuppressLint;
 import android.content.Context;
 
+import com.sim.baselibrary.utils.CrashHandler;
 import com.sim.traveltool.internet.APIFactory;
 
 /**
@@ -19,6 +20,7 @@ public class Application extends android.app.Application {
     public void onCreate() {
         super.onCreate();
         context = this;
+        CrashHandler.getInstance().init(context);
         APIFactory.getInstance().init(this);
     }
 
