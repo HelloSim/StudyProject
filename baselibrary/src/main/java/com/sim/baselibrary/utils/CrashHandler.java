@@ -1,6 +1,5 @@
 package com.sim.baselibrary.utils;
 
-import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
