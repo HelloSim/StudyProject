@@ -11,8 +11,10 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.sim.baselibrary.utils.AppUtil;
 import com.sim.traveltool.R;
 import com.sim.traveltool.bean.NewsWangYiBean;
+import com.sim.traveltool.ui.activity.NewsCollectActivity;
 
 import java.util.ArrayList;
 
@@ -81,13 +83,15 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
                 mOnItemClickListerer.onItemClick(view, position);
             }
         });
-        holder.itemParent.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View view) {
-                mOnItemLongClickListener.onItemLongClick(view, position);
-                return true;
-            }
-        });
+        if (AppUtil.isActivityRunning(mContext, NewsCollectActivity.class.getSimpleName())) {
+            holder.itemParent.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View view) {
+                    mOnItemLongClickListener.onItemLongClick(view, position);
+                    return true;
+                }
+            });
+        }
     }
 
     @Override
