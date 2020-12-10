@@ -11,7 +11,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,9 +29,9 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.sim.baselibrary.constant.Constant;
+import com.sim.baselibrary.utils.LogUtil;
 import com.sim.traveltool.R;
 import com.sim.traveltool.bean.UserInfo;
-import com.sim.traveltool.ui.activity.BaseActivity;
 import com.sim.baselibrary.utils.SPUtil;
 import com.sim.baselibrary.utils.ScreenUtil;
 import com.google.gson.Gson;
@@ -265,7 +264,7 @@ public class UserUpdateActivity extends BaseActivity {
 
             @Override
             public void onError(Throwable e) {
-                Log.d("Sim", "getWangYiNewOnError: " + e);
+                LogUtil.d(TAG, "getWangYiNewOnError: " + e);
             }
 
             @Override

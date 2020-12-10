@@ -41,6 +41,8 @@ public class WangyiFragment extends Fragment {
 
     private SwipeRefreshLayout refreshLayout;
 
+    private int page = 0;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -126,7 +128,7 @@ public class WangyiFragment extends Fragment {
                 newsList.addAll(wangYiNewsBean.getResult());
                 newsAdapter.notifyDataSetChanged();
             }
-        }, String.valueOf((int) (0 + Math.random() * 1000)), "20");
+        }, String.valueOf(page++), "20");
     }
 
 }

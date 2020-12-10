@@ -12,6 +12,7 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 
 import com.sim.baselibrary.constant.Constant;
+import com.sim.baselibrary.utils.LogUtil;
 import com.sim.traveltool.R;
 import com.sim.traveltool.bean.UserInfo;
 import com.sim.traveltool.ui.activity.BaseActivity;
@@ -102,7 +103,7 @@ public class UserRegisterActivity extends BaseActivity {
 
             @Override
             public void onError(Throwable e) {
-                Log.d("Sim", "getWangYiNewOnError: " + e);
+                LogUtil.d(TAG, "getWangYiNewOnError: " + e);
             }
 
             @Override

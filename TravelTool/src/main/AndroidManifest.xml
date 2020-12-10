@@ -41,10 +41,8 @@
         <activity android:name="com.sim.traveltool.ui.activity.UserRegisterActivity" />
         <activity android:name="com.sim.traveltool.ui.activity.UserUpdateActivity" />
 
-        <activity android:name="com.sim.traveltool.ui.activity.BusRealTimeSearchActivity" />
         <activity android:name="com.sim.traveltool.ui.activity.BusRealTimeActivity" />
-
-        <activity android:name="com.sim.traveltool.ui.activity.BusRouteSearchLocationActivity" />
+        <activity android:name="com.sim.traveltool.ui.activity.BusSearchActivity"/>
         <activity android:name="com.sim.traveltool.ui.activity.BusRouteActivity" />
         <activity android:name="com.sim.traveltool.ui.activity.BusRouteDetailActivity" />
 

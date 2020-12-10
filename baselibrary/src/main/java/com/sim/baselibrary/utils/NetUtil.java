@@ -23,7 +23,7 @@ import java.util.Enumeration;
  */
 public class NetUtil {
 
-    private static final String TAG = "Sim";
+    private static final String TAG = "Sim_NetUtil";
 
     //没有连接网络 
     private static final int NETWORK_NONE = -1;

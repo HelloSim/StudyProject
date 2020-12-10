@@ -19,11 +19,11 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
+import com.sim.traveltool.AppHelper;
 import com.sim.traveltool.R;
 import com.sim.traveltool.adapter.LoopViewAdapter;
-import com.sim.traveltool.ui.activity.BusRouteSearchLocationActivity;
-import com.sim.traveltool.ui.activity.BusRealTimeSearchActivity;
 import com.sim.traveltool.ui.activity.BusRouteActivity;
+import com.sim.traveltool.ui.activity.BusSearchActivity;
 
 import java.util.ArrayList;
 
@@ -66,10 +66,6 @@ public class BusFragment extends Fragment implements View.OnClickListener {
     private LinearLayout llStationContent;
     private TextView tvStation;
     private Button btnStation;
-
-
-    private final int RESULT_START_STATION = 1001;
-    private final int RESULT_END_STATION = 1002;
 
     @Nullable
     @Override
@@ -197,7 +193,7 @@ public class BusFragment extends Fragment implements View.OnClickListener {
         // 图片资源id数组
         mImg = new int[]{R.mipmap.photo1, R.mipmap.photo2, R.mipmap.photo3, R.mipmap.photo4, R.mipmap.photo5};
         // 文本描述
-        mDec = new String[]{"神·艾尼路的自然系响雷果实", "人物志--乔巴", "唐吉诃德·多弗朗明哥", "红发香克斯实力", "特拉法尔加·罗"};
+        mDec = new String[]{"", "", "", "", ""};
         //
         mImg_id = new int[]{R.id.pager_img1, R.id.pager_img2, R.id.pager_img3, R.id.pager_img4, R.id.pager_img5};
         // 初始化要展示的5个ImageView
@@ -304,13 +300,13 @@ public class BusFragment extends Fragment implements View.OnClickListener {
                 llStationContent.setVisibility(View.VISIBLE);
                 break;
             case R.id.tv_search:
-                startActivity(new Intent(getActivity(), BusRealTimeSearchActivity.class));
+                startActivity(new Intent(getActivity(), BusSearchActivity.class).putExtra("searchType", AppHelper.RESULT_BUS));
                 break;
             case R.id.tv_start_station:
-                startActivityForResult(new Intent(getActivity(), BusRouteSearchLocationActivity.class), RESULT_START_STATION);
+                startActivityForResult(new Intent(getActivity(), BusSearchActivity.class).putExtra("searchType", AppHelper.RESULT_START_STATION), AppHelper.RESULT_START_STATION);
                 break;
             case R.id.tv_end_station:
-                startActivityForResult(new Intent(getActivity(), BusRouteSearchLocationActivity.class), RESULT_END_STATION);
+                startActivityForResult(new Intent(getActivity(), BusSearchActivity.class).putExtra("searchType", AppHelper.RESULT_END_STATION), AppHelper.RESULT_END_STATION);
                 break;
             case R.id.btn_route:
                 if (tvStartStation.getText().length() > 0 && tvEndStation.getText().length() > 0) {
@@ -329,11 +325,11 @@ public class BusFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == RESULT_START_STATION) {
+        if (requestCode == AppHelper.RESULT_START_STATION) {
             if ((data != null)) {
                 tvStartStation.setText(data.getStringExtra("name"));
             }
-        } else if (requestCode == RESULT_END_STATION) {
+        } else if (requestCode == AppHelper.RESULT_END_STATION) {
             if ((data != null)) {
                 tvEndStation.setText(data.getStringExtra("name"));
             }

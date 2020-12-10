@@ -7,6 +7,7 @@ import com.sim.baselibrary.bean.HttpResult;
 import com.sim.baselibrary.internet.APIException;
 import com.sim.baselibrary.internet.AppUtil;
 import com.sim.baselibrary.internet.RxUtils;
+import com.sim.traveltool.AppHelper;
 
 import java.io.File;
 import java.io.IOException;
@@ -21,8 +22,6 @@ import okhttp3.Response;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
-import retrofit2.http.GET;
-import retrofit2.http.Query;
 import rx.Observable;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
@@ -36,19 +35,6 @@ import rx.schedulers.Schedulers;
  */
 public class RetrofitUtil {
     private static final String TAG = "Sim_RetrofitUtil";
-
-    /**
-     * 服务器地址
-     */
-//    private static final String BASE_URL = "https://homepage-api.smzdm.com";
-//    /**
-//     * Home的Data请求API
-//     */
-//    @GET("v1/home")
-//    Observable <SmzdmDataBean> getHome(@Query("page") String page, @Query("limit") String limit, @Query("time") String time);
-    private static final String USER_BASE_URL = "https://api.apiopen.top";
-    private static final String BUS_BASE_URL = "http://www.zhbuswx.com";
-    private static final String ROUTE_BASE_URL = "http://restapi.amap.com";
 
     private UserAPIService userAPIService;
     private BusAPIService busAPIService;
@@ -169,19 +155,19 @@ public class RetrofitUtil {
      */
     private void initRetrofit() {
         userRetrofit = new Retrofit.Builder()
-                .baseUrl(USER_BASE_URL)
+                .baseUrl(AppHelper.USER_BASE_URL)
                 .client(okHttpClient)
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .build();
         busRetrofit = new Retrofit.Builder()
-                .baseUrl(BUS_BASE_URL)
+                .baseUrl(AppHelper.BUS_BASE_URL)
                 .client(okHttpClient)
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .build();
         routeRetrofit = new Retrofit.Builder()
-                .baseUrl(ROUTE_BASE_URL)
+                .baseUrl(AppHelper.ROUTE_BASE_URL)
                 .client(okHttpClient)
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())

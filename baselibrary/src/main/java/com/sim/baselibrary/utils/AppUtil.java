@@ -21,7 +21,7 @@ import java.util.List;
  * @Description App常用工具类
  */
 public class AppUtil {
-    private static final String TAG = "AppUtil";
+    private static final String TAG = "Sim_AppUtil";
 
     /**
      * 打开指定APP
@@ -130,7 +130,7 @@ public class AppUtil {
             PackageManager pm = context.getApplicationContext().getPackageManager();
             pi = pm.getPackageInfo(pkgName, 0);
         } catch (Throwable t) {
-            Log.d("Sim", t.getMessage(), t);
+            Log.d(TAG, t.getMessage(), t);
         }
         // 是系统中已安装的应用
         if (pi != null) {

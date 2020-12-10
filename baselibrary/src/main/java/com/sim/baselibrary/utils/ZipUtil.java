@@ -22,7 +22,7 @@ import java.util.zip.ZipOutputStream;
  */
 public class ZipUtil {
 
-    public static final String TAG = "ZipUtils";
+    public static final String TAG = "Sim_ZipUtils";
 
     public ZipUtil() {
     }
