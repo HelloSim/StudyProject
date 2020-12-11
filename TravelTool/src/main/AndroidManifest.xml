@@ -42,11 +42,13 @@
         <activity android:name="com.sim.traveltool.ui.activity.UserUpdateActivity" />
 
         <activity android:name="com.sim.traveltool.ui.activity.BusRealTimeActivity" />
-        <activity android:name="com.sim.traveltool.ui.activity.BusSearchActivity"/>
+        <activity android:name="com.sim.traveltool.ui.activity.BusSearchActivity" />
         <activity android:name="com.sim.traveltool.ui.activity.BusRouteActivity" />
         <activity android:name="com.sim.traveltool.ui.activity.BusRouteDetailActivity" />
 
-        <activity android:name="com.sim.traveltool.ui.activity.RecordAllActivity"/>
+        <activity android:name="com.sim.traveltool.ui.activity.RecordAllActivity" />
+
+        <activity android:name=".ui.activity.HideActivity" />
 
         <!--<service
             android:name=".music.ui.EasyTileService"
@@ -66,7 +68,7 @@
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/provider_paths"
-                tools:replace="name,resource"/>
+                tools:replace="name,resource" />
         </provider>
 
     </application>

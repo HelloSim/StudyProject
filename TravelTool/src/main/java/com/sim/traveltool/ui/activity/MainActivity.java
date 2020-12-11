@@ -1,7 +1,10 @@
 package com.sim.traveltool.ui.activity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -77,6 +80,9 @@ public class MainActivity extends BaseActivity {
     private FragmentManager mFragmentManager;
     private FragmentTransaction mFragmentTransaction;
 
+    private Handler handler;
+    private int count = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -86,12 +92,21 @@ public class MainActivity extends BaseActivity {
         initView();
     }
 
+    @SuppressLint("HandlerLeak")
     private void initData() {
         if (!SPUtil.contains(this, spName, spStateKey)) {
             SPUtil.put(this, spName, spStateKey, isLogIn);
         } else {
             isLogIn = (boolean) SPUtil.get(this, spName, spStateKey, false);
         }
+
+        handler = new Handler() {
+            @Override
+            public void handleMessage(Message msg) {
+                super.handleMessage(msg);
+                count = 0;
+            }
+        };
     }
 
     private void initView() {
@@ -176,6 +191,18 @@ public class MainActivity extends BaseActivity {
         mFragmentTransaction.commit();
     }
 
+    //按6下进入隐藏界面（间隔不能超过1s）
+    private void clickMark() {
+        if (count != 5) {
+            handler.removeMessages(1001);
+            count++;
+            handler.sendEmptyMessageDelayed(1001, 1000);
+        } else {
+            startActivity(new Intent(this, HideActivity.class));
+            count = 0;
+        }
+    }
+
     @OnClick({R.id.bottom_bar_radioGroup, R.id.bottom_bar_bus, R.id.bottom_bar_wangyi, R.id.bottom_bar_record,
             R.id.user_log_in, R.id.user_detail, R.id.user_collect, R.id.user_setting})
     public void onClick(View v) {
@@ -206,7 +233,7 @@ public class MainActivity extends BaseActivity {
                 }
                 break;
             case R.id.user_setting:
-                dl_drawer.close();
+                clickMark();
                 break;
         }
     }
