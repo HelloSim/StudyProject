@@ -9,7 +9,6 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
-import android.util.Log;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -130,7 +129,7 @@ public class AppUtil {
             PackageManager pm = context.getApplicationContext().getPackageManager();
             pi = pm.getPackageInfo(pkgName, 0);
         } catch (Throwable t) {
-            Log.d(TAG, t.getMessage(), t);
+            LogUtil.e(TAG, "判断是否系统应用出错：" + t);
         }
         // 是系统中已安装的应用
         if (pi != null) {
@@ -247,11 +246,11 @@ public class AppUtil {
             Method forceStopPackage = am.getClass().getDeclaredMethod("forceStopPackage", String.class);
             forceStopPackage.setAccessible(true);
             forceStopPackage.invoke(am, packageName);
-            Log.d("TAG", "stopApps: successful");
+            LogUtil.i(TAG, "stopApps: successful");
             return true;
         } catch (Exception ex) {
             ex.printStackTrace();
-            Log.d("TAG", "stopApps: error");
+            LogUtil.i(TAG, "stopApps: error");
             return false;
         }
     }

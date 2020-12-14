@@ -22,7 +22,6 @@ import java.util.Enumeration;
  * @Description Net工具类
  */
 public class NetUtil {
-
     private static final String TAG = "Sim_NetUtil";
 
     //没有连接网络 
@@ -38,17 +37,17 @@ public class NetUtil {
         @SuppressLint("MissingPermission") NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
         if (activeNetworkInfo != null && activeNetworkInfo.isConnected()) {
             if (activeNetworkInfo.getType() == (ConnectivityManager.TYPE_WIFI)) {
-                Log.d(TAG, "getNetWorkState: WIFI");
+                LogUtil.d(TAG, "getNetWorkState: WIFI");
                 return NETWORK_WIFI;
             } else if (activeNetworkInfo.getType() == (ConnectivityManager.TYPE_ETHERNET)) {
-                Log.d(TAG, "getNetWorkState: MOBILE");
+                LogUtil.d(TAG, "getNetWorkState: MOBILE");
                 return NETWORK_MOBILE;
             }
         } else {
-            Log.d(TAG, "getNetWorkState: NONETWORK");
+            LogUtil.d(TAG, "getNetWorkState: NONETWORK");
             return NETWORK_NONE;
         }
-        Log.d(TAG, "getNetWorkState: NONETWORK");
+        LogUtil.d(TAG, "getNetWorkState: NONETWORK");
         return NETWORK_NONE;
     }
 

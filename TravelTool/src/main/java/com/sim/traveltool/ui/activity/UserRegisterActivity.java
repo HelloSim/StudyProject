@@ -2,7 +2,6 @@ package com.sim.traveltool.ui.activity;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -15,7 +14,6 @@ import com.sim.baselibrary.constant.Constant;
 import com.sim.baselibrary.utils.LogUtil;
 import com.sim.traveltool.R;
 import com.sim.traveltool.bean.UserInfo;
-import com.sim.traveltool.ui.activity.BaseActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -103,7 +101,7 @@ public class UserRegisterActivity extends BaseActivity {
 
             @Override
             public void onError(Throwable e) {
-                LogUtil.d(TAG, "getWangYiNewOnError: " + e);
+                LogUtil.e(TAG, "getWangYiNewOnError: " + e);
             }
 
             @Override

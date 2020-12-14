@@ -3,7 +3,6 @@ package com.sim.traveltool.ui.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -13,6 +12,7 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 
 import com.sim.baselibrary.constant.Constant;
+import com.sim.baselibrary.utils.LogUtil;
 import com.sim.traveltool.R;
 import com.sim.traveltool.bean.UserInfo;
 import com.sim.baselibrary.utils.SPUtil;
@@ -103,7 +103,7 @@ public class UserLogInActivity extends BaseActivity {
 
             @Override
             public void onError(Throwable e) {
-                Log.d(TAG, "getWangYiNewOnError: " + e);
+                LogUtil.e(TAG, "logInOnError: " + e);
             }
 
             @Override

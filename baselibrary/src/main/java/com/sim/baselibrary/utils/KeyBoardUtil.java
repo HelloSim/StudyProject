@@ -3,7 +3,6 @@ package com.sim.baselibrary.utils;
 import android.app.Activity;
 import android.content.Context;
 import android.text.InputType;
-import android.util.Log;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -20,6 +19,7 @@ import java.lang.reflect.Method;
  * @Description 打开或关闭软键盘
  */
 public class KeyBoardUtil {
+    public static final String TAG = "Sim_KeyBoardUtil";
 
     /**
      * 关闭搜索
@@ -29,7 +29,7 @@ public class KeyBoardUtil {
             ((SearchView.SearchAutoComplete) searchView.findViewById(R.id.search_src_text)).setText("");
             searchView.setIconified(true);
         } catch (Exception e) {
-            Log.e(e.toString(), "SearchView onCloseClicked");
+            LogUtil.e(TAG, "SearchView onCloseClicked" + e);
         }
     }
 

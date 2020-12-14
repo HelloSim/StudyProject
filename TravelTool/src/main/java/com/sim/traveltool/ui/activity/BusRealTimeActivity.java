@@ -14,6 +14,7 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.sim.baselibrary.utils.LogUtil;
 import com.sim.traveltool.R;
 import com.sim.traveltool.adapter.BusStationListAdapter;
 import com.sim.traveltool.bean.BusRealTimeDataBean;
@@ -149,7 +150,7 @@ public class BusRealTimeActivity extends BaseActivity {
 
             @Override
             public void onError(Throwable e) {
-
+                LogUtil.e(TAG, "获取公交路线站点请求出错: " + e);
             }
 
             @Override

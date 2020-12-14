@@ -3,7 +3,6 @@ package com.sim.traveltool.ui.fragment;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.sim.baselibrary.utils.LogUtil;
 import com.sim.traveltool.R;
 import com.sim.traveltool.adapter.NewsAdapter;
 import com.sim.traveltool.bean.NewsWangYiBean;
@@ -120,7 +120,7 @@ public class WangyiFragment extends Fragment {
 
             @Override
             public void onError(Throwable e) {
-                Log.d(TAG, "getWangYiNewOnError: " + e);
+                LogUtil.e(TAG, "getWangYiNewOnError: " + e);
             }
 
             @Override

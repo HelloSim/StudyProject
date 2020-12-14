@@ -197,7 +197,7 @@ public class BusSearchActivity extends BaseActivity {
 
             @Override
             public void onError(Throwable e) {
-                LogUtil.d(TAG, "onError: " + e);
+                LogUtil.d(TAG, "位置请求出错: " + e);
             }
 
             @Override

@@ -264,7 +264,7 @@ public class UserUpdateActivity extends BaseActivity {
 
             @Override
             public void onError(Throwable e) {
-                LogUtil.d(TAG, "getWangYiNewOnError: " + e);
+                LogUtil.d(TAG, "updateUserInfoOnError: " + e);
             }
 
             @Override

@@ -13,6 +13,7 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.sim.baselibrary.utils.LogUtil;
 import com.sim.traveltool.R;
 import com.sim.traveltool.adapter.BusRouteAdapter;
 import com.sim.traveltool.bean.BusLocationDesignatedDataBean;
@@ -122,7 +123,7 @@ public class BusRouteActivity extends BaseActivity {
 
             @Override
             public void onError(Throwable e) {
-                Log.d(TAG, "onError: " + e);
+                LogUtil.e(TAG, "位置信息请求出错: " + e);
             }
 
             @Override
@@ -153,7 +154,7 @@ public class BusRouteActivity extends BaseActivity {
 
             @Override
             public void onError(Throwable e) {
-                Log.d(TAG, "onError: " + e);
+                LogUtil.e(TAG, "出行方案请求出错: " + e);
             }
 
             @Override
