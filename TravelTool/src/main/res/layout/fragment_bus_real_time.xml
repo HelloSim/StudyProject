@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/transparent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tv_search"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="20dp"
+        android:background="@drawable/blue_stroke"
+        android:focusable="false"
+        android:gravity="center_vertical"
+        android:hint="请输入路线名称如：8"
+        android:padding="5dp"
+        android:textColor="@color/white"
+        android:textColorHint="@color/dark_gray"
+        android:textSize="20sp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        android:text="接口已废弃，后续更换实现。。。"
+        android:textColor="@color/dark_gray"
+        android:textSize="12sp" />
+
+</LinearLayout>
