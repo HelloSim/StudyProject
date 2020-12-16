@@ -11,6 +11,10 @@
     <string name="record">打卡</string>
     <string name="user">我的</string>
 
+    <string name="BusRealTime">实时公交</string>
+    <string name="BusRoute">出行路线</string>
+    <string name="BusStation">站点查询</string>
+
     <string name="user_login">用户登录</string>
     <string name="user_detail">收藏</string>
     <string name="user_setting">设置</string>

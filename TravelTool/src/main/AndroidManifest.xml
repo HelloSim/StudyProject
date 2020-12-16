@@ -21,7 +21,7 @@
         android:theme="@style/APPTheme"
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name="com.sim.traveltool.ui.activity.MainActivity">
+        <activity android:name=".ui.activity.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -29,24 +29,19 @@
             </intent-filter>
         </activity>
 
-        <activity
-            android:name="com.tencent.bugly.beta.ui.BetaActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize|locale"
-            android:theme="@android:style/Theme.Translucent" />
+        <activity android:name=".ui.activity.NewsDetailActivity" />
+        <activity android:name=".ui.activity.NewsCollectActivity" />
 
-        <activity android:name="com.sim.traveltool.ui.activity.NewsDetailActivity" />
-        <activity android:name="com.sim.traveltool.ui.activity.NewsCollectActivity" />
+        <activity android:name=".ui.activity.UserLogInActivity" />
+        <activity android:name=".ui.activity.UserRegisterActivity" />
+        <activity android:name=".ui.activity.UserUpdateActivity" />
 
-        <activity android:name="com.sim.traveltool.ui.activity.UserLogInActivity" />
-        <activity android:name="com.sim.traveltool.ui.activity.UserRegisterActivity" />
-        <activity android:name="com.sim.traveltool.ui.activity.UserUpdateActivity" />
+        <activity android:name=".ui.activity.BusRealTimeActivity" />
+        <activity android:name=".ui.activity.BusSearchActivity" />
+        <activity android:name=".ui.activity.BusRouteActivity" />
+        <activity android:name=".ui.activity.BusRouteDetailActivity" />
 
-        <activity android:name="com.sim.traveltool.ui.activity.BusRealTimeActivity" />
-        <activity android:name="com.sim.traveltool.ui.activity.BusSearchActivity" />
-        <activity android:name="com.sim.traveltool.ui.activity.BusRouteActivity" />
-        <activity android:name="com.sim.traveltool.ui.activity.BusRouteDetailActivity" />
-
-        <activity android:name="com.sim.traveltool.ui.activity.RecordAllActivity" />
+        <activity android:name=".ui.activity.RecordAllActivity" />
 
         <activity android:name=".ui.activity.HideActivity" />
 
@@ -59,6 +54,12 @@
             </intent-filter>
         </service>-->
 
+
+        <!--bugly-->
+        <activity
+            android:name="com.tencent.bugly.beta.ui.BetaActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize|locale"
+            android:theme="@android:style/Theme.Translucent" />
         <provider
             android:name="com.tencent.bugly.beta.utils.BuglyFileProvider"
             android:authorities="${applicationId}.fileProvider"

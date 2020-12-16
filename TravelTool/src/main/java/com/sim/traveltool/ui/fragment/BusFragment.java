@@ -2,13 +2,10 @@ package com.sim.traveltool.ui.fragment;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -17,22 +14,24 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
-import com.sim.traveltool.AppHelper;
+import com.google.android.material.tabs.TabLayout;
+import com.sim.baselibrary.utils.StringUtil;
 import com.sim.traveltool.R;
 import com.sim.traveltool.adapter.LoopViewAdapter;
-import com.sim.traveltool.ui.activity.BusRouteActivity;
-import com.sim.traveltool.ui.activity.BusSearchActivity;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 /**
  * @Auther Sim
  * @Time 2020/4/25 1:05
- * @Description “首页”Fragment（“实时公交搜索”Fragment）
+ * @Description “首页”Fragment
  */
-public class BusFragment extends Fragment implements View.OnClickListener {
+public class BusFragment extends Fragment {
     private static final String TAG = "Sim_BusFragment";
 
     //轮播图模块
@@ -46,34 +45,29 @@ public class BusFragment extends Fragment implements View.OnClickListener {
     private int previousSelectedPosition = 0;
     boolean isRunning = false;
 
+    private TabLayout tab_layout;
+    private ViewPager view_pager;
+    private List<String> titleDatas;
 
-    //搜索功能模块
-    private LinearLayout llRealTime;
-    private LinearLayout llStopSign;
-    private LinearLayout llRoute;
-    private ImageView ivRealTime;
-    private ImageView ivStopSign;
-    private ImageView ivRoute;
-
-    private LinearLayout llRealTimeContent;
-    private TextView tvSearch;
-
-    private LinearLayout llRouteContent;
-    private TextView tvStartStation;
-    private TextView tvEndStation;
-    private Button btnRoute;
-
-    private LinearLayout llStationContent;
-    private TextView tvStation;
-    private Button btnStation;
+    private BusRealTimeFragment busRealTimeFragment;
+    private BusRouteFragment busRouteFragment;
+    private BusStationFragment busStationFragment;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_bus, container, false);
+        initData();
         initView(view);
         initLoopView();
         return view;
+    }
+
+    private void initData() {
+        titleDatas = new ArrayList<>();
+        titleDatas.add(getContext().getString(R.string.BusRealTime));
+        titleDatas.add(getContext().getString(R.string.BusRoute));
+        titleDatas.add(getContext().getString(R.string.BusStation));
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -82,113 +76,57 @@ public class BusFragment extends Fragment implements View.OnClickListener {
         ll_dots_container = view.findViewById(R.id.ll_dots_loop);
         loop_dec = view.findViewById(R.id.loop_dec);
 
-        llRealTime = view.findViewById(R.id.ll_real_time);
-        llStopSign = view.findViewById(R.id.ll_stop_sign);
-        llRoute = view.findViewById(R.id.ll_route);
-        ivRealTime = view.findViewById(R.id.iv_real_time);
-        ivStopSign = view.findViewById(R.id.iv_stop_sign);
-        ivRoute = view.findViewById(R.id.iv_route);
-        llRealTime.setOnClickListener(this);
-        llStopSign.setOnClickListener(this);
-        llRoute.setOnClickListener(this);
+        tab_layout = view.findViewById(R.id.tab_layout);
+        view_pager = view.findViewById(R.id.view_pager);
 
-        llRealTimeContent = view.findViewById(R.id.ll_real_time_content);
-        tvSearch = view.findViewById(R.id.tv_search);
-        tvSearch.setOnClickListener(this);
-
-        llRouteContent = view.findViewById(R.id.ll_route_content);
-        tvStartStation = view.findViewById(R.id.tv_start_station);
-        tvEndStation = view.findViewById(R.id.tv_end_station);
-        btnRoute = view.findViewById(R.id.btn_route);
-        tvStartStation.setOnClickListener(this);
-        tvEndStation.setOnClickListener(this);
-        btnRoute.setOnClickListener(this);
-
-        llStationContent = view.findViewById(R.id.ll_station_content);
-        tvStation = view.findViewById(R.id.tv_station);
-        btnStation = view.findViewById(R.id.btn_station);
-        tvStation.setOnClickListener(this);
-        btnStation.setOnClickListener(this);
-
-        //手指左右滑动的切换（实时公交搜索）
-        llRealTimeContent.setOnTouchListener(new View.OnTouchListener() {
-            float a = 0;
-            float b = 0;
+        view_pager.setAdapter(new FragmentPagerAdapter(getFragmentManager()) {
+            @Override
+            public Fragment getItem(int position) {
+                return Objects.requireNonNull(hideAllFragment(position));
+            }
 
             @Override
-            public boolean onTouch(View v, MotionEvent e) {
-                switch (e.getAction()) {
-                    case MotionEvent.ACTION_DOWN:
-                        a = e.getX();
-                        break;
-                    case MotionEvent.ACTION_MOVE:
-                        break;
-                    case MotionEvent.ACTION_UP:
-                        b = e.getX();
-                        if (a > b && a - b > 200) {
-                            llRoute.performClick();
-                        } else {
-                        }
-                        break;
-                }
-                return true;
+            public int getCount() {
+                return titleDatas.size();
             }
-        });
-
-        //手指左右滑动的切换（路线搜索）
-        llRouteContent.setOnTouchListener(new View.OnTouchListener() {
-            float a = 0;
-            float b = 0;
 
             @Override
-            public boolean onTouch(View v, MotionEvent e) {
-                switch (e.getAction()) {
-                    case MotionEvent.ACTION_DOWN:
-                        a = e.getX();
-                        break;
-                    case MotionEvent.ACTION_MOVE:
-                        break;
-                    case MotionEvent.ACTION_UP:
-                        b = e.getX();
-                        if (a < b && b - a > 200) {
-                            llRealTime.performClick();
-                        } else if (a > b && a - b > 200) {
-                            llStopSign.performClick();
-                        }
-                        break;
-                }
-                return true;
+            public CharSequence getPageTitle(int position) {
+                return titleDatas.get(position);
             }
         });
-
-        //手指左右滑动的切换（站点搜索）
-        llStationContent.setOnTouchListener(new View.OnTouchListener() {
-            float a = 0;
-            float b = 0;
-
-            @Override
-            public boolean onTouch(View v, MotionEvent e) {
-                switch (e.getAction()) {
-                    case MotionEvent.ACTION_DOWN:
-                        a = e.getX();
-                        break;
-                    case MotionEvent.ACTION_MOVE:
-                        break;
-                    case MotionEvent.ACTION_UP:
-                        b = e.getX();
-                        if (a < b && b - a > 200) {
-                            llRoute.performClick();
-                        } else {
-                        }
-                        break;
-                }
-                return true;
-            }
-        });
-
-        llRealTime.performClick();
+        tab_layout.setupWithViewPager(view_pager);
     }
 
+    /**
+     * 隐藏所有的fragment再显示需要的fragment
+     *
+     * @param type 0:实时公交fragment     1：出行路线fragment    2：站点查询fragment
+     */
+    private Fragment hideAllFragment(int type) {
+        switch (type) {
+            case 0:
+                if (busRealTimeFragment == null) {
+                    busRealTimeFragment = new BusRealTimeFragment();
+                }
+                return busRealTimeFragment;
+            case 1:
+                if (busRouteFragment == null) {
+                    busRouteFragment = new BusRouteFragment();
+                }
+                return busRouteFragment;
+            case 2:
+                if (busStationFragment == null) {
+                    busStationFragment = new BusStationFragment();
+                }
+                return busStationFragment;
+        }
+        return null;
+    }
+
+    /**
+     * 导航轮播图设置
+     */
     private void initLoopView() {
         // 图片资源id数组
         mImg = new int[]{R.mipmap.photo1, R.mipmap.photo2, R.mipmap.photo3, R.mipmap.photo4, R.mipmap.photo5};
@@ -245,10 +183,8 @@ public class BusFragment extends Fragment implements View.OnClickListener {
 
             @Override
             public void onPageScrollStateChanged(int i) {
-
             }
         });
-
         // 开启轮询
         new Thread() {
             public void run() {
@@ -269,71 +205,6 @@ public class BusFragment extends Fragment implements View.OnClickListener {
                 }
             }
         }.start();
-
-    }
-
-    @Override
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.ll_real_time:
-                ivStopSign.setImageDrawable(getResources().getDrawable(R.mipmap.ic_bus_stop_sign_gray));
-                llStationContent.setVisibility(View.GONE);
-                ivRoute.setImageDrawable(getResources().getDrawable(R.mipmap.ic_bus_route_gray));
-                llRouteContent.setVisibility(View.GONE);
-                ivRealTime.setImageDrawable(getResources().getDrawable(R.mipmap.ic_bus_real_time_blue));
-                llRealTimeContent.setVisibility(View.VISIBLE);
-                break;
-            case R.id.ll_route:
-                ivRealTime.setImageDrawable(getResources().getDrawable(R.mipmap.ic_bus_real_time_gray));
-                llRealTimeContent.setVisibility(View.GONE);
-                ivStopSign.setImageDrawable(getResources().getDrawable(R.mipmap.ic_bus_stop_sign_gray));
-                llStationContent.setVisibility(View.GONE);
-                ivRoute.setImageDrawable(getResources().getDrawable(R.mipmap.ic_bus_route_blue));
-                llRouteContent.setVisibility(View.VISIBLE);
-                break;
-            case R.id.ll_stop_sign:
-                ivRealTime.setImageDrawable(getResources().getDrawable(R.mipmap.ic_bus_real_time_gray));
-                llRealTimeContent.setVisibility(View.GONE);
-                ivRoute.setImageDrawable(getResources().getDrawable(R.mipmap.ic_bus_route_gray));
-                llRouteContent.setVisibility(View.GONE);
-                ivStopSign.setImageDrawable(getResources().getDrawable(R.mipmap.ic_bus_stop_sign_blue));
-                llStationContent.setVisibility(View.VISIBLE);
-                break;
-            case R.id.tv_search:
-                startActivity(new Intent(getActivity(), BusSearchActivity.class).putExtra("searchType", AppHelper.RESULT_BUS));
-                break;
-            case R.id.tv_start_station:
-                startActivityForResult(new Intent(getActivity(), BusSearchActivity.class).putExtra("searchType", AppHelper.RESULT_START_STATION), AppHelper.RESULT_START_STATION);
-                break;
-            case R.id.tv_end_station:
-                startActivityForResult(new Intent(getActivity(), BusSearchActivity.class).putExtra("searchType", AppHelper.RESULT_END_STATION), AppHelper.RESULT_END_STATION);
-                break;
-            case R.id.btn_route:
-                if (tvStartStation.getText().length() > 0 && tvEndStation.getText().length() > 0) {
-                    Intent intent = new Intent(getActivity(), BusRouteActivity.class);
-                    intent.putExtra("tvStartStation", tvStartStation.getText().toString());
-                    intent.putExtra("tvEndStation", tvEndStation.getText().toString());
-                    startActivity(intent);
-                }
-                break;
-            case R.id.tv_station:
-            case R.id.btn_station:
-                break;
-        }
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == AppHelper.RESULT_START_STATION) {
-            if ((data != null)) {
-                tvStartStation.setText(data.getStringExtra("name"));
-            }
-        } else if (requestCode == AppHelper.RESULT_END_STATION) {
-            if ((data != null)) {
-                tvEndStation.setText(data.getStringExtra("name"));
-            }
-        }
     }
 
     public class pagerOnClickListener implements View.OnClickListener {

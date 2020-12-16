@@ -2,7 +2,6 @@ package com.sim.baselibrary.views;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import android.widget.TableLayout;
 
 import com.google.android.material.tabs.TabLayout;
 
@@ -13,10 +12,9 @@ import java.lang.reflect.Field;
  * @Time 2020/12/15 11:55
  * @Description 自定义TableLayout
  */
-public class CustomizeTabLayout extends TableLayout {
+public class CustomizeTabLayout extends TabLayout {
 
     private static final String SCROLLABLE_TAB_MIN_WIDTH = "scrollableTabMinWidth";//28前  mScrollableTabMinWidth
-    private int size = 3;//默认3个
 
     public CustomizeTabLayout(Context context) {
         super(context);
@@ -28,9 +26,14 @@ public class CustomizeTabLayout extends TableLayout {
         initTabMinWidth();
     }
 
+    public CustomizeTabLayout(Context context, AttributeSet attrs, int defStyleAttr) {
+        super(context, attrs, defStyleAttr);
+        initTabMinWidth();
+    }
+
     private void initTabMinWidth() {
         int screenWidth = getResources().getDisplayMetrics().widthPixels;
-        int tabMinWidth = screenWidth / getTabViewNumber();
+        int tabMinWidth = getResources().getDisplayMetrics().widthPixels / getTabViewNumber();
         Field field;
         try {
             field = TabLayout.class.getDeclaredField(SCROLLABLE_TAB_MIN_WIDTH);
@@ -45,12 +48,7 @@ public class CustomizeTabLayout extends TableLayout {
 
     // 显示的默认tab个数
     protected int getTabViewNumber() {
-        return size;
+        return 3;
     }
-
-    public void setSize(int size) {
-        this.size = size;
-    }
-
 
 }
