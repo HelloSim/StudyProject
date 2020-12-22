@@ -120,6 +120,4 @@ dependencies {
     implementation 'com.tencent.bugly:nativecrashreport:3.7.500'
 
     implementation 'com.github.bumptech.glide:glide:4.9.0'//一个第三方的图片选择库
-
-    implementation 'com.alibaba:fastjson:1.2.56'//fastjson
 }
