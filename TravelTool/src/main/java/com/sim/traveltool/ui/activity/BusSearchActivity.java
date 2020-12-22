@@ -1,16 +1,12 @@
 package com.sim.traveltool.ui.activity;
 
-import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -19,13 +15,13 @@ import com.sim.traveltool.AppHelper;
 import com.sim.traveltool.R;
 import com.sim.traveltool.adapter.BusLineNameAdapter;
 import com.sim.traveltool.adapter.BusStationNameAdapter;
+import com.sim.traveltool.base.AppActivity;
 import com.sim.traveltool.bean.BusLocationDataBean;
 import com.sim.traveltool.bean.BusRealTimeLineDataBean;
 
 import java.util.ArrayList;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 import rx.Subscriber;
 
@@ -34,11 +30,9 @@ import rx.Subscriber;
  * @Author: HelloSim
  * @Description :实时公交、出行线路站点的搜索页面
  */
-public class BusSearchActivity extends BaseActivity {
+public class BusSearchActivity extends AppActivity {
     private static final String TAG = "Sim_BusSearchActivity";
 
-    @BindView(R.id.back)
-    ImageView back;
     @BindView(R.id.tv_search)
     EditText tvSearch;
     @BindView(R.id.tv_not_found)
@@ -48,7 +42,6 @@ public class BusSearchActivity extends BaseActivity {
 
     private int searchType;
 
-    private Context context;
     private BusStationNameAdapter stationNameAdapter;
     private ArrayList<BusLocationDataBean.TipsBean> startLocationDataBeanList = new ArrayList<>();
 
@@ -57,26 +50,21 @@ public class BusSearchActivity extends BaseActivity {
     private boolean hasResult = false;
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_bus_search);
-        ButterKnife.bind(this);
-        context = this;
-        initData();
-        initView();
+    protected int getContentViewId() {
+        return R.layout.activity_bus_search;
     }
 
-    private void initData() {
+    protected void initData() {
         searchType = getIntent().getIntExtra("searchType", AppHelper.RESULT_BUS);
     }
 
-    private void initView() {
+    protected void initView() {
         if (searchType == AppHelper.RESULT_BUS) {
-            busLineNameAdapter = new BusLineNameAdapter(context, lineListByLineNameBeanList);
+            busLineNameAdapter = new BusLineNameAdapter(this, lineListByLineNameBeanList);
             busLineNameAdapter.setOnItemClickListerer(new BusLineNameAdapter.onItemClickListener() {
                 @Override
                 public void onItemClick(View view, int i) {
-                    Intent intent = new Intent(context, BusRealTimeActivity.class);
+                    Intent intent = new Intent(BusSearchActivity.this, BusRealTimeActivity.class);
                     intent.putExtra("busName", lineListByLineNameBeanList.get(i).getName());
                     intent.putExtra("lineId", lineListByLineNameBeanList.get(i).getId());
                     intent.putExtra("fromStation", lineListByLineNameBeanList.get(i).getFromStation());
@@ -90,7 +78,7 @@ public class BusSearchActivity extends BaseActivity {
             rlDatal.setLayoutManager(new LinearLayoutManager(this));
             rlDatal.setAdapter(busLineNameAdapter);
         } else {
-            stationNameAdapter = new BusStationNameAdapter(context, startLocationDataBeanList);
+            stationNameAdapter = new BusStationNameAdapter(BusSearchActivity.this, startLocationDataBeanList);
             stationNameAdapter.setOnItemClickListerer(new BusStationNameAdapter.onItemClickListener() {
                 @Override
                 public void onItemClick(View view, int i) {

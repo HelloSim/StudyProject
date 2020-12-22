@@ -1,20 +1,17 @@
 package com.sim.traveltool.ui.activity;
 
-import android.os.Bundle;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.sim.traveltool.R;
 import com.sim.traveltool.adapter.BusRouteDetailAdapter;
+import com.sim.traveltool.base.AppActivity;
 import com.sim.traveltool.bean.BusRouteDataBean;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
@@ -22,11 +19,9 @@ import butterknife.OnClick;
  * @Time 2020/11/29 1:12
  * @Description 出行路线的详细方式
  */
-public class BusRouteDetailActivity extends BaseActivity {
+public class BusRouteDetailActivity extends AppActivity {
     private static final String TAG = "Sim_BusRouteDetailActivity";
 
-    @BindView(R.id.back)
-    ImageView back;
     @BindView(R.id.tv_bus_route)
     TextView tv_bus_route;
     @BindView(R.id.tv_time_distance)
@@ -41,15 +36,11 @@ public class BusRouteDetailActivity extends BaseActivity {
     private BusRouteDetailAdapter busRouteDetailAdapter;
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_bus_route_detail);
-        ButterKnife.bind(this);
-        initData();
-        initView();
+    protected int getContentViewId() {
+        return R.layout.activity_bus_route_detail;
     }
 
-    private void initData() {
+    protected void initData() {
         tvStartLocation = getIntent().getStringExtra("tvStartLocation");
         tvEndLocation = getIntent().getStringExtra("tvEndLocation");
         data = (BusRouteDataBean.RouteBean.TransitsBean) getIntent().getSerializableExtra("data");
@@ -63,7 +54,7 @@ public class BusRouteDetailActivity extends BaseActivity {
         }
     }
 
-    private void initView() {
+    protected void initView() {
         tv_bus_route.setText(busRoute);
         tv_time_distance.setText(Integer.parseInt(data.getDuration()) / 60 + "分钟 | 步行" + data.getWalking_distance() + "米");
         busRouteDetailAdapter = new BusRouteDetailAdapter(this, tvStartLocation, tvEndLocation, data.getSegments());

@@ -1,11 +1,8 @@
 package com.sim.traveltool.ui.activity;
 
 import android.graphics.Color;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
-
-import androidx.annotation.Nullable;
 
 import com.bin.david.form.core.SmartTable;
 import com.bin.david.form.core.TableConfig;
@@ -18,13 +15,13 @@ import com.bin.david.form.utils.DensityUtils;
 import com.haibin.calendarview.Calendar;
 import com.sim.sqlitelibrary.bean.RecordDataBean;
 import com.sim.traveltool.R;
+import com.sim.traveltool.base.AppActivity;
 import com.sim.traveltool.db.RecordDataDaoUtil;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
@@ -32,7 +29,7 @@ import butterknife.OnClick;
  * @Time 2020/10/22 14:21
  * @Description 月打卡列表页面
  */
-public class RecordAllActivity extends BaseActivity {
+public class RecordAllActivity extends AppActivity {
     private static final String TAG = "Sim_RecordAllActivity";
 
     @BindView(R.id.title)
@@ -46,15 +43,12 @@ public class RecordAllActivity extends BaseActivity {
     private List<RecordDataBean> recordDataBeanList;
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_record_all);
-        ButterKnife.bind(this);
-        FontStyle.setDefaultTextSize(DensityUtils.sp2px(this, 18)); //设置全局字体大小
-        initData();
+    protected int getContentViewId() {
+        return R.layout.activity_record_all;
     }
 
-    private void initData() {
+    protected void initData() {
+        FontStyle.setDefaultTextSize(DensityUtils.sp2px(this, 18)); //设置全局字体大小
         calendar = (Calendar) getIntent().getSerializableExtra("calendar");
         title.setText(RecordDataDaoUtil.getInstance().getMonth(this, calendar) + "月" + getString(R.string.record_all));
         recordDataBeanList = RecordDataDaoUtil.getInstance().queryRecordForMonth(this, calendar);
@@ -67,7 +61,7 @@ public class RecordAllActivity extends BaseActivity {
         }
     }
 
-    private void initView() {
+    protected void initView() {
         List<String> dayColum = null;
         for (Column column : table.getTableData().getColumns()) {
             if (column.getColumnName().equals("日期")) {

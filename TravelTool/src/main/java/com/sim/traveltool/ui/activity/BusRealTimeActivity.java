@@ -1,8 +1,6 @@
 package com.sim.traveltool.ui.activity;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
-import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.view.View;
@@ -10,20 +8,19 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.sim.baselibrary.utils.LogUtil;
 import com.sim.traveltool.R;
 import com.sim.traveltool.adapter.BusStationListAdapter;
+import com.sim.traveltool.base.AppActivity;
 import com.sim.traveltool.bean.BusRealTimeBusStopDataBean;
 import com.sim.traveltool.bean.BusRealTimeDataBean;
 
 import java.util.ArrayList;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 import rx.Subscriber;
 
@@ -32,15 +29,13 @@ import rx.Subscriber;
  * @Author: HelloSim
  * @Description :显示实时公交位置的页面
  */
-public class BusRealTimeActivity extends BaseActivity {
+public class BusRealTimeActivity extends AppActivity {
     private static final String TAG = "Sim_BusRealTimeActivity";
 
     @BindView(R.id.rl_station_list)
     RecyclerView rlstationList;
     @BindView(R.id.tv_bus_name)
     TextView tvBusName;
-    @BindView(R.id.iv_reverse)
-    ImageView ivReverse;
     @BindView(R.id.tv_from_station)
     TextView tvFromStation;
     @BindView(R.id.tv_to_station)
@@ -53,8 +48,6 @@ public class BusRealTimeActivity extends BaseActivity {
     TextView tvPrice;
     @BindView(R.id.iv_refresh)
     ImageView ivRefresh;
-
-    private Context context;
 
     private String busName;//公交名
     private String lineId;//公交id
@@ -73,17 +66,12 @@ public class BusRealTimeActivity extends BaseActivity {
     private final int REFRESH = 1001;
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_bus_real_time);
-        ButterKnife.bind(this);
-        context = this;
-        initData();
-        initView();
+    protected int getContentViewId() {
+        return R.layout.activity_bus_real_time;
     }
 
     @SuppressLint("HandlerLeak")
-    private void initData() {
+    protected void initData() {
         busName = getIntent().getStringExtra("busName");
         lineId = getIntent().getStringExtra("lineId");
         fromStation = getIntent().getStringExtra("fromStation");
@@ -106,29 +94,13 @@ public class BusRealTimeActivity extends BaseActivity {
         };
     }
 
-    private void initView() {
+    protected void initView() {
         tvBusName.setText(busName);
         tvFromStation.setText(fromStation);
         tvToStation.setText(toStation);
         tvBeginTime.setText(beginTime);
         tvEndTime.setText(endTime);
         tvPrice.setText(price + "元");
-    }
-
-    @OnClick({R.id.back, R.id.iv_refresh, R.id.iv_reverse})
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.back:
-                finish();
-                break;
-            case R.id.iv_refresh:
-                handler.removeMessages(REFRESH);
-                getBusListOnRoad(busName, fromStation);
-                break;
-            case R.id.iv_reverse:
-
-                break;
-        }
     }
 
     /**
@@ -143,7 +115,7 @@ public class BusRealTimeActivity extends BaseActivity {
             public void onCompleted() {
                 if (stationList != null) {
                 } else {
-                    Toast.makeText(context, "数据出错！", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(BusRealTimeActivity.this, "数据出错！", Toast.LENGTH_SHORT).show();
                     finish();
                 }
             }
@@ -178,9 +150,9 @@ public class BusRealTimeActivity extends BaseActivity {
                 //30s做一次更新查询
                 handler.sendEmptyMessageDelayed(REFRESH, 30000);
                 if (stationListAdapter == null) {
-                    stationListAdapter = new BusStationListAdapter(context, stationList, busListOnRoadListList);
+                    stationListAdapter = new BusStationListAdapter(BusRealTimeActivity.this, stationList, busListOnRoadListList);
                     stationListAdapter.setHasStableIds(true);
-                    rlstationList.setLayoutManager(new LinearLayoutManager(context));
+                    rlstationList.setLayoutManager(new LinearLayoutManager(BusRealTimeActivity.this));
                     rlstationList.setAdapter(stationListAdapter);
                 } else {
                     stationListAdapter.notifyDataSetChanged();
@@ -199,6 +171,22 @@ public class BusRealTimeActivity extends BaseActivity {
                 }
             }
         }, "GetBusListOnRoad", lineName, fromStation, String.valueOf(System.currentTimeMillis()));
+    }
+
+    @OnClick({R.id.back, R.id.iv_refresh, R.id.iv_reverse})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.back:
+                finish();
+                break;
+            case R.id.iv_refresh:
+                handler.removeMessages(REFRESH);
+                getBusListOnRoad(busName, fromStation);
+                break;
+            case R.id.iv_reverse:
+
+                break;
+        }
     }
 
 }

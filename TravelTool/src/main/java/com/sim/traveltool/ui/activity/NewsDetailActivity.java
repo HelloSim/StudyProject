@@ -1,9 +1,6 @@
 package com.sim.traveltool.ui.activity;
 
-import android.annotation.SuppressLint;
-import android.content.Context;
 import android.net.http.SslError;
-import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
 import android.webkit.SslErrorHandler;
@@ -12,15 +9,13 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageView;
 
-import androidx.annotation.Nullable;
-
 import com.google.gson.Gson;
 import com.sim.baselibrary.utils.SPUtil;
 import com.sim.traveltool.R;
+import com.sim.traveltool.base.AppActivity;
 import com.sim.traveltool.bean.NewsWangYiBean;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
@@ -28,13 +23,9 @@ import butterknife.OnClick;
  * @Time 2020/4/28 1:05
  * @Description 显示网易新闻的页面
  */
-public class NewsDetailActivity extends BaseActivity {
+public class NewsDetailActivity extends AppActivity {
     private static final String TAG = "Sim_NewsDetailActivity";
 
-    private Context context;
-
-    @BindView(R.id.back)
-    ImageView back;
     @BindView(R.id.web_view)
     WebView webView;
     @BindView(R.id.collect)
@@ -45,28 +36,16 @@ public class NewsDetailActivity extends BaseActivity {
     private boolean isCollect = false;//是否收藏
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_news_detail);
-        ButterKnife.bind(this);
-        context = this;
-        initData();
-        initView();
+    protected int getContentViewId() {
+        return R.layout.activity_news_detail;
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-    }
-
-    @SuppressLint("CommitPrefEdits")
-    private void initData() {
+    protected void initData() {
         news = (NewsWangYiBean.ResultBean) getIntent().getSerializableExtra("news");
-        isCollect = SPUtil.contains(context, fileName, news.getTitle());
+        isCollect = SPUtil.contains(this, fileName, news.getTitle());
     }
 
-    @SuppressLint("SetJavaScriptEnabled")
-    private void initView() {
+    protected void initView() {
         if (isCollect) {
             collect.setImageResource(R.mipmap.ic_collect_yes);
         } else {
@@ -118,11 +97,11 @@ public class NewsDetailActivity extends BaseActivity {
                 break;
             case R.id.collect:
                 if (isCollect) {
-                    SPUtil.remove(context, fileName, news.getTitle());
+                    SPUtil.remove(NewsDetailActivity.this, fileName, news.getTitle());
                     collect.setImageResource(R.mipmap.ic_collect_not);
                     isCollect = false;
                 } else {
-                    SPUtil.put(context, fileName, news.getTitle(), new Gson().toJson(news));
+                    SPUtil.put(NewsDetailActivity.this, fileName, news.getTitle(), new Gson().toJson(news));
                     collect.setImageResource(R.mipmap.ic_collect_yes);
                     isCollect = true;
                 }

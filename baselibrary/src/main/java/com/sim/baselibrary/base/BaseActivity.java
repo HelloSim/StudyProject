@@ -1,12 +1,15 @@
 package com.sim.baselibrary.base;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.util.DisplayMetrics;
 import android.view.View;
+import android.view.WindowManager;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -22,20 +25,38 @@ import java.util.List;
 /**
  * @Auther Sim
  * @Time 2020/12/9 11:13
- * @Description 封装权限请求、dialog。BaseActivity继承此类
+ * @Description 封装权限请求、dialog。项目模块BaseActivity继承此类
  */
-public class Base_Activity extends AppCompatActivity {
+public abstract class BaseActivity extends AppCompatActivity {
 
-    private int REQUEST_CODE_PERMISSION = 0x00000;
+    protected int screenWidth;//屏幕宽度
+    protected int heightPixels;//屏幕高度
+
+    private int REQUEST_CODE_PERMISSION = 0x00000;//权限请求码
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getScreenSize();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
+    }
+
+    private void getScreenSize() {
+        //获取屏幕宽高相关
+        WindowManager wm = (WindowManager) this.getSystemService(Context.WINDOW_SERVICE);
+        DisplayMetrics dm = new DisplayMetrics();
+        wm.getDefaultDisplay().getMetrics(dm);
+        int width = dm.widthPixels;         // 屏幕宽度（像素）
+        int height = dm.heightPixels;       // 屏幕高度（像素）
+        float density = dm.density;         // 屏幕密度（0.75 / 1.0 / 1.5）
+        int densityDpi = dm.densityDpi;     // 屏幕密度dpi（120 / 160 / 240）
+        // 屏幕宽度算法:屏幕宽度（像素）/屏幕密度
+        screenWidth = (int) (width / density);  // 屏幕宽度(dp)
+        heightPixels = (int) (height / density);// 屏幕高度(dp)
     }
 
     /**
@@ -44,7 +65,6 @@ public class Base_Activity extends AppCompatActivity {
      * @param permissions 请求的权限
      * @param requestCode 请求权限的请求码
      */
-
     public void requestPermission(String[] permissions, int requestCode) {
         this.REQUEST_CODE_PERMISSION = requestCode;
         if (checkPermissions(permissions)) {
@@ -54,7 +74,6 @@ public class Base_Activity extends AppCompatActivity {
             ActivityCompat.requestPermissions(this, needPermissions.toArray(new String[needPermissions.size()]), REQUEST_CODE_PERMISSION);
         }
     }
-
 
     /**
      * 检测所有的权限是否都已授权
@@ -93,7 +112,6 @@ public class Base_Activity extends AppCompatActivity {
         }
         return needRequestPermissionList;
     }
-
 
     /**
      * 系统请求权限回调
@@ -158,6 +176,16 @@ public class Base_Activity extends AppCompatActivity {
                 });
     }
 
+
+    /**
+     * dialog显示
+     *
+     * @param title           标题
+     * @param message         提示信息
+     * @param sureText        确认按钮
+     * @param cancelText      取消按钮
+     * @param dialogInterface 点击事件监听
+     */
     public void showDialog(String title, String message, String sureText, String cancelText,
                            final com.sim.baselibrary.views.DialogInterface dialogInterface) {
         DialogBuilder dialogBuilder;

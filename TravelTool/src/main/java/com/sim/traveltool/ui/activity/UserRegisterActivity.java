@@ -1,22 +1,16 @@
 package com.sim.traveltool.ui.activity;
 
-import android.content.Context;
-import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.Toast;
-
-import androidx.annotation.Nullable;
 
 import com.sim.baselibrary.constant.Constant;
 import com.sim.baselibrary.utils.LogUtil;
 import com.sim.traveltool.R;
+import com.sim.traveltool.base.AppActivity;
 import com.sim.traveltool.bean.UserInfo;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 import rx.Subscriber;
 
@@ -25,15 +19,9 @@ import rx.Subscriber;
  * @Time 2020/4/29 1:05
  * @Description 用户注册页面
  */
-public class UserRegisterActivity extends BaseActivity {
+public class UserRegisterActivity extends AppActivity {
     private static final String TAG = "Sim_UserRegisterActivity";
 
-    private Context context;
-
-    @BindView(R.id.back)
-    ImageView back;
-    @BindView(R.id.iv_user_image)
-    ImageView ivUserImage;
     @BindView(R.id.et_user_name)
     EditText etUserName;
     @BindView(R.id.et_password)
@@ -42,38 +30,12 @@ public class UserRegisterActivity extends BaseActivity {
     EditText etNikeName;
     @BindView(R.id.et_autograph)
     EditText etAutograph;
-    @BindView(R.id.btn_registered)
-    Button registered;
 
     private UserInfo userInfoBean;
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_user_register);
-        ButterKnife.bind(this);
-        context = this;
-    }
-
-    @OnClick({R.id.back, R.id.btn_registered})
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.back:
-                finish();
-                break;
-            case R.id.btn_registered:
-                if (etUserName.getText().toString().length() > 0 && etPassword.getText().toString().length() > 0) {
-                    registerUser(etUserName.getText().toString(), etPassword.getText().toString(),
-                            null, etNikeName.getText().toString(), etAutograph.getText().toString(), null, null, null, null);
-                } else {
-                    if (etUserName.getText().toString().length() <= 0) {
-                        Toast.makeText(context, "用户名不能为空！", Toast.LENGTH_SHORT).show();
-                    } else if (etPassword.getText().toString().length() <= 0) {
-                        Toast.makeText(context, "密码不能为空！", Toast.LENGTH_SHORT).show();
-                    }
-                }
-                break;
-        }
+    protected int getContentViewId() {
+        return R.layout.activity_user_register;
     }
 
     /**
@@ -93,7 +55,7 @@ public class UserRegisterActivity extends BaseActivity {
         retrofitUtil.registerUser(new Subscriber<UserInfo>() {
             @Override
             public void onCompleted() {
-                Toast.makeText(context, userInfoBean.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(UserRegisterActivity.this, userInfoBean.getMessage(), Toast.LENGTH_SHORT).show();
                 if (userInfoBean.getCode() == 200) {
                     finish();
                 }
@@ -109,6 +71,27 @@ public class UserRegisterActivity extends BaseActivity {
                 userInfoBean = userInfo;
             }
         }, Constant.API_KEY, name, passwd, headerImg, nikeName, autograph, phone, email, remarks, vipGrade);
+    }
+
+    @OnClick({R.id.back, R.id.btn_registered})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.back:
+                finish();
+                break;
+            case R.id.btn_registered:
+                if (etUserName.getText().toString().length() > 0 && etPassword.getText().toString().length() > 0) {
+                    registerUser(etUserName.getText().toString(), etPassword.getText().toString(),
+                            null, etNikeName.getText().toString(), etAutograph.getText().toString(), null, null, null, null);
+                } else {
+                    if (etUserName.getText().toString().length() <= 0) {
+                        Toast.makeText(this, "用户名不能为空！", Toast.LENGTH_SHORT).show();
+                    } else if (etPassword.getText().toString().length() <= 0) {
+                        Toast.makeText(this, "密码不能为空！", Toast.LENGTH_SHORT).show();
+                    }
+                }
+                break;
+        }
     }
 
 }

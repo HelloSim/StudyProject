@@ -9,18 +9,18 @@ import androidx.recyclerview.widget.RecyclerView;
 /**
  * @Auther Sim
  * @Time 2020/12/22 14:21
- * @Description BaseAdapter
+ * @Description BaseAdapter。项目模块BaseAdapter继承此类
  */
-public class Base_Adapter extends RecyclerView.Adapter<Base_Adapter.ViewHolder> {
+public abstract class BaseAdapter extends RecyclerView.Adapter<BaseAdapter.ViewHolder> {
     
     @NonNull
     @Override
-    public Base_Adapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public BaseAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         return null;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull Base_Adapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull BaseAdapter.ViewHolder holder, int position) {
 
     }
 

@@ -9,10 +9,19 @@ import com.sim.baselibrary.views.DialogBuilder;
 /**
  * @Auther Sim
  * @Time 2020/12/22 11:46
- * @Description 封装dialog。Fragment继承此类
+ * @Description 封装dialog。项目模块BaseFragment继承此类
  */
-public class Base_Fragment extends Fragment {
+public abstract class BaseFragment extends Fragment {
 
+    /**
+     * dialog显示
+     *
+     * @param title           标题
+     * @param message         提示信息
+     * @param sureText        确认按钮
+     * @param cancelText      取消按钮
+     * @param dialogInterface 点击事件监听
+     */
     public void showDialog(String title, String message, String sureText, String cancelText,
                            final com.sim.baselibrary.views.DialogInterface dialogInterface) {
         DialogBuilder dialogBuilder;

@@ -1,19 +1,15 @@
 package com.sim.traveltool.ui.activity;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
-import android.os.Bundle;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 
-import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -23,6 +19,7 @@ import com.sim.baselibrary.utils.ScreenUtil;
 import com.sim.baselibrary.utils.TimeUtil;
 import com.sim.traveltool.R;
 import com.sim.traveltool.adapter.NewsAdapter;
+import com.sim.traveltool.base.AppActivity;
 import com.sim.traveltool.bean.NewsWangYiBean;
 
 import java.io.Serializable;
@@ -31,7 +28,6 @@ import java.util.Iterator;
 import java.util.Map;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
@@ -39,15 +35,11 @@ import butterknife.OnClick;
  * @Time 2020/4/30 1:05
  * @Description 网易新闻的收藏页面
  */
-public class NewsCollectActivity extends BaseActivity {
+public class NewsCollectActivity extends AppActivity {
     private static final String TAG = "Sim_NewsCollectActivity";
-
-    private Context context;
 
     @BindView(R.id.parent)
     LinearLayout parent;
-    @BindView(R.id.back)
-    ImageView back;
     @BindView(R.id.recycle_view)
     RecyclerView newsRecyclerView;
 
@@ -66,18 +58,13 @@ public class NewsCollectActivity extends BaseActivity {
     private int position;//长按的item
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_news_collect);
-        ButterKnife.bind(this);
-        context = this;
-        initDate();
-        initView();
+    protected int getContentViewId() {
+        return R.layout.activity_news_collect;
     }
 
-    private void initDate() {
+    protected void initData() {
         Gson gson = new Gson();
-        newsMap = (Map<String, NewsWangYiBean.ResultBean>) SPUtil.getAll(context, fileName);
+        newsMap = (Map<String, NewsWangYiBean.ResultBean>) SPUtil.getAll(this, fileName);
         Iterator it = newsMap.keySet().iterator();
         while (it.hasNext()) {
             String key = it.next().toString();
@@ -85,13 +72,13 @@ public class NewsCollectActivity extends BaseActivity {
         }
     }
 
-    private void initView() {
-        newsAdapter = new NewsAdapter(context, newsList);
-        newsRecyclerView.setLayoutManager(new LinearLayoutManager(context));
+    protected void initView() {
+        newsAdapter = new NewsAdapter(this, newsList);
+        newsRecyclerView.setLayoutManager(new LinearLayoutManager(NewsCollectActivity.this));
         newsAdapter.setOnItemClickListerer(new NewsAdapter.onItemClickListener() {
             @Override
             public void onItemClick(View view, int i) {
-                Intent intent = new Intent(context, NewsDetailActivity.class);
+                Intent intent = new Intent(NewsCollectActivity.this, NewsDetailActivity.class);
                 intent.putExtra("news", (Serializable) newsAdapter.getNews().get(i));
                 startActivity(intent);
             }
@@ -105,12 +92,12 @@ public class NewsCollectActivity extends BaseActivity {
         });
         newsRecyclerView.setAdapter(newsAdapter);
 
-        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
+        LayoutInflater inflater = (LayoutInflater) NewsCollectActivity.this.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
         deleteLayout = inflater.inflate(R.layout.view_popup_delete_collect, null);
-        deletePopupWindow = new PopupWindow(context);
+        deletePopupWindow = new PopupWindow(NewsCollectActivity.this);
         deletePopupWindow.setContentView(deleteLayout);//设置主体布局
-        deletePopupWindow.setWidth(ScreenUtil.dip2px(context, deletePupDPWidth));//宽度
-        deletePopupWindow.setHeight(ScreenUtil.dip2px(context, deletePupDPHeight));//高度
+        deletePopupWindow.setWidth(ScreenUtil.dip2px(NewsCollectActivity.this, deletePupDPWidth));//宽度
+        deletePopupWindow.setHeight(ScreenUtil.dip2px(NewsCollectActivity.this, deletePupDPHeight));//高度
         deletePopupWindow.setFocusable(true);
         deletePopupWindow.setBackgroundDrawable(new BitmapDrawable());//设置空白背景
         deletePopupWindow.setAnimationStyle(R.style.mypopwindow_anim_style);//动画
@@ -128,7 +115,7 @@ public class NewsCollectActivity extends BaseActivity {
             @Override
             public void onClick(View view) {
                 if (TimeUtil.isFastClick()) {
-                    SPUtil.remove(context, fileName, newsList.get(position).getTitle());
+                    SPUtil.remove(NewsCollectActivity.this, fileName, newsList.get(position).getTitle());
                     newsList.remove(position);
                     newsAdapter.notifyDataSetChanged();
                     deletePopupWindow.dismiss();

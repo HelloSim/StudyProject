@@ -10,7 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.sim.baselibrary.base.Base_Fragment;
+import com.sim.baselibrary.base.BaseFragment;
 import com.sim.traveltool.R;
 
 /**
@@ -18,7 +18,7 @@ import com.sim.traveltool.R;
  * @Time 2020/12/16 11:09
  * @Description 站点查询fragment
  */
-public class BusStationFragment extends Base_Fragment implements View.OnClickListener {
+public class BusStationFragment extends BaseFragment implements View.OnClickListener {
     private static final String TAG = "Sim_BusStationFragment";
 
     private TextView tvStation;

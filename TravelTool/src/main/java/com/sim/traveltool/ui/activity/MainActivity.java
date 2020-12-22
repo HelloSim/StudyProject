@@ -1,15 +1,12 @@
 package com.sim.traveltool.ui.activity;
 
-import android.annotation.SuppressLint;
+import android.Manifest;
 import android.content.Intent;
-import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.view.View;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -24,28 +21,20 @@ import com.google.gson.Gson;
 import com.sim.baselibrary.utils.SPUtil;
 import com.sim.baselibrary.utils.ToastUtil;
 import com.sim.traveltool.R;
+import com.sim.traveltool.base.AppActivity;
 import com.sim.traveltool.bean.UserInfo;
 import com.sim.traveltool.ui.fragment.BusFragment;
 import com.sim.traveltool.ui.fragment.RecordFragment;
 import com.sim.traveltool.ui.fragment.WangyiFragment;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class MainActivity extends BaseActivity {
+public class MainActivity extends AppActivity {
     private static final String TAG = "Sim_MainActivity";
 
-    @BindView(R.id.frameLayout)
-    FrameLayout frameLayout;
-    @BindView(R.id.bottom_bar_radioGroup)
-    RadioGroup barRadioGroup;
     @BindView(R.id.bottom_bar_bus)
     RadioButton barHome;
-    @BindView(R.id.bottom_bar_wangyi)
-    RadioButton barSpeed;
-    @BindView(R.id.bottom_bar_record)
-    RadioButton barCommunity;
 
     @BindView(R.id.dl_drawer)
     DrawerLayout dl_drawer;
@@ -53,10 +42,6 @@ public class MainActivity extends BaseActivity {
     RelativeLayout userLogIn;
     @BindView(R.id.user_detail)
     RelativeLayout userDetail;
-    @BindView(R.id.user_collect)
-    RelativeLayout userCollect;
-    @BindView(R.id.user_setting)
-    RelativeLayout userSetting;
     @BindView(R.id.user_image)
     ImageView userImage;
     @BindView(R.id.user_nike_name)
@@ -84,16 +69,12 @@ public class MainActivity extends BaseActivity {
     private int count = 0;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        ButterKnife.bind(this);
-        initData();
-        initView();
+    protected int getContentViewId() {
+        return R.layout.activity_main;
     }
 
-    @SuppressLint("HandlerLeak")
-    private void initData() {
+    protected void initData() {
+        requestPermission(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.WRITE_EXTERNAL_STORAGE}, 0x001);
         if (!SPUtil.contains(this, spName, spStateKey)) {
             SPUtil.put(this, spName, spStateKey, isLogIn);
         } else {
@@ -109,7 +90,7 @@ public class MainActivity extends BaseActivity {
         };
     }
 
-    private void initView() {
+    protected void initView() {
         barHome.performClick();
         userImage = findViewById(R.id.user_image);
         userNikeName = findViewById(R.id.user_nike_name);

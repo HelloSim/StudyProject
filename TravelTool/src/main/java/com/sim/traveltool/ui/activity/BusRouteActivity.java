@@ -1,14 +1,11 @@
 package com.sim.traveltool.ui.activity;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -16,13 +13,13 @@ import com.sim.baselibrary.utils.LogUtil;
 import com.sim.baselibrary.utils.ToastUtil;
 import com.sim.traveltool.R;
 import com.sim.traveltool.adapter.BusRouteAdapter;
+import com.sim.traveltool.base.AppActivity;
 import com.sim.traveltool.bean.BusLocationDesignatedDataBean;
 import com.sim.traveltool.bean.BusRouteDataBean;
 
 import java.util.ArrayList;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 import rx.Subscriber;
 
@@ -31,12 +28,9 @@ import rx.Subscriber;
  * @Author: HelloSim
  * @Description :显示出行方案的页面
  */
-public class BusRouteActivity extends BaseActivity {
+public class BusRouteActivity extends AppActivity {
     private static final String TAG = "Sim_RouteActivity";
-    private Context context;
 
-    @BindView(R.id.back)
-    ImageView back;
     @BindView(R.id.tv_from_and_to_location)
     TextView tvFromAndToLocation;
     @BindView(R.id.rl_location_list)
@@ -55,21 +49,11 @@ public class BusRouteActivity extends BaseActivity {
     private BusRouteAdapter routeAdapter;
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_bus_route);
-        ButterKnife.bind(this);
-        context = this;
-        initData();
-        initView();
+    protected int getContentViewId() {
+        return R.layout.activity_bus_route;
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-    }
-
-    private void initData() {
+    protected void initData() {
         tvStartLocation = getIntent().getStringExtra("tvStartStation");
         tvEndLocation = getIntent().getStringExtra("tvEndStation");
         getLocation(true, tvStartLocation);
@@ -77,15 +61,15 @@ public class BusRouteActivity extends BaseActivity {
     }
 
     @SuppressLint("SetTextI18n")
-    private void initView() {
+    protected void initView() {
         tvFromAndToLocation.setText(tvStartLocation + " -> " + tvEndLocation);
 
-        routeAdapter = new BusRouteAdapter(context, routeDataList);
+        routeAdapter = new BusRouteAdapter(this, routeDataList);
         rlLocationList.setLayoutManager(new LinearLayoutManager(this));
         routeAdapter.setOnItemClickListerer(new BusRouteAdapter.onItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                Intent intent = new Intent(context, BusRouteDetailActivity.class);
+                Intent intent = new Intent(BusRouteActivity.this, BusRouteDetailActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("data", routeDataList.get(position));
                 bundle.putString("tvStartLocation", tvStartLocation);
@@ -144,7 +128,7 @@ public class BusRouteActivity extends BaseActivity {
             @Override
             public void onCompleted() {
                 if (routeDataList == null || routeDataList.size() == 0) {
-                    ToastUtil.toast(context, "未查询到换乘信息！");
+                    ToastUtil.toast(BusRouteActivity.this, "未查询到换乘信息！");
                     finish();
                 }
                 routeAdapter.notifyDataSetChanged();

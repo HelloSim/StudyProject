@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import com.sim.baselibrary.base.Base_Fragment;
+import com.sim.baselibrary.base.BaseFragment;
 import com.sim.baselibrary.utils.LogUtil;
 import com.sim.traveltool.R;
 import com.sim.traveltool.adapter.NewsAdapter;
@@ -25,14 +25,14 @@ import java.util.ArrayList;
 
 import rx.Subscriber;
 
-import static com.sim.traveltool.ui.activity.BaseActivity.retrofitUtil;
+import static com.sim.traveltool.base.AppActivity.retrofitUtil;
 
 /**
  * @Auther Sim
  * @Time 2020/4/27 1:05
  * @Description “网易”Fragment
  */
-public class WangyiFragment extends Base_Fragment {
+public class WangyiFragment extends BaseFragment {
     private static final String TAG = "Sim_WangyiFragment";
 
     private RecyclerView newsRecyclerView;

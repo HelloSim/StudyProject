@@ -1,20 +1,16 @@
 package com.sim.traveltool.ui.activity;
 
 import android.graphics.Color;
-import android.os.Bundle;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
-
-import androidx.annotation.Nullable;
 
 import com.haibin.calendarview.Calendar;
 import com.haibin.calendarview.CalendarView;
 import com.sim.traveltool.R;
+import com.sim.traveltool.base.AppActivity;
 import com.sim.traveltool.db.RecordDataDaoUtil;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
@@ -22,24 +18,19 @@ import butterknife.OnClick;
  * @Time 2020/12/11 15:05
  * @Description 隐藏界面
  */
-public class HideActivity extends BaseActivity implements CalendarView.OnMonthChangeListener, CalendarView.OnCalendarSelectListener {
+public class HideActivity extends AppActivity implements CalendarView.OnMonthChangeListener, CalendarView.OnCalendarSelectListener {
 
-    @BindView(R.id.back)
-    ImageView back;
     @BindView(R.id.tv_now_year_and_month)
     TextView tv_now_year_and_month;
     @BindView(R.id.calendarView)
     CalendarView calendarView;
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_hide);
-        ButterKnife.bind(this);
-        initView();
+    protected int getContentViewId() {
+        return R.layout.activity_hide;
     }
 
-    private void initView() {
+    protected void initView() {
         //设置星期日周起始
         calendarView.setWeekStarWithSun();
         //设置星期栏的背景、字体颜色
@@ -53,15 +44,6 @@ public class HideActivity extends BaseActivity implements CalendarView.OnMonthCh
         //日期选择事件监听
         calendarView.setOnCalendarSelectListener(this);
         tv_now_year_and_month.setText(RecordDataDaoUtil.getInstance().getYearMonth(this, calendarView.getSelectedCalendar()));
-    }
-
-    @OnClick({R.id.back})
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.back:
-                finish();
-                break;
-        }
     }
 
     /**
@@ -89,6 +71,15 @@ public class HideActivity extends BaseActivity implements CalendarView.OnMonthCh
     @Override
     public void onCalendarSelect(Calendar calendar, boolean isClick) {
 
+    }
+
+    @OnClick({R.id.back})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.back:
+                finish();
+                break;
+        }
     }
 
 }

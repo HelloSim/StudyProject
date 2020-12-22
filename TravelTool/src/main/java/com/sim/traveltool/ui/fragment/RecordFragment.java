@@ -17,7 +17,7 @@ import androidx.appcompat.app.AlertDialog;
 
 import com.haibin.calendarview.Calendar;
 import com.haibin.calendarview.CalendarView;
-import com.sim.baselibrary.base.Base_Fragment;
+import com.sim.baselibrary.base.BaseFragment;
 import com.sim.baselibrary.utils.TimeUtil;
 import com.sim.baselibrary.utils.ToastUtil;
 import com.sim.sqlitelibrary.bean.RecordDataBean;
@@ -36,7 +36,7 @@ import butterknife.OnClick;
  * @Time 2020/4/27 1:05
  * @Description “打卡”Fragment
  */
-public class RecordFragment extends Base_Fragment implements CalendarView.OnMonthChangeListener,
+public class RecordFragment extends BaseFragment implements CalendarView.OnMonthChangeListener,
         CalendarView.OnCalendarSelectListener {
     private static final String TAG = "Sim_RecordFragment";
 

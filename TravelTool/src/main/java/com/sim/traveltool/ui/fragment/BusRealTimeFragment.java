@@ -9,7 +9,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.sim.baselibrary.base.Base_Fragment;
+import com.sim.baselibrary.base.BaseFragment;
 import com.sim.traveltool.R;
 
 /**
@@ -17,7 +17,7 @@ import com.sim.traveltool.R;
  * @Time 2020/12/16 11:01
  * @Description 实时公交fragment
  */
-public class BusRealTimeFragment extends Base_Fragment {
+public class BusRealTimeFragment extends BaseFragment {
     private static final String TAG = "Sim_BusRealTimeFragment";
 
     private TextView tvSearch;
