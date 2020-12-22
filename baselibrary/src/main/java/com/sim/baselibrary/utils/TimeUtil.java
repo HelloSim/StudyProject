@@ -1,16 +1,13 @@
 package com.sim.baselibrary.utils;
 
 import android.annotation.SuppressLint;
-import android.util.Log;
 
 import java.io.File;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
-import java.util.List;
 import java.util.Locale;
 
 /**
@@ -21,6 +18,20 @@ import java.util.Locale;
 
 @SuppressLint("NewApi")
 public class TimeUtil {
+
+    // 两次点击按钮接口之间的点击间隔不能少于1000毫秒
+    private static final int MIN_CLICK_DELAY_TIME = 1000;
+    private static long lastClickTime;
+
+    public static boolean isFastClick() {
+        boolean flag = false;
+        long curClickTime = System.currentTimeMillis();
+        if ((curClickTime - lastClickTime) >= MIN_CLICK_DELAY_TIME) {
+            flag = true;
+        }
+        lastClickTime = curClickTime;
+        return flag;
+    }
 
     static Calendar calendar = Calendar.getInstance();
 

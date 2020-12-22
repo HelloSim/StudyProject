@@ -18,7 +18,7 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.tabs.TabLayout;
-import com.sim.baselibrary.utils.StringUtil;
+import com.sim.baselibrary.base.Base_Fragment;
 import com.sim.traveltool.R;
 import com.sim.traveltool.adapter.LoopViewAdapter;
 
@@ -31,7 +31,7 @@ import java.util.Objects;
  * @Time 2020/4/25 1:05
  * @Description “首页”Fragment
  */
-public class BusFragment extends Fragment {
+public class BusFragment extends Base_Fragment {
     private static final String TAG = "Sim_BusFragment";
 
     //轮播图模块

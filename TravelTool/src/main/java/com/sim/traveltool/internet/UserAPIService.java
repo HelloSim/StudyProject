@@ -1,7 +1,7 @@
 package com.sim.traveltool.internet;
 
-import com.sim.traveltool.bean.UserInfo;
 import com.sim.traveltool.bean.NewsWangYiBean;
+import com.sim.traveltool.bean.UserInfo;
 
 import retrofit2.http.POST;
 import retrofit2.http.Query;

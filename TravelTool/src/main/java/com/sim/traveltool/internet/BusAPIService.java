@@ -1,8 +1,8 @@
 package com.sim.traveltool.internet;
 
+import com.sim.traveltool.bean.BusRealTimeBusStopDataBean;
 import com.sim.traveltool.bean.BusRealTimeDataBean;
 import com.sim.traveltool.bean.BusRealTimeLineDataBean;
-import com.sim.traveltool.bean.BusRealTimeBusStopDataBean;
 
 import retrofit2.http.GET;
 import retrofit2.http.Query;

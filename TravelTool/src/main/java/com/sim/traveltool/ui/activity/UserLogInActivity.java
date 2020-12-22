@@ -11,12 +11,12 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
+import com.google.gson.Gson;
 import com.sim.baselibrary.constant.Constant;
 import com.sim.baselibrary.utils.LogUtil;
+import com.sim.baselibrary.utils.SPUtil;
 import com.sim.traveltool.R;
 import com.sim.traveltool.bean.UserInfo;
-import com.sim.baselibrary.utils.SPUtil;
-import com.google.gson.Gson;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

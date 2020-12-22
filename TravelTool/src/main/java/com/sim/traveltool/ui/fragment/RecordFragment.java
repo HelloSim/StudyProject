@@ -14,15 +14,15 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
-import androidx.fragment.app.Fragment;
 
 import com.haibin.calendarview.Calendar;
 import com.haibin.calendarview.CalendarView;
+import com.sim.baselibrary.base.Base_Fragment;
 import com.sim.baselibrary.utils.TimeUtil;
 import com.sim.baselibrary.utils.ToastUtil;
 import com.sim.sqlitelibrary.bean.RecordDataBean;
-import com.sim.traveltool.db.RecordDataDaoUtil;
 import com.sim.traveltool.R;
+import com.sim.traveltool.db.RecordDataDaoUtil;
 import com.sim.traveltool.ui.activity.RecordAllActivity;
 
 import java.util.List;
@@ -36,7 +36,7 @@ import butterknife.OnClick;
  * @Time 2020/4/27 1:05
  * @Description “打卡”Fragment
  */
-public class RecordFragment extends Fragment implements CalendarView.OnMonthChangeListener,
+public class RecordFragment extends Base_Fragment implements CalendarView.OnMonthChangeListener,
         CalendarView.OnCalendarSelectListener {
     private static final String TAG = "Sim_RecordFragment";
 
@@ -136,20 +136,22 @@ public class RecordFragment extends Fragment implements CalendarView.OnMonthChan
                     }
                     showInfo(calendarView.getSelectedCalendar());
                 } else {
-                    new AlertDialog.Builder(getContext())
-                            .setMessage(getString(R.string.record_update))
-                            .setNegativeButton(getString(R.string.cancel), null)
-                            .setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    if (RecordDataDaoUtil.getInstance().updataStartTime(getContext(), calendarView.getSelectedCalendar())) {
-                                        ToastUtil.T_Info(getContext(), (getString(R.string.record_success) + getString(R.string.late)));
-                                    } else {
-                                        ToastUtil.T_Info(getContext(), getString(R.string.record_success));
-                                    }
-                                    showInfo(calendarView.getSelectedCalendar());
-                                }
-                            }).create().show();
+                    showDialog(null, getString(R.string.record_update), getString(R.string.ok), getString(R.string.cancel), new com.sim.baselibrary.views.DialogInterface() {
+                        @Override
+                        public void sureOnClick() {
+                            if (RecordDataDaoUtil.getInstance().updataStartTime(getContext(), calendarView.getSelectedCalendar())) {
+                                ToastUtil.T_Info(getContext(), (getString(R.string.record_success) + getString(R.string.late)));
+                            } else {
+                                ToastUtil.T_Info(getContext(), getString(R.string.record_success));
+                            }
+                            showInfo(calendarView.getSelectedCalendar());
+                        }
+
+                        @Override
+                        public void cancelOnClick() {
+
+                        }
+                    });
                 }
                 break;
             case 2://下班卡
@@ -161,20 +163,22 @@ public class RecordFragment extends Fragment implements CalendarView.OnMonthChan
                     }
                     showInfo(calendarView.getSelectedCalendar());
                 } else {
-                    new AlertDialog.Builder(getContext())
-                            .setMessage(getString(R.string.record_update))
-                            .setNegativeButton(getString(R.string.cancel), null)
-                            .setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    if (RecordDataDaoUtil.getInstance().updataEndTime(getContext(), calendarView.getSelectedCalendar())) {
-                                        ToastUtil.T_Info(getContext(), getString(R.string.record_success) + getString(R.string.leave_early));
-                                    } else {
-                                        ToastUtil.T_Info(getContext(), getString(R.string.record_success));
-                                    }
-                                    showInfo(calendarView.getSelectedCalendar());
-                                }
-                            }).create().show();
+                    showDialog(null, getString(R.string.record_update), getString(R.string.ok), getString(R.string.cancel), new com.sim.baselibrary.views.DialogInterface() {
+                        @Override
+                        public void sureOnClick() {
+                            if (RecordDataDaoUtil.getInstance().updataEndTime(getContext(), calendarView.getSelectedCalendar())) {
+                                ToastUtil.T_Info(getContext(), getString(R.string.record_success) + getString(R.string.leave_early));
+                            } else {
+                                ToastUtil.T_Info(getContext(), getString(R.string.record_success));
+                            }
+                            showInfo(calendarView.getSelectedCalendar());
+                        }
+
+                        @Override
+                        public void cancelOnClick() {
+
+                        }
+                    });
                 }
                 break;
         }
@@ -199,19 +203,21 @@ public class RecordFragment extends Fragment implements CalendarView.OnMonthChan
                             record(2);
                         }
                     } else {
-                        new AlertDialog.Builder(getContext())
-                                .setMessage(getString(R.string.record_week))
-                                .setNegativeButton(getString(R.string.cancel), null)
-                                .setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        if (btn_record.getText().equals(getString(R.string.record_start))) {
-                                            record(1);
-                                        } else {
-                                            record(2);
-                                        }
-                                    }
-                                }).create().show();
+                        showDialog(null, getString(R.string.record_week), getString(R.string.ok), getString(R.string.cancel), new com.sim.baselibrary.views.DialogInterface() {
+                            @Override
+                            public void sureOnClick() {
+                                if (btn_record.getText().equals(getString(R.string.record_start))) {
+                                    record(1);
+                                } else {
+                                    record(2);
+                                }
+                            }
+
+                            @Override
+                            public void cancelOnClick() {
+
+                            }
+                        });
                     }
                 } else {
                     calendarView.scrollToCurrent(true);

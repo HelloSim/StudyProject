@@ -6,9 +6,9 @@ import android.database.sqlite.SQLiteDatabase;
 import com.haibin.calendarview.Calendar;
 import com.sim.baselibrary.utils.TimeUtil;
 import com.sim.sqlitelibrary.bean.RecordDataBean;
-import com.sim.sqlitelibrary.greendao.db.RecordDataBeanDao;
 import com.sim.sqlitelibrary.greendao.db.DaoMaster;
 import com.sim.sqlitelibrary.greendao.db.DaoSession;
+import com.sim.sqlitelibrary.greendao.db.RecordDataBeanDao;
 import com.sim.traveltool.R;
 
 import java.text.SimpleDateFormat;

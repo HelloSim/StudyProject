@@ -10,8 +10,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.sim.traveltool.R;
-import com.sim.traveltool.bean.BusRealTimeDataBean;
 import com.sim.traveltool.bean.BusRealTimeBusStopDataBean;
+import com.sim.traveltool.bean.BusRealTimeDataBean;
 
 import java.util.ArrayList;
 

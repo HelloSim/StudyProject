@@ -8,7 +8,7 @@ import android.view.WindowManager;
 
 import androidx.annotation.Nullable;
 
-import com.sim.baselibrary.utils.RequestPermission;
+import com.sim.baselibrary.base.Base_Activity;
 import com.sim.traveltool.internet.APIFactory;
 
 /**
@@ -16,7 +16,7 @@ import com.sim.traveltool.internet.APIFactory;
  * @Time 2020/4/24 1:05
  * @Description BaseActivity
  */
-public class BaseActivity extends RequestPermission {
+public class BaseActivity extends Base_Activity {
     private static final String TAG = "Sim_BaseActivity";
 
     protected int screenWidth;

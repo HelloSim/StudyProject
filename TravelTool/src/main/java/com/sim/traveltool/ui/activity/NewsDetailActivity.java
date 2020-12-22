@@ -14,11 +14,10 @@ import android.widget.ImageView;
 
 import androidx.annotation.Nullable;
 
+import com.google.gson.Gson;
+import com.sim.baselibrary.utils.SPUtil;
 import com.sim.traveltool.R;
 import com.sim.traveltool.bean.NewsWangYiBean;
-import com.sim.traveltool.ui.activity.BaseActivity;
-import com.sim.baselibrary.utils.SPUtil;
-import com.google.gson.Gson;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -70,7 +69,7 @@ public class NewsDetailActivity extends BaseActivity {
     private void initView() {
         if (isCollect) {
             collect.setImageResource(R.mipmap.ic_collect_yes);
-        }else {
+        } else {
             collect.setImageResource(R.mipmap.ic_collect_not);
         }
         if (news != null) {

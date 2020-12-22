@@ -9,11 +9,11 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.sim.baselibrary.base.Base_Fragment;
 import com.sim.baselibrary.utils.LogUtil;
 import com.sim.traveltool.R;
 import com.sim.traveltool.adapter.NewsAdapter;
@@ -32,7 +32,7 @@ import static com.sim.traveltool.ui.activity.BaseActivity.retrofitUtil;
  * @Time 2020/4/27 1:05
  * @Description “网易”Fragment
  */
-public class WangyiFragment extends Fragment {
+public class WangyiFragment extends Base_Fragment {
     private static final String TAG = "Sim_WangyiFragment";
 
     private RecyclerView newsRecyclerView;

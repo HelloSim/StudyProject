@@ -1,9 +1,7 @@
 package com.sim.traveltool.ui.activity;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
@@ -28,13 +26,14 @@ import androidx.annotation.Nullable;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
+import com.google.gson.Gson;
 import com.sim.baselibrary.constant.Constant;
 import com.sim.baselibrary.utils.LogUtil;
-import com.sim.traveltool.R;
-import com.sim.traveltool.bean.UserInfo;
 import com.sim.baselibrary.utils.SPUtil;
 import com.sim.baselibrary.utils.ScreenUtil;
-import com.google.gson.Gson;
+import com.sim.baselibrary.utils.TimeUtil;
+import com.sim.traveltool.R;
+import com.sim.traveltool.bean.UserInfo;
 
 import java.io.File;
 
@@ -169,18 +168,21 @@ public class UserUpdateActivity extends BaseActivity {
         btn_nike_name_cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                et_nike_name.setText(userNikeName);
-                updateNikeNamePopupWindow.dismiss();
-
+                if (TimeUtil.isFastClick()) {
+                    et_nike_name.setText(userNikeName);
+                    updateNikeNamePopupWindow.dismiss();
+                }
             }
         });
         btn_nike_name_confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (et_nike_name.getText().toString().length() > 0) {
-                    updateUserInfo(userInfo.getResult().getName(), (String) SPUtil.get(context, spName, "password", ""), userInfo.getResult().getHeaderImg(),
-                            et_nike_name.getText().toString(), userInfo.getResult().getAutograph(), userInfo.getResult().getPhone(), userInfo.getResult().getEmail(),
-                            userInfo.getResult().getRemarks(), userInfo.getResult().getVipGrade());
+                if (TimeUtil.isFastClick()) {
+                    if (et_nike_name.getText().toString().length() > 0) {
+                        updateUserInfo(userInfo.getResult().getName(), (String) SPUtil.get(context, spName, "password", ""), userInfo.getResult().getHeaderImg(),
+                                et_nike_name.getText().toString(), userInfo.getResult().getAutograph(), userInfo.getResult().getPhone(), userInfo.getResult().getEmail(),
+                                userInfo.getResult().getRemarks(), userInfo.getResult().getVipGrade());
+                    }
                 }
             }
         });
@@ -218,6 +220,7 @@ public class UserUpdateActivity extends BaseActivity {
 
     /**
      * 更新用户信息的网络请求
+     *
      * @param name
      * @param passwd
      * @param headerImg
@@ -290,26 +293,21 @@ public class UserUpdateActivity extends BaseActivity {
                 updateAutographNamePopupWindow.showAtLocation(parent, Gravity.CENTER, 0, 0);
                 break;
             case R.id.btn_sign_out:
-                new AlertDialog.Builder(context)
-                        .setTitle("退出登录")
-                        .setMessage("是否确认退出？")
-                        .setCancelable(true)
-                        .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                showDialog("退出登录", "是否确认退出？", "确认", "取消",
+                        new com.sim.baselibrary.views.DialogInterface() {
                             @Override
-                            public void onClick(DialogInterface dialog, int which) {
-
-                            }
-                        })
-                        .setPositiveButton("确认", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
+                            public void sureOnClick() {
                                 SPUtil.put(context, spName, spStateKey, false);
                                 SPUtil.remove(context, spName, spUserInfoKey);
                                 SPUtil.remove(context, spName, "password");
                                 finish();
                             }
-                        })
-                        .show();
+
+                            @Override
+                            public void cancelOnClick() {
+
+                            }
+                        });
                 break;
         }
     }

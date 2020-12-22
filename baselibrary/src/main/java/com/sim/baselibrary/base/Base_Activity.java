@@ -1,20 +1,20 @@
-package com.sim.baselibrary.utils;
+package com.sim.baselibrary.base;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.view.View;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
-import com.sim.baselibrary.R;
+import com.sim.baselibrary.views.DialogBuilder;
+import com.sim.baselibrary.views.DialogInterface;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,9 +22,9 @@ import java.util.List;
 /**
  * @Auther Sim
  * @Time 2020/12/9 11:13
- * @Description 权限请求类
+ * @Description 封装权限请求、dialog。BaseActivity继承此类
  */
-public class RequestPermission extends AppCompatActivity {
+public class Base_Activity extends AppCompatActivity {
 
     private int REQUEST_CODE_PERMISSION = 0x00000;
 
@@ -129,24 +129,6 @@ public class RequestPermission extends AppCompatActivity {
         return true;
     }
 
-    //无权限显示提示对话框,需自行修改
-    private void showTipsDialog() {
-        new AlertDialog.Builder(this)
-                .setTitle("提示信息")
-                .setMessage("缺少必要权限软件无法正常使用!如若恢复正常使用，请单击【确定】按钮前往设置进行权限授权")
-                .setNegativeButton("取消", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                    }
-                })
-                .setPositiveButton("确认", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        startAppSettings();
-                    }
-                }).show();
-    }
-
     //无权限提示跳转到当前应用设置页面
     private void startAppSettings() {
         Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
@@ -161,7 +143,52 @@ public class RequestPermission extends AppCompatActivity {
 
     //权限获取失败
     public void permissionFail(int requestCode) {
-        showTipsDialog();
+        //无权限显示提示对话框,需自行修改
+        showDialog("提示信息", "缺少必要权限软件无法正常使用!如若恢复正常使用，请单击【确定】按钮前往设置进行权限授权",
+                "确定", "取消", new DialogInterface() {
+                    @Override
+                    public void sureOnClick() {
+                        startAppSettings();
+                    }
+
+                    @Override
+                    public void cancelOnClick() {
+
+                    }
+                });
+    }
+
+    public void showDialog(String title, String message, String sureText, String cancelText,
+                           final com.sim.baselibrary.views.DialogInterface dialogInterface) {
+        DialogBuilder dialogBuilder;
+        dialogBuilder = new DialogBuilder(this);
+        if (title != null) {
+            dialogBuilder.title(title);
+        }
+        if (message != null) {
+            dialogBuilder.message(message);
+        }
+        if (sureText != null) {
+            dialogBuilder.sureText(sureText);
+        }
+        if (cancelText != null) {
+            dialogBuilder.cancelText(cancelText);
+        }
+        if (dialogInterface != null) {
+            dialogBuilder.setSureOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dialogInterface.sureOnClick();
+                }
+            });
+            dialogBuilder.setCancelOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dialogInterface.cancelOnClick();
+                }
+            });
+        }
+        dialogBuilder.build().show();
     }
 
 }

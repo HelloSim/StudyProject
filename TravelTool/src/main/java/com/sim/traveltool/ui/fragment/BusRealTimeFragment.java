@@ -1,6 +1,5 @@
 package com.sim.traveltool.ui.fragment;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,18 +8,16 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 
-import com.sim.traveltool.AppHelper;
+import com.sim.baselibrary.base.Base_Fragment;
 import com.sim.traveltool.R;
-import com.sim.traveltool.ui.activity.BusSearchActivity;
 
 /**
  * @Auther Sim
  * @Time 2020/12/16 11:01
  * @Description 实时公交fragment
  */
-public class BusRealTimeFragment extends Fragment {
+public class BusRealTimeFragment extends Base_Fragment {
     private static final String TAG = "Sim_BusRealTimeFragment";
 
     private TextView tvSearch;

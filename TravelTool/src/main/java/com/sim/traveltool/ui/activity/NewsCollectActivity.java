@@ -17,12 +17,13 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.gson.Gson;
+import com.sim.baselibrary.utils.SPUtil;
+import com.sim.baselibrary.utils.ScreenUtil;
+import com.sim.baselibrary.utils.TimeUtil;
 import com.sim.traveltool.R;
 import com.sim.traveltool.adapter.NewsAdapter;
 import com.sim.traveltool.bean.NewsWangYiBean;
-import com.sim.baselibrary.utils.SPUtil;
-import com.sim.baselibrary.utils.ScreenUtil;
-import com.google.gson.Gson;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -118,26 +119,32 @@ public class NewsCollectActivity extends BaseActivity {
         btn_collect_cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                deletePopupWindow.dismiss();
+                if (TimeUtil.isFastClick()) {
+                    deletePopupWindow.dismiss();
+                }
             }
         });
         btn_collect_confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                SPUtil.remove(context, fileName, newsList.get(position).getTitle());
-                newsList.remove(position);
-                newsAdapter.notifyDataSetChanged();
-                deletePopupWindow.dismiss();
+                if (TimeUtil.isFastClick()) {
+                    SPUtil.remove(context, fileName, newsList.get(position).getTitle());
+                    newsList.remove(position);
+                    newsAdapter.notifyDataSetChanged();
+                    deletePopupWindow.dismiss();
+                }
             }
         });
     }
 
     @OnClick({R.id.back})
     public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.back:
-                finish();
-                break;
+        if (TimeUtil.isFastClick()) {
+            switch (view.getId()) {
+                case R.id.back:
+                    finish();
+                    break;
+            }
         }
     }
 

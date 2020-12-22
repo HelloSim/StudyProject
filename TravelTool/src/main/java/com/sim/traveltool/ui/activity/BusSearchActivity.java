@@ -55,7 +55,7 @@ public class BusSearchActivity extends BaseActivity {
     private ArrayList<BusRealTimeLineDataBean.DataBean> lineListByLineNameBeanList = new ArrayList<>();
     private BusLineNameAdapter busLineNameAdapter;
     private boolean hasResult = false;
-    
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,7 +67,7 @@ public class BusSearchActivity extends BaseActivity {
     }
 
     private void initData() {
-        searchType = getIntent().getIntExtra("searchType",AppHelper.RESULT_BUS);
+        searchType = getIntent().getIntExtra("searchType", AppHelper.RESULT_BUS);
     }
 
     private void initView() {
@@ -127,7 +127,7 @@ public class BusSearchActivity extends BaseActivity {
                         }
                         getLineListByLineName(editable.toString());
                     }
-                }else {
+                } else {
                     if (editable == null || editable.toString().equals("")) {
                         rlDatal.setVisibility(View.GONE);
                     } else {

@@ -1,7 +1,6 @@
 package com.sim.traveltool.ui.activity;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -67,7 +66,7 @@ public class BusRouteDetailActivity extends BaseActivity {
     private void initView() {
         tv_bus_route.setText(busRoute);
         tv_time_distance.setText(Integer.parseInt(data.getDuration()) / 60 + "分钟 | 步行" + data.getWalking_distance() + "米");
-        busRouteDetailAdapter = new BusRouteDetailAdapter(this, tvStartLocation, tvEndLocation,data.getSegments());
+        busRouteDetailAdapter = new BusRouteDetailAdapter(this, tvStartLocation, tvEndLocation, data.getSegments());
         rl_route_detail.setLayoutManager(new LinearLayoutManager(this));
         rl_route_detail.setAdapter(busRouteDetailAdapter);
     }

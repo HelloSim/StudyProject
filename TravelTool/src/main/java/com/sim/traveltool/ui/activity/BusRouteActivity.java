@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -14,12 +13,11 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.sim.baselibrary.utils.LogUtil;
+import com.sim.baselibrary.utils.ToastUtil;
 import com.sim.traveltool.R;
 import com.sim.traveltool.adapter.BusRouteAdapter;
 import com.sim.traveltool.bean.BusLocationDesignatedDataBean;
 import com.sim.traveltool.bean.BusRouteDataBean;
-import com.sim.baselibrary.utils.ToastUtil;
-import com.google.gson.Gson;
 
 import java.util.ArrayList;
 
