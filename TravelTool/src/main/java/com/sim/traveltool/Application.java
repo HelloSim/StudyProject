@@ -10,6 +10,8 @@ import com.sim.traveltool.internet.APIFactory;
 import com.tencent.bugly.Bugly;
 import com.tencent.bugly.beta.Beta;
 
+import cn.jpush.android.api.JPushInterface;
+
 /**
  * @Auther Sim
  * @Time 2020/4/27 1:05
@@ -28,6 +30,8 @@ public class Application extends android.app.Application {
         CrashHandler.getInstance().init(context);
         APIFactory.getInstance().init(this);
         Bugly.init(this, AppHelper.Bugly_APPID, BuildConfig.DEBUG);
+        JPushInterface.setDebugMode(BuildConfig.DEBUG);
+        JPushInterface.init(this);
     }
 
     @Override

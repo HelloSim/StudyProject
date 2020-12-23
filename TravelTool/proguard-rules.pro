@@ -19,9 +19,26 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+# ===================bugly===================
 -dontwarn com.tencent.bugly.**
 -keep public class com.tencent.bugly.**{*;}
-# tinker混淆规则
+# ===================tinker===================
 -dontwarn com.tencent.tinker.**
 -keep class com.tencent.tinker.** { *; }
 -keep class android.support.**{*;}
+
+# ===================push===================
+-dontoptimize
+-dontpreverify
+
+-dontwarn cn.jpush.**
+-keep class cn.jpush.** { *; }
+-keep class * extends cn.jpush.android.helpers.JPushMessageReceiver { *; }
+
+-dontwarn cn.jiguang.**
+-keep class cn.jiguang.** { *; }
+
+#==================gson && protobuf==========================
+-dontwarn com.google.**
+-keep class com.google.gson.** {*;}
+-keep class com.google.protobuf.** {*;}
