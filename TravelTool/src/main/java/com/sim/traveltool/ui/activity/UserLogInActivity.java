@@ -23,7 +23,6 @@ import rx.Subscriber;
  * @Description 登陆页面
  */
 public class UserLogInActivity extends AppActivity {
-    private static final String TAG = "Sim_UserLogInActivity";
 
     @BindView(R.id.et_user_name)
     EditText userName;
@@ -62,7 +61,7 @@ public class UserLogInActivity extends AppActivity {
 
             @Override
             public void onError(Throwable e) {
-                LogUtil.e(TAG, "logInOnError: " + e);
+                LogUtil.e(UserLogInActivity.class.getSimpleName(), "用户登陆出错: " + e);
             }
 
             @Override

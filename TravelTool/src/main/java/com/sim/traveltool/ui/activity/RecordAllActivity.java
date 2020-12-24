@@ -30,7 +30,6 @@ import butterknife.OnClick;
  * @Description 月打卡列表页面
  */
 public class RecordAllActivity extends AppActivity {
-    private static final String TAG = "Sim_RecordAllActivity";
 
     @BindView(R.id.title)
     TextView title;

@@ -26,8 +26,6 @@ import java.util.Map;
  */
 public class CrashHandler implements Thread.UncaughtExceptionHandler {
 
-    public static final String TAG = "Sim_CrashHandler";
-
     private Context mContext;
     //系统默认的UncaughtException处理类
     private Thread.UncaughtExceptionHandler mDefaultHandler;
@@ -77,7 +75,7 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
             try {
                 Thread.sleep(3000);
             } catch (InterruptedException e) {
-                LogUtil.e(TAG, "uncaughtException : " + e);
+                LogUtil.e(CrashHandler.class.getSimpleName(), "uncaughtException : " + e);
             }
             //退出程序
             android.os.Process.killProcess(android.os.Process.myPid());
@@ -129,16 +127,15 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
                 infos.put("osVersion",osVersion);
             }
         } catch (PackageManager.NameNotFoundException e) {
-            LogUtil.e(TAG, "收集设备信息时发生错误:" + e);
+            LogUtil.e(CrashHandler.class.getSimpleName(), "收集设备信息时发生错误:" + e);
         }
         Field[] fields = Build.class.getDeclaredFields();
         for (Field field : fields) {
             try {
                 field.setAccessible(true);
                 infos.put(field.getName(), field.get(null).toString());
-                LogUtil.d(TAG, field.getName() + " : " + field.get(null));
             } catch (Exception e) {
-                LogUtil.e(TAG, "收集崩溃信息时发生错误:" + e);
+                LogUtil.e(CrashHandler.class.getSimpleName(), "收集崩溃信息时发生错误:" + e);
             }
         }
     }
@@ -178,7 +175,7 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
             }
             return true;
         } catch (Exception e) {
-            LogUtil.e(TAG, "写入文件时发生错误:" + e);
+            LogUtil.e(CrashHandler.class.getSimpleName(), "写入文件时发生错误:" + e);
             return false;
         }
     }

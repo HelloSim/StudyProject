@@ -7,6 +7,7 @@ import com.sim.baselibrary.bean.HttpResult;
 import com.sim.baselibrary.internet.APIException;
 import com.sim.baselibrary.internet.AppUtil;
 import com.sim.baselibrary.internet.RxUtils;
+import com.sim.baselibrary.utils.LogUtil;
 import com.sim.traveltool.AppHelper;
 
 import java.io.File;
@@ -34,7 +35,6 @@ import rx.schedulers.Schedulers;
  * @Description 初始化OKHttpClient、Retrofit，切换线程
  */
 public class RetrofitUtil {
-    private static final String TAG = "Sim_RetrofitUtil";
 
     private UserAPIService userAPIService;
     private BusAPIService busAPIService;
@@ -103,14 +103,14 @@ public class RetrofitUtil {
                 Request request = chain.request();
                 if (!AppUtil.isNetworkConnected(mContext) || isUseCache) {//如果网络不可用或者设置只用网络
                     request = request.newBuilder().cacheControl(CacheControl.FORCE_CACHE).build();
-                    Log.d(TAG, "网络不可用请求拦截");
+                    LogUtil.d(RetrofitUtil.class.getSimpleName(), "网络不可用请求拦截");
                 } else if (AppUtil.isNetworkConnected(mContext) && !isUseCache) {//网络可用
                     request = request.newBuilder().cacheControl(CacheControl.FORCE_NETWORK).build();
-                    Log.d(TAG, "网络可用请求拦截");
+                    LogUtil.d(RetrofitUtil.class.getSimpleName(), "网络可用请求拦截");
                 }
                 Response response = chain.proceed(request);
                 if (AppUtil.isNetworkConnected(mContext)) {//如果网络可用
-                    Log.d(TAG, "网络可用响应拦截");
+                    LogUtil.d(RetrofitUtil.class.getSimpleName(), "网络可用响应拦截");
                     response = response.newBuilder()
 //                            //移除旧的
 //                            .removeHeader("User-Agent")

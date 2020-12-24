@@ -20,7 +20,6 @@ import rx.Subscriber;
  * @Description 用户注册页面
  */
 public class UserRegisterActivity extends AppActivity {
-    private static final String TAG = "Sim_UserRegisterActivity";
 
     @BindView(R.id.et_user_name)
     EditText etUserName;
@@ -63,7 +62,7 @@ public class UserRegisterActivity extends AppActivity {
 
             @Override
             public void onError(Throwable e) {
-                LogUtil.e(TAG, "getWangYiNewOnError: " + e);
+                LogUtil.e(UserRegisterActivity.class.getSimpleName(), "注册用户出错: " + e);
             }
 
             @Override

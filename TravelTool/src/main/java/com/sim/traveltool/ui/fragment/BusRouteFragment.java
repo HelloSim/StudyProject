@@ -23,7 +23,6 @@ import com.sim.traveltool.ui.activity.BusSearchActivity;
  * @Description 出行路线fragment
  */
 public class BusRouteFragment extends BaseFragment implements View.OnClickListener {
-    private static final String TAG = "Sim_BusRouteFragment";
 
     private TextView tvStartStation;
     private TextView tvEndStation;

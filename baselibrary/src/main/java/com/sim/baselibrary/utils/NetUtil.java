@@ -21,7 +21,6 @@ import java.util.Enumeration;
  * @Description Net工具类
  */
 public class NetUtil {
-    private static final String TAG = "Sim_NetUtil";
 
     //没有连接网络 
     private static final int NETWORK_NONE = -1;
@@ -36,17 +35,17 @@ public class NetUtil {
         @SuppressLint("MissingPermission") NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
         if (activeNetworkInfo != null && activeNetworkInfo.isConnected()) {
             if (activeNetworkInfo.getType() == (ConnectivityManager.TYPE_WIFI)) {
-                LogUtil.d(TAG, "getNetWorkState: WIFI");
+                LogUtil.d(NetUtil.class.getSimpleName(), "getNetWorkState: WIFI");
                 return NETWORK_WIFI;
             } else if (activeNetworkInfo.getType() == (ConnectivityManager.TYPE_ETHERNET)) {
-                LogUtil.d(TAG, "getNetWorkState: MOBILE");
+                LogUtil.d(NetUtil.class.getSimpleName(), "getNetWorkState: MOBILE");
                 return NETWORK_MOBILE;
             }
         } else {
-            LogUtil.d(TAG, "getNetWorkState: NONETWORK");
+            LogUtil.d(NetUtil.class.getSimpleName(), "getNetWorkState: NONETWORK");
             return NETWORK_NONE;
         }
-        LogUtil.d(TAG, "getNetWorkState: NONETWORK");
+        LogUtil.d(NetUtil.class.getSimpleName(), "getNetWorkState: NONETWORK");
         return NETWORK_NONE;
     }
 
@@ -57,13 +56,9 @@ public class NetUtil {
      * @return
      */
     public static boolean isConnected(Context context) {
-
-        ConnectivityManager connectivity = (ConnectivityManager) context
-                .getSystemService(Context.CONNECTIVITY_SERVICE);
-
+        ConnectivityManager connectivity = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         if (null != connectivity) {
-
-            NetworkInfo info = connectivity.getActiveNetworkInfo();
+            @SuppressLint("MissingPermission") NetworkInfo info = connectivity.getActiveNetworkInfo();
             if (null != info && info.isConnected()) {
                 if (info.getState() == NetworkInfo.State.CONNECTED) {
                     return true;
@@ -76,12 +71,10 @@ public class NetUtil {
     /**
      * 判断是否是wifi连接
      */
+    @SuppressLint("MissingPermission")
     public static boolean isWifi(Context context) {
-        ConnectivityManager cm = (ConnectivityManager) context
-                .getSystemService(Context.CONNECTIVITY_SERVICE);
-
-        if (cm == null)
-            return false;
+        ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        if (cm == null) return false;
         return cm.getActiveNetworkInfo().getType() == ConnectivityManager.TYPE_WIFI;
 
     }
@@ -91,8 +84,7 @@ public class NetUtil {
      */
     public static void openSetting(Activity activity) {
         Intent intent = new Intent("/");
-        ComponentName cm = new ComponentName("com.android.settings",
-                "com.android.settings.WirelessSettings");
+        ComponentName cm = new ComponentName("com.android.settings", "com.android.settings.WirelessSettings");
         intent.setComponent(cm);
         intent.setAction("android.intent.action.VIEW");
         activity.startActivityForResult(intent, 0);

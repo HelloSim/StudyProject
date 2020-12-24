@@ -30,7 +30,6 @@ import rx.Subscriber;
  * @Description :显示实时公交位置的页面
  */
 public class BusRealTimeActivity extends AppActivity {
-    private static final String TAG = "Sim_BusRealTimeActivity";
 
     @BindView(R.id.rl_station_list)
     RecyclerView rlstationList;
@@ -122,7 +121,7 @@ public class BusRealTimeActivity extends AppActivity {
 
             @Override
             public void onError(Throwable e) {
-                LogUtil.e(TAG, "获取公交路线站点请求出错: " + e);
+                LogUtil.e(BusRealTimeActivity.class.getSimpleName(), "获取公交路线站点请求出错: " + e);
             }
 
             @Override

@@ -36,7 +36,6 @@ import butterknife.OnClick;
  * @Description 网易新闻的收藏页面
  */
 public class NewsCollectActivity extends AppActivity {
-    private static final String TAG = "Sim_NewsCollectActivity";
 
     @BindView(R.id.parent)
     LinearLayout parent;

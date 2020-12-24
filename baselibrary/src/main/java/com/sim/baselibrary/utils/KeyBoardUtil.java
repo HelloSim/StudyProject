@@ -19,7 +19,6 @@ import java.lang.reflect.Method;
  * @Description 打开或关闭软键盘
  */
 public class KeyBoardUtil {
-    public static final String TAG = "Sim_KeyBoardUtil";
 
     /**
      * 关闭搜索
@@ -29,7 +28,7 @@ public class KeyBoardUtil {
             ((SearchView.SearchAutoComplete) searchView.findViewById(R.id.search_src_text)).setText("");
             searchView.setIconified(true);
         } catch (Exception e) {
-            LogUtil.e(TAG, "SearchView onCloseClicked" + e);
+            LogUtil.e(ZipUtil.class.getSimpleName(), "SearchView onCloseClicked" + e);
         }
     }
 

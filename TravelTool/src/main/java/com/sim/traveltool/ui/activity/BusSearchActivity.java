@@ -31,7 +31,6 @@ import rx.Subscriber;
  * @Description :实时公交、出行线路站点的搜索页面
  */
 public class BusSearchActivity extends AppActivity {
-    private static final String TAG = "Sim_BusSearchActivity";
 
     @BindView(R.id.tv_search)
     EditText tvSearch;
@@ -153,7 +152,7 @@ public class BusSearchActivity extends AppActivity {
 
             @Override
             public void onError(Throwable e) {
-                e.printStackTrace();
+                LogUtil.d(BusSearchActivity.class.getSimpleName(), "搜索实时公交路线出错: " + e);
             }
 
             @Override
@@ -185,7 +184,7 @@ public class BusSearchActivity extends AppActivity {
 
             @Override
             public void onError(Throwable e) {
-                LogUtil.d(TAG, "位置请求出错: " + e);
+                LogUtil.d(BusSearchActivity.class.getSimpleName(), "位置请求出错: " + e);
             }
 
             @Override

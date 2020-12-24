@@ -19,7 +19,6 @@ import com.sim.traveltool.R;
  * @Description 站点查询fragment
  */
 public class BusStationFragment extends BaseFragment implements View.OnClickListener {
-    private static final String TAG = "Sim_BusStationFragment";
 
     private TextView tvStation;
     private Button btnStation;

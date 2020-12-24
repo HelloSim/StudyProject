@@ -20,7 +20,6 @@ import java.util.List;
  * @Description App常用工具类
  */
 public class AppUtil {
-    private static final String TAG = "Sim_AppUtil";
 
     /**
      * 打开指定APP
@@ -129,7 +128,7 @@ public class AppUtil {
             PackageManager pm = context.getApplicationContext().getPackageManager();
             pi = pm.getPackageInfo(pkgName, 0);
         } catch (Throwable t) {
-            LogUtil.e(TAG, "判断是否系统应用出错：" + t);
+            LogUtil.e(AppUtil.class.getSimpleName(), "判断是否系统应用出错：" + t);
         }
         // 是系统中已安装的应用
         if (pi != null) {
@@ -246,11 +245,11 @@ public class AppUtil {
             Method forceStopPackage = am.getClass().getDeclaredMethod("forceStopPackage", String.class);
             forceStopPackage.setAccessible(true);
             forceStopPackage.invoke(am, packageName);
-            LogUtil.i(TAG, "stopApps: successful");
+            LogUtil.i(AppUtil.class.getSimpleName(), "stopApps: successful");
             return true;
         } catch (Exception ex) {
             ex.printStackTrace();
-            LogUtil.i(TAG, "stopApps: error");
+            LogUtil.i(AppUtil.class.getSimpleName(), "stopApps: error");
             return false;
         }
     }

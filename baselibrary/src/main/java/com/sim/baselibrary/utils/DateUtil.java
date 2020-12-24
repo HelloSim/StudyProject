@@ -19,7 +19,6 @@ import java.util.Locale;
  * @Description 日期工具类
  */
 public class DateUtil {
-	public static final String TAG = "Sim_DateUtil";
 
 	public static Date dateUtil(String s) {
 		String dateString = s.replaceAll("T", " ");
@@ -30,7 +29,6 @@ public class DateUtil {
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
-		LogUtil.d(TAG, "date:" + date);
 		return date;
 	}
 

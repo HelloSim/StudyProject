@@ -20,7 +20,6 @@ import butterknife.OnClick;
  * @Description 出行路线的详细方式
  */
 public class BusRouteDetailActivity extends AppActivity {
-    private static final String TAG = "Sim_BusRouteDetailActivity";
 
     @BindView(R.id.tv_bus_route)
     TextView tv_bus_route;

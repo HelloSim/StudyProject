@@ -18,7 +18,6 @@ import com.sim.traveltool.R;
  * @Description 实时公交fragment
  */
 public class BusRealTimeFragment extends BaseFragment {
-    private static final String TAG = "Sim_BusRealTimeFragment";
 
     private TextView tvSearch;
 

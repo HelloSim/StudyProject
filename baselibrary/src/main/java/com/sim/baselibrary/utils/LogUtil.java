@@ -11,33 +11,37 @@ import com.sim.baselibrary.BuildConfig;
  */
 public class LogUtil {
 
-    public static void v(String tag, String msg) {
+    /**
+     * @param classSimpleName 类名
+     * @param msg             打印信息
+     */
+    public static void v(String classSimpleName, String msg) {
         if (BuildConfig.DEBUG) {
-            Log.v(tag, msg);
+            Log.v("Sim_" + classSimpleName, msg);
         }
     }
 
-    public static void d(String tag, String msg) {
+    public static void d(String classSimpleName, String msg) {
         if (BuildConfig.DEBUG) {
-            Log.d(tag, msg);
+            Log.d("Sim_" + classSimpleName, msg);
         }
     }
 
-    public static void i(String tag, String msg) {
+    public static void i(String classSimpleName, String msg) {
         if (BuildConfig.DEBUG) {
-            Log.i(tag, msg);
+            Log.i("Sim_" + classSimpleName, msg);
         }
     }
 
-    public static void w(String tag, String msg) {
+    public static void w(String classSimpleName, String msg) {
         if (BuildConfig.DEBUG) {
-            Log.w(tag, msg);
+            Log.w("Sim_" + classSimpleName, msg);
         }
     }
 
-    public static void e(String tag, String msg) {
+    public static void e(String classSimpleName, String msg) {
         if (BuildConfig.DEBUG) {
-            Log.e(tag, msg);
+            Log.e("Sim_" + classSimpleName, msg);
         }
     }
 

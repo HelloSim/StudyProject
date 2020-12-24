@@ -18,7 +18,6 @@ import cn.jpush.android.api.JPushInterface;
  * @Description Application
  */
 public class Application extends android.app.Application {
-    private static final String TAG = "Sim_Application";
 
     public static Context context;
 

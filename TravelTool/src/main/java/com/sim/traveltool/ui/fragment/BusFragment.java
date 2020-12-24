@@ -32,7 +32,6 @@ import java.util.Objects;
  * @Description “首页”Fragment
  */
 public class BusFragment extends BaseFragment {
-    private static final String TAG = "Sim_BusFragment";
 
     //轮播图模块
     private ViewPager viewPager;

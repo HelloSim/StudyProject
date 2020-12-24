@@ -29,7 +29,6 @@ import rx.Subscriber;
  * @Description :显示出行方案的页面
  */
 public class BusRouteActivity extends AppActivity {
-    private static final String TAG = "Sim_RouteActivity";
 
     @BindView(R.id.tv_from_and_to_location)
     TextView tvFromAndToLocation;
@@ -105,7 +104,7 @@ public class BusRouteActivity extends AppActivity {
 
             @Override
             public void onError(Throwable e) {
-                LogUtil.e(TAG, "位置信息请求出错: " + e);
+                LogUtil.e(BusRouteActivity.class.getSimpleName(), "位置信息请求出错: " + e);
             }
 
             @Override
@@ -136,7 +135,7 @@ public class BusRouteActivity extends AppActivity {
 
             @Override
             public void onError(Throwable e) {
-                LogUtil.e(TAG, "出行方案请求出错: " + e);
+                LogUtil.e(BusRouteActivity.class.getSimpleName(), "出行方案请求出错: " + e);
             }
 
             @Override

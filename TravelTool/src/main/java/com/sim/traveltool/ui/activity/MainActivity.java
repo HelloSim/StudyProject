@@ -31,7 +31,6 @@ import butterknife.BindView;
 import butterknife.OnClick;
 
 public class MainActivity extends AppActivity {
-    private static final String TAG = "Sim_MainActivity";
 
     @BindView(R.id.bottom_bar_bus)
     RadioButton barHome;

@@ -8,8 +8,8 @@ android {
         applicationId "com.sim.traveltool"
         minSdkVersion rootProject.ext.android["minSdkVersion"]
         targetSdkVersion rootProject.ext.android["targetSdkVersion"]
-        versionCode 13
-        versionName "3.2.8"
+        versionCode 14
+        versionName "3.2.9"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         ndk {
             // 设置支持的SO库架构
@@ -98,6 +98,8 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation files('libs\\jcore-android-2.6.0.jar')
+    implementation files('libs\\jpush-android-3.9.0.jar')
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     implementation 'androidx.appcompat:appcompat:1.2.0'

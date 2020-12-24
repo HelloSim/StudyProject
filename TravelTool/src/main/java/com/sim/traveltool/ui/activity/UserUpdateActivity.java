@@ -43,7 +43,6 @@ import rx.Subscriber;
  * @Description 显示用户信息的页面
  */
 public class UserUpdateActivity extends AppActivity {
-    private static final String TAG = "Sim_UserUpdateActivity";
 
     @BindView(R.id.parent)
     LinearLayout parent;
@@ -238,7 +237,7 @@ public class UserUpdateActivity extends AppActivity {
 
             @Override
             public void onError(Throwable e) {
-                LogUtil.d(TAG, "updateUserInfoOnError: " + e);
+                LogUtil.d(UserUpdateActivity.class.getSimpleName(), "更新用户信息出错: " + e);
             }
 
             @Override

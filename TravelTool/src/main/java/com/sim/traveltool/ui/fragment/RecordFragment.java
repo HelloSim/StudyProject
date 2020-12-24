@@ -38,7 +38,6 @@ import butterknife.OnClick;
  */
 public class RecordFragment extends BaseFragment implements CalendarView.OnMonthChangeListener,
         CalendarView.OnCalendarSelectListener {
-    private static final String TAG = "Sim_RecordFragment";
 
     @BindView(R.id.tv_now_year_and_month)
     TextView tv_now_year_and_month;

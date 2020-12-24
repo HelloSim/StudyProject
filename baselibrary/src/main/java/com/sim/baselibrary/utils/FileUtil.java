@@ -14,7 +14,6 @@ import java.util.Comparator;
  * @Description File工具类
  */
 public class FileUtil {
-    public static final String TAG = "Sim_FileUtil";
 
     /**
      * 创建文件
@@ -51,7 +50,7 @@ public class FileUtil {
                 file.mkdir();
             }
         } catch (Exception e) {
-            LogUtil.e(TAG,"创建文件夹error:"+e );
+            LogUtil.e(FileUtil.class.getSimpleName(),"创建文件夹error:"+e );
         }
     }
 
