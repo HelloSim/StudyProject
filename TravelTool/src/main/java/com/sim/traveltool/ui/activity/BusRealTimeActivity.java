@@ -121,7 +121,7 @@ public class BusRealTimeActivity extends AppActivity {
 
             @Override
             public void onError(Throwable e) {
-                LogUtil.e(BusRealTimeActivity.class.getSimpleName(), "获取公交路线站点请求出错: " + e);
+                LogUtil.e(BusRealTimeActivity.class, "获取公交路线站点请求出错: " + e);
             }
 
             @Override

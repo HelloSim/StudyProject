@@ -62,7 +62,7 @@ public class UserRegisterActivity extends AppActivity {
 
             @Override
             public void onError(Throwable e) {
-                LogUtil.e(UserRegisterActivity.class.getSimpleName(), "注册用户出错: " + e);
+                LogUtil.e(UserRegisterActivity.class, "注册用户出错: " + e);
             }
 
             @Override

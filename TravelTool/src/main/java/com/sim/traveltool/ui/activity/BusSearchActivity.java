@@ -152,7 +152,7 @@ public class BusSearchActivity extends AppActivity {
 
             @Override
             public void onError(Throwable e) {
-                LogUtil.d(BusSearchActivity.class.getSimpleName(), "搜索实时公交路线出错: " + e);
+                LogUtil.d(BusSearchActivity.class, "搜索实时公交路线出错: " + e);
             }
 
             @Override
@@ -184,7 +184,7 @@ public class BusSearchActivity extends AppActivity {
 
             @Override
             public void onError(Throwable e) {
-                LogUtil.d(BusSearchActivity.class.getSimpleName(), "位置请求出错: " + e);
+                LogUtil.d(BusSearchActivity.class, "位置请求出错: " + e);
             }
 
             @Override

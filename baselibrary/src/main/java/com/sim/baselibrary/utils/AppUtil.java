@@ -128,7 +128,7 @@ public class AppUtil {
             PackageManager pm = context.getApplicationContext().getPackageManager();
             pi = pm.getPackageInfo(pkgName, 0);
         } catch (Throwable t) {
-            LogUtil.e(AppUtil.class.getSimpleName(), "判断是否系统应用出错：" + t);
+            LogUtil.e(AppUtil.class, "判断是否系统应用出错：" + t);
         }
         // 是系统中已安装的应用
         if (pi != null) {
@@ -245,11 +245,11 @@ public class AppUtil {
             Method forceStopPackage = am.getClass().getDeclaredMethod("forceStopPackage", String.class);
             forceStopPackage.setAccessible(true);
             forceStopPackage.invoke(am, packageName);
-            LogUtil.i(AppUtil.class.getSimpleName(), "stopApps: successful");
+            LogUtil.i(AppUtil.class, "stopApps: successful");
             return true;
         } catch (Exception ex) {
             ex.printStackTrace();
-            LogUtil.i(AppUtil.class.getSimpleName(), "stopApps: error");
+            LogUtil.i(AppUtil.class, "stopApps: error");
             return false;
         }
     }

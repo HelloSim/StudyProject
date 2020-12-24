@@ -61,7 +61,7 @@ public class UserLogInActivity extends AppActivity {
 
             @Override
             public void onError(Throwable e) {
-                LogUtil.e(UserLogInActivity.class.getSimpleName(), "用户登陆出错: " + e);
+                LogUtil.e(UserLogInActivity.class, "用户登陆出错: " + e);
             }
 
             @Override

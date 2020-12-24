@@ -104,7 +104,7 @@ public class BusRouteActivity extends AppActivity {
 
             @Override
             public void onError(Throwable e) {
-                LogUtil.e(BusRouteActivity.class.getSimpleName(), "位置信息请求出错: " + e);
+                LogUtil.e(BusRouteActivity.class, "位置信息请求出错: " + e);
             }
 
             @Override
@@ -135,7 +135,7 @@ public class BusRouteActivity extends AppActivity {
 
             @Override
             public void onError(Throwable e) {
-                LogUtil.e(BusRouteActivity.class.getSimpleName(), "出行方案请求出错: " + e);
+                LogUtil.e(BusRouteActivity.class, "出行方案请求出错: " + e);
             }
 
             @Override

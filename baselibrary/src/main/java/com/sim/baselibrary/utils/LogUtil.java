@@ -12,36 +12,36 @@ import com.sim.baselibrary.BuildConfig;
 public class LogUtil {
 
     /**
-     * @param classSimpleName 类名
-     * @param msg             打印信息
+     * @param className 类名
+     * @param msg       打印信息
      */
-    public static void v(String classSimpleName, String msg) {
+    public static void v(Class className, String msg) {
         if (BuildConfig.DEBUG) {
-            Log.v("Sim_" + classSimpleName, msg);
+            Log.v("Sim_" + className.getSimpleName(), msg);
         }
     }
 
-    public static void d(String classSimpleName, String msg) {
+    public static void d(Class className, String msg) {
         if (BuildConfig.DEBUG) {
-            Log.d("Sim_" + classSimpleName, msg);
+            Log.d("Sim_" + className.getSimpleName(), msg);
         }
     }
 
-    public static void i(String classSimpleName, String msg) {
+    public static void i(Class className, String msg) {
         if (BuildConfig.DEBUG) {
-            Log.i("Sim_" + classSimpleName, msg);
+            Log.i("Sim_" + className.getSimpleName(), msg);
         }
     }
 
-    public static void w(String classSimpleName, String msg) {
+    public static void w(Class className, String msg) {
         if (BuildConfig.DEBUG) {
-            Log.w("Sim_" + classSimpleName, msg);
+            Log.w("Sim_" + className.getSimpleName(), msg);
         }
     }
 
-    public static void e(String classSimpleName, String msg) {
+    public static void e(Class className, String msg) {
         if (BuildConfig.DEBUG) {
-            Log.e("Sim_" + classSimpleName, msg);
+            Log.e("Sim_" + className.getSimpleName(), msg);
         }
     }
 

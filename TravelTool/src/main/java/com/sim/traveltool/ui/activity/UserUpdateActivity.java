@@ -237,7 +237,7 @@ public class UserUpdateActivity extends AppActivity {
 
             @Override
             public void onError(Throwable e) {
-                LogUtil.d(UserUpdateActivity.class.getSimpleName(), "更新用户信息出错: " + e);
+                LogUtil.d(UserUpdateActivity.class, "更新用户信息出错: " + e);
             }
 
             @Override

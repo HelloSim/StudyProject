@@ -50,7 +50,7 @@ public class FileUtil {
                 file.mkdir();
             }
         } catch (Exception e) {
-            LogUtil.e(FileUtil.class.getSimpleName(),"创建文件夹error:"+e );
+            LogUtil.e(FileUtil.class,"创建文件夹error:"+e );
         }
     }
 

@@ -28,7 +28,7 @@ public class KeyBoardUtil {
             ((SearchView.SearchAutoComplete) searchView.findViewById(R.id.search_src_text)).setText("");
             searchView.setIconified(true);
         } catch (Exception e) {
-            LogUtil.e(ZipUtil.class.getSimpleName(), "SearchView onCloseClicked" + e);
+            LogUtil.e(ZipUtil.class, "SearchView onCloseClicked" + e);
         }
     }
 
