@@ -34,11 +34,11 @@ public class BusRouteFragment extends BaseFragment {
         tvStartStation = view.findViewById(R.id.tv_start_station);
         tvEndStation = view.findViewById(R.id.tv_end_station);
         btnRoute = view.findViewById(R.id.btn_route);
+        setViewClick(tvStartStation, tvEndStation, btnRoute);
     }
 
     @Override
     protected void initView(View view) {
-        setViewClick(tvStartStation, tvEndStation, btnRoute);
     }
 
     @Override

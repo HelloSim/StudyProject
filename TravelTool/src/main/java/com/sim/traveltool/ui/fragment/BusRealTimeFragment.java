@@ -26,11 +26,11 @@ public class BusRealTimeFragment extends BaseFragment {
     @Override
     protected void bindViews(View view) {
         tvSearch = view.findViewById(R.id.tv_search);
+        setViewClick(tvSearch);
     }
 
     @Override
     protected void initView(View view) {
-        setViewClick(tvSearch);
     }
 
     @Override
@@ -41,7 +41,7 @@ public class BusRealTimeFragment extends BaseFragment {
     @Override
     public void onMultiClick(View view) {
         if (view == tvSearch) {
-            startActivity(new Intent(getActivity(), BusSearchActivity.class).putExtra("searchType", AppHelper.RESULT_BUS));
+//            startActivity(new Intent(getActivity(), BusSearchActivity.class).putExtra("searchType", AppHelper.RESULT_BUS));
         } else {
             super.onMultiClick(view);
         }

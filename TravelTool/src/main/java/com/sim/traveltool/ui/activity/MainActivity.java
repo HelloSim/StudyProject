@@ -44,7 +44,6 @@ public class MainActivity extends BaseActivity {
     DrawerLayout drawerLayout;
     ImageView ivUserImage;
     TextView tvUserNikeName;
-    TextView tvUserAutograph;
 
     private String spName = "userState";
     private String spStateKey = "isLogIn";
@@ -83,7 +82,6 @@ public class MainActivity extends BaseActivity {
         drawerLayout = findViewById(R.id.dl_drawer);
         ivUserImage = findViewById(R.id.iv_user);
         tvUserNikeName = findViewById(R.id.tv_user_nike_name);
-        tvUserAutograph = findViewById(R.id.tv_user_autograph);
         setViewClick(rbBottomBarBus, rbBottomBarWangyi, rbBottomBarRecord, rlUserLogIn, rlUserDetail, rlUserCollect, rlUserSetting);
     }
 
@@ -101,9 +99,6 @@ public class MainActivity extends BaseActivity {
                     }
                     if (userInfo.getResult().getName() != null) {
                         tvUserNikeName.setText(userInfo.getResult().getName());
-                    }
-                    if (userInfo.getResult().getAutograph() != null) {
-                        tvUserAutograph.setText(userInfo.getResult().getAutograph());
                     }
                 } else {
                     isLogIn = false;
@@ -239,9 +234,6 @@ public class MainActivity extends BaseActivity {
                     }
                     if (userInfo.getResult().getName() != null) {
                         tvUserNikeName.setText(userInfo.getResult().getName());
-                    }
-                    if (userInfo.getResult().getAutograph() != null) {
-                        tvUserAutograph.setText(userInfo.getResult().getAutograph());
                     }
                 } else {
                     isLogIn = false;

@@ -11,7 +11,7 @@ import java.util.concurrent.atomic.AtomicLong;
  */
 public abstract class OnMultiClickListener implements View.OnClickListener {
 
-    private static final int MIN_CLICK_DELAY_TIME = 1000;// 两次点击按钮之间的点击间隔不能少于1000毫秒
+    private static final int MIN_CLICK_DELAY_TIME = 600;// 两次点击按钮之间的点击间隔不能少于600毫秒
     private static AtomicLong lastClickTime = new AtomicLong(0);
 
     /**

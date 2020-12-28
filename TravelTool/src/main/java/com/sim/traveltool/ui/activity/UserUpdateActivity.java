@@ -129,55 +129,22 @@ public class UserUpdateActivity extends BaseActivity {
 
         LayoutInflater inflater = (LayoutInflater) this.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
         updateNikeNameLayout = inflater.inflate(R.layout.view_popup_update_nike_name, null);
-        updateNikeNamePopupWindow = showPopupWindow(updateNikeNameLayout,300,180);
+        updateAutographLayout = inflater.inflate(R.layout.view_popup_update_autograph, null);
+
+        updateNikeNamePopupWindow = showPopupWindow(updateNikeNameLayout, 300, 180);
+        updateAutographNamePopupWindow = showPopupWindow(updateAutographLayout, 300, 180);
+
         et_nike_name = updateNikeNameLayout.findViewById(R.id.et_nike_name);
         btn_nike_name_cancel = updateNikeNameLayout.findViewById(R.id.btn_nike_name_cancel);
         btn_nike_name_confirm = updateNikeNameLayout.findViewById(R.id.btn_nike_name_confirm);
-        et_nike_name.setText(userNikeName);
-        btn_nike_name_cancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (TimeUtil.isFastClick()) {
-                    et_nike_name.setText(userNikeName);
-                    updateNikeNamePopupWindow.dismiss();
-                }
-            }
-        });
-        btn_nike_name_confirm.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (TimeUtil.isFastClick()) {
-                    if (et_nike_name.getText().toString().length() > 0) {
-                        updateUserInfo(userInfo.getResult().getName(), (String) SPUtil.get(UserUpdateActivity.this, spName, "password", ""), userInfo.getResult().getHeaderImg(),
-                                et_nike_name.getText().toString(), userInfo.getResult().getAutograph(), userInfo.getResult().getPhone(), userInfo.getResult().getEmail(),
-                                userInfo.getResult().getRemarks(), userInfo.getResult().getVipGrade());
-                    }
-                }
-            }
-        });
-
-        updateAutographLayout = inflater.inflate(R.layout.view_popup_update_autograph, null);
-        updateAutographNamePopupWindow = showPopupWindow(updateAutographLayout, 300, 180);
+        et_autograph = updateAutographLayout.findViewById(R.id.et_autograph);
         btn_autograph_cancel = updateAutographLayout.findViewById(R.id.btn_autograph_cancel);
         btn_autograph_confirm = updateAutographLayout.findViewById(R.id.btn_autograph_confirm);
+
+        et_nike_name.setText(userNikeName);
         et_autograph.setText(userAutograph);
-        btn_autograph_cancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                et_autograph.setText(userAutograph);
-                updateAutographNamePopupWindow.dismiss();
-            }
-        });
-        btn_autograph_confirm.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (et_autograph.getText() != null) {
-                    updateUserInfo(userInfo.getResult().getName(), (String) SPUtil.get(UserUpdateActivity.this, spName, "password", ""), userInfo.getResult().getHeaderImg(),
-                            userInfo.getResult().getNikeName(), et_autograph.getText().toString(), userInfo.getResult().getPhone(), userInfo.getResult().getEmail(),
-                            userInfo.getResult().getRemarks(), userInfo.getResult().getVipGrade());
-                }
-            }
-        });
+
+        setViewClick(btn_nike_name_cancel, btn_nike_name_confirm, btn_autograph_cancel, btn_autograph_confirm);
     }
 
     @Override
@@ -195,7 +162,7 @@ public class UserUpdateActivity extends BaseActivity {
     public void onMultiClick(View view) {
         if (view == back) {
             finish();
-        } else if (view ==rlUserImage) {
+        } else if (view == rlUserImage) {
             gallery();
         } else if (view == rlUserNikeName) {
             updateNikeNamePopupWindow.showAtLocation(parent, Gravity.CENTER, 0, 0);
@@ -217,6 +184,28 @@ public class UserUpdateActivity extends BaseActivity {
 
                         }
                     });
+        } else if (view == btn_nike_name_cancel) {
+            if (TimeUtil.isFastClick()) {
+                et_nike_name.setText(userNikeName);
+                updateNikeNamePopupWindow.dismiss();
+            }
+        } else if (view == btn_nike_name_confirm) {
+            if (TimeUtil.isFastClick()) {
+                if (userInfo != null && et_nike_name.getText().toString().length() > 0) {
+                    updateUserInfo(userInfo.getResult().getName(), (String) SPUtil.get(UserUpdateActivity.this, spName, "password", ""), userInfo.getResult().getHeaderImg(),
+                            et_nike_name.getText().toString(), userInfo.getResult().getAutograph(), userInfo.getResult().getPhone(), userInfo.getResult().getEmail(),
+                            userInfo.getResult().getRemarks(), userInfo.getResult().getVipGrade());
+                }
+            }
+        } else if (view == btn_autograph_cancel) {
+            et_autograph.setText(userAutograph);
+            updateAutographNamePopupWindow.dismiss();
+        } else if (view == btn_autograph_confirm) {
+            if (et_autograph.getText() != null) {
+                updateUserInfo(userInfo.getResult().getName(), (String) SPUtil.get(UserUpdateActivity.this, spName, "password", ""), userInfo.getResult().getHeaderImg(),
+                        userInfo.getResult().getNikeName(), et_autograph.getText().toString(), userInfo.getResult().getPhone(), userInfo.getResult().getEmail(),
+                        userInfo.getResult().getRemarks(), userInfo.getResult().getVipGrade());
+            }
         } else {
             super.onMultiClick(view);
         }

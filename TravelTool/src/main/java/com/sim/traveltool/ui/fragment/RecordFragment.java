@@ -1,12 +1,18 @@
 package com.sim.traveltool.ui.fragment;
 
+import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
@@ -34,14 +40,27 @@ public class RecordFragment extends BaseFragment implements CalendarView.OnMonth
     TextView tvNowMonth;
     CalendarView calendarView;
 
+    LinearLayout parent;
+    ImageView ivMore;
     TextView tvRecordTimeStart;
     TextView tvRecordTimeEnd;
     Button btnRecord;
-    Button btnAllRecord;
-    Button btnOther;
 
     private List<RecordDataBean> recordDataBeanList;//指定日期的打卡记录列表
     private RecordDataBean recordDataBean;//指定日期的打卡信息
+
+    //更多弹窗
+    private PopupWindow morePopupWindow;//弹窗
+    private View moreLayout;//布局
+    Button btnAllRecord;
+    Button btnOther;
+    //添加备忘弹窗
+    private PopupWindow otherPopupWindow;//弹窗
+    private View otherLayout;//布局
+    EditText etOther;
+    Button btnCancel;
+    Button btnConfirm;
+
 
     @Override
     protected int getLayoutRes() {
@@ -53,16 +72,16 @@ public class RecordFragment extends BaseFragment implements CalendarView.OnMonth
         tvNowMonth = view.findViewById(R.id.tv_now_year_and_month);
         calendarView = view.findViewById(R.id.calendarView);
 
+        parent = view.findViewById(R.id.parent);
+        ivMore = view.findViewById(R.id.iv_more);
         tvRecordTimeStart = view.findViewById(R.id.tv_record_time_start);
         tvRecordTimeEnd = view.findViewById(R.id.tv_record_time_end);
         btnRecord = view.findViewById(R.id.btn_record);
-        btnAllRecord = view.findViewById(R.id.all_record);
-        btnOther = view.findViewById(R.id.btn_updata_other);
+        setViewClick(ivMore, btnRecord);
     }
 
     @Override
     protected void initView(View view) {
-        setViewClick(btnRecord, btnAllRecord, btnOther);
         //设置星期日周起始
         calendarView.setWeekStarWithSun();
         //设置星期栏的背景、字体颜色
@@ -78,6 +97,21 @@ public class RecordFragment extends BaseFragment implements CalendarView.OnMonth
 
         tvNowMonth.setText(RecordDataDaoUtil.getInstance().getYearMonth(getContext(), calendarView.getSelectedCalendar()));
         showInfo(calendarView.getSelectedCalendar());
+
+        LayoutInflater inflater = (LayoutInflater) getActivity().getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
+        moreLayout = inflater.inflate(R.layout.view_popup_more, null);
+        otherLayout = inflater.inflate(R.layout.view_popup_add_other, null);
+
+        morePopupWindow = showPopupWindow(moreLayout, 300, 180);
+        otherPopupWindow = showPopupWindow(otherLayout, 300, 180);
+
+        btnAllRecord = moreLayout.findViewById(R.id.all_record);
+        btnOther = moreLayout.findViewById(R.id.btn_updata_other);
+        etOther = otherLayout.findViewById(R.id.et_other);
+        btnCancel = otherLayout.findViewById(R.id.btn_cancel);
+        btnConfirm = otherLayout.findViewById(R.id.btn_confirm);
+
+        setViewClick(btnAllRecord, btnOther, btnCancel, btnConfirm);
     }
 
     @Override
@@ -88,24 +122,23 @@ public class RecordFragment extends BaseFragment implements CalendarView.OnMonth
 
     @Override
     public void onMultiClick(View view) {
-        if (view == btnAllRecord) {
+        if (view == ivMore) {
+            morePopupWindow.showAsDropDown(ivMore, 0, 0);
+        } else if (view == btnAllRecord) {
+            morePopupWindow.dismiss();
             Intent intent = new Intent(getContext(), RecordAllActivity.class);
             Bundle bundle = new Bundle();
             bundle.putSerializable("calendar", calendarView.getSelectedCalendar());
             intent.putExtras(bundle);
             startActivity(intent);
         } else if (view == btnOther) {
-            EditText et = new EditText(getContext());
-            new AlertDialog.Builder(getContext())
-                    .setTitle(getString(R.string.record_add_memo))
-                    .setView(et)
-                    .setNegativeButton(getString(R.string.cancel), null)
-                    .setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            RecordDataDaoUtil.getInstance().updataRecordOther(getContext(), calendarView.getSelectedCalendar(), et.getText().toString());
-                        }
-                    }).show();
+            morePopupWindow.dismiss();
+            otherPopupWindow.showAtLocation(parent, Gravity.CENTER, 0, 0);
+        } else if (view == btnCancel) {
+            otherPopupWindow.dismiss();
+        } else if (view == btnConfirm) {
+            otherPopupWindow.dismiss();
+            RecordDataDaoUtil.getInstance().updataRecordOther(getContext(), calendarView.getSelectedCalendar(), etOther.getText().toString());
         } else if (view == btnRecord) {
             if (calendarView.getSelectedCalendar().isCurrentDay()) {//是否当天
                 if (!calendarView.getSelectedCalendar().isWeekend()) {//是否周末

@@ -26,11 +26,11 @@ public class BusStationFragment extends BaseFragment {
     protected void bindViews(View view) {
         tvStation = view.findViewById(R.id.tv_station);
         btnStation = view.findViewById(R.id.btn_station);
+        setViewClick(tvStation, btnStation);
     }
 
     @Override
     protected void initView(View view) {
-        setViewClick(tvStation, btnStation);
     }
 
     @Override
