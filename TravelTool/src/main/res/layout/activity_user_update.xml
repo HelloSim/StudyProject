@@ -74,7 +74,7 @@
         android:padding="20dp">
 
         <TextView
-            android:id="@+id/tv_user_name"
+            android:id="@+id/user_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
@@ -83,7 +83,7 @@
             android:textSize="18sp" />
 
         <TextView
-            android:id="@+id/user_name"
+            android:id="@+id/tv_user_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
@@ -108,7 +108,7 @@
         android:padding="20dp">
 
         <TextView
-            android:id="@+id/tv_user_nikeName"
+            android:id="@+id/user_nikeName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
@@ -117,7 +117,7 @@
             android:textSize="18sp" />
 
         <TextView
-            android:id="@+id/user_nikeName"
+            android:id="@+id/tv_user_nikeName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
@@ -143,7 +143,7 @@
         android:padding="20dp">
 
         <TextView
-            android:id="@+id/tv_user_autograph"
+            android:id="@+id/user_autograph"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
@@ -152,7 +152,7 @@
             android:textSize="18sp" />
 
         <TextView
-            android:id="@+id/user_autograph"
+            android:id="@+id/tv_user_autograph"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"

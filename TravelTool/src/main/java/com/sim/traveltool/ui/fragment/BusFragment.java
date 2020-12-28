@@ -1,18 +1,11 @@
 package com.sim.traveltool.ui.fragment;
 
-import android.annotation.SuppressLint;
-import android.content.Context;
-import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
@@ -34,7 +27,7 @@ import java.util.Objects;
 public class BusFragment extends BaseFragment {
 
     //轮播图模块
-    private ViewPager viewPager;
+    private ViewPager LoopViewPager;
     private int[] mImg;
     private int[] mImg_id;
     private String[] mDec;
@@ -44,44 +37,44 @@ public class BusFragment extends BaseFragment {
     private int previousSelectedPosition = 0;
     boolean isRunning = false;
 
-    private TabLayout tab_layout;
-    private ViewPager view_pager;
+    //导航栏模块
+    private TabLayout tabLayout;
+    private ViewPager viewPager;
     private List<String> titleDatas;
 
+    //fragment
     private BusRealTimeFragment busRealTimeFragment;
     private BusRouteFragment busRouteFragment;
     private BusStationFragment busStationFragment;
 
-    @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_bus, container, false);
-        initData();
-        initView(view);
-        initLoopView();
-        return view;
+    protected int getLayoutRes() {
+        return R.layout.fragment_bus;
     }
 
-    private void initData() {
+    @Override
+    protected void bindViews(View view) {
+        LoopViewPager = view.findViewById(R.id.loopviewpager);
+        ll_dots_container = view.findViewById(R.id.ll_dots_loop);
+        loop_dec = view.findViewById(R.id.loop_dec);
+
+        tabLayout = view.findViewById(R.id.tab_layout);
+        viewPager = view.findViewById(R.id.view_pager);
+
         titleDatas = new ArrayList<>();
         titleDatas.add(getContext().getString(R.string.BusRealTime));
         titleDatas.add(getContext().getString(R.string.BusRoute));
         titleDatas.add(getContext().getString(R.string.BusStation));
     }
 
-    @SuppressLint("ClickableViewAccessibility")
-    private void initView(View view) {
-        viewPager = view.findViewById(R.id.loopviewpager);
-        ll_dots_container = view.findViewById(R.id.ll_dots_loop);
-        loop_dec = view.findViewById(R.id.loop_dec);
+    @Override
+    protected void initView(View view) {
+        initLoopView();
 
-        tab_layout = view.findViewById(R.id.tab_layout);
-        view_pager = view.findViewById(R.id.view_pager);
-
-        view_pager.setAdapter(new FragmentPagerAdapter(getFragmentManager()) {
+        viewPager.setAdapter(new FragmentPagerAdapter(getFragmentManager()) {
             @Override
             public Fragment getItem(int position) {
-                return Objects.requireNonNull(hideAllFragment(position));
+                return Objects.requireNonNull(showFragment(position));
             }
 
             @Override
@@ -94,33 +87,12 @@ public class BusFragment extends BaseFragment {
                 return titleDatas.get(position);
             }
         });
-        tab_layout.setupWithViewPager(view_pager);
+        tabLayout.setupWithViewPager(viewPager);
     }
 
-    /**
-     * 隐藏所有的fragment再显示需要的fragment
-     *
-     * @param type 0:实时公交fragment     1：出行路线fragment    2：站点查询fragment
-     */
-    private Fragment hideAllFragment(int type) {
-        switch (type) {
-            case 0:
-                if (busRealTimeFragment == null) {
-                    busRealTimeFragment = new BusRealTimeFragment();
-                }
-                return busRealTimeFragment;
-            case 1:
-                if (busRouteFragment == null) {
-                    busRouteFragment = new BusRouteFragment();
-                }
-                return busRouteFragment;
-            case 2:
-                if (busStationFragment == null) {
-                    busStationFragment = new BusStationFragment();
-                }
-                return busStationFragment;
-        }
-        return null;
+    @Override
+    protected void initData() {
+
     }
 
     /**
@@ -143,7 +115,28 @@ public class BusFragment extends BaseFragment {
             imageView = new ImageView(getActivity());
             imageView.setBackgroundResource(mImg[i]);
             imageView.setId(mImg_id[i]);
-            imageView.setOnClickListener(new pagerOnClickListener(getContext()));
+            imageView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    switch (v.getId()) {
+                        case R.id.pager_img1:
+                            Toast.makeText(getContext(), "1被点击", Toast.LENGTH_SHORT).show();
+                            break;
+                        case R.id.pager_img2:
+                            Toast.makeText(getContext(), "2被点击", Toast.LENGTH_SHORT).show();
+                            break;
+                        case R.id.pager_img3:
+                            Toast.makeText(getContext(), "3被点击", Toast.LENGTH_SHORT).show();
+                            break;
+                        case R.id.pager_img4:
+                            Toast.makeText(getContext(), "4被点击", Toast.LENGTH_SHORT).show();
+                            break;
+                        case R.id.pager_img5:
+                            Toast.makeText(getContext(), "5被点击", Toast.LENGTH_SHORT).show();
+                            break;
+                    }
+                }
+            });
             mImgList.add(imageView);
             //加引导点
             dotView = new View(getActivity());
@@ -159,13 +152,13 @@ public class BusFragment extends BaseFragment {
         ll_dots_container.getChildAt(0).setEnabled(true);
         loop_dec.setText(mDec[0]);
         previousSelectedPosition = 0;
-        viewPager.setAdapter(new LoopViewAdapter(mImgList));//设置适配器
+        LoopViewPager.setAdapter(new LoopViewAdapter(mImgList));//设置适配器
         // 把ViewPager设置为默认选中Integer.MAX_VALUE / t2，从十几亿次开始轮播图片，达到无限循环目的;
         int m = (Integer.MAX_VALUE / 2) % mImgList.size();
         int currentPosition = Integer.MAX_VALUE / 2 - m;
-        viewPager.setCurrentItem(currentPosition);
+        LoopViewPager.setCurrentItem(currentPosition);
 
-        viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+        LoopViewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int i, float v, int i1) {
 
@@ -198,7 +191,7 @@ public class BusFragment extends BaseFragment {
                     getActivity().runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            viewPager.setCurrentItem(viewPager.getCurrentItem() + 1);
+                            LoopViewPager.setCurrentItem(LoopViewPager.getCurrentItem() + 1);
                         }
                     });
                 }
@@ -206,33 +199,28 @@ public class BusFragment extends BaseFragment {
         }.start();
     }
 
-    public class pagerOnClickListener implements View.OnClickListener {
-
-        Context mContext;
-
-        public pagerOnClickListener(Context mContext) {
-            this.mContext = mContext;
-        }
-
-        @Override
-        public void onClick(View v) {
-            switch (v.getId()) {
-                case R.id.pager_img1:
-                    Toast.makeText(mContext, "1被点击", Toast.LENGTH_SHORT).show();
-                    break;
-                case R.id.pager_img2:
-                    Toast.makeText(mContext, "2被点击", Toast.LENGTH_SHORT).show();
-                    break;
-                case R.id.pager_img3:
-                    Toast.makeText(mContext, "3被点击", Toast.LENGTH_SHORT).show();
-                    break;
-                case R.id.pager_img4:
-                    Toast.makeText(mContext, "4被点击", Toast.LENGTH_SHORT).show();
-                    break;
-                case R.id.pager_img5:
-                    Toast.makeText(mContext, "5被点击", Toast.LENGTH_SHORT).show();
-                    break;
-            }
+    /**
+     * 隐藏所有的fragment再显示需要的fragment
+     *
+     * @param type 0:实时公交fragment     1：出行路线fragment    2：站点查询fragment
+     */
+    private Fragment showFragment(int type) {
+        switch (type) {
+            default:
+                if (busRealTimeFragment == null) {
+                    busRealTimeFragment = new BusRealTimeFragment();
+                }
+                return busRealTimeFragment;
+            case 1:
+                if (busRouteFragment == null) {
+                    busRouteFragment = new BusRouteFragment();
+                }
+                return busRouteFragment;
+            case 2:
+                if (busStationFragment == null) {
+                    busStationFragment = new BusStationFragment();
+                }
+                return busStationFragment;
         }
     }
 

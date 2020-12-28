@@ -1,14 +1,10 @@
 package com.sim.traveltool.ui.fragment;
 
 import android.content.Intent;
-import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.sim.baselibrary.base.BaseFragment;
@@ -22,46 +18,49 @@ import com.sim.traveltool.ui.activity.BusSearchActivity;
  * @Time 2020/12/16 11:09
  * @Description 出行路线fragment
  */
-public class BusRouteFragment extends BaseFragment implements View.OnClickListener {
+public class BusRouteFragment extends BaseFragment {
 
     private TextView tvStartStation;
     private TextView tvEndStation;
     private Button btnRoute;
 
-    @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_bus_route, container, false);
-        initView(view);
-        return view;
+    protected int getLayoutRes() {
+        return R.layout.fragment_bus_route;
     }
 
-    private void initView(View view) {
+    @Override
+    protected void bindViews(View view) {
         tvStartStation = view.findViewById(R.id.tv_start_station);
         tvEndStation = view.findViewById(R.id.tv_end_station);
         btnRoute = view.findViewById(R.id.btn_route);
-        tvStartStation.setOnClickListener(this);
-        tvEndStation.setOnClickListener(this);
-        btnRoute.setOnClickListener(this);
     }
 
     @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.tv_start_station:
-                startActivityForResult(new Intent(getActivity(), BusSearchActivity.class).putExtra("searchType", AppHelper.RESULT_START_STATION), AppHelper.RESULT_START_STATION);
-                break;
-            case R.id.tv_end_station:
-                startActivityForResult(new Intent(getActivity(), BusSearchActivity.class).putExtra("searchType", AppHelper.RESULT_END_STATION), AppHelper.RESULT_END_STATION);
-                break;
-            case R.id.btn_route:
-                if (tvStartStation.getText().length() > 0 && tvEndStation.getText().length() > 0) {
-                    Intent intent = new Intent(getActivity(), BusRouteActivity.class);
-                    intent.putExtra("tvStartStation", tvStartStation.getText().toString());
-                    intent.putExtra("tvEndStation", tvEndStation.getText().toString());
-                    startActivity(intent);
-                }
-                break;
+    protected void initView(View view) {
+        setViewClick(tvStartStation, tvEndStation, btnRoute);
+    }
+
+    @Override
+    protected void initData() {
+
+    }
+
+    @Override
+    public void onMultiClick(View view) {
+        if (view == tvStartStation) {
+            startActivityForResult(new Intent(getActivity(), BusSearchActivity.class).putExtra("searchType", AppHelper.RESULT_START_STATION), AppHelper.RESULT_START_STATION);
+        } else if (view == tvEndStation) {
+            startActivityForResult(new Intent(getActivity(), BusSearchActivity.class).putExtra("searchType", AppHelper.RESULT_END_STATION), AppHelper.RESULT_END_STATION);
+        } else if (view == btnRoute) {
+            if (tvStartStation.getText().length() > 0 && tvEndStation.getText().length() > 0) {
+                Intent intent = new Intent(getActivity(), BusRouteActivity.class);
+                intent.putExtra("tvStartStation", tvStartStation.getText().toString());
+                intent.putExtra("tvEndStation", tvEndStation.getText().toString());
+                startActivity(intent);
+            }
+        } else {
+            super.onMultiClick(view);
         }
     }
 

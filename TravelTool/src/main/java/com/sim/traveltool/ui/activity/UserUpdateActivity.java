@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
+import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.view.Gravity;
@@ -15,6 +16,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,19 +24,19 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.google.gson.Gson;
+import com.sim.baselibrary.base.BaseActivity;
+import com.sim.baselibrary.callback.DialogInterface;
 import com.sim.baselibrary.constant.Constant;
 import com.sim.baselibrary.utils.LogUtil;
 import com.sim.baselibrary.utils.SPUtil;
 import com.sim.baselibrary.utils.ScreenUtil;
 import com.sim.baselibrary.utils.TimeUtil;
 import com.sim.traveltool.R;
-import com.sim.traveltool.base.AppActivity;
 import com.sim.traveltool.bean.UserInfo;
+import com.sim.traveltool.internet.APIFactory;
 
 import java.io.File;
 
-import butterknife.BindView;
-import butterknife.OnClick;
 import rx.Subscriber;
 
 /**
@@ -42,18 +44,19 @@ import rx.Subscriber;
  * @Time 2020/4/29 1:05
  * @Description 显示用户信息的页面
  */
-public class UserUpdateActivity extends AppActivity {
+public class UserUpdateActivity extends BaseActivity {
 
-    @BindView(R.id.parent)
+    ImageView back;
     LinearLayout parent;
 
-    @BindView(R.id.iv_user_image)
+    RelativeLayout rlUserImage;
+    RelativeLayout rlUserNikeName;
+    RelativeLayout rlUserAutograph;
+    Button btnSignOut;
+
     ImageView ivUserImage;
-    @BindView(R.id.user_name)
     TextView tvUserName;
-    @BindView(R.id.user_nikeName)
     TextView tvUserNikeName;
-    @BindView(R.id.user_autograph)
     TextView tvUserAutograph;
 
     private String spName = "userState";
@@ -70,8 +73,6 @@ public class UserUpdateActivity extends AppActivity {
     //更新用户名弹窗
     private PopupWindow updateNikeNamePopupWindow;//弹窗
     private View updateNikeNameLayout;//布局
-    private int updateNikeNamePupDPWidth = 300;//宽度，单位DP
-    private int updateNikeNamePupDPHeight = 180;//高度，单位DP
     private EditText et_nike_name;
     private Button btn_nike_name_cancel;
     private Button btn_nike_name_confirm;
@@ -79,8 +80,6 @@ public class UserUpdateActivity extends AppActivity {
     //更新签名弹窗
     private PopupWindow updateAutographNamePopupWindow;//弹窗
     private View updateAutographLayout;//布局
-    private int updateAutographPupDPWidth = 300;//宽度，单位DP
-    private int updateAutographPupDPHeight = 180;//高度，单位DP
     private EditText et_autograph;
     private Button btn_autograph_cancel;
     private Button btn_autograph_confirm;
@@ -92,20 +91,26 @@ public class UserUpdateActivity extends AppActivity {
     private Uri imageUri = null;// 裁剪后的图片uri
 
     @Override
-    protected int getContentViewId() {
+    protected int getLayoutRes() {
         return R.layout.activity_user_update;
     }
 
-    protected void initData() {
-        userInfo = new Gson().fromJson((String) SPUtil.get(this, spName, spUserInfoKey, ""), UserInfo.class);
-        if (userInfo != null) {
-            userImage = userInfo.getResult().getHeaderImg();
-            userName = userInfo.getResult().getName();
-            userNikeName = userInfo.getResult().getNikeName();
-            userAutograph = userInfo.getResult().getAutograph();
-        }
+    @Override
+    protected void bindViews(Bundle savedInstanceState) {
+        back = findViewById(R.id.back);
+        parent = findViewById(R.id.parent);
+        rlUserImage = findViewById(R.id.rl_user_image);
+        rlUserNikeName = findViewById(R.id.rl_user_nikeName);
+        rlUserAutograph = findViewById(R.id.rl_user_autograph);
+        btnSignOut = findViewById(R.id.btn_sign_out);
+        ivUserImage = findViewById(R.id.iv_user_image);
+        tvUserName = findViewById(R.id.user_name);
+        tvUserNikeName = findViewById(R.id.user_nikeName);
+        tvUserAutograph = findViewById(R.id.user_autograph);
+        setViewClick(back, rlUserImage, rlUserNikeName, rlUserAutograph, btnSignOut);
     }
 
+    @Override
     protected void initView() {
         if (userInfo != null) {
             if (userImage != null) {
@@ -124,13 +129,7 @@ public class UserUpdateActivity extends AppActivity {
 
         LayoutInflater inflater = (LayoutInflater) this.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
         updateNikeNameLayout = inflater.inflate(R.layout.view_popup_update_nike_name, null);
-        updateNikeNamePopupWindow = new PopupWindow(this);
-        updateNikeNamePopupWindow.setContentView(updateNikeNameLayout);//设置主体布局
-        updateNikeNamePopupWindow.setWidth(ScreenUtil.dip2px(this, updateNikeNamePupDPWidth));//宽度
-        updateNikeNamePopupWindow.setHeight(ScreenUtil.dip2px(this, updateNikeNamePupDPHeight));//高度
-        updateNikeNamePopupWindow.setFocusable(true);
-        updateNikeNamePopupWindow.setBackgroundDrawable(new BitmapDrawable());//设置空白背景
-        updateNikeNamePopupWindow.setAnimationStyle(R.style.mypopwindow_anim_style);//动画
+        updateNikeNamePopupWindow = showPopupWindow(updateNikeNameLayout,300,180);
         et_nike_name = updateNikeNameLayout.findViewById(R.id.et_nike_name);
         btn_nike_name_cancel = updateNikeNameLayout.findViewById(R.id.btn_nike_name_cancel);
         btn_nike_name_confirm = updateNikeNameLayout.findViewById(R.id.btn_nike_name_confirm);
@@ -158,14 +157,7 @@ public class UserUpdateActivity extends AppActivity {
         });
 
         updateAutographLayout = inflater.inflate(R.layout.view_popup_update_autograph, null);
-        updateAutographNamePopupWindow = new PopupWindow(this);
-        updateAutographNamePopupWindow.setContentView(updateAutographLayout);//设置主体布局
-        updateAutographNamePopupWindow.setWidth(ScreenUtil.dip2px(this, updateAutographPupDPWidth));//宽度
-        updateAutographNamePopupWindow.setHeight(ScreenUtil.dip2px(this, updateAutographPupDPHeight));//高度
-        updateAutographNamePopupWindow.setFocusable(true);
-        updateAutographNamePopupWindow.setBackgroundDrawable(new BitmapDrawable());//设置空白背景
-        updateAutographNamePopupWindow.setAnimationStyle(R.style.mypopwindow_anim_style);//动画
-        et_autograph = updateAutographLayout.findViewById(R.id.et_autograph);
+        updateAutographNamePopupWindow = showPopupWindow(updateAutographLayout, 300, 180);
         btn_autograph_cancel = updateAutographLayout.findViewById(R.id.btn_autograph_cancel);
         btn_autograph_confirm = updateAutographLayout.findViewById(R.id.btn_autograph_confirm);
         et_autograph.setText(userAutograph);
@@ -188,6 +180,48 @@ public class UserUpdateActivity extends AppActivity {
         });
     }
 
+    @Override
+    protected void initData() {
+        userInfo = new Gson().fromJson((String) SPUtil.get(this, spName, spUserInfoKey, ""), UserInfo.class);
+        if (userInfo != null) {
+            userImage = userInfo.getResult().getHeaderImg();
+            userName = userInfo.getResult().getName();
+            userNikeName = userInfo.getResult().getNikeName();
+            userAutograph = userInfo.getResult().getAutograph();
+        }
+    }
+
+    @Override
+    public void onMultiClick(View view) {
+        if (view == back) {
+            finish();
+        } else if (view ==rlUserImage) {
+            gallery();
+        } else if (view == rlUserNikeName) {
+            updateNikeNamePopupWindow.showAtLocation(parent, Gravity.CENTER, 0, 0);
+        } else if (view == rlUserAutograph) {
+            updateAutographNamePopupWindow.showAtLocation(parent, Gravity.CENTER, 0, 0);
+        } else if (view == btnSignOut) {
+            showDialog("退出登录", "是否确认退出？", "确认", "取消",
+                    new DialogInterface() {
+                        @Override
+                        public void sureOnClick() {
+                            SPUtil.put(UserUpdateActivity.this, spName, spStateKey, false);
+                            SPUtil.remove(UserUpdateActivity.this, spName, spUserInfoKey);
+                            SPUtil.remove(UserUpdateActivity.this, spName, "password");
+                            finish();
+                        }
+
+                        @Override
+                        public void cancelOnClick() {
+
+                        }
+                    });
+        } else {
+            super.onMultiClick(view);
+        }
+    }
+
     /**
      * 更新用户信息的网络请求
      *
@@ -202,7 +236,7 @@ public class UserUpdateActivity extends AppActivity {
      * @param vipGrade
      */
     private void updateUserInfo(String name, String passwd, String headerImg, String nikeName, String autograph, String phone, String email, String remarks, String vipGrade) {
-        retrofitUtil.updateUserInfo(new Subscriber<UserInfo>() {
+        APIFactory.getInstance().updateUserInfo(new Subscriber<UserInfo>() {
             @Override
             public void onCompleted() {
                 if (userInfo.getCode() == 200) {
@@ -247,41 +281,6 @@ public class UserUpdateActivity extends AppActivity {
         }, Constant.API_KEY, name, passwd, headerImg, nikeName, autograph, phone, email, remarks, vipGrade);
     }
 
-    @OnClick({R.id.back, R.id.rl_user_image, R.id.rl_user_nikeName, R.id.rl_user_autograph, R.id.btn_sign_out})
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.back:
-                finish();
-                break;
-            case R.id.rl_user_image:
-                gallery();
-                break;
-            case R.id.rl_user_nikeName:
-                updateNikeNamePopupWindow.showAtLocation(parent, Gravity.CENTER, 0, 0);
-                break;
-            case R.id.rl_user_autograph:
-                updateAutographNamePopupWindow.showAtLocation(parent, Gravity.CENTER, 0, 0);
-                break;
-            case R.id.btn_sign_out:
-                showDialog("退出登录", "是否确认退出？", "确认", "取消",
-                        new com.sim.baselibrary.views.DialogInterface() {
-                            @Override
-                            public void sureOnClick() {
-                                SPUtil.put(UserUpdateActivity.this, spName, spStateKey, false);
-                                SPUtil.remove(UserUpdateActivity.this, spName, spUserInfoKey);
-                                SPUtil.remove(UserUpdateActivity.this, spName, "password");
-                                finish();
-                            }
-
-                            @Override
-                            public void cancelOnClick() {
-
-                            }
-                        });
-                break;
-        }
-    }
-
     /**
      * 图库选择图片
      */
@@ -299,7 +298,7 @@ public class UserUpdateActivity extends AppActivity {
      * @param data
      */
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {// 操作成功了
             switch (requestCode) {
@@ -347,7 +346,6 @@ public class UserUpdateActivity extends AppActivity {
      * 创建File保存图片
      */
     private void createImageFile() {
-
         try {
             if (imageFile != null && imageFile.exists()) {
                 imageFile.delete();
@@ -357,7 +355,6 @@ public class UserUpdateActivity extends AppActivity {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
 
     /**
@@ -378,8 +375,6 @@ public class UserUpdateActivity extends AppActivity {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
-
 
 }

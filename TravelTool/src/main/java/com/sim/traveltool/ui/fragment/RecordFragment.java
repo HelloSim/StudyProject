@@ -4,15 +4,11 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 
 import com.haibin.calendarview.Calendar;
@@ -27,10 +23,6 @@ import com.sim.traveltool.ui.activity.RecordAllActivity;
 
 import java.util.List;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-
 /**
  * @Auther Sim
  * @Time 2020/4/27 1:05
@@ -39,34 +31,38 @@ import butterknife.OnClick;
 public class RecordFragment extends BaseFragment implements CalendarView.OnMonthChangeListener,
         CalendarView.OnCalendarSelectListener {
 
-    @BindView(R.id.tv_now_year_and_month)
-    TextView tv_now_year_and_month;
-    @BindView(R.id.calendarView)
+    TextView tvNowMonth;
     CalendarView calendarView;
 
-    @BindView(R.id.tv_record_time_start)
-    TextView tv_record_time_start;
-    @BindView(R.id.tv_record_time_end)
-    TextView tv_record_time_end;
-    @BindView(R.id.btn_record)
-    Button btn_record;
-    @BindView(R.id.btn_updata_other)
-    Button btn_updata_other;
+    TextView tvRecordTimeStart;
+    TextView tvRecordTimeEnd;
+    Button btnRecord;
+    Button btnAllRecord;
+    Button btnOther;
 
     private List<RecordDataBean> recordDataBeanList;//指定日期的打卡记录列表
     private RecordDataBean recordDataBean;//指定日期的打卡信息
 
-    @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_record, container, false);
-        ButterKnife.bind(this, view);
-        initView();
-        initData();
-        return view;
+    protected int getLayoutRes() {
+        return R.layout.fragment_record;
     }
 
-    private void initView() {
+    @Override
+    protected void bindViews(View view) {
+        tvNowMonth = view.findViewById(R.id.tv_now_year_and_month);
+        calendarView = view.findViewById(R.id.calendarView);
+
+        tvRecordTimeStart = view.findViewById(R.id.tv_record_time_start);
+        tvRecordTimeEnd = view.findViewById(R.id.tv_record_time_end);
+        btnRecord = view.findViewById(R.id.btn_record);
+        btnAllRecord = view.findViewById(R.id.all_record);
+        btnOther = view.findViewById(R.id.btn_updata_other);
+    }
+
+    @Override
+    protected void initView(View view) {
+        setViewClick(btnRecord, btnAllRecord, btnOther);
         //设置星期日周起始
         calendarView.setWeekStarWithSun();
         //设置星期栏的背景、字体颜色
@@ -80,13 +76,95 @@ public class RecordFragment extends BaseFragment implements CalendarView.OnMonth
         //日期选择事件监听
         calendarView.setOnCalendarSelectListener(this);
 
-        tv_now_year_and_month.setText(RecordDataDaoUtil.getInstance().getYearMonth(getContext(), calendarView.getSelectedCalendar()));
+        tvNowMonth.setText(RecordDataDaoUtil.getInstance().getYearMonth(getContext(), calendarView.getSelectedCalendar()));
         showInfo(calendarView.getSelectedCalendar());
     }
 
-    private void initData() {
+    @Override
+    protected void initData() {
         //数据库插入本月所有日期条目
         RecordDataDaoUtil.getInstance().insertDataForMonth(getContext(), calendarView.getSelectedCalendar());
+    }
+
+    @Override
+    public void onMultiClick(View view) {
+        if (view == btnAllRecord) {
+            Intent intent = new Intent(getContext(), RecordAllActivity.class);
+            Bundle bundle = new Bundle();
+            bundle.putSerializable("calendar", calendarView.getSelectedCalendar());
+            intent.putExtras(bundle);
+            startActivity(intent);
+        } else if (view == btnOther) {
+            EditText et = new EditText(getContext());
+            new AlertDialog.Builder(getContext())
+                    .setTitle(getString(R.string.record_add_memo))
+                    .setView(et)
+                    .setNegativeButton(getString(R.string.cancel), null)
+                    .setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            RecordDataDaoUtil.getInstance().updataRecordOther(getContext(), calendarView.getSelectedCalendar(), et.getText().toString());
+                        }
+                    }).show();
+        } else if (view == btnRecord) {
+            if (calendarView.getSelectedCalendar().isCurrentDay()) {//是否当天
+                if (!calendarView.getSelectedCalendar().isWeekend()) {//是否周末
+                    if (btnRecord.getText().equals(getString(R.string.record_start))) {
+                        record(1);
+                    } else {
+                        record(2);
+                    }
+                } else {
+                    showDialog(null, getString(R.string.record_week), getString(R.string.ok), getString(R.string.cancel), new com.sim.baselibrary.callback.DialogInterface() {
+                        @Override
+                        public void sureOnClick() {
+                            if (btnRecord.getText().equals(getString(R.string.record_start))) {
+                                record(1);
+                            } else {
+                                record(2);
+                            }
+                        }
+
+                        @Override
+                        public void cancelOnClick() {
+
+                        }
+                    });
+                }
+            } else {
+                calendarView.scrollToCurrent(true);
+                ToastUtil.T_Error(getContext(), getString(R.string.record_only_today));
+            }
+        } else {
+            super.onMultiClick(view);
+        }
+    }
+
+    /**
+     * 视图更改时更新顶部年月份显示
+     *
+     * @param years
+     * @param months
+     */
+    @Override
+    public void onMonthChange(int years, int months) {
+        tvNowMonth.setText(years + getString(R.string.year) + months + getString(R.string.month));
+    }
+
+    @Override
+    public void onCalendarOutOfRange(Calendar calendar) {
+
+    }
+
+    /**
+     * 选中日期更改时更新打卡记录显示
+     *
+     * @param calendar
+     * @param isClick
+     */
+    @Override
+    public void onCalendarSelect(Calendar calendar, boolean isClick) {
+        showInfo(calendar);
     }
 
     /**
@@ -96,26 +174,26 @@ public class RecordFragment extends BaseFragment implements CalendarView.OnMonth
         recordDataBeanList = RecordDataDaoUtil.getInstance().queryRecordForDay(getContext(), calendar);
         if (recordDataBeanList != null && recordDataBeanList.size() != 0) {
             recordDataBean = recordDataBeanList.get(0);
-            tv_record_time_start.setText(recordDataBean.getStartTime());
-            tv_record_time_end.setText(recordDataBean.getEndTime());
-            tv_record_time_start.setTextColor(recordDataBean.getIsLate() ? Color.RED : Color.WHITE);
-            tv_record_time_end.setTextColor(recordDataBean.getIsLeaveEarly() ? Color.RED : Color.WHITE);
-            if (tv_record_time_end.getText().equals(getString(R.string.record_no))) {//是否已打下班卡
-                if (tv_record_time_start.getText().equals(getString(R.string.record_no))) {//是否已打上班卡
+            tvRecordTimeStart.setText(recordDataBean.getStartTime());
+            tvRecordTimeEnd.setText(recordDataBean.getEndTime());
+            tvRecordTimeStart.setTextColor(recordDataBean.getIsLate() ? Color.RED : Color.WHITE);
+            tvRecordTimeEnd.setTextColor(recordDataBean.getIsLeaveEarly() ? Color.RED : Color.WHITE);
+            if (tvRecordTimeEnd.getText().equals(getString(R.string.record_no))) {//是否已打下班卡
+                if (tvRecordTimeStart.getText().equals(getString(R.string.record_no))) {//是否已打上班卡
                     if (TimeUtil.getHour() >= 14) {
-                        btn_record.setText(getString(R.string.record_end));
+                        btnRecord.setText(getString(R.string.record_end));
                     } else {
-                        btn_record.setText(getString(R.string.record_start));
+                        btnRecord.setText(getString(R.string.record_start));
                     }
                 } else {
-                    btn_record.setText(getString(R.string.record_end));
+                    btnRecord.setText(getString(R.string.record_end));
                 }
             } else {
-                btn_record.setText(getString(R.string.record_end));
+                btnRecord.setText(getString(R.string.record_end));
             }
         } else {
-            tv_record_time_start.setText(getString(R.string.record_no));
-            tv_record_time_end.setText(getString(R.string.record_no));
+            tvRecordTimeStart.setText(getString(R.string.record_no));
+            tvRecordTimeEnd.setText(getString(R.string.record_no));
         }
     }
 
@@ -127,7 +205,7 @@ public class RecordFragment extends BaseFragment implements CalendarView.OnMonth
     private void record(int type) {
         switch (type) {
             case 1://上班卡
-                if (tv_record_time_start.getText().equals(getString(R.string.record_no))) {
+                if (tvRecordTimeStart.getText().equals(getString(R.string.record_no))) {
                     if (RecordDataDaoUtil.getInstance().updataStartTime(getContext(), calendarView.getSelectedCalendar())) {
                         ToastUtil.T_Info(getContext(), (getString(R.string.record_success) + getString(R.string.late)));
                     } else {
@@ -135,7 +213,7 @@ public class RecordFragment extends BaseFragment implements CalendarView.OnMonth
                     }
                     showInfo(calendarView.getSelectedCalendar());
                 } else {
-                    showDialog(null, getString(R.string.record_update), getString(R.string.ok), getString(R.string.cancel), new com.sim.baselibrary.views.DialogInterface() {
+                    showDialog(null, getString(R.string.record_update), getString(R.string.ok), getString(R.string.cancel), new com.sim.baselibrary.callback.DialogInterface() {
                         @Override
                         public void sureOnClick() {
                             if (RecordDataDaoUtil.getInstance().updataStartTime(getContext(), calendarView.getSelectedCalendar())) {
@@ -154,7 +232,7 @@ public class RecordFragment extends BaseFragment implements CalendarView.OnMonth
                 }
                 break;
             case 2://下班卡
-                if (tv_record_time_end.getText().equals(getString(R.string.record_no))) {
+                if (tvRecordTimeEnd.getText().equals(getString(R.string.record_no))) {
                     if (RecordDataDaoUtil.getInstance().updataEndTime(getContext(), calendarView.getSelectedCalendar())) {
                         ToastUtil.T_Info(getContext(), getString(R.string.record_success) + getString(R.string.leave_early));
                     } else {
@@ -162,7 +240,7 @@ public class RecordFragment extends BaseFragment implements CalendarView.OnMonth
                     }
                     showInfo(calendarView.getSelectedCalendar());
                 } else {
-                    showDialog(null, getString(R.string.record_update), getString(R.string.ok), getString(R.string.cancel), new com.sim.baselibrary.views.DialogInterface() {
+                    showDialog(null, getString(R.string.record_update), getString(R.string.ok), getString(R.string.cancel), new com.sim.baselibrary.callback.DialogInterface() {
                         @Override
                         public void sureOnClick() {
                             if (RecordDataDaoUtil.getInstance().updataEndTime(getContext(), calendarView.getSelectedCalendar())) {
@@ -181,89 +259,6 @@ public class RecordFragment extends BaseFragment implements CalendarView.OnMonth
                 }
                 break;
         }
-    }
-
-    @OnClick({R.id.all_record, R.id.btn_updata_other, R.id.btn_record})
-    public void OnClick(View v) {
-        switch (v.getId()) {
-            case R.id.all_record:
-                Intent intent = new Intent(getContext(), RecordAllActivity.class);
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("calendar", calendarView.getSelectedCalendar());
-                intent.putExtras(bundle);
-                startActivity(intent);
-                break;
-            case R.id.btn_record:
-                if (calendarView.getSelectedCalendar().isCurrentDay()) {//是否当天
-                    if (!calendarView.getSelectedCalendar().isWeekend()) {//是否周末
-                        if (btn_record.getText().equals(getString(R.string.record_start))) {
-                            record(1);
-                        } else {
-                            record(2);
-                        }
-                    } else {
-                        showDialog(null, getString(R.string.record_week), getString(R.string.ok), getString(R.string.cancel), new com.sim.baselibrary.views.DialogInterface() {
-                            @Override
-                            public void sureOnClick() {
-                                if (btn_record.getText().equals(getString(R.string.record_start))) {
-                                    record(1);
-                                } else {
-                                    record(2);
-                                }
-                            }
-
-                            @Override
-                            public void cancelOnClick() {
-
-                            }
-                        });
-                    }
-                } else {
-                    calendarView.scrollToCurrent(true);
-                    ToastUtil.T_Error(getContext(), getString(R.string.record_only_today));
-                }
-                break;
-            case R.id.btn_updata_other:
-                final EditText et = new EditText(getContext());
-                new AlertDialog.Builder(getContext())
-                        .setTitle(getString(R.string.record_add_memo))
-                        .setView(et)
-                        .setNegativeButton(getString(R.string.cancel), null)
-                        .setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                RecordDataDaoUtil.getInstance().updataRecordOther(getContext(), calendarView.getSelectedCalendar(), et.getText().toString());
-                            }
-                        }).show();
-                break;
-        }
-    }
-
-    /**
-     * 视图更改时更新顶部年月份显示
-     *
-     * @param years
-     * @param months
-     */
-    @Override
-    public void onMonthChange(int years, int months) {
-        tv_now_year_and_month.setText(years + getString(R.string.year) + months + getString(R.string.month));
-    }
-
-    @Override
-    public void onCalendarOutOfRange(Calendar calendar) {
-
-    }
-
-    /**
-     * 选中日期更改时更新打卡记录显示
-     *
-     * @param calendar
-     * @param isClick
-     */
-    @Override
-    public void onCalendarSelect(Calendar calendar, boolean isClick) {
-        showInfo(calendar);
     }
 
 }

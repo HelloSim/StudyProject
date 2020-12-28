@@ -2,13 +2,8 @@ package com.sim.traveltool.ui.fragment;
 
 import android.content.Intent;
 import android.graphics.Color;
-import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -18,14 +13,13 @@ import com.sim.baselibrary.utils.LogUtil;
 import com.sim.traveltool.R;
 import com.sim.traveltool.adapter.NewsAdapter;
 import com.sim.traveltool.bean.NewsWangYiBean;
+import com.sim.traveltool.internet.APIFactory;
 import com.sim.traveltool.ui.activity.NewsDetailActivity;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 
 import rx.Subscriber;
-
-import static com.sim.traveltool.base.AppActivity.retrofitUtil;
 
 /**
  * @Auther Sim
@@ -42,18 +36,24 @@ public class WangyiFragment extends BaseFragment {
 
     private int page = 0;
 
-    @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_wangyi, container, false);
-        initRecyclerView(view);
-        getWangYiNew();
-        return view;
+    protected int getLayoutRes() {
+        return R.layout.fragment_wangyi;
     }
 
     @Override
-    public void onDestroyView() {
-        super.onDestroyView();
+    protected void bindViews(View view) {
+
+    }
+
+    @Override
+    protected void initView(View view) {
+        initRecyclerView(view);
+    }
+
+    @Override
+    protected void initData() {
+        getWangYiNew();
     }
 
     //初始化RecyclerView
@@ -111,7 +111,7 @@ public class WangyiFragment extends BaseFragment {
      * 获取网易新闻的网络请求
      */
     private void getWangYiNew() {
-        retrofitUtil.getWangYiNew(new Subscriber<NewsWangYiBean>() {
+        APIFactory.getInstance().getWangYiNew(new Subscriber<NewsWangYiBean>() {
             @Override
             public void onCompleted() {
                 refreshLayout.setRefreshing(false);

@@ -2,11 +2,13 @@ package com.sim.traveltool.ui.activity;
 
 import android.Manifest;
 import android.content.Intent;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -18,35 +20,31 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
+import com.sim.baselibrary.base.BaseActivity;
 import com.sim.baselibrary.utils.SPUtil;
 import com.sim.baselibrary.utils.ToastUtil;
 import com.sim.traveltool.R;
-import com.sim.traveltool.base.AppActivity;
 import com.sim.traveltool.bean.UserInfo;
 import com.sim.traveltool.ui.fragment.BusFragment;
 import com.sim.traveltool.ui.fragment.RecordFragment;
 import com.sim.traveltool.ui.fragment.WangyiFragment;
 
-import butterknife.BindView;
-import butterknife.OnClick;
+public class MainActivity extends BaseActivity {
 
-public class MainActivity extends AppActivity {
+    RadioGroup rgBottomBar;
+    RadioButton rbBottomBarBus;
+    RadioButton rbBottomBarWangyi;
+    RadioButton rbBottomBarRecord;
 
-    @BindView(R.id.bottom_bar_bus)
-    RadioButton barHome;
+    RelativeLayout rlUserLogIn;
+    RelativeLayout rlUserDetail;
+    RelativeLayout rlUserCollect;
+    RelativeLayout rlUserSetting;
 
-    @BindView(R.id.dl_drawer)
-    DrawerLayout dl_drawer;
-    @BindView(R.id.user_log_in)
-    RelativeLayout userLogIn;
-    @BindView(R.id.user_detail)
-    RelativeLayout userDetail;
-    @BindView(R.id.user_image)
-    ImageView userImage;
-    @BindView(R.id.user_nike_name)
-    TextView userNikeName;
-    @BindView(R.id.user_autograph)
-    TextView userAutograph;
+    DrawerLayout drawerLayout;
+    ImageView ivUserImage;
+    TextView tvUserNikeName;
+    TextView tvUserAutograph;
 
     private String spName = "userState";
     private String spStateKey = "isLogIn";
@@ -68,12 +66,64 @@ public class MainActivity extends AppActivity {
     private int count = 0;
 
     @Override
-    protected int getContentViewId() {
+    protected int getLayoutRes() {
         return R.layout.activity_main;
     }
 
+    @Override
+    protected void bindViews(Bundle savedInstanceState) {
+        rgBottomBar = findViewById(R.id.rg_bottom_bar);
+        rbBottomBarBus = findViewById(R.id.rb_bottom_bar_bus);
+        rbBottomBarWangyi = findViewById(R.id.rb_bottom_bar_wangyi);
+        rbBottomBarRecord = findViewById(R.id.rb_bottom_bar_record);
+        rlUserLogIn = findViewById(R.id.rl_user_log_in);
+        rlUserDetail = findViewById(R.id.rl_user_detail);
+        rlUserCollect = findViewById(R.id.rl_user_collect);
+        rlUserSetting = findViewById(R.id.rl_user_setting);
+        drawerLayout = findViewById(R.id.dl_drawer);
+        ivUserImage = findViewById(R.id.iv_user);
+        tvUserNikeName = findViewById(R.id.tv_user_nike_name);
+        tvUserAutograph = findViewById(R.id.tv_user_autograph);
+        setViewClick(rbBottomBarBus, rbBottomBarWangyi, rbBottomBarRecord, rlUserLogIn, rlUserDetail, rlUserCollect, rlUserSetting);
+    }
+
+    @Override
+    protected void initView() {
+        rbBottomBarBus.performClick();
+        if (isLogIn) {
+            rlUserLogIn.setVisibility(View.GONE);
+            rlUserDetail.setVisibility(View.VISIBLE);
+            if (SPUtil.contains(this, spName, spUserInfoKey)) {
+                userInfo = new Gson().fromJson((String) SPUtil.get(this, spName, spUserInfoKey, ""), UserInfo.class);
+                if (userInfo != null) {
+                    if (userInfo.getResult().getHeaderImg() != null) {
+                        Glide.with(this).load(userInfo.getResult().getHeaderImg()).into(ivUserImage);
+                    }
+                    if (userInfo.getResult().getName() != null) {
+                        tvUserNikeName.setText(userInfo.getResult().getName());
+                    }
+                    if (userInfo.getResult().getAutograph() != null) {
+                        tvUserAutograph.setText(userInfo.getResult().getAutograph());
+                    }
+                } else {
+                    isLogIn = false;
+                    rlUserDetail.setVisibility(View.GONE);
+                    rlUserLogIn.setVisibility(View.VISIBLE);
+                }
+            } else {
+                isLogIn = false;
+                rlUserDetail.setVisibility(View.GONE);
+                rlUserLogIn.setVisibility(View.VISIBLE);
+            }
+        } else {
+            rlUserDetail.setVisibility(View.GONE);
+            rlUserLogIn.setVisibility(View.VISIBLE);
+        }
+    }
+
+    @Override
     protected void initData() {
-        requestPermission(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.WRITE_EXTERNAL_STORAGE}, 0x001);
+        requestPermission(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 0x001);
         if (!SPUtil.contains(this, spName, spStateKey)) {
             SPUtil.put(this, spName, spStateKey, isLogIn);
         } else {
@@ -89,40 +139,31 @@ public class MainActivity extends AppActivity {
         };
     }
 
-    protected void initView() {
-        barHome.performClick();
-        userImage = findViewById(R.id.user_image);
-        userNikeName = findViewById(R.id.user_nike_name);
-        userAutograph = findViewById(R.id.user_autograph);
-        if (isLogIn) {
-            userLogIn.setVisibility(View.GONE);
-            userDetail.setVisibility(View.VISIBLE);
-            if (SPUtil.contains(this, spName, spUserInfoKey)) {
-                userInfo = new Gson().fromJson((String) SPUtil.get(this, spName, spUserInfoKey, ""), UserInfo.class);
-                if (userInfo != null) {
-                    if (userInfo.getResult().getHeaderImg() != null) {
-                        Glide.with(this).load(userInfo.getResult().getHeaderImg()).into(userImage);
-                    }
-                    if (userInfo.getResult().getName() != null) {
-                        userNikeName.setText(userInfo.getResult().getName());
-                    }
-                    if (userInfo.getResult().getAutograph() != null) {
-                        userAutograph.setText(userInfo.getResult().getAutograph());
-                    }
-                } else {
-                    isLogIn = false;
-                    userDetail.setVisibility(View.GONE);
-                    userLogIn.setVisibility(View.VISIBLE);
-                }
+    @Override
+    public void onMultiClick(View view) {
+        if (view == rbBottomBarBus) {
+            showFragment(1);
+        } else if (view == rbBottomBarWangyi) {
+            showFragment(2);
+        } else if (view == rbBottomBarRecord) {
+            showFragment(3);
+        } else if (view == rlUserLogIn) {
+            drawerLayout.close();
+            startActivityForResult(new Intent(this, UserLogInActivity.class), LogInNum);
+        } else if (view == rlUserDetail) {
+            drawerLayout.close();
+            startActivityForResult(new Intent(this, UserUpdateActivity.class), LogInNum);
+        } else if (view == rlUserCollect) {
+            if (isLogIn) {
+                drawerLayout.close();
+                startActivity(new Intent(this, NewsCollectActivity.class));
             } else {
-                isLogIn = false;
-                userDetail.setVisibility(View.GONE);
-                userLogIn.setVisibility(View.VISIBLE);
+                ToastUtil.T_Error(this, "未登录！");
             }
-        } else {
-            userDetail.setVisibility(View.GONE);
-            userLogIn.setVisibility(View.VISIBLE);
+        } else if (view == rlUserSetting) {
+            clickMark();
         }
+        super.onMultiClick(view);
     }
 
     /**
@@ -130,7 +171,7 @@ public class MainActivity extends AppActivity {
      *
      * @param type 1:公交fragment     2：网易fragment    3：打卡fragment
      */
-    private void hideAllFragment(int type) {
+    private void showFragment(int type) {
         mFragmentManager = getSupportFragmentManager();
         mFragmentTransaction = mFragmentManager.beginTransaction();
         if (busFragment != null) {
@@ -183,68 +224,33 @@ public class MainActivity extends AppActivity {
         }
     }
 
-    @OnClick({R.id.bottom_bar_radioGroup, R.id.bottom_bar_bus, R.id.bottom_bar_wangyi, R.id.bottom_bar_record,
-            R.id.user_log_in, R.id.user_detail, R.id.user_collect, R.id.user_setting})
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.bottom_bar_bus:
-                hideAllFragment(1);
-                break;
-            case R.id.bottom_bar_wangyi:
-                hideAllFragment(2);
-                break;
-            case R.id.bottom_bar_record:
-                hideAllFragment(3);
-                break;
-            case R.id.user_log_in:
-                dl_drawer.close();
-                startActivityForResult(new Intent(this, UserLogInActivity.class), LogInNum);
-                break;
-            case R.id.user_detail:
-                dl_drawer.close();
-                startActivityForResult(new Intent(this, UserUpdateActivity.class), LogInNum);
-                break;
-            case R.id.user_collect:
-                if (isLogIn) {
-                    dl_drawer.close();
-                    startActivity(new Intent(this, NewsCollectActivity.class));
-                } else {
-                    ToastUtil.T_Error(this, "未登录！");
-                }
-                break;
-            case R.id.user_setting:
-                clickMark();
-                break;
-        }
-    }
-
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK && requestCode == LogInNum) {
             isLogIn = (boolean) SPUtil.get(this, spName, spStateKey, false);
             if (isLogIn) {
-                userLogIn.setVisibility(View.GONE);
-                userDetail.setVisibility(View.VISIBLE);
+                rlUserLogIn.setVisibility(View.GONE);
+                rlUserDetail.setVisibility(View.VISIBLE);
                 if (SPUtil.contains(this, spName, spUserInfoKey)) {
                     userInfo = new Gson().fromJson((String) SPUtil.get(this, spName, spUserInfoKey, ""), UserInfo.class);
                     if (userInfo.getResult().getHeaderImg() != null) {
-                        Glide.with(this).load(userInfo.getResult().getHeaderImg()).into(userImage);
+                        Glide.with(this).load(userInfo.getResult().getHeaderImg()).into(ivUserImage);
                     }
                     if (userInfo.getResult().getName() != null) {
-                        userNikeName.setText(userInfo.getResult().getName());
+                        tvUserNikeName.setText(userInfo.getResult().getName());
                     }
                     if (userInfo.getResult().getAutograph() != null) {
-                        userAutograph.setText(userInfo.getResult().getAutograph());
+                        tvUserAutograph.setText(userInfo.getResult().getAutograph());
                     }
                 } else {
                     isLogIn = false;
-                    userDetail.setVisibility(View.GONE);
-                    userLogIn.setVisibility(View.VISIBLE);
+                    rlUserDetail.setVisibility(View.GONE);
+                    rlUserLogIn.setVisibility(View.VISIBLE);
                 }
             } else {
-                userDetail.setVisibility(View.GONE);
-                userLogIn.setVisibility(View.VISIBLE);
+                rlUserDetail.setVisibility(View.GONE);
+                rlUserLogIn.setVisibility(View.VISIBLE);
             }
         }
     }

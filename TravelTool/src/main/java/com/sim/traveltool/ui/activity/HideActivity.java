@@ -1,35 +1,42 @@
 package com.sim.traveltool.ui.activity;
 
 import android.graphics.Color;
+import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.haibin.calendarview.Calendar;
 import com.haibin.calendarview.CalendarView;
+import com.sim.baselibrary.base.BaseActivity;
 import com.sim.traveltool.R;
-import com.sim.traveltool.base.AppActivity;
 import com.sim.traveltool.db.RecordDataDaoUtil;
-
-import butterknife.BindView;
-import butterknife.OnClick;
 
 /**
  * @Auther Sim
  * @Time 2020/12/11 15:05
  * @Description 隐藏界面
  */
-public class HideActivity extends AppActivity implements CalendarView.OnMonthChangeListener, CalendarView.OnCalendarSelectListener {
+public class HideActivity extends BaseActivity implements CalendarView.OnMonthChangeListener, CalendarView.OnCalendarSelectListener {
 
-    @BindView(R.id.tv_now_year_and_month)
-    TextView tv_now_year_and_month;
-    @BindView(R.id.calendarView)
+    ImageView back;
+    TextView tvNowMonth;
     CalendarView calendarView;
 
     @Override
-    protected int getContentViewId() {
+    protected int getLayoutRes() {
         return R.layout.activity_hide;
     }
 
+    @Override
+    protected void bindViews(Bundle savedInstanceState) {
+        back = findViewById(R.id.back);
+        tvNowMonth = findViewById(R.id.tv_now_year_and_month);
+        calendarView = findViewById(R.id.calendarView);
+        setViewClick(back);
+    }
+
+    @Override
     protected void initView() {
         //设置星期日周起始
         calendarView.setWeekStarWithSun();
@@ -43,7 +50,21 @@ public class HideActivity extends AppActivity implements CalendarView.OnMonthCha
         calendarView.setOnMonthChangeListener(this);
         //日期选择事件监听
         calendarView.setOnCalendarSelectListener(this);
-        tv_now_year_and_month.setText(RecordDataDaoUtil.getInstance().getYearMonth(this, calendarView.getSelectedCalendar()));
+        tvNowMonth.setText(RecordDataDaoUtil.getInstance().getYearMonth(this, calendarView.getSelectedCalendar()));
+    }
+
+    @Override
+    protected void initData() {
+
+    }
+
+    @Override
+    public void onMultiClick(View view) {
+        if (view == back) {
+            finish();
+        } else {
+            super.onMultiClick(view);
+        }
     }
 
     /**
@@ -54,7 +75,7 @@ public class HideActivity extends AppActivity implements CalendarView.OnMonthCha
      */
     @Override
     public void onMonthChange(int years, int months) {
-        tv_now_year_and_month.setText(years + getString(R.string.year) + months + getString(R.string.month));
+        tvNowMonth.setText(years + getString(R.string.year) + months + getString(R.string.month));
     }
 
     @Override
@@ -71,15 +92,6 @@ public class HideActivity extends AppActivity implements CalendarView.OnMonthCha
     @Override
     public void onCalendarSelect(Calendar calendar, boolean isClick) {
 
-    }
-
-    @OnClick({R.id.back})
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.back:
-                finish();
-                break;
-        }
     }
 
 }

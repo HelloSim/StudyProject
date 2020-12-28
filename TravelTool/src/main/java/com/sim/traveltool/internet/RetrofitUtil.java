@@ -1,7 +1,6 @@
 package com.sim.traveltool.internet;
 
 import android.content.Context;
-import android.util.Log;
 
 import com.sim.baselibrary.bean.HttpResult;
 import com.sim.baselibrary.internet.APIException;

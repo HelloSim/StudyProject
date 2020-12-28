@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item type="id" name="btn_submit" />
+    <item type="id" name="btn_ok" />
+    <item name="item_click_support" type="id" />
+    <item name="finish" type="id" />
+    <item name="toolbar" type="id" />
+    <item name="search_view" type="id" />
+
+    <item name="fragment_content" type="id" />
+    <item name="rg_root" type="id" />
+</resources>

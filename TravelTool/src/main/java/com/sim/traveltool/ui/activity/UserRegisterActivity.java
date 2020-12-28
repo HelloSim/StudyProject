@@ -1,17 +1,19 @@
 package com.sim.traveltool.ui.activity;
 
+import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.sim.baselibrary.base.BaseActivity;
 import com.sim.baselibrary.constant.Constant;
 import com.sim.baselibrary.utils.LogUtil;
 import com.sim.traveltool.R;
-import com.sim.traveltool.base.AppActivity;
 import com.sim.traveltool.bean.UserInfo;
+import com.sim.traveltool.internet.APIFactory;
 
-import butterknife.BindView;
-import butterknife.OnClick;
 import rx.Subscriber;
 
 /**
@@ -19,22 +21,61 @@ import rx.Subscriber;
  * @Time 2020/4/29 1:05
  * @Description 用户注册页面
  */
-public class UserRegisterActivity extends AppActivity {
+public class UserRegisterActivity extends BaseActivity {
 
-    @BindView(R.id.et_user_name)
+    ImageView back;
     EditText etUserName;
-    @BindView(R.id.et_password)
     EditText etPassword;
-    @BindView(R.id.et_nike_name)
     EditText etNikeName;
-    @BindView(R.id.et_autograph)
     EditText etAutograph;
+    Button btnRegistered;
 
     private UserInfo userInfoBean;
 
     @Override
-    protected int getContentViewId() {
+    protected int getLayoutRes() {
         return R.layout.activity_user_register;
+    }
+
+    @Override
+    protected void bindViews(Bundle savedInstanceState) {
+        back = findViewById(R.id.back);
+        etUserName = findViewById(R.id.et_user_name);
+        etPassword = findViewById(R.id.et_password);
+        etNikeName = findViewById(R.id.et_nike_name);
+        etAutograph = findViewById(R.id.et_autograph);
+        btnRegistered = findViewById(R.id.btn_registered);
+        setViewClick(back, btnRegistered);
+    }
+
+    @Override
+    protected void initView() {
+
+    }
+
+    @Override
+    protected void initData() {
+
+    }
+
+    @Override
+    public void onMultiClick(View view) {
+        if (view == back) {
+            finish();
+        } else if (view == btnRegistered) {
+            if (etUserName.getText().toString().length() > 0 && etPassword.getText().toString().length() > 0) {
+                registerUser(etUserName.getText().toString(), etPassword.getText().toString(),
+                        null, etNikeName.getText().toString(), etAutograph.getText().toString(), null, null, null, null);
+            } else {
+                if (etUserName.getText().toString().length() <= 0) {
+                    Toast.makeText(this, "用户名不能为空！", Toast.LENGTH_SHORT).show();
+                } else if (etPassword.getText().toString().length() <= 0) {
+                    Toast.makeText(this, "密码不能为空！", Toast.LENGTH_SHORT).show();
+                }
+            }
+        } else {
+            super.onMultiClick(view);
+        }
     }
 
     /**
@@ -51,7 +92,7 @@ public class UserRegisterActivity extends AppActivity {
      * @param vipGrade
      */
     private void registerUser(String name, String passwd, String headerImg, String nikeName, String autograph, String phone, String email, String remarks, String vipGrade) {
-        retrofitUtil.registerUser(new Subscriber<UserInfo>() {
+        APIFactory.getInstance().registerUser(new Subscriber<UserInfo>() {
             @Override
             public void onCompleted() {
                 Toast.makeText(UserRegisterActivity.this, userInfoBean.getMessage(), Toast.LENGTH_SHORT).show();
@@ -70,27 +111,6 @@ public class UserRegisterActivity extends AppActivity {
                 userInfoBean = userInfo;
             }
         }, Constant.API_KEY, name, passwd, headerImg, nikeName, autograph, phone, email, remarks, vipGrade);
-    }
-
-    @OnClick({R.id.back, R.id.btn_registered})
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.back:
-                finish();
-                break;
-            case R.id.btn_registered:
-                if (etUserName.getText().toString().length() > 0 && etPassword.getText().toString().length() > 0) {
-                    registerUser(etUserName.getText().toString(), etPassword.getText().toString(),
-                            null, etNikeName.getText().toString(), etAutograph.getText().toString(), null, null, null, null);
-                } else {
-                    if (etUserName.getText().toString().length() <= 0) {
-                        Toast.makeText(this, "用户名不能为空！", Toast.LENGTH_SHORT).show();
-                    } else if (etPassword.getText().toString().length() <= 0) {
-                        Toast.makeText(this, "密码不能为空！", Toast.LENGTH_SHORT).show();
-                    }
-                }
-                break;
-        }
     }
 
 }

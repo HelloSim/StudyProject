@@ -1,28 +1,29 @@
 package com.sim.traveltool.ui.activity;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.sim.baselibrary.base.BaseActivity;
 import com.sim.baselibrary.utils.LogUtil;
 import com.sim.traveltool.AppHelper;
 import com.sim.traveltool.R;
 import com.sim.traveltool.adapter.BusLineNameAdapter;
 import com.sim.traveltool.adapter.BusStationNameAdapter;
-import com.sim.traveltool.base.AppActivity;
 import com.sim.traveltool.bean.BusLocationDataBean;
 import com.sim.traveltool.bean.BusRealTimeLineDataBean;
+import com.sim.traveltool.internet.APIFactory;
 
 import java.util.ArrayList;
 
-import butterknife.BindView;
-import butterknife.OnClick;
 import rx.Subscriber;
 
 /**
@@ -30,14 +31,12 @@ import rx.Subscriber;
  * @Author: HelloSim
  * @Description :实时公交、出行线路站点的搜索页面
  */
-public class BusSearchActivity extends AppActivity {
+public class BusSearchActivity extends BaseActivity {
 
-    @BindView(R.id.tv_search)
+    ImageView back;
     EditText tvSearch;
-    @BindView(R.id.tv_not_found)
     TextView tvNotFound;
-    @BindView(R.id.rl_data)
-    RecyclerView rlDatal;
+    RecyclerView rlData;
 
     private int searchType;
 
@@ -49,15 +48,24 @@ public class BusSearchActivity extends AppActivity {
     private boolean hasResult = false;
 
     @Override
-    protected int getContentViewId() {
+    protected int getLayoutRes() {
         return R.layout.activity_bus_search;
     }
 
-    protected void initData() {
-        searchType = getIntent().getIntExtra("searchType", AppHelper.RESULT_BUS);
+    @Override
+    protected void bindViews(Bundle savedInstanceState) {
+        back = findViewById(R.id.back);
+        tvSearch = findViewById(R.id.tv_search);
+        tvNotFound = findViewById(R.id.tv_not_found);
+        rlData = findViewById(R.id.rl_data);
+        setViewClick(back);
     }
 
+    @Override
     protected void initView() {
+        if (searchType == 0) {
+            initData();
+        }
         if (searchType == AppHelper.RESULT_BUS) {
             busLineNameAdapter = new BusLineNameAdapter(this, lineListByLineNameBeanList);
             busLineNameAdapter.setOnItemClickListerer(new BusLineNameAdapter.onItemClickListener() {
@@ -74,8 +82,8 @@ public class BusSearchActivity extends AppActivity {
                     startActivity(intent);
                 }
             });
-            rlDatal.setLayoutManager(new LinearLayoutManager(this));
-            rlDatal.setAdapter(busLineNameAdapter);
+            rlData.setLayoutManager(new LinearLayoutManager(this));
+            rlData.setAdapter(busLineNameAdapter);
         } else {
             stationNameAdapter = new BusStationNameAdapter(BusSearchActivity.this, startLocationDataBeanList);
             stationNameAdapter.setOnItemClickListerer(new BusStationNameAdapter.onItemClickListener() {
@@ -87,8 +95,8 @@ public class BusSearchActivity extends AppActivity {
                     finish();
                 }
             });
-            rlDatal.setLayoutManager(new LinearLayoutManager(this));
-            rlDatal.setAdapter(stationNameAdapter);
+            rlData.setLayoutManager(new LinearLayoutManager(this));
+            rlData.setAdapter(stationNameAdapter);
         }
         //editext的内容变化监听
         tvSearch.addTextChangedListener(new TextWatcher() {
@@ -107,7 +115,7 @@ public class BusSearchActivity extends AppActivity {
                 if (searchType == AppHelper.RESULT_BUS) {
                     if (editable == null || editable.toString().equals("")) {
                         tvNotFound.setVisibility(View.GONE);
-                        rlDatal.setVisibility(View.GONE);
+                        rlData.setVisibility(View.GONE);
                     } else {
                         if (lineListByLineNameBeanList != null) {
                             lineListByLineNameBeanList.clear();
@@ -116,7 +124,7 @@ public class BusSearchActivity extends AppActivity {
                     }
                 } else {
                     if (editable == null || editable.toString().equals("")) {
-                        rlDatal.setVisibility(View.GONE);
+                        rlData.setVisibility(View.GONE);
                     } else {
                         //内容变化请求数据
                         getStartLocation(editable.toString());
@@ -126,6 +134,20 @@ public class BusSearchActivity extends AppActivity {
         });
     }
 
+    @Override
+    protected void initData() {
+        searchType = getIntent().getIntExtra("searchType", AppHelper.RESULT_BUS);
+    }
+
+    @Override
+    public void onMultiClick(View view) {
+        if (view == back) {
+            finish();
+        } else {
+            super.onMultiClick(view);
+        }
+    }
+
     /**
      * 搜索实时公交路线的网络请求
      *
@@ -133,19 +155,19 @@ public class BusSearchActivity extends AppActivity {
      */
     private void getLineListByLineName(String key) {
         //这里做请求
-        retrofitUtil.getLineListByLineName(new Subscriber<BusRealTimeLineDataBean>() {
+        APIFactory.getInstance().getLineListByLineName(new Subscriber<BusRealTimeLineDataBean>() {
             @Override
             public void onCompleted() {
                 if (!hasResult) {
-                    rlDatal.setVisibility(View.GONE);
+                    rlData.setVisibility(View.GONE);
                     tvNotFound.setVisibility(View.VISIBLE);
                 } else {
                     if (lineListByLineNameBeanList == null) {
-                        rlDatal.setVisibility(View.GONE);
+                        rlData.setVisibility(View.GONE);
                         tvNotFound.setVisibility(View.VISIBLE);
                     } else {
                         tvNotFound.setVisibility(View.GONE);
-                        rlDatal.setVisibility(View.VISIBLE);
+                        rlData.setVisibility(View.VISIBLE);
                     }
                 }
             }
@@ -175,11 +197,11 @@ public class BusSearchActivity extends AppActivity {
      */
     public void getStartLocation(String keywords) {
         startLocationDataBeanList.clear();
-        retrofitUtil.getStartOrEndLocation(new Subscriber<BusLocationDataBean>() {
+        APIFactory.getInstance().getStartOrEndLocation(new Subscriber<BusLocationDataBean>() {
             @Override
             public void onCompleted() {
                 stationNameAdapter.notifyDataSetChanged();
-                rlDatal.setVisibility(View.VISIBLE);
+                rlData.setVisibility(View.VISIBLE);
             }
 
             @Override
@@ -192,15 +214,6 @@ public class BusSearchActivity extends AppActivity {
                 startLocationDataBeanList.addAll(busLocationDataBean.getTips());
             }
         }, keywords);
-    }
-
-    @OnClick({R.id.back})
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.back:
-                finish();
-                break;
-        }
     }
 
 }

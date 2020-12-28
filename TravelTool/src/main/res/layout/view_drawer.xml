@@ -19,7 +19,7 @@
         android:orientation="vertical">
 
         <RelativeLayout
-            android:id="@+id/user_log_in"
+            android:id="@+id/rl_user_log_in"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/card_shape"
@@ -54,7 +54,7 @@
         </RelativeLayout>
 
         <RelativeLayout
-            android:id="@+id/user_detail"
+            android:id="@+id/rl_user_detail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/card_shape"
@@ -62,17 +62,17 @@
             android:visibility="gone">
 
             <ImageView
-                android:id="@+id/user_image"
+                android:id="@+id/iv_user"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 tools:src="@mipmap/ic_launcher" />
 
             <TextView
-                android:id="@+id/user_nike_name"
+                android:id="@+id/tv_user_nike_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
-                android:layout_toRightOf="@+id/user_image"
+                android:layout_toRightOf="@+id/iv_user"
                 android:textColor="@color/black"
                 android:textSize="20sp"
                 android:textStyle="bold"
@@ -82,9 +82,9 @@
                 android:id="@+id/user_autograph"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/user_nike_name"
+                android:layout_below="@+id/tv_user_nike_name"
                 android:layout_marginLeft="20dp"
-                android:layout_toRightOf="@+id/user_image"
+                android:layout_toRightOf="@+id/iv_user"
                 android:textColor="#cccccc"
                 android:textSize="16sp"
                 tools:text="没有个性，没有签名" />
@@ -99,7 +99,7 @@
         </RelativeLayout>
 
         <RelativeLayout
-            android:id="@+id/user_collect"
+            android:id="@+id/rl_user_collect"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/card_shape"
@@ -132,7 +132,7 @@
         </RelativeLayout>
 
         <RelativeLayout
-            android:id="@+id/user_setting"
+            android:id="@+id/rl_user_setting"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/card_shape"

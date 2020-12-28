@@ -1,6 +1,6 @@
 package com.sim.traveltool.ui.activity;
 
-import android.annotation.SuppressLint;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.view.View;
@@ -11,17 +11,16 @@ import android.widget.Toast;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.sim.baselibrary.base.BaseActivity;
 import com.sim.baselibrary.utils.LogUtil;
 import com.sim.traveltool.R;
 import com.sim.traveltool.adapter.BusStationListAdapter;
-import com.sim.traveltool.base.AppActivity;
 import com.sim.traveltool.bean.BusRealTimeBusStopDataBean;
 import com.sim.traveltool.bean.BusRealTimeDataBean;
+import com.sim.traveltool.internet.APIFactory;
 
 import java.util.ArrayList;
 
-import butterknife.BindView;
-import butterknife.OnClick;
 import rx.Subscriber;
 
 /**
@@ -29,24 +28,18 @@ import rx.Subscriber;
  * @Author: HelloSim
  * @Description :显示实时公交位置的页面
  */
-public class BusRealTimeActivity extends AppActivity {
+public class BusRealTimeActivity extends BaseActivity {
 
-    @BindView(R.id.rl_station_list)
+    ImageView back;
     RecyclerView rlstationList;
-    @BindView(R.id.tv_bus_name)
     TextView tvBusName;
-    @BindView(R.id.tv_from_station)
     TextView tvFromStation;
-    @BindView(R.id.tv_to_station)
     TextView tvToStation;
-    @BindView(R.id.tv_begin_time)
     TextView tvBeginTime;
-    @BindView(R.id.tv_end_time)
     TextView tvEndTime;
-    @BindView(R.id.tv_price)
     TextView tvPrice;
-    @BindView(R.id.iv_refresh)
     ImageView ivRefresh;
+    ImageView ivReverse;
 
     private String busName;//公交名
     private String lineId;//公交id
@@ -65,11 +58,36 @@ public class BusRealTimeActivity extends AppActivity {
     private final int REFRESH = 1001;
 
     @Override
-    protected int getContentViewId() {
+    protected int getLayoutRes() {
         return R.layout.activity_bus_real_time;
     }
 
-    @SuppressLint("HandlerLeak")
+    @Override
+    protected void bindViews(Bundle savedInstanceState) {
+        back = findViewById(R.id.back);
+        rlstationList = findViewById(R.id.rl_station_list);
+        tvBusName = findViewById(R.id.tv_bus_name);
+        tvFromStation = findViewById(R.id.tv_from_station);
+        tvToStation = findViewById(R.id.tv_to_station);
+        tvBeginTime = findViewById(R.id.tv_begin_time);
+        tvEndTime = findViewById(R.id.tv_end_time);
+        tvPrice = findViewById(R.id.tv_price);
+        ivRefresh = findViewById(R.id.iv_refresh);
+        ivReverse = findViewById(R.id.iv_reverse);
+        setViewClick(back, ivRefresh, ivReverse);
+    }
+
+    @Override
+    protected void initView() {
+        tvBusName.setText(busName);
+        tvFromStation.setText(fromStation);
+        tvToStation.setText(toStation);
+        tvBeginTime.setText(beginTime);
+        tvEndTime.setText(endTime);
+        tvPrice.setText(price + "元");
+    }
+
+    @Override
     protected void initData() {
         busName = getIntent().getStringExtra("busName");
         lineId = getIntent().getStringExtra("lineId");
@@ -93,13 +111,18 @@ public class BusRealTimeActivity extends AppActivity {
         };
     }
 
-    protected void initView() {
-        tvBusName.setText(busName);
-        tvFromStation.setText(fromStation);
-        tvToStation.setText(toStation);
-        tvBeginTime.setText(beginTime);
-        tvEndTime.setText(endTime);
-        tvPrice.setText(price + "元");
+    @Override
+    public void onMultiClick(View view) {
+        if (view == back) {
+            finish();
+        } else if (view == ivRefresh) {
+            handler.removeMessages(REFRESH);
+            getBusListOnRoad(busName, fromStation);
+        } else if (view == ivReverse) {
+
+        } else {
+            super.onMultiClick(view);
+        }
     }
 
     /**
@@ -109,7 +132,7 @@ public class BusRealTimeActivity extends AppActivity {
      */
     private void getStationList(String lineId) {
         stationList.clear();
-        retrofitUtil.getStationList(new Subscriber<BusRealTimeBusStopDataBean>() {
+        APIFactory.getInstance().getStationList(new Subscriber<BusRealTimeBusStopDataBean>() {
             @Override
             public void onCompleted() {
                 if (stationList != null) {
@@ -142,7 +165,7 @@ public class BusRealTimeActivity extends AppActivity {
     private void getBusListOnRoad(String lineName, String fromStation) {
         busListOnRoadListList.clear();
         ivRefresh.setImageDrawable(getResources().getDrawable(R.mipmap.ic_bus_refresh_gray));
-        retrofitUtil.getBusListOnRoad(new Subscriber<BusRealTimeDataBean>() {
+        APIFactory.getInstance().getBusListOnRoad(new Subscriber<BusRealTimeDataBean>() {
             @Override
             public void onCompleted() {
                 ivRefresh.setImageDrawable(getResources().getDrawable(R.mipmap.ic_bus_refresh_blue));
@@ -170,22 +193,6 @@ public class BusRealTimeActivity extends AppActivity {
                 }
             }
         }, "GetBusListOnRoad", lineName, fromStation, String.valueOf(System.currentTimeMillis()));
-    }
-
-    @OnClick({R.id.back, R.id.iv_refresh, R.id.iv_reverse})
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.back:
-                finish();
-                break;
-            case R.id.iv_refresh:
-                handler.removeMessages(REFRESH);
-                getBusListOnRoad(busName, fromStation);
-                break;
-            case R.id.iv_reverse:
-
-                break;
-        }
     }
 
 }

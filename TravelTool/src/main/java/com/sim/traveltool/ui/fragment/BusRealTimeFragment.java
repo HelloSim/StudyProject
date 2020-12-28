@@ -1,16 +1,13 @@
 package com.sim.traveltool.ui.fragment;
 
-import android.os.Bundle;
-import android.view.LayoutInflater;
+import android.content.Intent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-
 import com.sim.baselibrary.base.BaseFragment;
+import com.sim.traveltool.AppHelper;
 import com.sim.traveltool.R;
+import com.sim.traveltool.ui.activity.BusSearchActivity;
 
 /**
  * @Auther Sim
@@ -21,22 +18,33 @@ public class BusRealTimeFragment extends BaseFragment {
 
     private TextView tvSearch;
 
-    @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_bus_real_time, container, false);
-        initView(view);
-        return view;
+    protected int getLayoutRes() {
+        return R.layout.fragment_bus_real_time;
     }
 
-    private void initView(View view) {
+    @Override
+    protected void bindViews(View view) {
         tvSearch = view.findViewById(R.id.tv_search);
-        tvSearch.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                startActivity(new Intent(getActivity(), BusSearchActivity.class).putExtra("searchType", AppHelper.RESULT_BUS));
-            }
-        });
+    }
+
+    @Override
+    protected void initView(View view) {
+        setViewClick(tvSearch);
+    }
+
+    @Override
+    protected void initData() {
+
+    }
+
+    @Override
+    public void onMultiClick(View view) {
+        if (view == tvSearch) {
+            startActivity(new Intent(getActivity(), BusSearchActivity.class).putExtra("searchType", AppHelper.RESULT_BUS));
+        } else {
+            super.onMultiClick(view);
+        }
     }
 
 }

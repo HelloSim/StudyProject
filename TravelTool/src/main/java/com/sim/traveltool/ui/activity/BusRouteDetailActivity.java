@@ -1,32 +1,29 @@
 package com.sim.traveltool.ui.activity;
 
+import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.sim.baselibrary.base.BaseActivity;
 import com.sim.traveltool.R;
 import com.sim.traveltool.adapter.BusRouteDetailAdapter;
-import com.sim.traveltool.base.AppActivity;
 import com.sim.traveltool.bean.BusRouteDataBean;
-
-import butterknife.BindView;
-import butterknife.OnClick;
 
 /**
  * @Auther Sim
  * @Time 2020/11/29 1:12
  * @Description 出行路线的详细方式
  */
-public class BusRouteDetailActivity extends AppActivity {
+public class BusRouteDetailActivity extends BaseActivity {
 
-    @BindView(R.id.tv_bus_route)
-    TextView tv_bus_route;
-    @BindView(R.id.tv_time_distance)
-    TextView tv_time_distance;
-    @BindView(R.id.rl_route_detail)
-    RecyclerView rl_route_detail;
+    ImageView back;
+    TextView tvBusRoute;
+    TextView tvTimeDistance;
+    RecyclerView rlRouteDetail;
 
     private String tvStartLocation;//起点位置
     private String tvEndLocation;//终点位置
@@ -35,10 +32,29 @@ public class BusRouteDetailActivity extends AppActivity {
     private BusRouteDetailAdapter busRouteDetailAdapter;
 
     @Override
-    protected int getContentViewId() {
+    protected int getLayoutRes() {
         return R.layout.activity_bus_route_detail;
     }
 
+    @Override
+    protected void bindViews(Bundle savedInstanceState) {
+        back = findViewById(R.id.back);
+        tvBusRoute = findViewById(R.id.tv_bus_route);
+        tvTimeDistance = findViewById(R.id.tv_time_distance);
+        rlRouteDetail = findViewById(R.id.rl_route_detail);
+        setViewClick(back);
+    }
+
+    @Override
+    protected void initView() {
+        tvBusRoute.setText(busRoute);
+        tvTimeDistance.setText(Integer.parseInt(data.getDuration()) / 60 + "分钟 | 步行" + data.getWalking_distance() + "米");
+        busRouteDetailAdapter = new BusRouteDetailAdapter(this, tvStartLocation, tvEndLocation, data.getSegments());
+        rlRouteDetail.setLayoutManager(new LinearLayoutManager(this));
+        rlRouteDetail.setAdapter(busRouteDetailAdapter);
+    }
+
+    @Override
     protected void initData() {
         tvStartLocation = getIntent().getStringExtra("tvStartLocation");
         tvEndLocation = getIntent().getStringExtra("tvEndLocation");
@@ -53,20 +69,12 @@ public class BusRouteDetailActivity extends AppActivity {
         }
     }
 
-    protected void initView() {
-        tv_bus_route.setText(busRoute);
-        tv_time_distance.setText(Integer.parseInt(data.getDuration()) / 60 + "分钟 | 步行" + data.getWalking_distance() + "米");
-        busRouteDetailAdapter = new BusRouteDetailAdapter(this, tvStartLocation, tvEndLocation, data.getSegments());
-        rl_route_detail.setLayoutManager(new LinearLayoutManager(this));
-        rl_route_detail.setAdapter(busRouteDetailAdapter);
-    }
-
-    @OnClick({R.id.back})
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.back:
-                finish();
-                break;
+    @Override
+    public void onMultiClick(View view) {
+        if (view == back) {
+            finish();
+        } else {
+            super.onMultiClick(view);
         }
     }
 

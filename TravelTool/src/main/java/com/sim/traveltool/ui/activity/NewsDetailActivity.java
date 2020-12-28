@@ -1,6 +1,7 @@
 package com.sim.traveltool.ui.activity;
 
 import android.net.http.SslError;
+import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
 import android.webkit.SslErrorHandler;
@@ -10,24 +11,20 @@ import android.webkit.WebViewClient;
 import android.widget.ImageView;
 
 import com.google.gson.Gson;
+import com.sim.baselibrary.base.BaseActivity;
 import com.sim.baselibrary.utils.SPUtil;
 import com.sim.traveltool.R;
-import com.sim.traveltool.base.AppActivity;
 import com.sim.traveltool.bean.NewsWangYiBean;
-
-import butterknife.BindView;
-import butterknife.OnClick;
 
 /**
  * @Auther Sim
  * @Time 2020/4/28 1:05
  * @Description 显示网易新闻的页面
  */
-public class NewsDetailActivity extends AppActivity {
+public class NewsDetailActivity extends BaseActivity {
 
-    @BindView(R.id.web_view)
+    ImageView back;
     WebView webView;
-    @BindView(R.id.collect)
     ImageView collect;
 
     private NewsWangYiBean.ResultBean news;
@@ -35,15 +32,19 @@ public class NewsDetailActivity extends AppActivity {
     private boolean isCollect = false;//是否收藏
 
     @Override
-    protected int getContentViewId() {
+    protected int getLayoutRes() {
         return R.layout.activity_news_detail;
     }
 
-    protected void initData() {
-        news = (NewsWangYiBean.ResultBean) getIntent().getSerializableExtra("news");
-        isCollect = SPUtil.contains(this, fileName, news.getTitle());
+    @Override
+    protected void bindViews(Bundle savedInstanceState) {
+        back = findViewById(R.id.back);
+        webView = findViewById(R.id.web_view);
+        collect = findViewById(R.id.collect);
+        setViewClick(back, collect);
     }
 
+    @Override
     protected void initView() {
         if (isCollect) {
             collect.setImageResource(R.mipmap.ic_collect_yes);
@@ -88,23 +89,28 @@ public class NewsDetailActivity extends AppActivity {
         }
     }
 
-    @OnClick({R.id.back, R.id.collect})
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.back:
-                finish();
-                break;
-            case R.id.collect:
-                if (isCollect) {
-                    SPUtil.remove(NewsDetailActivity.this, fileName, news.getTitle());
-                    collect.setImageResource(R.mipmap.ic_collect_not);
-                    isCollect = false;
-                } else {
-                    SPUtil.put(NewsDetailActivity.this, fileName, news.getTitle(), new Gson().toJson(news));
-                    collect.setImageResource(R.mipmap.ic_collect_yes);
-                    isCollect = true;
-                }
-                break;
+    @Override
+    protected void initData() {
+        news = (NewsWangYiBean.ResultBean) getIntent().getSerializableExtra("news");
+        isCollect = SPUtil.contains(this, fileName, news.getTitle());
+    }
+
+    @Override
+    public void onMultiClick(View view) {
+        if (view == back) {
+            finish();
+        } else if (view == collect) {
+            if (isCollect) {
+                SPUtil.remove(NewsDetailActivity.this, fileName, news.getTitle());
+                collect.setImageResource(R.mipmap.ic_collect_not);
+                isCollect = false;
+            } else {
+                SPUtil.put(NewsDetailActivity.this, fileName, news.getTitle(), new Gson().toJson(news));
+                collect.setImageResource(R.mipmap.ic_collect_yes);
+                isCollect = true;
+            }
+        } else {
+            super.onMultiClick(view);
         }
     }
 

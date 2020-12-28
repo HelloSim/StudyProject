@@ -1,7 +1,9 @@
 package com.sim.traveltool.ui.activity;
 
 import android.graphics.Color;
+import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bin.david.form.core.SmartTable;
@@ -13,53 +15,44 @@ import com.bin.david.form.data.format.tip.MultiLineBubbleTip;
 import com.bin.david.form.data.style.FontStyle;
 import com.bin.david.form.utils.DensityUtils;
 import com.haibin.calendarview.Calendar;
+import com.sim.baselibrary.base.BaseActivity;
 import com.sim.sqlitelibrary.bean.RecordDataBean;
 import com.sim.traveltool.R;
-import com.sim.traveltool.base.AppActivity;
 import com.sim.traveltool.db.RecordDataDaoUtil;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import butterknife.BindView;
-import butterknife.OnClick;
 
 /**
  * @Auther Sim
  * @Time 2020/10/22 14:21
  * @Description 月打卡列表页面
  */
-public class RecordAllActivity extends AppActivity {
+public class RecordAllActivity extends BaseActivity {
 
-    @BindView(R.id.title)
+    ImageView back;
     TextView title;
-    @BindView(R.id.table_data)
     SmartTable<RecordDataBean> table;
-    @BindView(R.id.no_record)
     TextView no_record;
 
     private Calendar calendar;
     private List<RecordDataBean> recordDataBeanList;
 
     @Override
-    protected int getContentViewId() {
+    protected int getLayoutRes() {
         return R.layout.activity_record_all;
     }
 
-    protected void initData() {
-        FontStyle.setDefaultTextSize(DensityUtils.sp2px(this, 18)); //设置全局字体大小
-        calendar = (Calendar) getIntent().getSerializableExtra("calendar");
-        title.setText(RecordDataDaoUtil.getInstance().getMonth(this, calendar) + "月" + getString(R.string.record_all));
-        recordDataBeanList = RecordDataDaoUtil.getInstance().queryRecordForMonth(this, calendar);
-        if (recordDataBeanList != null && recordDataBeanList.size() > 0) {
-            table.setData(recordDataBeanList);
-            initView();
-        } else {
-            table.setVisibility(View.GONE);
-            no_record.setVisibility(View.VISIBLE);
-        }
+    @Override
+    protected void bindViews(Bundle savedInstanceState) {
+        back = findViewById(R.id.back);
+        title = findViewById(R.id.title);
+        table = findViewById(R.id.table_data);
+        no_record = findViewById(R.id.no_record);
+        setViewClick(back);
     }
 
+    @Override
     protected void initView() {
         List<String> dayColum = null;
         for (Column column : table.getTableData().getColumns()) {
@@ -137,12 +130,27 @@ public class RecordAllActivity extends AppActivity {
 //        });//点击事件
     }
 
-    @OnClick({R.id.back})
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.back:
-                finish();
-                break;
+    @Override
+    protected void initData() {
+        FontStyle.setDefaultTextSize(DensityUtils.sp2px(this, 18)); //设置全局字体大小
+        calendar = (Calendar) getIntent().getSerializableExtra("calendar");
+        title.setText(RecordDataDaoUtil.getInstance().getMonth(this, calendar) + "月" + getString(R.string.record_all));
+        recordDataBeanList = RecordDataDaoUtil.getInstance().queryRecordForMonth(this, calendar);
+        if (recordDataBeanList != null && recordDataBeanList.size() > 0) {
+            table.setData(recordDataBeanList);
+            initView();
+        } else {
+            table.setVisibility(View.GONE);
+            no_record.setVisibility(View.VISIBLE);
+        }
+    }
+
+    @Override
+    public void onMultiClick(View view) {
+        if (view == back) {
+            finish();
+        } else {
+            super.onMultiClick(view);
         }
     }
 

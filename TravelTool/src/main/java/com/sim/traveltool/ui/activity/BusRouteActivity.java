@@ -1,26 +1,25 @@
 package com.sim.traveltool.ui.activity;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.sim.baselibrary.base.BaseActivity;
 import com.sim.baselibrary.utils.LogUtil;
 import com.sim.baselibrary.utils.ToastUtil;
 import com.sim.traveltool.R;
 import com.sim.traveltool.adapter.BusRouteAdapter;
-import com.sim.traveltool.base.AppActivity;
 import com.sim.traveltool.bean.BusLocationDesignatedDataBean;
 import com.sim.traveltool.bean.BusRouteDataBean;
+import com.sim.traveltool.internet.APIFactory;
 
 import java.util.ArrayList;
 
-import butterknife.BindView;
-import butterknife.OnClick;
 import rx.Subscriber;
 
 /**
@@ -28,11 +27,10 @@ import rx.Subscriber;
  * @Author: HelloSim
  * @Description :显示出行方案的页面
  */
-public class BusRouteActivity extends AppActivity {
+public class BusRouteActivity extends BaseActivity {
 
-    @BindView(R.id.tv_from_and_to_location)
+    ImageView back;
     TextView tvFromAndToLocation;
-    @BindView(R.id.rl_location_list)
     RecyclerView rlLocationList;
 
     private String tvStartLocation;//要显示的起始位置
@@ -48,18 +46,19 @@ public class BusRouteActivity extends AppActivity {
     private BusRouteAdapter routeAdapter;
 
     @Override
-    protected int getContentViewId() {
+    protected int getLayoutRes() {
         return R.layout.activity_bus_route;
     }
 
-    protected void initData() {
-        tvStartLocation = getIntent().getStringExtra("tvStartStation");
-        tvEndLocation = getIntent().getStringExtra("tvEndStation");
-        getLocation(true, tvStartLocation);
-        getLocation(false, tvEndLocation);
+    @Override
+    protected void bindViews(Bundle savedInstanceState) {
+        back = findViewById(R.id.back);
+        tvFromAndToLocation = findViewById(R.id.tv_from_and_to_location);
+        rlLocationList = findViewById(R.id.rl_location_list);
+        setViewClick(back);
     }
 
-    @SuppressLint("SetTextI18n")
+    @Override
     protected void initView() {
         tvFromAndToLocation.setText(tvStartLocation + " -> " + tvEndLocation);
 
@@ -80,6 +79,24 @@ public class BusRouteActivity extends AppActivity {
         rlLocationList.setAdapter(routeAdapter);
     }
 
+    @Override
+    protected void initData() {
+        tvStartLocation = getIntent().getStringExtra("tvStartStation");
+        tvEndLocation = getIntent().getStringExtra("tvEndStation");
+        getLocation(true, tvStartLocation);
+        getLocation(false, tvEndLocation);
+
+    }
+
+    @Override
+    public void onMultiClick(View view) {
+        if (view == back) {
+            finish();
+        } else {
+            super.onMultiClick(view);
+        }
+    }
+
     /**
      * 起始位置和终点位置的位置信息请求
      *
@@ -87,7 +104,7 @@ public class BusRouteActivity extends AppActivity {
      * @param location
      */
     private void getLocation(boolean isStart, String location) {
-        retrofitUtil.getLocation(new Subscriber<BusLocationDesignatedDataBean>() {
+        APIFactory.getInstance().getLocation(new Subscriber<BusLocationDesignatedDataBean>() {
             @Override
             public void onCompleted() {
                 if (isStart) {//起点
@@ -120,10 +137,8 @@ public class BusRouteActivity extends AppActivity {
      * @param origin
      * @param destination
      */
-    BusRouteDataBean busRouteDataBean;
-
     private void getRoute(String origin, String destination) {
-        retrofitUtil.getRoute(new Subscriber<BusRouteDataBean>() {
+        APIFactory.getInstance().getRoute(new Subscriber<BusRouteDataBean>() {
             @Override
             public void onCompleted() {
                 if (routeDataList == null || routeDataList.size() == 0) {
@@ -143,15 +158,6 @@ public class BusRouteActivity extends AppActivity {
                 routeDataList.addAll(dataBean.getRoute().getTransits());
             }
         }, origin, destination);
-    }
-
-    @OnClick({R.id.back})
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.back:
-                finish();
-                break;
-        }
     }
 
 }
