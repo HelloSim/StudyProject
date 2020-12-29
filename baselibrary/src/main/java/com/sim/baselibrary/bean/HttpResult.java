@@ -14,7 +14,7 @@ public class HttpResult<T> {
     public T content;
 
     public boolean isSuccess() {
-        return Constant.SUCCESS.equals( error_code );
+        return error_code.equals(Constant.SUCCESS);
     }
 
 }

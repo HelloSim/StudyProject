@@ -1,6 +1,5 @@
 package com.sim.traveltool;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 
 import androidx.multidex.MultiDex;
@@ -19,14 +18,10 @@ import cn.jpush.android.api.JPushInterface;
  */
 public class Application extends android.app.Application {
 
-    public static Context context;
-
-    @SuppressLint("ApplySharedPref")
     @Override
     public void onCreate() {
         super.onCreate();
-        context = this;
-        CrashHandler.getInstance().init(context);
+        CrashHandler.getInstance().init(getApplicationContext());
         APIFactory.getInstance().init(this);
         Bugly.init(this, AppHelper.Bugly_APPID, BuildConfig.DEBUG);
         JPushInterface.setDebugMode(BuildConfig.DEBUG);
@@ -36,10 +31,8 @@ public class Application extends android.app.Application {
     @Override
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(base);
-        // you must install multiDex whatever tinker is installed!
-        MultiDex.install(base);
-        // 安装tinker
-        Beta.installTinker();
+        MultiDex.install(base);//you must install multiDex whatever tinker is installed!
+        Beta.installTinker();//安装tinker
     }
 
 }

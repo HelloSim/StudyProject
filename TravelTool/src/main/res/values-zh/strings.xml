@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
     <string name="app_name">Sim</string>
 
     <string name="cancel">取消</string>
     <string name="ok">确认</string>
-    <string name="exit">再按一次退出程序</string>
+    <string name="exit">再按一次退出程序！</string>
     <string name="no_more">暂无更多内容！</string>
 
     <string name="bus">出行</string>

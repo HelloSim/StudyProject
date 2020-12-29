@@ -7,9 +7,9 @@ import android.widget.EditText;
 import android.widget.ImageView;
 
 import com.sim.baselibrary.base.BaseActivity;
-import com.sim.baselibrary.constant.Constant;
 import com.sim.baselibrary.utils.LogUtil;
 import com.sim.baselibrary.utils.ToastUtil;
+import com.sim.traveltool.AppHelper;
 import com.sim.traveltool.R;
 import com.sim.traveltool.bean.UserInfo;
 import com.sim.traveltool.internet.APIFactory;
@@ -111,7 +111,7 @@ public class UserRegisterActivity extends BaseActivity {
             public void onNext(UserInfo userInfo) {
                 userInfoBean = userInfo;
             }
-        }, Constant.API_KEY, name, passwd, headerImg, nikeName, autograph, phone, email, remarks, vipGrade);
+        }, AppHelper.USER_API_KEY, name, passwd, headerImg, nikeName, autograph, phone, email, remarks, vipGrade);
     }
 
 }

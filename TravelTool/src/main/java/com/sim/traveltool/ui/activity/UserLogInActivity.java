@@ -10,7 +10,6 @@ import android.widget.ImageView;
 import com.google.gson.Gson;
 import com.sim.baselibrary.base.BaseActivity;
 import com.sim.baselibrary.bean.EventMessage;
-import com.sim.baselibrary.constant.Constant;
 import com.sim.baselibrary.utils.LogUtil;
 import com.sim.baselibrary.utils.SPUtil;
 import com.sim.baselibrary.utils.ToastUtil;
@@ -113,7 +112,7 @@ public class UserLogInActivity extends BaseActivity {
             public void onNext(UserInfo userInfo) {
                 userInfoBean = userInfo;
             }
-        }, Constant.API_KEY, etUserName.getText().toString(), etPassword.getText().toString());
+        }, AppHelper.USER_API_KEY, etUserName.getText().toString(), etPassword.getText().toString());
     }
 
 }

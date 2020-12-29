@@ -1,38 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Sim</string>
 
     <string name="cancel">cancel</string>
     <string name="ok">OK</string>
-    <string name="exit">再按一次退出程序</string>
-    <string name="no_more">暂无更多内容！</string>
+    <string name="exit">Press again to exit the program!</string>
+    <string name="no_more">No more content!</string>
 
-    <string name="bus">出行</string>
-    <string name="wangyi">网易</string>
-    <string name="record">打卡</string>
-    <string name="user">我的</string>
+    <string name="bus">Bus</string>
+    <string name="wangyi">NetEase</string>
+    <string name="record">Record</string>
+    <string name="user">User</string>
 
-    <string name="BusRealTime">实时公交</string>
-    <string name="BusRoute">出行路线</string>
-    <string name="BusStation">站点查询</string>
+    <string name="BusRealTime">RealTime Bus</string>
+    <string name="BusRoute">Bus Route</string>
+    <string name="BusStation">Bus Station</string>
 
-    <string name="user_login">用户登录</string>
-    <string name="user_detail">收藏</string>
-    <string name="user_setting">设置</string>
+    <string name="user_login">User Login</string>
+    <string name="user_detail">Detail</string>
+    <string name="user_setting">Setting</string>
 
-    <string name="year">年</string>
-    <string name="month">月</string>
-    <string name="day">日</string>
-    <string name="late">迟到</string>
-    <string name="leave_early">早退</string>
-    <string name="record_no">未打卡</string>
-    <string name="record_success">打卡成功！</string>
-    <string name="record_failure">打卡失败！</string>
-    <string name="record_update">更新打卡记录！</string>
-    <string name="record_only_today">只能操作当天打卡！</string>
-    <string name="record_week">周末打卡？</string>
-    <string name="record_start">上班打卡</string>
-    <string name="record_end">下班打卡</string>
-    <string name="record_all">打卡记录</string>
-    <string name="record_add_memo">添加备忘</string>
+    <string name="year">year</string>
+    <string name="month">month</string>
+    <string name="day">day</string>
+    <string name="late">late</string>
+    <string name="leave_early">leave early</string>
+    <string name="record_no">not-record</string>
+    <string name="record_success">record success!</string>
+    <string name="record_failure">record_failure!</string>
+    <string name="record_update">record update time!</string>
+    <string name="record_only_today">Only record in on the day!</string>
+    <string name="record_week">Record in on the weekend?</string>
+    <string name="record_start">Clock in</string>
+    <string name="record_end">Clock out</string>
+    <string name="record_all">Record all</string>
+    <string name="record_add_memo">add notes</string>
 
 </resources>

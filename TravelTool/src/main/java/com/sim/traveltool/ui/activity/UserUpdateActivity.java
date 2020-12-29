@@ -25,7 +25,6 @@ import com.google.gson.Gson;
 import com.sim.baselibrary.base.BaseActivity;
 import com.sim.baselibrary.bean.EventMessage;
 import com.sim.baselibrary.callback.DialogInterface;
-import com.sim.baselibrary.constant.Constant;
 import com.sim.baselibrary.utils.LogUtil;
 import com.sim.baselibrary.utils.SPUtil;
 import com.sim.baselibrary.utils.ToastUtil;
@@ -233,7 +232,7 @@ public class UserUpdateActivity extends BaseActivity {
             public void onNext(UserInfo newUserInfo) {
                 userInfo = newUserInfo;
             }
-        }, Constant.API_KEY, userInfo.getResult().getName(), userPassword, userInfo.getResult().getHeaderImg(), userInfo.getResult().getNikeName(), userInfo.getResult().getAutograph(), userInfo.getResult().getPhone(), userInfo.getResult().getEmail(), userInfo.getResult().getRemarks(), userInfo.getResult().getVipGrade());
+        }, AppHelper.USER_API_KEY, userInfo.getResult().getName(), userPassword, userInfo.getResult().getHeaderImg(), userInfo.getResult().getNikeName(), userInfo.getResult().getAutograph(), userInfo.getResult().getPhone(), userInfo.getResult().getEmail(), userInfo.getResult().getRemarks(), userInfo.getResult().getVipGrade());
     }
 
     /**
