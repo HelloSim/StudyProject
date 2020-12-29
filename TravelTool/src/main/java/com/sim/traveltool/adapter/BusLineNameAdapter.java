@@ -1,48 +1,43 @@
 package com.sim.traveltool.adapter;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
 
+import com.sim.baselibrary.base.BaseAdapter;
+import com.sim.baselibrary.base.BaseViewHolder;
 import com.sim.traveltool.R;
 import com.sim.traveltool.bean.BusRealTimeLineDataBean;
 
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @Time: 2020/6/9 19:49
  * @Author: HelloSim
  * @Description :实时公交搜索界面的RecyclerView适配器
  */
-public class BusLineNameAdapter extends RecyclerView.Adapter<BusLineNameAdapter.ViewHolder> {
+public class BusLineNameAdapter extends BaseAdapter<BusLineNameAdapter.ViewHolder, BusRealTimeLineDataBean.DataBean> {
 
-    private Context mContext;
-    private ArrayList<BusRealTimeLineDataBean.DataBean> busLineNameBeanList;
-
-    public BusLineNameAdapter(Context mContext, ArrayList<BusRealTimeLineDataBean.DataBean> busLineNameBeanList) {
-        this.mContext = mContext;
-        this.busLineNameBeanList = busLineNameBeanList;
+    public BusLineNameAdapter(List<BusRealTimeLineDataBean.DataBean> busLineNameBeanList) {
+        super(busLineNameBeanList);
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(mContext).inflate(R.layout.recycler_view_item_bus_line_name, parent, false);
-        return new ViewHolder(view);
+        return new ViewHolder(LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.recycler_view_item_bus_line_name, parent, false));
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        if (busLineNameBeanList != null) {
-            holder.tvBusName.setText(busLineNameBeanList.get(position).getName());
-            holder.tvBusLineName.setText(busLineNameBeanList.get(position).getFromStation()
-                    + "->" + busLineNameBeanList.get(position).getToStation());
+        BusRealTimeLineDataBean.DataBean dataBean = getItem(position);
+        if (dataBean != null) {
+            holder.tvBusName.setText(dataBean.getName());
+            holder.tvBusLineName.setText(dataBean.getFromStation() + "->" + dataBean.getToStation());
         }
     }
 
@@ -51,17 +46,19 @@ public class BusLineNameAdapter extends RecyclerView.Adapter<BusLineNameAdapter.
         return 2;
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends BaseViewHolder {
 
-        private LinearLayout itemParent;
         private TextView tvBusName;
         private TextView tvBusLineName;
 
-        public ViewHolder(@NonNull View itemView) {
+        public ViewHolder(View itemView) {
             super(itemView);
-            itemParent = itemView.findViewById(R.id.item_parent);
-            tvBusName = itemView.findViewById(R.id.tv_bus_name);
-            tvBusLineName = itemView.findViewById(R.id.tv_bus_line_name);
+        }
+
+        @Override
+        protected void bindViews() {
+            tvBusName = findViewById(R.id.tv_bus_name);
+            tvBusLineName = findViewById(R.id.tv_bus_line_name);
         }
 
     }

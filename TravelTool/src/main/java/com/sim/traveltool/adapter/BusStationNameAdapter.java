@@ -1,16 +1,14 @@
 package com.sim.traveltool.adapter;
 
-import android.annotation.SuppressLint;
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
 
+import com.sim.baselibrary.base.BaseAdapter;
+import com.sim.baselibrary.base.BaseViewHolder;
 import com.sim.traveltool.R;
 import com.sim.traveltool.bean.BusLocationDataBean;
 
@@ -21,45 +19,37 @@ import java.util.ArrayList;
  * @Author: HelloSim
  * @Description :终点位置搜索界面的RecyclerView适配器
  */
-public class BusStationNameAdapter extends RecyclerView.Adapter<BusStationNameAdapter.ViewHolder> {
+public class BusStationNameAdapter extends BaseAdapter<BusStationNameAdapter.ViewHolder,BusLocationDataBean.TipsBean> {
 
-    private Context mContext;
-    private ArrayList<BusLocationDataBean.TipsBean> startStationDataList = new ArrayList<>();
-
-    public BusStationNameAdapter(Context mContext, ArrayList<BusLocationDataBean.TipsBean> startStationDataList) {
-        this.mContext = mContext;
-        this.startStationDataList = startStationDataList;
+    public BusStationNameAdapter(ArrayList<BusLocationDataBean.TipsBean> startStationDataList) {
+        super(startStationDataList);
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(mContext).inflate(R.layout.recycler_view_item_station_name, parent, false);
-        return new ViewHolder(view);
+        return new ViewHolder(LayoutInflater.from(parent.getContext()).
+                inflate(R.layout.recycler_view_item_station_name, parent, false));
     }
 
-    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        if (startStationDataList != null) {
-            holder.tvLocationName.setText(String.valueOf(startStationDataList.get(position).getName()));
-        }
+        BusLocationDataBean.TipsBean tipsBean = getItem(position);
+        if (tipsBean != null)
+            holder.tvLocationName.setText(String.valueOf(tipsBean.getName()));
     }
 
-    @Override
-    public int getItemCount() {
-        return startStationDataList == null ? 0 : startStationDataList.size();
-    }
+    public class ViewHolder extends BaseViewHolder {
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
-
-        private LinearLayout itemParent;
         private TextView tvLocationName;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            itemParent = itemView.findViewById(R.id.item_parent);
-            tvLocationName = itemView.findViewById(R.id.tv_location_name);
+        }
+
+        @Override
+        protected void bindViews() {
+            tvLocationName = findViewById(R.id.tv_location_name);
         }
 
     }

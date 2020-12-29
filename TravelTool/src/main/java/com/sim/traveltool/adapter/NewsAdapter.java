@@ -5,16 +5,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import androidx.recyclerview.widget.RecyclerView;
+import androidx.annotation.NonNull;
 
 import com.bumptech.glide.Glide;
-import com.sim.baselibrary.utils.AppUtil;
+import com.sim.baselibrary.base.BaseAdapter;
+import com.sim.baselibrary.base.BaseViewHolder;
 import com.sim.traveltool.R;
 import com.sim.traveltool.bean.NewsWangYiBean;
-import com.sim.traveltool.ui.activity.NewsCollectActivity;
 
 import java.util.ArrayList;
 
@@ -23,22 +22,16 @@ import java.util.ArrayList;
  * @Time 2020/4/27 1:05
  * @Description 新闻列表界面的RecyclerView适配器
  */
-public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
+public class NewsAdapter extends BaseAdapter<NewsAdapter.ViewHolder, NewsWangYiBean.ResultBean> {
 
     private Context mContext;
-    private ArrayList<NewsWangYiBean.ResultBean> news;
 
     public NewsAdapter(Context context, ArrayList<NewsWangYiBean.ResultBean> news) {
+        super(news);
         this.mContext = context;
-        this.news = news;
-
     }
 
-    public ArrayList<NewsWangYiBean.ResultBean> getNews() {
-        return news;
-    }
-
-    //    //根据channel_id()值return 1 or 2
+//    //根据channel_id()值return 1 or 2
 //    @Override
 //    public int getItemViewType(int position) {
 //        if ("11".equals( home_arrayList.get( position ).getArticle_channel_id() )) {
@@ -48,9 +41,11 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(mContext).inflate(R.layout.recycler_view_item_news, parent, false);
+        return new ViewHolder(LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.recycler_view_item_news, parent, false));
+//        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recycler_view_item_news, parent, false);
 //        View view1 = LayoutInflater.from(mContext).inflate(R.layout.home_fragment_gone_view_item, parent, false);
-        return new ViewHolder(view);
+//        return new ViewHolder(view);
 //        //根据getItemViewType()return的值显示item，以过滤广告
 //        if (viewType == 1) {
 //            return new ViewHolder(view);
@@ -61,31 +56,30 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
+        NewsWangYiBean.ResultBean resultBean = getItem(position);
         Glide.with(mContext)
-                .load(news.get(position).getImage())
+                .load(resultBean.getImage())
                 .into(holder.newsImage);
-        holder.newsTitle.setText(news.get(position).getTitle());
-        holder.newsTime.setText(news.get(position).getPasstime());
+        holder.newsTitle.setText(resultBean.getTitle());
+        holder.newsTime.setText(resultBean.getPasstime());
     }
 
-    @Override
-    public int getItemCount() {
-        return news == null ? 0 : news.size();
-    }
-
-    public class ViewHolder extends RecyclerView.ViewHolder {
-        LinearLayout itemParent;
+    public class ViewHolder extends BaseViewHolder {
         ImageView newsImage;
         TextView newsTitle;
         TextView newsTime;
 
-        public ViewHolder(View itemView) {
+        public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            itemParent = itemView.findViewById(R.id.item_parent);
-            newsImage = itemView.findViewById(R.id.news_image);
-            newsTitle = itemView.findViewById(R.id.news_title);
-            newsTime = itemView.findViewById(R.id.news_time);
         }
+
+        @Override
+        protected void bindViews() {
+            newsImage = findViewById(R.id.news_image);
+            newsTitle = findViewById(R.id.news_title);
+            newsTime = findViewById(R.id.news_time);
+        }
+
     }
 
 }

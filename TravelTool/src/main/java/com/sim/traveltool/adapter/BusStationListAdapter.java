@@ -1,14 +1,14 @@
 package com.sim.traveltool.adapter;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
 
+import com.sim.baselibrary.base.BaseAdapter;
+import com.sim.baselibrary.base.BaseViewHolder;
 import com.sim.traveltool.R;
 import com.sim.traveltool.bean.BusRealTimeBusStopDataBean;
 import com.sim.traveltool.bean.BusRealTimeDataBean;
@@ -20,41 +20,26 @@ import java.util.ArrayList;
  * @Author: HelloSim
  * @Description :起始位置搜索界面的RecyclerView适配器
  */
-public class BusStationListAdapter extends RecyclerView.Adapter<BusStationListAdapter.ViewHolder> {
+public class BusStationListAdapter extends BaseAdapter<BusStationListAdapter.ViewHolder,BusRealTimeBusStopDataBean.DataBean> {
 
-    private Context mContext;
-    private ArrayList<BusRealTimeBusStopDataBean.DataBean> stationList = new ArrayList<>();
     private ArrayList<BusRealTimeDataBean.DataBean> busListOnRoadListList = new ArrayList<>();
 
-
-    public BusStationListAdapter(Context mContext, ArrayList<BusRealTimeBusStopDataBean.DataBean> stationList, ArrayList<BusRealTimeDataBean.DataBean> busListOnRoadListList) {
-        this.mContext = mContext;
-        this.stationList = stationList;
+    public BusStationListAdapter(ArrayList<BusRealTimeBusStopDataBean.DataBean> stationList, ArrayList<BusRealTimeDataBean.DataBean> busListOnRoadListList) {
+        super(stationList);
         this.busListOnRoadListList = busListOnRoadListList;
-    }
-
-    public void refresh(ArrayList<BusRealTimeDataBean.DataBean> busListOnRoadListList) {
-        this.busListOnRoadListList.clear();
-        this.busListOnRoadListList = busListOnRoadListList;
-        notifyDataSetChanged();
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(mContext).inflate(R.layout.recycler_view_item_station_list, parent, false);
-        return new ViewHolder(view);
-    }
-
-    @Override
-    public int getItemViewType(int position) {
-        return position;
+        return new ViewHolder(LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.recycler_view_item_station_list, parent, false));
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.tvStationNum.setText(String.valueOf(position + 1));
-        holder.tvStationName.setText(stationList.get(position).getName());
+        holder.tvStationName.setText(getItem(position).getName());
         if (busListOnRoadListList != null) {
             StringBuffer busNumber = new StringBuffer();
             for (BusRealTimeDataBean.DataBean dataBean : busListOnRoadListList) {
@@ -66,12 +51,7 @@ public class BusStationListAdapter extends RecyclerView.Adapter<BusStationListAd
         }
     }
 
-    @Override
-    public int getItemCount() {
-        return stationList == null ? 0 : stationList.size();
-    }
-
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends BaseViewHolder {
 
         private TextView tvStationNum;
         private TextView tvStationName;
@@ -79,9 +59,13 @@ public class BusStationListAdapter extends RecyclerView.Adapter<BusStationListAd
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            tvStationNum = itemView.findViewById(R.id.tv_station_num);
-            tvStationName = itemView.findViewById(R.id.tv_station_name);
-            tvBusNumber = itemView.findViewById(R.id.tv_bus_number);
+        }
+
+        @Override
+        protected void bindViews() {
+            tvStationNum = findViewById(R.id.tv_station_num);
+            tvStationName = findViewById(R.id.tv_station_name);
+            tvBusNumber = findViewById(R.id.tv_bus_number);
         }
 
     }

@@ -172,7 +172,7 @@ public class BusRealTimeActivity extends BaseActivity {
                 //30s做一次更新查询
                 handler.sendEmptyMessageDelayed(REFRESH, 30000);
                 if (stationListAdapter == null) {
-                    stationListAdapter = new BusStationListAdapter(BusRealTimeActivity.this, stationList, busListOnRoadListList);
+                    stationListAdapter = new BusStationListAdapter(stationList, busListOnRoadListList);
                     stationListAdapter.setHasStableIds(true);
                     rlstationList.setLayoutManager(new LinearLayoutManager(BusRealTimeActivity.this));
                     rlstationList.setAdapter(stationListAdapter);

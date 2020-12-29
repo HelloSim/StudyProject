@@ -1,6 +1,5 @@
 package com.sim.traveltool.adapter;
 
-import android.content.Context;
 import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +10,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.sim.baselibrary.base.BaseAdapter;
+import com.sim.baselibrary.base.BaseViewHolder;
 import com.sim.traveltool.R;
 import com.sim.traveltool.bean.BusRouteDataBean;
 
@@ -22,21 +23,21 @@ import java.util.List;
  * @Time 2020/11/29 15:19
  * @Description
  */
-public class BusRouteDetailBusStationAdapter extends RecyclerView.Adapter<BusRouteDetailBusStationAdapter.ViewHolder> {
+public class BusRouteDetailBusStationAdapter extends BaseAdapter<BusRouteDetailBusStationAdapter.ViewHolder,
+        BusRouteDataBean.RouteBean.TransitsBean.SegmentsBean.BusBean.BuslinesBean> {
 
-    private Context mContext;
     private List<BusRouteDataBean.RouteBean.TransitsBean.SegmentsBean.BusBean.BuslinesBean> buslinesBeanList = new ArrayList<>();
 
-    public BusRouteDetailBusStationAdapter(Context mContext, List<BusRouteDataBean.RouteBean.TransitsBean.SegmentsBean.BusBean.BuslinesBean> buslinesBeanList) {
-        this.mContext = mContext;
+    public BusRouteDetailBusStationAdapter(List<BusRouteDataBean.RouteBean.TransitsBean.SegmentsBean.BusBean.BuslinesBean> buslinesBeanList) {
+        super(buslinesBeanList);
         this.buslinesBeanList = buslinesBeanList;
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(mContext).inflate(R.layout.recycler_view_item_route_detail_bus_station, parent, false);
-        return new BusRouteDetailBusStationAdapter.ViewHolder(view);
+        return new ViewHolder(LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.recycler_view_item_route_detail_bus_station, parent, false));
     }
 
     @Override
@@ -59,15 +60,19 @@ public class BusRouteDetailBusStationAdapter extends RecyclerView.Adapter<BusRou
         return buslinesBeanList.get(0).getVia_stops() == null ? 0 : buslinesBeanList.get(0).getVia_stops().size() + 2;
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends BaseViewHolder {
 
         private LinearLayout item_parent;
         private TextView tv_item_bus_station_name;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            item_parent = itemView.findViewById(R.id.item_parent);
-            tv_item_bus_station_name = itemView.findViewById(R.id.tv_item_bus_station_name);
+        }
+
+        @Override
+        protected void bindViews() {
+            item_parent = findViewById(R.id.item_parent);
+            tv_item_bus_station_name = findViewById(R.id.tv_item_bus_station_name);
         }
 
         public void setVisibility(boolean isVisible) {

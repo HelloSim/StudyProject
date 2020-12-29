@@ -67,7 +67,7 @@ public class WangyiFragment extends BaseFragment {
             @Override
             public void onItemClicked(RecyclerView recyclerView, int position, View v) {
                 Intent intent = new Intent(getActivity(), NewsDetailActivity.class);
-                intent.putExtra("news", (Serializable) newsAdapter.getNews().get(position));
+                intent.putExtra("news", (Serializable) newsAdapter.getData().get(position));
                 startActivity(intent);
             }
         });

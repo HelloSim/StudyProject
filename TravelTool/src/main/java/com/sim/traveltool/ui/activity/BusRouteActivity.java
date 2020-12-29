@@ -63,7 +63,7 @@ public class BusRouteActivity extends BaseActivity {
     protected void initView() {
         tvFromAndToLocation.setText(tvStartLocation + " -> " + tvEndLocation);
 
-        routeAdapter = new BusRouteAdapter(this, routeDataList);
+        routeAdapter = new BusRouteAdapter( routeDataList);
         rlLocationList.setLayoutManager(new LinearLayoutManager(this));
         rlLocationList.setAdapter(routeAdapter);
         ItemClickSupport.addTo(rlLocationList).setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {

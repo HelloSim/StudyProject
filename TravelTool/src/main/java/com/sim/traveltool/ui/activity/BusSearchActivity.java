@@ -69,7 +69,7 @@ public class BusSearchActivity extends BaseActivity {
             initData();
         }
         if (searchType == AppHelper.RESULT_BUS) {
-            busLineNameAdapter = new BusLineNameAdapter(this, lineListByLineNameBeanList);
+            busLineNameAdapter = new BusLineNameAdapter(lineListByLineNameBeanList);
             rlData.setLayoutManager(new LinearLayoutManager(this));
             rlData.setAdapter(busLineNameAdapter);
             ItemClickSupport.addTo(rlData).setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
@@ -87,7 +87,7 @@ public class BusSearchActivity extends BaseActivity {
                 }
             });
         } else {
-            stationNameAdapter = new BusStationNameAdapter(BusSearchActivity.this, startLocationDataBeanList);
+            stationNameAdapter = new BusStationNameAdapter(startLocationDataBeanList);
             rlData.setLayoutManager(new LinearLayoutManager(this));
             rlData.setAdapter(stationNameAdapter);
             ItemClickSupport.addTo(rlData).setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
