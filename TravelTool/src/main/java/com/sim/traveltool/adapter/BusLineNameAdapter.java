@@ -1,6 +1,5 @@
 package com.sim.traveltool.adapter;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,15 +25,9 @@ public class BusLineNameAdapter extends RecyclerView.Adapter<BusLineNameAdapter.
     private Context mContext;
     private ArrayList<BusRealTimeLineDataBean.DataBean> busLineNameBeanList;
 
-    private onItemClickListener mOnItemClickListerer;
-
     public BusLineNameAdapter(Context mContext, ArrayList<BusRealTimeLineDataBean.DataBean> busLineNameBeanList) {
         this.mContext = mContext;
         this.busLineNameBeanList = busLineNameBeanList;
-    }
-
-    public void setOnItemClickListerer(onItemClickListener onItemClickListerer) {
-        mOnItemClickListerer = onItemClickListerer;
     }
 
     @NonNull
@@ -44,19 +37,12 @@ public class BusLineNameAdapter extends RecyclerView.Adapter<BusLineNameAdapter.
         return new ViewHolder(view);
     }
 
-    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         if (busLineNameBeanList != null) {
             holder.tvBusName.setText(busLineNameBeanList.get(position).getName());
             holder.tvBusLineName.setText(busLineNameBeanList.get(position).getFromStation()
                     + "->" + busLineNameBeanList.get(position).getToStation());
-            holder.itemParent.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    mOnItemClickListerer.onItemClick(view, position);
-                }
-            });
         }
     }
 
@@ -78,10 +64,6 @@ public class BusLineNameAdapter extends RecyclerView.Adapter<BusLineNameAdapter.
             tvBusLineName = itemView.findViewById(R.id.tv_bus_line_name);
         }
 
-    }
-
-    public interface onItemClickListener {
-        void onItemClick(View view, int i);
     }
 
 }

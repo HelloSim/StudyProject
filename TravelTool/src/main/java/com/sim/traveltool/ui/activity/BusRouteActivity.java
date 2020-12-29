@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.sim.baselibrary.base.BaseActivity;
+import com.sim.baselibrary.callback.ItemClickSupport;
 import com.sim.baselibrary.utils.LogUtil;
 import com.sim.baselibrary.utils.ToastUtil;
 import com.sim.traveltool.R;
@@ -64,9 +65,10 @@ public class BusRouteActivity extends BaseActivity {
 
         routeAdapter = new BusRouteAdapter(this, routeDataList);
         rlLocationList.setLayoutManager(new LinearLayoutManager(this));
-        routeAdapter.setOnItemClickListerer(new BusRouteAdapter.onItemClickListener() {
+        rlLocationList.setAdapter(routeAdapter);
+        ItemClickSupport.addTo(rlLocationList).setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
             @Override
-            public void onItemClick(View view, int position) {
+            public void onItemClicked(RecyclerView recyclerView, int position, View v) {
                 Intent intent = new Intent(BusRouteActivity.this, BusRouteDetailActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("data", routeDataList.get(position));
@@ -76,7 +78,6 @@ public class BusRouteActivity extends BaseActivity {
                 startActivity(intent);
             }
         });
-        rlLocationList.setAdapter(routeAdapter);
     }
 
     @Override

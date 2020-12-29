@@ -28,21 +28,10 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
     private Context mContext;
     private ArrayList<NewsWangYiBean.ResultBean> news;
 
-    private onItemClickListener mOnItemClickListerer;
-    private onItemLongClickListener mOnItemLongClickListener;
-
     public NewsAdapter(Context context, ArrayList<NewsWangYiBean.ResultBean> news) {
         this.mContext = context;
         this.news = news;
 
-    }
-
-    public void setOnItemClickListerer(onItemClickListener onItemClickListerer) {
-        mOnItemClickListerer = onItemClickListerer;
-    }
-
-    public void setmOnItemLongClickListener(onItemLongClickListener mOnItemLongClickListener) {
-        this.mOnItemLongClickListener = mOnItemLongClickListener;
     }
 
     public ArrayList<NewsWangYiBean.ResultBean> getNews() {
@@ -77,21 +66,6 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
                 .into(holder.newsImage);
         holder.newsTitle.setText(news.get(position).getTitle());
         holder.newsTime.setText(news.get(position).getPasstime());
-        holder.itemParent.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mOnItemClickListerer.onItemClick(view, position);
-            }
-        });
-        if (AppUtil.isActivityRunning(mContext, NewsCollectActivity.class.getSimpleName())) {
-            holder.itemParent.setOnLongClickListener(new View.OnLongClickListener() {
-                @Override
-                public boolean onLongClick(View view) {
-                    mOnItemLongClickListener.onItemLongClick(view, position);
-                    return true;
-                }
-            });
-        }
     }
 
     @Override
@@ -113,14 +87,5 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
             newsTime = itemView.findViewById(R.id.news_time);
         }
     }
-
-    public interface onItemClickListener {
-        void onItemClick(View view, int i);
-    }
-
-    public interface onItemLongClickListener {
-        void onItemLongClick(View view, int i);
-    }
-
 
 }

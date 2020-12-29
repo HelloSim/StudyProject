@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.sim.baselibrary.base.BaseFragment;
+import com.sim.baselibrary.callback.ItemClickSupport;
 import com.sim.baselibrary.utils.LogUtil;
 import com.sim.traveltool.R;
 import com.sim.traveltool.adapter.NewsAdapter;
@@ -61,15 +62,15 @@ public class WangyiFragment extends BaseFragment {
         newsRecyclerView = root.findViewById(R.id.recycle_view);
         newsAdapter = new NewsAdapter(getActivity(), newsList);
         newsRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        newsAdapter.setOnItemClickListerer(new NewsAdapter.onItemClickListener() {
+        newsRecyclerView.setAdapter(newsAdapter);
+        ItemClickSupport.addTo(newsRecyclerView).setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
             @Override
-            public void onItemClick(View view, int i) {
+            public void onItemClicked(RecyclerView recyclerView, int position, View v) {
                 Intent intent = new Intent(getActivity(), NewsDetailActivity.class);
-                intent.putExtra("news", (Serializable) newsAdapter.getNews().get(i));
+                intent.putExtra("news", (Serializable) newsAdapter.getNews().get(position));
                 startActivity(intent);
             }
         });
-        newsRecyclerView.setAdapter(newsAdapter);
 
         //freshLayout控件下拉刷新
         refreshLayout = root.findViewById(R.id.refresh);

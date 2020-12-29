@@ -26,15 +26,9 @@ public class BusRouteAdapter extends RecyclerView.Adapter<BusRouteAdapter.ViewHo
     private Context mContext;
     private ArrayList<BusRouteDataBean.RouteBean.TransitsBean> routeDataList = new ArrayList<>();
 
-    private onItemClickListener mOnItemClickListerer;
-
     public BusRouteAdapter(Context mContext, ArrayList<BusRouteDataBean.RouteBean.TransitsBean> routeDataList) {
         this.mContext = mContext;
         this.routeDataList = routeDataList;
-    }
-
-    public void setOnItemClickListerer(onItemClickListener onItemClickListerer) {
-        mOnItemClickListerer = onItemClickListerer;
     }
 
     @NonNull
@@ -44,7 +38,6 @@ public class BusRouteAdapter extends RecyclerView.Adapter<BusRouteAdapter.ViewHo
         return new ViewHolder(view);
     }
 
-    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull BusRouteAdapter.ViewHolder holder, int position) {
         if (routeDataList != null) {
@@ -69,12 +62,6 @@ public class BusRouteAdapter extends RecyclerView.Adapter<BusRouteAdapter.ViewHo
             holder.tvBusName.setText(busName);
             holder.tvRouteRoughly.setText(Integer.parseInt(routeDataList.get(position).getDuration()) / 60 + "分钟 | "
                     + "步行" + routeDataList.get(position).getWalking_distance() + "米");
-            holder.itemParent.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    mOnItemClickListerer.onItemClick(view, position);
-                }
-            });
         }
     }
 
@@ -96,10 +83,6 @@ public class BusRouteAdapter extends RecyclerView.Adapter<BusRouteAdapter.ViewHo
             tvRouteRoughly = itemView.findViewById(R.id.tv_route_roughly);
         }
 
-    }
-
-    public interface onItemClickListener {
-        void onItemClick(View view, int position);
     }
 
 }

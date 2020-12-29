@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.sim.baselibrary.base.BaseActivity;
+import com.sim.baselibrary.callback.ItemClickSupport;
 import com.sim.baselibrary.utils.LogUtil;
 import com.sim.baselibrary.utils.ToastUtil;
 import com.sim.traveltool.AppHelper;
@@ -69,35 +70,35 @@ public class BusSearchActivity extends BaseActivity {
         }
         if (searchType == AppHelper.RESULT_BUS) {
             busLineNameAdapter = new BusLineNameAdapter(this, lineListByLineNameBeanList);
-            busLineNameAdapter.setOnItemClickListerer(new BusLineNameAdapter.onItemClickListener() {
+            rlData.setLayoutManager(new LinearLayoutManager(this));
+            rlData.setAdapter(busLineNameAdapter);
+            ItemClickSupport.addTo(rlData).setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
                 @Override
-                public void onItemClick(View view, int i) {
+                public void onItemClicked(RecyclerView recyclerView, int position, View v) {
                     Intent intent = new Intent(BusSearchActivity.this, BusRealTimeActivity.class);
-                    intent.putExtra("busName", lineListByLineNameBeanList.get(i).getName());
-                    intent.putExtra("lineId", lineListByLineNameBeanList.get(i).getId());
-                    intent.putExtra("fromStation", lineListByLineNameBeanList.get(i).getFromStation());
-                    intent.putExtra("toStation", lineListByLineNameBeanList.get(i).getToStation());
-                    intent.putExtra("beginTime", lineListByLineNameBeanList.get(i).getBeginTime());
-                    intent.putExtra("endTime", lineListByLineNameBeanList.get(i).getEndTime());
-                    intent.putExtra("price", lineListByLineNameBeanList.get(i).getPrice());
+                    intent.putExtra("busName", lineListByLineNameBeanList.get(position).getName());
+                    intent.putExtra("lineId", lineListByLineNameBeanList.get(position).getId());
+                    intent.putExtra("fromStation", lineListByLineNameBeanList.get(position).getFromStation());
+                    intent.putExtra("toStation", lineListByLineNameBeanList.get(position).getToStation());
+                    intent.putExtra("beginTime", lineListByLineNameBeanList.get(position).getBeginTime());
+                    intent.putExtra("endTime", lineListByLineNameBeanList.get(position).getEndTime());
+                    intent.putExtra("price", lineListByLineNameBeanList.get(position).getPrice());
                     startActivity(intent);
                 }
             });
-            rlData.setLayoutManager(new LinearLayoutManager(this));
-            rlData.setAdapter(busLineNameAdapter);
         } else {
             stationNameAdapter = new BusStationNameAdapter(BusSearchActivity.this, startLocationDataBeanList);
-            stationNameAdapter.setOnItemClickListerer(new BusStationNameAdapter.onItemClickListener() {
+            rlData.setLayoutManager(new LinearLayoutManager(this));
+            rlData.setAdapter(stationNameAdapter);
+            ItemClickSupport.addTo(rlData).setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
                 @Override
-                public void onItemClick(View view, int i) {
+                public void onItemClicked(RecyclerView recyclerView, int position, View v) {
                     Intent intent = new Intent();
-                    intent.putExtra("name", String.valueOf(startLocationDataBeanList.get(i).getName()));
+                    intent.putExtra("name", String.valueOf(startLocationDataBeanList.get(position).getName()));
                     setResult(searchType, intent);
                     finish();
                 }
             });
-            rlData.setLayoutManager(new LinearLayoutManager(this));
-            rlData.setAdapter(stationNameAdapter);
         }
         //editext的内容变化监听
         tvSearch.addTextChangedListener(new TextWatcher() {

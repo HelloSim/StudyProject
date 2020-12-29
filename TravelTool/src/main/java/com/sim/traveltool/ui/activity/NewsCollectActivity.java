@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.gson.Gson;
 import com.sim.baselibrary.base.BaseActivity;
+import com.sim.baselibrary.callback.ItemClickSupport;
 import com.sim.baselibrary.callback.OnMultiClickListener;
 import com.sim.baselibrary.utils.SPUtil;
 import com.sim.traveltool.R;
@@ -38,8 +39,6 @@ public class NewsCollectActivity extends BaseActivity {
     private ArrayList<NewsWangYiBean.ResultBean> newsList = new ArrayList<>();
     private NewsAdapter newsAdapter;
 
-    private int position;//长按的item
-
     @Override
     protected int getLayoutRes() {
         return R.layout.activity_news_collect;
@@ -57,18 +56,18 @@ public class NewsCollectActivity extends BaseActivity {
     protected void initView() {
         newsAdapter = new NewsAdapter(this, newsList);
         newsRecyclerView.setLayoutManager(new LinearLayoutManager(NewsCollectActivity.this));
-        newsAdapter.setOnItemClickListerer(new NewsAdapter.onItemClickListener() {
+        newsRecyclerView.setAdapter(newsAdapter);
+        ItemClickSupport.addTo(newsRecyclerView).setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
             @Override
-            public void onItemClick(View view, int i) {
+            public void onItemClicked(RecyclerView recyclerView, int position, View v) {
                 Intent intent = new Intent(NewsCollectActivity.this, NewsDetailActivity.class);
-                intent.putExtra("news", (Serializable) newsAdapter.getNews().get(i));
+                intent.putExtra("news", (Serializable) newsAdapter.getNews().get(position));
                 startActivity(intent);
             }
         });
-        newsAdapter.setmOnItemLongClickListener(new NewsAdapter.onItemLongClickListener() {
+        ItemClickSupport.addTo(newsRecyclerView).setOnItemLongClickListener(new ItemClickSupport.OnItemLongClickListener() {
             @Override
-            public void onItemLongClick(View view, int i) {
-                position = i;
+            public boolean onItemLongClicked(RecyclerView recyclerView, int position, View v) {
                 showDialog(null, "取消收藏", getString(R.string.ok), getString(R.string.cancel), new com.sim.baselibrary.callback.DialogInterface() {
                     @Override
                     public void sureOnClick() {
@@ -83,9 +82,9 @@ public class NewsCollectActivity extends BaseActivity {
                     public void cancelOnClick() {
                     }
                 });
+                return false;
             }
         });
-        newsRecyclerView.setAdapter(newsAdapter);
     }
 
     @Override

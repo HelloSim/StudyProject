@@ -26,15 +26,9 @@ public class BusStationNameAdapter extends RecyclerView.Adapter<BusStationNameAd
     private Context mContext;
     private ArrayList<BusLocationDataBean.TipsBean> startStationDataList = new ArrayList<>();
 
-    private onItemClickListener mOnItemClickListerer;
-
     public BusStationNameAdapter(Context mContext, ArrayList<BusLocationDataBean.TipsBean> startStationDataList) {
         this.mContext = mContext;
         this.startStationDataList = startStationDataList;
-    }
-
-    public void setOnItemClickListerer(onItemClickListener onItemClickListerer) {
-        mOnItemClickListerer = onItemClickListerer;
     }
 
     @NonNull
@@ -49,12 +43,6 @@ public class BusStationNameAdapter extends RecyclerView.Adapter<BusStationNameAd
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         if (startStationDataList != null) {
             holder.tvLocationName.setText(String.valueOf(startStationDataList.get(position).getName()));
-            holder.itemParent.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    mOnItemClickListerer.onItemClick(view, position);
-                }
-            });
         }
     }
 
@@ -74,10 +62,6 @@ public class BusStationNameAdapter extends RecyclerView.Adapter<BusStationNameAd
             tvLocationName = itemView.findViewById(R.id.tv_location_name);
         }
 
-    }
-
-    public interface onItemClickListener {
-        void onItemClick(View view, int i);
     }
 
 }
