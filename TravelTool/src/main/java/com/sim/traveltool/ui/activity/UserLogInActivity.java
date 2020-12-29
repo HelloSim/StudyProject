@@ -6,16 +6,20 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.sim.baselibrary.base.BaseActivity;
+import com.sim.baselibrary.bean.EventMessage;
 import com.sim.baselibrary.constant.Constant;
 import com.sim.baselibrary.utils.LogUtil;
 import com.sim.baselibrary.utils.SPUtil;
+import com.sim.baselibrary.utils.ToastUtil;
+import com.sim.traveltool.AppHelper;
 import com.sim.traveltool.R;
 import com.sim.traveltool.bean.UserInfo;
 import com.sim.traveltool.internet.APIFactory;
+
+import org.greenrobot.eventbus.EventBus;
 
 import rx.Subscriber;
 
@@ -31,10 +35,6 @@ public class UserLogInActivity extends BaseActivity {
     EditText etPassword;
     Button btnRegistered;
     Button btnLogIn;
-
-    private String spName = "userState";
-    private String spStateKey = "isLogIn";
-    private String spUserInfoKey = "userInfo";
 
     private UserInfo userInfoBean;
 
@@ -75,9 +75,9 @@ public class UserLogInActivity extends BaseActivity {
                 logIn();
             } else {
                 if (etUserName.getText().toString().length() > 0) {
-                    Toast.makeText(this, "请输入密码！", Toast.LENGTH_SHORT).show();
+                    ToastUtil.T_Info(UserLogInActivity.this,"请输入密码！");
                 } else {
-                    Toast.makeText(this, "请输入用户名！", Toast.LENGTH_SHORT).show();
+                    ToastUtil.T_Info(UserLogInActivity.this,"请输入用户名！");
                 }
             }
         } else {
@@ -93,19 +93,19 @@ public class UserLogInActivity extends BaseActivity {
             @Override
             public void onCompleted() {
                 if (userInfoBean.getCode() == 200) {
-                    SPUtil.put(UserLogInActivity.this, spName, spStateKey, true);
-                    SPUtil.put(UserLogInActivity.this, spName, "etPassword", etPassword.getText().toString());
-                    SPUtil.put(UserLogInActivity.this, spName, spUserInfoKey, new Gson().toJson(userInfoBean));
-                    Intent intent = getIntent();
-                    setResult(RESULT_OK, intent);
+                    SPUtil.put(UserLogInActivity.this, AppHelper.userSpName, AppHelper.userSpStateKey, true);
+                    SPUtil.put(UserLogInActivity.this, AppHelper.userSpName, AppHelper.userSpPasswordKey, etPassword.getText().toString());
+                    SPUtil.put(UserLogInActivity.this, AppHelper.userSpName, AppHelper.userSpUserInfoKey, new Gson().toJson(userInfoBean));
+                    EventBus.getDefault().post(new EventMessage(AppHelper.USER_IsLogIn));
                     finish();
                 } else {
-                    Toast.makeText(UserLogInActivity.this, userInfoBean.getMessage(), Toast.LENGTH_SHORT).show();
+                    ToastUtil.T_Error(UserLogInActivity.this,"登录出错！");
                 }
             }
 
             @Override
             public void onError(Throwable e) {
+                ToastUtil.T_Error(UserLogInActivity.this,"登录出错！");
                 LogUtil.e(UserLogInActivity.class, "用户登陆出错: " + e);
             }
 

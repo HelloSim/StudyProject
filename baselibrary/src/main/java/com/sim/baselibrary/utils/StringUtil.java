@@ -23,6 +23,7 @@ public class StringUtil {
         if (o == null) {
             return "";
         } else {
+            LogUtil.d(StringUtil.class,o.toString());
             return o.toString().trim();
         }
     }

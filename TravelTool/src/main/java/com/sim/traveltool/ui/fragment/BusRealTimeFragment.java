@@ -1,13 +1,10 @@
 package com.sim.traveltool.ui.fragment;
 
-import android.content.Intent;
 import android.view.View;
 import android.widget.TextView;
 
 import com.sim.baselibrary.base.BaseFragment;
-import com.sim.traveltool.AppHelper;
 import com.sim.traveltool.R;
-import com.sim.traveltool.ui.activity.BusSearchActivity;
 
 /**
  * @Auther Sim

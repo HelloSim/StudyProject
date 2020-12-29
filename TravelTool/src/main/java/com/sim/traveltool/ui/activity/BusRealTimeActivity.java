@@ -6,13 +6,13 @@ import android.os.Message;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.sim.baselibrary.base.BaseActivity;
 import com.sim.baselibrary.utils.LogUtil;
+import com.sim.baselibrary.utils.ToastUtil;
 import com.sim.traveltool.R;
 import com.sim.traveltool.adapter.BusStationListAdapter;
 import com.sim.traveltool.bean.BusRealTimeBusStopDataBean;
@@ -135,15 +135,15 @@ public class BusRealTimeActivity extends BaseActivity {
         APIFactory.getInstance().getStationList(new Subscriber<BusRealTimeBusStopDataBean>() {
             @Override
             public void onCompleted() {
-                if (stationList != null) {
-                } else {
-                    Toast.makeText(BusRealTimeActivity.this, "数据出错！", Toast.LENGTH_SHORT).show();
+                if (stationList == null) {
+                    ToastUtil.T_Error(BusRealTimeActivity.this, "获取公交路线站点请求出错！");
                     finish();
                 }
             }
 
             @Override
             public void onError(Throwable e) {
+                ToastUtil.T_Error(BusRealTimeActivity.this, "获取公交路线站点请求出错！");
                 LogUtil.e(BusRealTimeActivity.class, "获取公交路线站点请求出错: " + e);
             }
 
@@ -183,7 +183,8 @@ public class BusRealTimeActivity extends BaseActivity {
 
             @Override
             public void onError(Throwable e) {
-
+                ToastUtil.T_Error(BusRealTimeActivity.this, "获取实时公交数据请求出错！");
+                LogUtil.e(BusRealTimeActivity.class, "获取实时公交数据的网络请求: " + e);
             }
 
             @Override

@@ -1,6 +1,5 @@
 package com.sim.baselibrary.base;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -10,12 +9,8 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.util.DisplayMetrics;
-import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.PopupWindow;
 
 import androidx.annotation.LayoutRes;
@@ -26,10 +21,10 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import com.sim.baselibrary.R;
+import com.sim.baselibrary.callback.DialogInterface;
 import com.sim.baselibrary.callback.OnMultiClickListener;
 import com.sim.baselibrary.utils.ScreenUtil;
 import com.sim.baselibrary.views.DialogBuilder;
-import com.sim.baselibrary.callback.DialogInterface;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -4,7 +4,6 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentPagerAdapter;
@@ -12,6 +11,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.tabs.TabLayout;
 import com.sim.baselibrary.base.BaseFragment;
+import com.sim.baselibrary.utils.ToastUtil;
 import com.sim.traveltool.R;
 import com.sim.traveltool.adapter.LoopViewAdapter;
 
@@ -120,19 +120,19 @@ public class BusFragment extends BaseFragment {
                 public void onClick(View v) {
                     switch (v.getId()) {
                         case R.id.pager_img1:
-                            Toast.makeText(getContext(), "1被点击", Toast.LENGTH_SHORT).show();
+                            ToastUtil.T_Info(getContext(), "1被点击！");
                             break;
                         case R.id.pager_img2:
-                            Toast.makeText(getContext(), "2被点击", Toast.LENGTH_SHORT).show();
+                            ToastUtil.T_Info(getContext(), "2被点击！");
                             break;
                         case R.id.pager_img3:
-                            Toast.makeText(getContext(), "3被点击", Toast.LENGTH_SHORT).show();
+                            ToastUtil.T_Info(getContext(), "3被点击！");
                             break;
                         case R.id.pager_img4:
-                            Toast.makeText(getContext(), "4被点击", Toast.LENGTH_SHORT).show();
+                            ToastUtil.T_Info(getContext(), "4被点击！");
                             break;
                         case R.id.pager_img5:
-                            Toast.makeText(getContext(), "5被点击", Toast.LENGTH_SHORT).show();
+                            ToastUtil.T_Info(getContext(), "5被点击！");
                             break;
                     }
                 }

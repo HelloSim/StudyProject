@@ -128,5 +128,19 @@ public class UserInfo implements Serializable {
         public void setRemarks(String remarks) {
             this.remarks = remarks;
         }
+
+        @Override
+        public String toString() {
+            return "ResultBean{" +
+                    "name='" + name + '\'' +
+                    ", nikeName='" + nikeName + '\'' +
+                    ", headerImg='" + headerImg + '\'' +
+                    ", phone='" + phone + '\'' +
+                    ", email='" + email + '\'' +
+                    ", vipGrade='" + vipGrade + '\'' +
+                    ", autograph='" + autograph + '\'' +
+                    ", remarks='" + remarks + '\'' +
+                    '}';
+        }
     }
 }

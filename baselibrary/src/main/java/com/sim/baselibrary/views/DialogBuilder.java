@@ -12,7 +12,7 @@ import android.view.WindowManager;
 import android.widget.TextView;
 
 import com.sim.baselibrary.R;
-import com.sim.baselibrary.utils.TimeUtil;
+import com.sim.baselibrary.callback.OnMultiClickListener;
 
 /**
  * @Auther Sim
@@ -120,7 +120,7 @@ public class DialogBuilder {
             layout.findViewById(R.id.sure).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if (TimeUtil.isFastClick()) {
+                    if (OnMultiClickListener.isNoFastClick()) {
                         sureClickListener.onClick(view);
                         dialog.dismiss();
                     }
@@ -131,7 +131,7 @@ public class DialogBuilder {
             layout.findViewById(R.id.cancel).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if (TimeUtil.isFastClick()) {
+                    if (OnMultiClickListener.isNoFastClick()) {
                         cancelClickListener.onClick(view);
                         dialog.dismiss();
                     }

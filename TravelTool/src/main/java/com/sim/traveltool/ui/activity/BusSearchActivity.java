@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.sim.baselibrary.base.BaseActivity;
 import com.sim.baselibrary.utils.LogUtil;
+import com.sim.baselibrary.utils.ToastUtil;
 import com.sim.traveltool.AppHelper;
 import com.sim.traveltool.R;
 import com.sim.traveltool.adapter.BusLineNameAdapter;
@@ -174,6 +175,7 @@ public class BusSearchActivity extends BaseActivity {
 
             @Override
             public void onError(Throwable e) {
+                ToastUtil.T_Error(BusSearchActivity.this, "搜索实时公交路线请求出错！");
                 LogUtil.d(BusSearchActivity.class, "搜索实时公交路线出错: " + e);
             }
 
@@ -206,6 +208,7 @@ public class BusSearchActivity extends BaseActivity {
 
             @Override
             public void onError(Throwable e) {
+                ToastUtil.T_Error(BusSearchActivity.this, "位置请求出错！");
                 LogUtil.d(BusSearchActivity.class, "位置请求出错: " + e);
             }
 

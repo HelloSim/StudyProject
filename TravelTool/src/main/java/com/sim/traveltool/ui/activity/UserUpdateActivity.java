@@ -3,7 +3,6 @@ package com.sim.traveltool.ui.activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -18,22 +17,24 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.google.gson.Gson;
 import com.sim.baselibrary.base.BaseActivity;
+import com.sim.baselibrary.bean.EventMessage;
 import com.sim.baselibrary.callback.DialogInterface;
 import com.sim.baselibrary.constant.Constant;
 import com.sim.baselibrary.utils.LogUtil;
 import com.sim.baselibrary.utils.SPUtil;
-import com.sim.baselibrary.utils.ScreenUtil;
-import com.sim.baselibrary.utils.TimeUtil;
+import com.sim.baselibrary.utils.ToastUtil;
+import com.sim.traveltool.AppHelper;
 import com.sim.traveltool.R;
 import com.sim.traveltool.bean.UserInfo;
 import com.sim.traveltool.internet.APIFactory;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.io.File;
 
@@ -59,16 +60,9 @@ public class UserUpdateActivity extends BaseActivity {
     TextView tvUserNikeName;
     TextView tvUserAutograph;
 
-    private String spName = "userState";
-    private String spStateKey = "isLogIn";
-    private String spUserInfoKey = "userInfo";
-
-    private UserInfo userInfo;
-
-    private String userImage;//头像
-    private String userName;//用户名
-    private String userNikeName;//昵称
-    private String userAutograph;//签名
+    private UserInfo userInfo;//修改前
+    private UserInfo newUserInfo;//修改后
+    private String userPassword;//密码
 
     //更新用户名弹窗
     private PopupWindow updateNikeNamePopupWindow;//弹窗
@@ -113,18 +107,14 @@ public class UserUpdateActivity extends BaseActivity {
     @Override
     protected void initView() {
         if (userInfo != null) {
-            if (userImage != null) {
-                Glide.with(this).load(userImage).into(ivUserImage);
-            }
-            if (userName != null) {
-                tvUserName.setText(userName);
-            }
-            if (userNikeName != null) {
-                tvUserNikeName.setText(userNikeName);
-            }
-            if (userAutograph != null) {
-                tvUserAutograph.setText(userAutograph);
-            }
+            if (userInfo.getResult().getHeaderImg() != null)
+                Glide.with(this).load(userInfo.getResult().getHeaderImg()).into(ivUserImage);
+            if (userInfo.getResult().getName() != null)
+                tvUserName.setText(userInfo.getResult().getName());
+            if (userInfo.getResult().getNikeName() != null)
+                tvUserNikeName.setText(userInfo.getResult().getNikeName());
+            if (userInfo.getResult().getAutograph() != null)
+                tvUserAutograph.setText(userInfo.getResult().getAutograph());
         }
 
         LayoutInflater inflater = (LayoutInflater) this.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
@@ -141,21 +131,18 @@ public class UserUpdateActivity extends BaseActivity {
         btn_autograph_cancel = updateAutographLayout.findViewById(R.id.btn_autograph_cancel);
         btn_autograph_confirm = updateAutographLayout.findViewById(R.id.btn_autograph_confirm);
 
-        et_nike_name.setText(userNikeName);
-        et_autograph.setText(userAutograph);
+        if (userInfo.getResult().getNikeName() != null)
+            et_nike_name.setText(userInfo.getResult().getNikeName());
+        if (userInfo.getResult().getAutograph() != null)
+            et_autograph.setText(userInfo.getResult().getAutograph());
 
         setViewClick(btn_nike_name_cancel, btn_nike_name_confirm, btn_autograph_cancel, btn_autograph_confirm);
     }
 
     @Override
     protected void initData() {
-        userInfo = new Gson().fromJson((String) SPUtil.get(this, spName, spUserInfoKey, ""), UserInfo.class);
-        if (userInfo != null) {
-            userImage = userInfo.getResult().getHeaderImg();
-            userName = userInfo.getResult().getName();
-            userNikeName = userInfo.getResult().getNikeName();
-            userAutograph = userInfo.getResult().getAutograph();
-        }
+        userPassword = String.valueOf(SPUtil.get(this, AppHelper.userSpName, AppHelper.userSpPasswordKey, ""));
+        userInfo = new Gson().fromJson((String) SPUtil.get(this, AppHelper.userSpName, AppHelper.userSpUserInfoKey, ""), UserInfo.class);
     }
 
     @Override
@@ -173,9 +160,10 @@ public class UserUpdateActivity extends BaseActivity {
                     new DialogInterface() {
                         @Override
                         public void sureOnClick() {
-                            SPUtil.put(UserUpdateActivity.this, spName, spStateKey, false);
-                            SPUtil.remove(UserUpdateActivity.this, spName, spUserInfoKey);
-                            SPUtil.remove(UserUpdateActivity.this, spName, "password");
+                            SPUtil.put(UserUpdateActivity.this, AppHelper.userSpName, AppHelper.userSpStateKey, false);
+                            SPUtil.remove(UserUpdateActivity.this, AppHelper.userSpName, AppHelper.userSpUserInfoKey);
+                            SPUtil.remove(UserUpdateActivity.this, AppHelper.userSpName, AppHelper.userSpPasswordKey);
+                            EventBus.getDefault().post(new EventMessage(AppHelper.USER_noLogIn));
                             finish();
                         }
 
@@ -185,26 +173,18 @@ public class UserUpdateActivity extends BaseActivity {
                         }
                     });
         } else if (view == btn_nike_name_cancel) {
-            if (TimeUtil.isFastClick()) {
-                et_nike_name.setText(userNikeName);
-                updateNikeNamePopupWindow.dismiss();
-            }
+            updateNikeNamePopupWindow.dismiss();
         } else if (view == btn_nike_name_confirm) {
-            if (TimeUtil.isFastClick()) {
-                if (userInfo != null && et_nike_name.getText().toString().length() > 0) {
-                    updateUserInfo(userInfo.getResult().getName(), (String) SPUtil.get(UserUpdateActivity.this, spName, "password", ""), userInfo.getResult().getHeaderImg(),
-                            et_nike_name.getText().toString(), userInfo.getResult().getAutograph(), userInfo.getResult().getPhone(), userInfo.getResult().getEmail(),
-                            userInfo.getResult().getRemarks(), userInfo.getResult().getVipGrade());
-                }
+            if (userInfo != null) {
+                userInfo.getResult().setNikeName(et_nike_name.getText().toString());
+                updateUserInfo();
             }
         } else if (view == btn_autograph_cancel) {
-            et_autograph.setText(userAutograph);
             updateAutographNamePopupWindow.dismiss();
         } else if (view == btn_autograph_confirm) {
-            if (et_autograph.getText() != null) {
-                updateUserInfo(userInfo.getResult().getName(), (String) SPUtil.get(UserUpdateActivity.this, spName, "password", ""), userInfo.getResult().getHeaderImg(),
-                        userInfo.getResult().getNikeName(), et_autograph.getText().toString(), userInfo.getResult().getPhone(), userInfo.getResult().getEmail(),
-                        userInfo.getResult().getRemarks(), userInfo.getResult().getVipGrade());
+            if (userInfo != null) {
+                userInfo.getResult().setAutograph(et_autograph.getText().toString());
+                updateUserInfo();
             }
         } else {
             super.onMultiClick(view);
@@ -213,53 +193,39 @@ public class UserUpdateActivity extends BaseActivity {
 
     /**
      * 更新用户信息的网络请求
-     *
-     * @param name
-     * @param passwd
-     * @param headerImg
-     * @param nikeName
-     * @param autograph
-     * @param phone
-     * @param email
-     * @param remarks
-     * @param vipGrade
      */
-    private void updateUserInfo(String name, String passwd, String headerImg, String nikeName, String autograph, String phone, String email, String remarks, String vipGrade) {
+    private void updateUserInfo() {
         APIFactory.getInstance().updateUserInfo(new Subscriber<UserInfo>() {
             @Override
             public void onCompleted() {
                 if (userInfo.getCode() == 200) {
                     updateNikeNamePopupWindow.dismiss();
                     updateAutographNamePopupWindow.dismiss();
-                    SPUtil.put(UserUpdateActivity.this, spName, spUserInfoKey, new Gson().toJson(userInfo));
-                    userInfo = new Gson().fromJson((String) SPUtil.get(UserUpdateActivity.this, spName, spUserInfoKey, ""), UserInfo.class);
+                    SPUtil.put(UserUpdateActivity.this, AppHelper.userSpName, AppHelper.userSpUserInfoKey, new Gson().toJson(userInfo));
+                    userInfo = new Gson().fromJson((String) SPUtil.get(UserUpdateActivity.this, AppHelper.userSpName, AppHelper.userSpUserInfoKey, ""), UserInfo.class);
                     if (userInfo != null) {
-                        userImage = userInfo.getResult().getHeaderImg();
-                        userName = userInfo.getResult().getName();
-                        userNikeName = userInfo.getResult().getNikeName();
-                        userAutograph = userInfo.getResult().getAutograph();
-                        if (userImage != null) {
-                            Glide.with(UserUpdateActivity.this).load(userImage).into(ivUserImage);
-                        }
-                        if (userName != null) {
-                            tvUserName.setText(userName);
-                        }
-                        if (userNikeName != null) {
-                            tvUserNikeName.setText(userNikeName);
-                        }
-                        if (userAutograph != null) {
-                            tvUserAutograph.setText(userAutograph);
-                        }
-                        et_nike_name.setText(userNikeName);
-                        et_autograph.setText(userAutograph);
+                        if (userInfo.getResult().getHeaderImg() != null)
+                            Glide.with(UserUpdateActivity.this).load(userInfo.getResult().getHeaderImg()).into(ivUserImage);
+                        if (userInfo.getResult().getName() != null)
+                            tvUserName.setText(userInfo.getResult().getName());
+                        if (userInfo.getResult().getNikeName() != null)
+                            tvUserNikeName.setText(userInfo.getResult().getNikeName());
+                        if (userInfo.getResult().getAutograph() != null)
+                            tvUserAutograph.setText(userInfo.getResult().getAutograph());
+                        if (userInfo.getResult().getNikeName() != null)
+                            et_nike_name.setText(userInfo.getResult().getNikeName());
+                        if (userInfo.getResult().getAutograph() != null)
+                            et_autograph.setText(userInfo.getResult().getAutograph());
+                        EventBus.getDefault().post(new EventMessage(AppHelper.USER_UpDate));
                     }
                 } else {
-                    Toast.makeText(UserUpdateActivity.this, userInfo.getMessage(), Toast.LENGTH_SHORT).show();
+                    ToastUtil.T_Error(UserUpdateActivity.this,"更新用户信息出错！");
                 }
             }
 
             @Override
             public void onError(Throwable e) {
+                ToastUtil.T_Error(UserUpdateActivity.this,"更新用户信息出错！");
                 LogUtil.d(UserUpdateActivity.class, "更新用户信息出错: " + e);
             }
 
@@ -267,7 +233,7 @@ public class UserUpdateActivity extends BaseActivity {
             public void onNext(UserInfo newUserInfo) {
                 userInfo = newUserInfo;
             }
-        }, Constant.API_KEY, name, passwd, headerImg, nikeName, autograph, phone, email, remarks, vipGrade);
+        }, Constant.API_KEY, userInfo.getResult().getName(), userPassword, userInfo.getResult().getHeaderImg(), userInfo.getResult().getNikeName(), userInfo.getResult().getAutograph(), userInfo.getResult().getPhone(), userInfo.getResult().getEmail(), userInfo.getResult().getRemarks(), userInfo.getResult().getVipGrade());
     }
 
     /**
@@ -318,9 +284,8 @@ public class UserUpdateActivity extends BaseActivity {
                     try {
                         if (imageUri != null) {
                             displayImage(imageUri);
-                            updateUserInfo(userInfo.getResult().getName(), (String) SPUtil.get(UserUpdateActivity.this, spName, "password", ""), imageUri.toString(),
-                                    userInfo.getResult().getNikeName(), et_autograph.getText().toString(), userInfo.getResult().getPhone(), userInfo.getResult().getEmail(),
-                                    userInfo.getResult().getRemarks(), userInfo.getResult().getVipGrade());
+                            userInfo.getResult().setHeaderImg(imageUri.toString());
+                            updateUserInfo();
                         }
                     } catch (Exception e) {
                         e.printStackTrace();

@@ -5,11 +5,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.sim.baselibrary.base.BaseActivity;
 import com.sim.baselibrary.constant.Constant;
 import com.sim.baselibrary.utils.LogUtil;
+import com.sim.baselibrary.utils.ToastUtil;
 import com.sim.traveltool.R;
 import com.sim.traveltool.bean.UserInfo;
 import com.sim.traveltool.internet.APIFactory;
@@ -68,9 +68,9 @@ public class UserRegisterActivity extends BaseActivity {
                         null, etNikeName.getText().toString(), etAutograph.getText().toString(), null, null, null, null);
             } else {
                 if (etUserName.getText().toString().length() <= 0) {
-                    Toast.makeText(this, "用户名不能为空！", Toast.LENGTH_SHORT).show();
+                    ToastUtil.T_Info(UserRegisterActivity.this, "用户名不能为空！");
                 } else if (etPassword.getText().toString().length() <= 0) {
-                    Toast.makeText(this, "密码不能为空！", Toast.LENGTH_SHORT).show();
+                    ToastUtil.T_Info(UserRegisterActivity.this, "密码不能为空！");
                 }
             }
         } else {
@@ -95,14 +95,15 @@ public class UserRegisterActivity extends BaseActivity {
         APIFactory.getInstance().registerUser(new Subscriber<UserInfo>() {
             @Override
             public void onCompleted() {
-                Toast.makeText(UserRegisterActivity.this, userInfoBean.getMessage(), Toast.LENGTH_SHORT).show();
                 if (userInfoBean.getCode() == 200) {
+                    ToastUtil.T_Success(UserRegisterActivity.this, "注册成功！");
                     finish();
-                }
+                } else ToastUtil.T_Error(UserRegisterActivity.this, "注册失败！");
             }
 
             @Override
             public void onError(Throwable e) {
+                ToastUtil.T_Error(UserRegisterActivity.this, "注册失败！");
                 LogUtil.e(UserRegisterActivity.class, "注册用户出错: " + e);
             }
 

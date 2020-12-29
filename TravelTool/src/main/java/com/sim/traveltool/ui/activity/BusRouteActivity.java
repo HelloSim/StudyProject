@@ -121,7 +121,8 @@ public class BusRouteActivity extends BaseActivity {
 
             @Override
             public void onError(Throwable e) {
-                LogUtil.e(BusRouteActivity.class, "位置信息请求出错: " + e);
+                ToastUtil.T_Error(BusRouteActivity.this, "位置信息请求出错！");
+                LogUtil.e(BusRealTimeActivity.class, "位置信息请求出错: " + e);
             }
 
             @Override
@@ -150,6 +151,7 @@ public class BusRouteActivity extends BaseActivity {
 
             @Override
             public void onError(Throwable e) {
+                ToastUtil.T_Error(BusRouteActivity.this, "出行方案请求出错！");
                 LogUtil.e(BusRouteActivity.class, "出行方案请求出错: " + e);
             }
 

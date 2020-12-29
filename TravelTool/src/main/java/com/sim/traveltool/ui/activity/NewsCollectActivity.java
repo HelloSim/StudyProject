@@ -11,8 +11,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.gson.Gson;
 import com.sim.baselibrary.base.BaseActivity;
+import com.sim.baselibrary.callback.OnMultiClickListener;
 import com.sim.baselibrary.utils.SPUtil;
-import com.sim.baselibrary.utils.TimeUtil;
 import com.sim.traveltool.R;
 import com.sim.traveltool.adapter.NewsAdapter;
 import com.sim.traveltool.bean.NewsWangYiBean;
@@ -72,7 +72,7 @@ public class NewsCollectActivity extends BaseActivity {
                 showDialog(null, "取消收藏", getString(R.string.ok), getString(R.string.cancel), new com.sim.baselibrary.callback.DialogInterface() {
                     @Override
                     public void sureOnClick() {
-                        if (TimeUtil.isFastClick()) {
+                        if (OnMultiClickListener.isNoFastClick()) {
                             SPUtil.remove(NewsCollectActivity.this, fileName, newsList.get(position).getTitle());
                             newsList.remove(position);
                             newsAdapter.notifyDataSetChanged();

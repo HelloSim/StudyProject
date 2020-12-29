@@ -1,7 +1,6 @@
 package com.sim.traveltool.ui.fragment;
 
 import android.app.Activity;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -14,8 +13,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
-
-import androidx.appcompat.app.AlertDialog;
 
 import com.haibin.calendarview.Calendar;
 import com.haibin.calendarview.CalendarView;
@@ -102,7 +99,7 @@ public class RecordFragment extends BaseFragment implements CalendarView.OnMonth
         moreLayout = inflater.inflate(R.layout.view_popup_more, null);
         otherLayout = inflater.inflate(R.layout.view_popup_add_other, null);
 
-        morePopupWindow = showPopupWindow(moreLayout, 300, 180);
+        morePopupWindow = showPopupWindow(moreLayout, 200, 150);
         otherPopupWindow = showPopupWindow(otherLayout, 300, 180);
 
         btnAllRecord = moreLayout.findViewById(R.id.all_record);
