@@ -7,7 +7,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bin.david.form.core.SmartTable;
-import com.bin.david.form.core.TableConfig;
 import com.bin.david.form.data.CellInfo;
 import com.bin.david.form.data.column.Column;
 import com.bin.david.form.data.format.bg.BaseCellBackgroundFormat;
@@ -54,41 +53,39 @@ public class RecordAllActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-        List<String> dayColum = null;
+        List<String> dayColum = null;//日期列
+        ArrayList list = new ArrayList();//日期列的周六日内容格
         for (Column column : table.getTableData().getColumns()) {
             if (column.getColumnName().equals("日期")) {
                 dayColum = column.getDatas();
             }
         }
-        List<String> finalDayColum = dayColum;
-        table.setZoom(true, 2, 1);//设置放大最大和最小值
-        ArrayList list = new ArrayList();
+        table.setZoom(false);//设置不可缩放
+//        table.setZoom(true, 2f, 0.5f);//设置缩放最大和最小值
         table.getConfig()
                 .setShowXSequence(false)//是否显示顶部序号列
                 .setShowYSequence(false)//是否显示左侧序号列
                 .setShowTableTitle(false)//是否显示表格标题
-                .setTableTitleStyle(new FontStyle(40, Color.WHITE))//设置表格标题字体样式
+//                .setTableTitleStyle(new FontStyle(RecordAllActivity.this, 18, Color.WHITE))//设置表格标题字体样式
+                .setCountStyle(new FontStyle(RecordAllActivity.this, 18, Color.WHITE))//设置统计行样式
                 .setContentCellBackgroundFormat(new BaseCellBackgroundFormat<CellInfo>() {
                     @Override
                     public int getBackGroundColor(CellInfo cellInfo) {
                         switch (cellInfo.value) {
-                            case "星期一":
-                            case "星期二":
-                            case "星期三":
-                            case "星期四":
-                            case "星期五":
+                            case "星期六":
+                            case "星期日":
                                 list.add(cellInfo.row);
                         }
                         for (int i = 0; i < list.size(); i++) {
                             if (cellInfo.row == (int) list.get(i)) {
-                                return TableConfig.INVALID_COLOR;
+                                return Color.parseColor("#DCDCDC");
                             }
                         }
-                        return Color.GRAY;
+                        return Color.parseColor("#FFFFFF");
                     }
                 });
 
-        FontStyle fontStyle = new FontStyle();
+        FontStyle fontStyle = new FontStyle(RecordAllActivity.this, 12, Color.parseColor("#636363"));
         MultiLineBubbleTip<Column> tip = new MultiLineBubbleTip<Column>(this, R.mipmap.ic_round_rect, R.mipmap.ic_triangle, fontStyle) {
             @Override
             public boolean isShowTip(Column column, int position) {
