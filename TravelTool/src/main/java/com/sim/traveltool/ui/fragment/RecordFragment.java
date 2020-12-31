@@ -17,14 +17,22 @@ import android.widget.TextView;
 import com.haibin.calendarview.Calendar;
 import com.haibin.calendarview.CalendarView;
 import com.sim.baselibrary.base.BaseFragment;
+import com.sim.baselibrary.callback.SuccessOrFailListener;
+import com.sim.baselibrary.utils.LogUtil;
 import com.sim.baselibrary.utils.TimeUtil;
 import com.sim.baselibrary.utils.ToastUtil;
 import com.sim.sqlitelibrary.bean.RecordDataBean;
 import com.sim.traveltool.R;
 import com.sim.traveltool.db.RecordDataDaoUtil;
+import com.sim.traveltool.db.bean.RecordData;
 import com.sim.traveltool.ui.activity.RecordAllActivity;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
+
+import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.UpdateListener;
 
 /**
  * @Auther Sim
@@ -114,7 +122,37 @@ public class RecordFragment extends BaseFragment implements CalendarView.OnMonth
     @Override
     protected void initData() {
         //数据库插入本月所有日期条目
-        RecordDataDaoUtil.getInstance().insertDataForMonth(getContext(), calendarView.getSelectedCalendar());
+//        RecordDataDaoUtil.getInstance().insertDataForMonth(getContext(), calendarView.getSelectedCalendar());
+
+        //数据库插入本月所有日期条目
+        RecordData.Dao.query(calendarView.getSelectedCalendar().getYear(), calendarView.getSelectedCalendar().getMonth(), new SuccessOrFailListener() {
+            @Override
+            public void success(Object... values) {
+                ArrayList<RecordData> list = (ArrayList<RecordData>) values[0];
+                if (list == null || list.size() == 0) {//没有就加上当月所有天的空数据
+                    RecordData.Dao.insertForMonthAll(getContext(), calendarView.getSelectedCalendar(), new SuccessOrFailListener() {
+                        @Override
+                        public void success(Object... values) {
+                            LogUtil.i(RecordFragment.class, "插入当月所有天的空数据成功！");
+                        }
+
+                        @Override
+                        public void fail(Object... values) {
+                            LogUtil.e(RecordFragment.class, "插入当月所有天的空数据失败！");
+                        }
+                    });
+                } else {
+                    LogUtil.i(RecordFragment.class, "已存在当月数据！");
+                }
+            }
+
+            @Override
+            public void fail(Object... values) {
+                ToastUtil.T_Error(getContext(), "查询不到数据库！");
+                LogUtil.e(RecordFragment.class, values.toString());
+            }
+        });
+
     }
 
     @Override
@@ -236,22 +274,84 @@ public class RecordFragment extends BaseFragment implements CalendarView.OnMonth
         switch (type) {
             case 1://上班卡
                 if (tvRecordTimeStart.getText().equals(getString(R.string.record_no))) {
-                    if (RecordDataDaoUtil.getInstance().updataStartTime(getContext(), calendarView.getSelectedCalendar())) {
-                        ToastUtil.T_Info(getContext(), (getString(R.string.record_success) + getString(R.string.late)));
-                    } else {
-                        ToastUtil.T_Info(getContext(), (getString(R.string.record_success)));
-                    }
-                    showInfo(calendarView.getSelectedCalendar());
+                    RecordData.Dao.query(calendarView.getSelectedCalendar().getYear(), calendarView.getSelectedCalendar().getMonth(),
+                            calendarView.getSelectedCalendar().getDay(), new SuccessOrFailListener() {
+                                @Override
+                                public void success(Object... values) {
+                                    ArrayList<RecordData> list = (ArrayList<RecordData>) values[0];
+                                    if (list != null || list.size() != 0) {//没有就加上当月所有天的空数据
+                                        RecordData recordData = list.get(0);
+                                        recordData.setStartTime(new SimpleDateFormat("HH:mm").format(System.currentTimeMillis()));
+                                        RecordData.Dao.update(recordData, new SuccessOrFailListener() {
+                                            @Override
+                                            public void success(Object... values) {
+                                                ToastUtil.T_Info(getContext(), (getString(R.string.record_success)));
+                                            }
+
+                                            @Override
+                                            public void fail(Object... values) {
+                                                ToastUtil.T_Info(getContext(), (getString(R.string.record_failure)));
+                                                LogUtil.d(RecordFragment.class, "修改指定日期数据出错：" + values.toString());
+                                            }
+                                        });
+                                    } else {
+                                        ToastUtil.T_Info(getContext(), (getString(R.string.record_failure)));
+                                    }
+                                }
+
+                                @Override
+                                public void fail(Object... values) {
+                                    ToastUtil.T_Info(getContext(), (getString(R.string.record_failure)));
+                                    LogUtil.d(RecordFragment.class, "查询指定日期数据出错：" + values.toString());
+                                }
+                            });
+//                    if (RecordDataDaoUtil.getInstance().updataStartTime(getContext(), calendarView.getSelectedCalendar())) {
+//                        ToastUtil.T_Info(getContext(), (getString(R.string.record_success) + getString(R.string.late)));
+//                    } else {
+//                        ToastUtil.T_Info(getContext(), (getString(R.string.record_success)));
+//                    }
+//                    showInfo(calendarView.getSelectedCalendar());
                 } else {
                     showDialog(null, getString(R.string.record_update), getString(R.string.ok), getString(R.string.cancel), new com.sim.baselibrary.callback.DialogInterface() {
                         @Override
                         public void sureOnClick() {
-                            if (RecordDataDaoUtil.getInstance().updataStartTime(getContext(), calendarView.getSelectedCalendar())) {
-                                ToastUtil.T_Info(getContext(), (getString(R.string.record_success) + getString(R.string.late)));
-                            } else {
-                                ToastUtil.T_Info(getContext(), getString(R.string.record_success));
-                            }
-                            showInfo(calendarView.getSelectedCalendar());
+                            RecordData.Dao.query(calendarView.getSelectedCalendar().getYear(), calendarView.getSelectedCalendar().getMonth(),
+                                    calendarView.getSelectedCalendar().getDay(), new SuccessOrFailListener() {
+                                        @Override
+                                        public void success(Object... values) {
+                                            ArrayList<RecordData> list = (ArrayList<RecordData>) values[0];
+                                            if (list != null || list.size() != 0) {//没有就加上当月所有天的空数据
+                                                RecordData recordData = list.get(0);
+                                                recordData.setStartTime(new SimpleDateFormat("HH:mm").format(System.currentTimeMillis()));
+                                                RecordData.Dao.update(recordData, new SuccessOrFailListener() {
+                                                    @Override
+                                                    public void success(Object... values) {
+                                                        ToastUtil.T_Info(getContext(), (getString(R.string.record_success)));
+                                                    }
+
+                                                    @Override
+                                                    public void fail(Object... values) {
+                                                        ToastUtil.T_Info(getContext(), (getString(R.string.record_failure)));
+                                                        LogUtil.d(RecordFragment.class, "修改指定日期数据出错：" + values.toString());
+                                                    }
+                                                });
+                                            } else {
+                                                ToastUtil.T_Info(getContext(), (getString(R.string.record_failure)));
+                                            }
+                                        }
+
+                                        @Override
+                                        public void fail(Object... values) {
+                                            ToastUtil.T_Info(getContext(), (getString(R.string.record_failure)));
+                                            LogUtil.d(RecordFragment.class, "查询指定日期数据出错：" + values.toString());
+                                        }
+                                    });
+//                            if (RecordDataDaoUtil.getInstance().updataStartTime(getContext(), calendarView.getSelectedCalendar())) {
+//                                ToastUtil.T_Info(getContext(), (getString(R.string.record_success) + getString(R.string.late)));
+//                            } else {
+//                                ToastUtil.T_Info(getContext(), getString(R.string.record_success));
+//                            }
+//                            showInfo(calendarView.getSelectedCalendar());
                         }
 
                         @Override
@@ -262,23 +362,83 @@ public class RecordFragment extends BaseFragment implements CalendarView.OnMonth
                 }
                 break;
             case 2://下班卡
+                LogUtil.d(RecordFragment.class, "000");
                 if (tvRecordTimeEnd.getText().equals(getString(R.string.record_no))) {
-                    if (RecordDataDaoUtil.getInstance().updataEndTime(getContext(), calendarView.getSelectedCalendar())) {
-                        ToastUtil.T_Info(getContext(), getString(R.string.record_success) + getString(R.string.leave_early));
-                    } else {
-                        ToastUtil.T_Info(getContext(), getString(R.string.record_success));
-                    }
-                    showInfo(calendarView.getSelectedCalendar());
+                    RecordData.Dao.query(calendarView.getSelectedCalendar().getYear(), calendarView.getSelectedCalendar().getMonth(),
+                            calendarView.getSelectedCalendar().getDay(), new SuccessOrFailListener() {
+                                @Override
+                                public void success(Object... values) {
+                                    ArrayList<RecordData> list = (ArrayList<RecordData>) values[0];
+                                    if (list != null || list.size() != 0) {//没有就加上当月所有天的空数据
+                                        RecordData recordData = list.get(0);
+                                        recordData.setEndTime(new SimpleDateFormat("HH:mm").format(System.currentTimeMillis()));
+                                        recordData.update(recordData.getObjectId(), new UpdateListener() {
+                                            @Override
+                                            public void done(BmobException e) {
+                                                if (e == null) {
+                                                    ToastUtil.T_Info(getContext(), (getString(R.string.record_success)));
+                                                } else {
+                                                    ToastUtil.T_Info(getContext(), (getString(R.string.record_failure)));
+                                                    LogUtil.d(RecordFragment.class, "修改指定日期数据出错：" + e.getMessage());
+                                                }
+                                            }
+                                        });
+                                    } else {
+                                        ToastUtil.T_Info(getContext(), (getString(R.string.record_failure)));
+                                    }
+                                }
+
+                                @Override
+                                public void fail(Object... values) {
+
+                                }
+                            });
+//                    if (RecordDataDaoUtil.getInstance().updataEndTime(getContext(), calendarView.getSelectedCalendar())) {
+//                        ToastUtil.T_Info(getContext(), getString(R.string.record_success) + getString(R.string.leave_early));
+//                    } else {
+//                        ToastUtil.T_Info(getContext(), getString(R.string.record_success));
+//                    }
+//                    showInfo(calendarView.getSelectedCalendar());
                 } else {
                     showDialog(null, getString(R.string.record_update), getString(R.string.ok), getString(R.string.cancel), new com.sim.baselibrary.callback.DialogInterface() {
                         @Override
                         public void sureOnClick() {
-                            if (RecordDataDaoUtil.getInstance().updataEndTime(getContext(), calendarView.getSelectedCalendar())) {
-                                ToastUtil.T_Info(getContext(), getString(R.string.record_success) + getString(R.string.leave_early));
-                            } else {
-                                ToastUtil.T_Info(getContext(), getString(R.string.record_success));
-                            }
-                            showInfo(calendarView.getSelectedCalendar());
+                            RecordData.Dao.query(calendarView.getSelectedCalendar().getYear(), calendarView.getSelectedCalendar().getMonth(),
+                                    calendarView.getSelectedCalendar().getDay(), new SuccessOrFailListener() {
+                                        @Override
+                                        public void success(Object... values) {
+                                            ArrayList<RecordData> list = (ArrayList<RecordData>) values[0];
+                                            if (list != null || list.size() != 0) {//没有就加上当月所有天的空数据
+                                                RecordData recordData = list.get(0);
+                                                recordData.setEndTime(new SimpleDateFormat("HH:mm").format(System.currentTimeMillis()));
+                                                RecordData.Dao.update(recordData, new SuccessOrFailListener() {
+                                                    @Override
+                                                    public void success(Object... values) {
+                                                        ToastUtil.T_Info(getContext(), (getString(R.string.record_success)));
+                                                    }
+
+                                                    @Override
+                                                    public void fail(Object... values) {
+                                                        ToastUtil.T_Info(getContext(), (getString(R.string.record_failure)));
+                                                        LogUtil.d(RecordFragment.class, "修改指定日期数据出错：" + values.toString());
+                                                    }
+                                                });
+                                            } else {
+                                                ToastUtil.T_Info(getContext(), (getString(R.string.record_failure)));
+                                            }
+                                        }
+
+                                        @Override
+                                        public void fail(Object... values) {
+
+                                        }
+                                    });
+//                            if (RecordDataDaoUtil.getInstance().updataEndTime(getContext(), calendarView.getSelectedCalendar())) {
+//                                ToastUtil.T_Info(getContext(), getString(R.string.record_success) + getString(R.string.leave_early));
+//                            } else {
+//                                ToastUtil.T_Info(getContext(), getString(R.string.record_success));
+//                            }
+//                            showInfo(calendarView.getSelectedCalendar());
                         }
 
                         @Override

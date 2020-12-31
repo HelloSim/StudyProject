@@ -21,6 +21,7 @@ android {
                 includeCompileClasspath = true
             }
         }
+        multiDexEnabled true
     }
     sourceSets {
         main {
@@ -120,6 +121,13 @@ dependencies {
     implementation 'com.tencent.tinker:tinker-android-lib:1.9.9'
     // 指定tinker依赖版本（注：应用升级1.3.5版本起，不再内置tinker）
     implementation 'com.tencent.bugly:nativecrashreport:3.7.500'
+
+    //bmob
+    implementation 'cn.bmob.android:bmob-sdk:3.7.8'
+    implementation "io.reactivex.rxjava2:rxjava:2.2.8"
+    implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
+    implementation 'com.squareup.okhttp3:okhttp:3.14.1'
+    implementation 'com.squareup.okio:okio:2.2.2'
 
     implementation 'com.github.bumptech.glide:glide:4.9.0'//一个第三方的图片选择库
 }

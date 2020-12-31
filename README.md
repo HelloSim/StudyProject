@@ -255,6 +255,15 @@ table.getConfig().setYSequenceCellBgFormat(new ICellBackgroundFormat<CellInfo>()
 # TravelTool
 公交查询功能（珠海）、网易新闻浏览、打卡记录
 
+
+接入SDK后台：
+bugly：https://bugly.qq.com/v2/index
+极光推送：https://www.jiguang.cn/accounts/login/form
+Bmob后端云：https://www.bmob.cn/login
+API接口：
+网易新闻、用户相关：https://api.apiopen.top/api.html
+
+
 #versionName "3.1.1"
 新添 CrashHandler 奔溃异常处理类
 新添 腾讯Bugly 异常log上报

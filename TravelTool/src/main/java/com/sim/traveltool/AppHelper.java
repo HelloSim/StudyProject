@@ -14,6 +14,16 @@ public class AppHelper {
     public static final String Bugly_APPID = "c7dbd02c92";
     public static final String Bugly_APPKEY = "34b65563-6853-4b74-93c1-8d3175a815d0";
 
+    //极光推送
+    public static final String jPush_APPID = "63c1f262d4358f4acf9a0712";
+    public static final String jPuh_MasterSecret = "a2d952b97ad9726c8b1ebb60";
+
+    //Bmob后端云
+    public static final String Bmob_ApplicationID = "62550b32bf5600010781ceeebc0e92ac";
+    public static final String Bmob_RESTAPIKey = "dbc7ef19309b3a17895d70fcd2ba875b";
+    public static final String Bmob_Secret_Key = "e35d936748f5a791";
+    public static final String Bmob_Master_Key = "f88f9725ef5fb9df1faf9b44f493fdfd";
+
 
     //服务器地址
     public static final String USER_BASE_URL = "https://api.apiopen.top";//用户服务器地址
@@ -25,9 +35,6 @@ public class AppHelper {
 //    public static final String smzdm_BASE_URL = "https://homepage-api.smzdm.com";//什么值得买服务器地址
 //    @GET("v1/home")
 //    Observable <SmzdmDataBean> getHome(@Query("page") String page, @Query("limit") String limit, @Query("time") String time);
-
-//    public static final String IMAGE_BASE_URL = "https://api.dongmanxingkong.com";//随机图片服务器地址
-//    public static final String IMAGE_BASE_URL = "https://gank.io/api/v2/data/category/Girl/type/Girl/page/1/count/10";//随机图片服务器地址
 
 
     //BUS搜索页面跳转

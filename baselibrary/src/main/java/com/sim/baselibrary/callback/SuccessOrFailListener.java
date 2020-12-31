@@ -7,8 +7,8 @@ package com.sim.baselibrary.callback;
  */
 public interface SuccessOrFailListener {
 
-    public void success(Object... values);
+    void success(Object... values);
 
-    public void fail(Object... values);
+    void fail(Object... values);
 
 }

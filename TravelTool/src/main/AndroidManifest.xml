@@ -10,6 +10,8 @@
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.READ_LOGS" />
+    <!--保持CPU 运转，屏幕和键盘灯有可能是关闭的,用于文件上传和下载 -->
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <permission
         android:name="com.sim.traveltool.permission.JPUSH_MESSAGE"
@@ -78,6 +80,15 @@
                 tools:replace="name,resource" />
         </provider>
 
+
+        <!--bmob-->
+        <provider
+            android:name="cn.bmob.v3.util.BmobContentProvider"
+            android:authorities="com.sim.traveltool.BmobContentProvider">
+        </provider>
+
+
+        <!--极光推送jPush-->
         <!-- Required SDK 核心功能-->
         <!-- 可配置 android:process 参数将 PushService 放在其他进程中 -->
         <provider
