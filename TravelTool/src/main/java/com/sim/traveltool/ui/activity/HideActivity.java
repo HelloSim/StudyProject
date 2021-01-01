@@ -10,7 +10,6 @@ import com.haibin.calendarview.Calendar;
 import com.haibin.calendarview.CalendarView;
 import com.sim.baselibrary.base.BaseActivity;
 import com.sim.traveltool.R;
-import com.sim.traveltool.db.RecordDataDaoUtil;
 
 /**
  * @Auther Sim
@@ -50,7 +49,7 @@ public class HideActivity extends BaseActivity implements CalendarView.OnMonthCh
         calendarView.setOnMonthChangeListener(this);
         //日期选择事件监听
         calendarView.setOnCalendarSelectListener(this);
-        tvNowMonth.setText(RecordDataDaoUtil.getInstance().getYearMonth(this, calendarView.getSelectedCalendar()));
+        tvNowMonth.setText(calendarView.getSelectedCalendar().getYear() + "-" + calendarView.getSelectedCalendar().getMonth());
     }
 
     @Override

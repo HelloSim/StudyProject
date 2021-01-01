@@ -54,8 +54,6 @@ public class MainActivity extends BaseActivity {
 
     private UserInfo userInfo;
 
-    private final int LogInNum = 1001;
-
     private BusFragment busFragment;
     private WangyiFragment wangyiFragment;
     private RecordFragment recordFragment;

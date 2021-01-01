@@ -93,6 +93,7 @@ public class UserLogInActivity extends BaseActivity {
             public void onCompleted() {
                 if (userInfoBean.getCode() == 200) {
                     SPUtil.put(UserLogInActivity.this, AppHelper.userSpName, AppHelper.userSpStateKey, true);
+                    SPUtil.put(UserLogInActivity.this, AppHelper.userSpName, AppHelper.userSpAccountNumber, etUserName.getText().toString());
                     SPUtil.put(UserLogInActivity.this, AppHelper.userSpName, AppHelper.userSpPasswordKey, etPassword.getText().toString());
                     SPUtil.put(UserLogInActivity.this, AppHelper.userSpName, AppHelper.userSpUserInfoKey, new Gson().toJson(userInfoBean));
                     EventBus.getDefault().post(new EventMessage(AppHelper.USER_IsLogIn));

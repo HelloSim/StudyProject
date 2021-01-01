@@ -1,6 +1,7 @@
 package com.sim.traveltool.ui.fragment;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -19,11 +20,11 @@ import com.haibin.calendarview.CalendarView;
 import com.sim.baselibrary.base.BaseFragment;
 import com.sim.baselibrary.callback.SuccessOrFailListener;
 import com.sim.baselibrary.utils.LogUtil;
+import com.sim.baselibrary.utils.SPUtil;
 import com.sim.baselibrary.utils.TimeUtil;
 import com.sim.baselibrary.utils.ToastUtil;
-import com.sim.sqlitelibrary.bean.RecordDataBean;
+import com.sim.traveltool.AppHelper;
 import com.sim.traveltool.R;
-import com.sim.traveltool.db.RecordDataDaoUtil;
 import com.sim.traveltool.db.bean.RecordData;
 import com.sim.traveltool.ui.activity.RecordAllActivity;
 
@@ -31,7 +32,10 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.FindListener;
+import cn.bmob.v3.listener.SaveListener;
 import cn.bmob.v3.listener.UpdateListener;
 
 /**
@@ -42,6 +46,8 @@ import cn.bmob.v3.listener.UpdateListener;
 public class RecordFragment extends BaseFragment implements CalendarView.OnMonthChangeListener,
         CalendarView.OnCalendarSelectListener {
 
+    private Context mContext;
+
     TextView tvNowMonth;
     CalendarView calendarView;
 
@@ -51,8 +57,11 @@ public class RecordFragment extends BaseFragment implements CalendarView.OnMonth
     TextView tvRecordTimeEnd;
     Button btnRecord;
 
-    private List<RecordDataBean> recordDataBeanList;//指定日期的打卡记录列表
-    private RecordDataBean recordDataBean;//指定日期的打卡信息
+    private boolean isLogIn = false;
+    private String userSpAccountNumber;
+
+    Calendar calendar;//选中的日期
+    RecordData recordData;//当天的打卡数据
 
     //更多弹窗
     private PopupWindow morePopupWindow;//弹窗
@@ -83,76 +92,51 @@ public class RecordFragment extends BaseFragment implements CalendarView.OnMonth
         tvRecordTimeEnd = view.findViewById(R.id.tv_record_time_end);
         btnRecord = view.findViewById(R.id.btn_record);
         setViewClick(ivMore, btnRecord);
+
+        calendarView.setWeekStarWithSun();//设置星期日周起始
+        calendarView.setWeeColor(Color.TRANSPARENT, Color.WHITE);//设置星期栏的背景、字体颜色
+        calendarView.setThemeColor(Color.WHITE, Color.TRANSPARENT);//定制颜色：选中的标记颜色、标记背景色
+        calendarView.setTextColor(Color.WHITE, Color.WHITE, Color.GRAY, Color.WHITE, Color.GRAY);//设置文本颜色：今天字体颜色、当前月份字体颜色、其它月份字体颜色、当前月份农历字体颜色、其它农历字体颜色
+        calendarView.setOnMonthChangeListener(this);//月份改变事件监听
+        calendarView.setOnCalendarSelectListener(this);//日期选择事件监听
     }
 
     @Override
     protected void initView(View view) {
-        //设置星期日周起始
-        calendarView.setWeekStarWithSun();
-        //设置星期栏的背景、字体颜色
-        calendarView.setWeeColor(Color.TRANSPARENT, Color.WHITE);
-        //定制颜色：选中的标记颜色、标记背景色
-        calendarView.setThemeColor(Color.WHITE, Color.TRANSPARENT);
-        //设置文本颜色：今天字体颜色、当前月份字体颜色、其它月份字体颜色、当前月份农历字体颜色、其它农历字体颜色
-        calendarView.setTextColor(Color.WHITE, Color.WHITE, Color.GRAY, Color.WHITE, Color.GRAY);
-        //月份改变事件监听
-        calendarView.setOnMonthChangeListener(this);
-        //日期选择事件监听
-        calendarView.setOnCalendarSelectListener(this);
-
-        tvNowMonth.setText(RecordDataDaoUtil.getInstance().getYearMonth(getContext(), calendarView.getSelectedCalendar()));
-        showInfo(calendarView.getSelectedCalendar());
+        mContext = getContext();
+        calendar = calendarView.getSelectedCalendar();
+        tvNowMonth.setText(calendar.getYear() + "-" + calendar.getMonth());
+        if (SPUtil.contains(mContext, AppHelper.userSpName, AppHelper.userSpStateKey)) {
+            isLogIn = (boolean) SPUtil.get(mContext, AppHelper.userSpName, AppHelper.userSpStateKey, false);
+            if (isLogIn) {
+                if (SPUtil.contains(mContext, AppHelper.userSpName, AppHelper.userSpAccountNumber)) {
+                    userSpAccountNumber = (String) SPUtil.get(mContext, AppHelper.userSpName, AppHelper.userSpAccountNumber, "");
+                    showInfo(calendar, true);
+                } else {
+                    isLogIn = false;
+                }
+            } else {
+                tvRecordTimeStart.setText(getString(R.string.record_no));
+                tvRecordTimeEnd.setText(getString(R.string.record_no));
+                btnRecord.setText("未登录");
+            }
+        }
 
         LayoutInflater inflater = (LayoutInflater) getActivity().getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
         moreLayout = inflater.inflate(R.layout.view_popup_more, null);
         otherLayout = inflater.inflate(R.layout.view_popup_add_other, null);
-
         morePopupWindow = showPopupWindow(moreLayout, 200, 150);
         otherPopupWindow = showPopupWindow(otherLayout, 300, 180);
-
         btnAllRecord = moreLayout.findViewById(R.id.all_record);
         btnOther = moreLayout.findViewById(R.id.btn_updata_other);
         etOther = otherLayout.findViewById(R.id.et_other);
         btnCancel = otherLayout.findViewById(R.id.btn_cancel);
         btnConfirm = otherLayout.findViewById(R.id.btn_confirm);
-
         setViewClick(btnAllRecord, btnOther, btnCancel, btnConfirm);
     }
 
     @Override
     protected void initData() {
-        //数据库插入本月所有日期条目
-//        RecordDataDaoUtil.getInstance().insertDataForMonth(getContext(), calendarView.getSelectedCalendar());
-
-        //数据库插入本月所有日期条目
-        RecordData.Dao.query(calendarView.getSelectedCalendar().getYear(), calendarView.getSelectedCalendar().getMonth(), new SuccessOrFailListener() {
-            @Override
-            public void success(Object... values) {
-                ArrayList<RecordData> list = (ArrayList<RecordData>) values[0];
-                if (list == null || list.size() == 0) {//没有就加上当月所有天的空数据
-                    RecordData.Dao.insertForMonthAll(getContext(), calendarView.getSelectedCalendar(), new SuccessOrFailListener() {
-                        @Override
-                        public void success(Object... values) {
-                            LogUtil.i(RecordFragment.class, "插入当月所有天的空数据成功！");
-                        }
-
-                        @Override
-                        public void fail(Object... values) {
-                            LogUtil.e(RecordFragment.class, "插入当月所有天的空数据失败！");
-                        }
-                    });
-                } else {
-                    LogUtil.i(RecordFragment.class, "已存在当月数据！");
-                }
-            }
-
-            @Override
-            public void fail(Object... values) {
-                ToastUtil.T_Error(getContext(), "查询不到数据库！");
-                LogUtil.e(RecordFragment.class, values.toString());
-            }
-        });
-
     }
 
     @Override
@@ -161,47 +145,97 @@ public class RecordFragment extends BaseFragment implements CalendarView.OnMonth
             morePopupWindow.showAsDropDown(ivMore, 0, 0);
         } else if (view == btnAllRecord) {
             morePopupWindow.dismiss();
-            Intent intent = new Intent(getContext(), RecordAllActivity.class);
-            Bundle bundle = new Bundle();
-            bundle.putSerializable("calendar", calendarView.getSelectedCalendar());
-            intent.putExtras(bundle);
-            startActivity(intent);
+            if (isLogIn) {
+                Intent intent = new Intent(mContext, RecordAllActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("calendar", calendar);
+                intent.putExtras(bundle);
+                startActivity(intent);
+            } else {
+                ToastUtil.T_Info(mContext, "请先登录！");
+            }
         } else if (view == btnOther) {
             morePopupWindow.dismiss();
-            otherPopupWindow.showAtLocation(parent, Gravity.CENTER, 0, 0);
+            if (isLogIn) {
+                otherPopupWindow.showAtLocation(parent, Gravity.CENTER, 0, 0);
+            } else {
+                ToastUtil.T_Info(mContext, "请先登录！");
+            }
         } else if (view == btnCancel) {
             otherPopupWindow.dismiss();
         } else if (view == btnConfirm) {
             otherPopupWindow.dismiss();
-            RecordDataDaoUtil.getInstance().updataRecordOther(getContext(), calendarView.getSelectedCalendar(), etOther.getText().toString());
+            if (isLogIn) {
+                query(userSpAccountNumber, getYMD(calendarView.getSelectedCalendar()), new SuccessOrFailListener() {
+                    @Override
+                    public void success(Object... values) {
+                        List<RecordData> list = (List<RecordData>) values[0];
+                        if (list != null || list.size() != 0) {
+                            RecordData newRecordData = new RecordData(list.get(0).getUserSpAccountNumber(), list.get(0).getDate(), list.get(0).getYearAndMonth(), list.get(0).getStartTime(), list.get(0).getEndTime(), etOther.getText().toString());
+                            newRecordData.update(list.get(0).getObjectId(), new UpdateListener() {
+                                @Override
+                                public void done(BmobException e) {
+                                    if (e == null) {
+                                        ToastUtil.T_Info(mContext, "添加备忘成功！");
+                                    } else {
+                                        ToastUtil.T_Info(mContext, "添加备忘失败！");
+                                        LogUtil.d(this.getClass(), "修改指定日期备忘出错：" + e.getMessage());
+                                    }
+                                }
+                            });
+                        }
+                    }
+
+                    @Override
+                    public void fail(Object... values) {
+                        LogUtil.e(this.getClass(), "修改指定日期备忘出错！");
+                    }
+                });
+            } else {
+                ToastUtil.T_Info(mContext, "请先登录！");
+            }
         } else if (view == btnRecord) {
-            if (calendarView.getSelectedCalendar().isCurrentDay()) {//是否当天
-                if (!calendarView.getSelectedCalendar().isWeekend()) {//是否周末
-                    if (btnRecord.getText().equals(getString(R.string.record_start))) {
-                        record(1);
-                    } else {
-                        record(2);
+            if (isLogIn) {
+                if (calendar.isCurrentDay()) {//是否当天
+                    if (btnRecord.getText().equals(getString(R.string.record_start))) {//上班卡
+                        if (tvRecordTimeStart.getText().equals(getString(R.string.record_no))) {//未打上班卡
+                            record(1);
+                        } else {//已打上班卡
+                            showDialog(null, getString(R.string.record_update), getString(R.string.ok), getString(R.string.cancel), new com.sim.baselibrary.callback.DialogInterface() {
+                                @Override
+                                public void sureOnClick() {
+                                    record(1);
+                                }
+
+                                @Override
+                                public void cancelOnClick() {
+
+                                }
+                            });
+                        }
+                    } else {//下班卡
+                        if (tvRecordTimeEnd.getText().equals(getString(R.string.record_no))) {//未打下班卡
+                            record(2);
+                        } else {//已打下班卡
+                            showDialog(null, getString(R.string.record_update), getString(R.string.ok), getString(R.string.cancel), new com.sim.baselibrary.callback.DialogInterface() {
+                                @Override
+                                public void sureOnClick() {
+                                    record(2);
+                                }
+
+                                @Override
+                                public void cancelOnClick() {
+
+                                }
+                            });
+                        }
                     }
                 } else {
-                    showDialog(null, getString(R.string.record_week), getString(R.string.ok), getString(R.string.cancel), new com.sim.baselibrary.callback.DialogInterface() {
-                        @Override
-                        public void sureOnClick() {
-                            if (btnRecord.getText().equals(getString(R.string.record_start))) {
-                                record(1);
-                            } else {
-                                record(2);
-                            }
-                        }
-
-                        @Override
-                        public void cancelOnClick() {
-
-                        }
-                    });
+                    calendarView.scrollToCurrent(true);
+                    ToastUtil.T_Info(mContext, getString(R.string.record_only_today));
                 }
             } else {
-                calendarView.scrollToCurrent(true);
-                ToastUtil.T_Error(getContext(), getString(R.string.record_only_today));
+                ToastUtil.T_Info(mContext, "请先登录！");
             }
         } else {
             super.onMultiClick(view);
@@ -221,7 +255,7 @@ public class RecordFragment extends BaseFragment implements CalendarView.OnMonth
 
     @Override
     public void onCalendarOutOfRange(Calendar calendar) {
-
+        this.calendar = calendar;
     }
 
     /**
@@ -232,37 +266,54 @@ public class RecordFragment extends BaseFragment implements CalendarView.OnMonth
      */
     @Override
     public void onCalendarSelect(Calendar calendar, boolean isClick) {
-        showInfo(calendar);
+        this.calendar = calendar;
+        showInfo(calendar, false);
     }
 
     /**
      * 根据数据进行显示
      */
-    private void showInfo(Calendar calendar) {
-        recordDataBeanList = RecordDataDaoUtil.getInstance().queryRecordForDay(getContext(), calendar);
-        if (recordDataBeanList != null && recordDataBeanList.size() != 0) {
-            recordDataBean = recordDataBeanList.get(0);
-            tvRecordTimeStart.setText(recordDataBean.getStartTime());
-            tvRecordTimeEnd.setText(recordDataBean.getEndTime());
-            tvRecordTimeStart.setTextColor(recordDataBean.getIsLate() ? Color.RED : Color.WHITE);
-            tvRecordTimeEnd.setTextColor(recordDataBean.getIsLeaveEarly() ? Color.RED : Color.WHITE);
-            if (tvRecordTimeEnd.getText().equals(getString(R.string.record_no))) {//是否已打下班卡
-                if (tvRecordTimeStart.getText().equals(getString(R.string.record_no))) {//是否已打上班卡
+    private void showInfo(Calendar calendar, boolean inInit) {
+        query(userSpAccountNumber, getYMD(calendar), new SuccessOrFailListener() {
+            @Override
+            public void success(Object... values) {
+                ArrayList<RecordData> list = (ArrayList<RecordData>) values[0];
+                if (list != null && list.size() > 0) {
+                    RecordData selectedRecordData = list.get(0);
+                    if (inInit) {
+                        recordData = selectedRecordData;
+                    }
+                    tvRecordTimeStart.setText((selectedRecordData.getStartTime() == null || selectedRecordData.getStartTime().length() == 0) ? getString(R.string.record_no) : selectedRecordData.getStartTime());
+                    tvRecordTimeEnd.setText((selectedRecordData.getEndTime() == null || selectedRecordData.getEndTime().length() == 0) ? getString(R.string.record_no) : selectedRecordData.getEndTime());
+                    tvRecordTimeStart.setTextColor(selectedRecordData.isLate() ? Color.RED : Color.WHITE);
+                    tvRecordTimeEnd.setTextColor(selectedRecordData.isLeaveEarly() ? Color.RED : Color.WHITE);
+                    if (tvRecordTimeStart.getText().equals(getString(R.string.record_no))) {//是否已打上班卡
+                        if (TimeUtil.getHour() >= 14) {
+                            btnRecord.setText(getString(R.string.record_end));
+                        } else {
+                            btnRecord.setText(getString(R.string.record_start));
+                        }
+                    } else {
+                        btnRecord.setText(getString(R.string.record_end));
+                    }
+                } else {
+                    tvRecordTimeStart.setText(getString(R.string.record_no));
+                    tvRecordTimeEnd.setText(getString(R.string.record_no));
+                    tvRecordTimeStart.setTextColor(Color.WHITE);
+                    tvRecordTimeEnd.setTextColor(Color.WHITE);
                     if (TimeUtil.getHour() >= 14) {
                         btnRecord.setText(getString(R.string.record_end));
                     } else {
                         btnRecord.setText(getString(R.string.record_start));
                     }
-                } else {
-                    btnRecord.setText(getString(R.string.record_end));
                 }
-            } else {
-                btnRecord.setText(getString(R.string.record_end));
             }
-        } else {
-            tvRecordTimeStart.setText(getString(R.string.record_no));
-            tvRecordTimeEnd.setText(getString(R.string.record_no));
-        }
+
+            @Override
+            public void fail(Object... values) {
+                LogUtil.d(this.getClass(), "查询选中日期数据失败！");
+            }
+        });
     }
 
     /**
@@ -271,184 +322,114 @@ public class RecordFragment extends BaseFragment implements CalendarView.OnMonth
      * @param type 1:上班卡 2:下班卡
      */
     private void record(int type) {
-        switch (type) {
-            case 1://上班卡
-                if (tvRecordTimeStart.getText().equals(getString(R.string.record_no))) {
-                    RecordData.Dao.query(calendarView.getSelectedCalendar().getYear(), calendarView.getSelectedCalendar().getMonth(),
-                            calendarView.getSelectedCalendar().getDay(), new SuccessOrFailListener() {
-                                @Override
-                                public void success(Object... values) {
-                                    ArrayList<RecordData> list = (ArrayList<RecordData>) values[0];
-                                    if (list != null || list.size() != 0) {//没有就加上当月所有天的空数据
-                                        RecordData recordData = list.get(0);
-                                        recordData.setStartTime(new SimpleDateFormat("HH:mm").format(System.currentTimeMillis()));
-                                        RecordData.Dao.update(recordData, new SuccessOrFailListener() {
-                                            @Override
-                                            public void success(Object... values) {
-                                                ToastUtil.T_Info(getContext(), (getString(R.string.record_success)));
-                                            }
-
-                                            @Override
-                                            public void fail(Object... values) {
-                                                ToastUtil.T_Info(getContext(), (getString(R.string.record_failure)));
-                                                LogUtil.d(RecordFragment.class, "修改指定日期数据出错：" + values.toString());
-                                            }
-                                        });
-                                    } else {
-                                        ToastUtil.T_Info(getContext(), (getString(R.string.record_failure)));
-                                    }
-                                }
-
-                                @Override
-                                public void fail(Object... values) {
-                                    ToastUtil.T_Info(getContext(), (getString(R.string.record_failure)));
-                                    LogUtil.d(RecordFragment.class, "查询指定日期数据出错：" + values.toString());
-                                }
-                            });
-//                    if (RecordDataDaoUtil.getInstance().updataStartTime(getContext(), calendarView.getSelectedCalendar())) {
-//                        ToastUtil.T_Info(getContext(), (getString(R.string.record_success) + getString(R.string.late)));
-//                    } else {
-//                        ToastUtil.T_Info(getContext(), (getString(R.string.record_success)));
-//                    }
-//                    showInfo(calendarView.getSelectedCalendar());
-                } else {
-                    showDialog(null, getString(R.string.record_update), getString(R.string.ok), getString(R.string.cancel), new com.sim.baselibrary.callback.DialogInterface() {
-                        @Override
-                        public void sureOnClick() {
-                            RecordData.Dao.query(calendarView.getSelectedCalendar().getYear(), calendarView.getSelectedCalendar().getMonth(),
-                                    calendarView.getSelectedCalendar().getDay(), new SuccessOrFailListener() {
-                                        @Override
-                                        public void success(Object... values) {
-                                            ArrayList<RecordData> list = (ArrayList<RecordData>) values[0];
-                                            if (list != null || list.size() != 0) {//没有就加上当月所有天的空数据
-                                                RecordData recordData = list.get(0);
-                                                recordData.setStartTime(new SimpleDateFormat("HH:mm").format(System.currentTimeMillis()));
-                                                RecordData.Dao.update(recordData, new SuccessOrFailListener() {
-                                                    @Override
-                                                    public void success(Object... values) {
-                                                        ToastUtil.T_Info(getContext(), (getString(R.string.record_success)));
-                                                    }
-
-                                                    @Override
-                                                    public void fail(Object... values) {
-                                                        ToastUtil.T_Info(getContext(), (getString(R.string.record_failure)));
-                                                        LogUtil.d(RecordFragment.class, "修改指定日期数据出错：" + values.toString());
-                                                    }
-                                                });
-                                            } else {
-                                                ToastUtil.T_Info(getContext(), (getString(R.string.record_failure)));
-                                            }
-                                        }
-
-                                        @Override
-                                        public void fail(Object... values) {
-                                            ToastUtil.T_Info(getContext(), (getString(R.string.record_failure)));
-                                            LogUtil.d(RecordFragment.class, "查询指定日期数据出错：" + values.toString());
-                                        }
-                                    });
-//                            if (RecordDataDaoUtil.getInstance().updataStartTime(getContext(), calendarView.getSelectedCalendar())) {
-//                                ToastUtil.T_Info(getContext(), (getString(R.string.record_success) + getString(R.string.late)));
-//                            } else {
-//                                ToastUtil.T_Info(getContext(), getString(R.string.record_success));
-//                            }
-//                            showInfo(calendarView.getSelectedCalendar());
+        if (recordData != null) {//已有当天数据
+            if (type == 1) {//修改当天数据（上班）
+                String startTime = new SimpleDateFormat("HH:mm").format(System.currentTimeMillis());
+                RecordData newRecordData = new RecordData(userSpAccountNumber, getYMD(calendar), getYM(calendar), startTime, recordData.getEndTime(), recordData.getOther());
+                newRecordData.update(recordData.getObjectId(), new UpdateListener() {
+                    @Override
+                    public void done(BmobException e) {
+                        if (e == null) {
+                            showInfo(calendar, true);
+                            ToastUtil.T_Info(mContext, (getString(R.string.record_success)));
+                        } else {
+                            ToastUtil.T_Info(mContext, (getString(R.string.record_failure)));
+                            LogUtil.d(this.getClass(), "修改当天上班数据出错：" + e.getMessage());
                         }
-
-                        @Override
-                        public void cancelOnClick() {
-
+                    }
+                });
+            } else {//修改当天数据（下班）
+                String endTime = new SimpleDateFormat("HH:mm").format(System.currentTimeMillis());
+                RecordData newRecordData = new RecordData(userSpAccountNumber, getYMD(calendar), getYM(calendar), recordData.getStartTime(), endTime, recordData.getOther());
+                newRecordData.update(recordData.getObjectId(), new UpdateListener() {
+                    @Override
+                    public void done(BmobException e) {
+                        if (e == null) {
+                            showInfo(calendar, true);
+                            ToastUtil.T_Info(mContext, (getString(R.string.record_success)));
+                        } else {
+                            ToastUtil.T_Info(mContext, (getString(R.string.record_failure)));
+                            LogUtil.d(this.getClass(), "修改当天下班数据出错：" + e.getMessage());
                         }
-                    });
-                }
-                break;
-            case 2://下班卡
-                LogUtil.d(RecordFragment.class, "000");
-                if (tvRecordTimeEnd.getText().equals(getString(R.string.record_no))) {
-                    RecordData.Dao.query(calendarView.getSelectedCalendar().getYear(), calendarView.getSelectedCalendar().getMonth(),
-                            calendarView.getSelectedCalendar().getDay(), new SuccessOrFailListener() {
-                                @Override
-                                public void success(Object... values) {
-                                    ArrayList<RecordData> list = (ArrayList<RecordData>) values[0];
-                                    if (list != null || list.size() != 0) {//没有就加上当月所有天的空数据
-                                        RecordData recordData = list.get(0);
-                                        recordData.setEndTime(new SimpleDateFormat("HH:mm").format(System.currentTimeMillis()));
-                                        recordData.update(recordData.getObjectId(), new UpdateListener() {
-                                            @Override
-                                            public void done(BmobException e) {
-                                                if (e == null) {
-                                                    ToastUtil.T_Info(getContext(), (getString(R.string.record_success)));
-                                                } else {
-                                                    ToastUtil.T_Info(getContext(), (getString(R.string.record_failure)));
-                                                    LogUtil.d(RecordFragment.class, "修改指定日期数据出错：" + e.getMessage());
-                                                }
-                                            }
-                                        });
-                                    } else {
-                                        ToastUtil.T_Info(getContext(), (getString(R.string.record_failure)));
-                                    }
-                                }
-
-                                @Override
-                                public void fail(Object... values) {
-
-                                }
-                            });
-//                    if (RecordDataDaoUtil.getInstance().updataEndTime(getContext(), calendarView.getSelectedCalendar())) {
-//                        ToastUtil.T_Info(getContext(), getString(R.string.record_success) + getString(R.string.leave_early));
-//                    } else {
-//                        ToastUtil.T_Info(getContext(), getString(R.string.record_success));
-//                    }
-//                    showInfo(calendarView.getSelectedCalendar());
-                } else {
-                    showDialog(null, getString(R.string.record_update), getString(R.string.ok), getString(R.string.cancel), new com.sim.baselibrary.callback.DialogInterface() {
-                        @Override
-                        public void sureOnClick() {
-                            RecordData.Dao.query(calendarView.getSelectedCalendar().getYear(), calendarView.getSelectedCalendar().getMonth(),
-                                    calendarView.getSelectedCalendar().getDay(), new SuccessOrFailListener() {
-                                        @Override
-                                        public void success(Object... values) {
-                                            ArrayList<RecordData> list = (ArrayList<RecordData>) values[0];
-                                            if (list != null || list.size() != 0) {//没有就加上当月所有天的空数据
-                                                RecordData recordData = list.get(0);
-                                                recordData.setEndTime(new SimpleDateFormat("HH:mm").format(System.currentTimeMillis()));
-                                                RecordData.Dao.update(recordData, new SuccessOrFailListener() {
-                                                    @Override
-                                                    public void success(Object... values) {
-                                                        ToastUtil.T_Info(getContext(), (getString(R.string.record_success)));
-                                                    }
-
-                                                    @Override
-                                                    public void fail(Object... values) {
-                                                        ToastUtil.T_Info(getContext(), (getString(R.string.record_failure)));
-                                                        LogUtil.d(RecordFragment.class, "修改指定日期数据出错：" + values.toString());
-                                                    }
-                                                });
-                                            } else {
-                                                ToastUtil.T_Info(getContext(), (getString(R.string.record_failure)));
-                                            }
-                                        }
-
-                                        @Override
-                                        public void fail(Object... values) {
-
-                                        }
-                                    });
-//                            if (RecordDataDaoUtil.getInstance().updataEndTime(getContext(), calendarView.getSelectedCalendar())) {
-//                                ToastUtil.T_Info(getContext(), getString(R.string.record_success) + getString(R.string.leave_early));
-//                            } else {
-//                                ToastUtil.T_Info(getContext(), getString(R.string.record_success));
-//                            }
-//                            showInfo(calendarView.getSelectedCalendar());
+                    }
+                });
+            }
+        } else {//没有当天数据
+            if (type == 1) {//插入当天数据（上班）
+                String startTime = new SimpleDateFormat("HH:mm").format(System.currentTimeMillis());
+                RecordData newRecordData = new RecordData(userSpAccountNumber, getYMD(calendar), getYM(calendar), startTime, null, null);
+                newRecordData.save(new SaveListener<String>() {
+                    @Override
+                    public void done(String s, BmobException e) {
+                        if (e == null) {
+                            showInfo(calendar, true);
+                            ToastUtil.T_Info(mContext, (getString(R.string.record_success)));
+                        } else {
+                            ToastUtil.T_Info(mContext, (getString(R.string.record_failure)));
+                            LogUtil.d(this.getClass(), "插入当天上班数据出错：" + e.getMessage());
                         }
-
-                        @Override
-                        public void cancelOnClick() {
-
+                    }
+                });
+            } else {//插入当天数据（下班）
+                String endTime = new SimpleDateFormat("HH:mm").format(System.currentTimeMillis());
+                RecordData newRecordData = new RecordData(userSpAccountNumber, getYMD(calendar), getYM(calendar), null, endTime, null);
+                newRecordData.save(new SaveListener<String>() {
+                    @Override
+                    public void done(String s, BmobException e) {
+                        if (e == null) {
+                            showInfo(calendar, true);
+                            ToastUtil.T_Info(mContext, (getString(R.string.record_success)));
+                        } else {
+                            ToastUtil.T_Info(mContext, (getString(R.string.record_failure)));
+                            LogUtil.d(this.getClass(), "插入当天下班数据出错：" + e.getMessage());
                         }
-                    });
-                }
-                break;
+                    }
+                });
+            }
         }
+    }
+
+    /**
+     * 获取年月日
+     *
+     * @param calendar
+     * @return
+     */
+    public String getYMD(Calendar calendar) {
+        return calendar.getYear() + "-" + calendar.getMonth() + "-" + calendar.getDay();
+    }
+
+    /**
+     * 获取年月
+     *
+     * @param calendar
+     * @return
+     */
+    public String getYM(Calendar calendar) {
+        return String.valueOf(calendar.getYear()) + calendar.getMonth();
+    }
+
+    /**
+     * 查询指定用户和年月日数据
+     *
+     * @param date
+     * @param successOrFailListener
+     */
+    public void query(String userSpAccountNumber, String date, SuccessOrFailListener successOrFailListener) {
+        BmobQuery<RecordData> bmobQuery = new BmobQuery<RecordData>();
+        bmobQuery.addWhereEqualTo("userSpAccountNumber", userSpAccountNumber);
+        bmobQuery.addWhereEqualTo("date", date);
+        bmobQuery.findObjects(new FindListener<RecordData>() {
+            @Override
+            public void done(List<RecordData> list, BmobException e) {
+                if (e == null) {
+                    successOrFailListener.success(list);
+                } else {
+                    LogUtil.d(RecordData.class, "数据库查询失败:" + e.getMessage());
+                    successOrFailListener.fail(e.getMessage());
+                }
+            }
+        });
     }
 
 }
