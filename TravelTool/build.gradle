@@ -129,5 +129,7 @@ dependencies {
     implementation 'com.squareup.okhttp3:okhttp:3.14.1'
     implementation 'com.squareup.okio:okio:2.2.2'
 
+    implementation 'com.haibin:calendarview:3.4.6' //日历
+    implementation 'com.github.huangyanbin:SmartTable:2.2.0'//表格
     implementation 'com.github.bumptech.glide:glide:4.9.0'//一个第三方的图片选择库
 }
