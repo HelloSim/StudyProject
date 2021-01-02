@@ -7,20 +7,19 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 
-import com.google.gson.Gson;
 import com.sim.baselibrary.base.BaseActivity;
 import com.sim.baselibrary.bean.EventMessage;
 import com.sim.baselibrary.utils.LogUtil;
-import com.sim.baselibrary.utils.SPUtil;
 import com.sim.baselibrary.utils.ToastUtil;
 import com.sim.traveltool.AppHelper;
 import com.sim.traveltool.R;
-import com.sim.traveltool.bean.UserInfo;
-import com.sim.traveltool.internet.APIFactory;
+import com.sim.traveltool.db.bean.User;
 
 import org.greenrobot.eventbus.EventBus;
 
-import rx.Subscriber;
+import cn.bmob.v3.BmobUser;
+import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.LogInListener;
 
 /**
  * @Auther Sim
@@ -34,8 +33,6 @@ public class UserLogInActivity extends BaseActivity {
     private EditText etPassword;
     private Button btnRegistered;
     private Button btnLogIn;
-
-    private UserInfo userInfoBean;
 
     @Override
     protected int getLayoutRes() {
@@ -71,12 +68,12 @@ public class UserLogInActivity extends BaseActivity {
             startActivity(intent);
         } else if (view == btnLogIn) {
             if (etUserName.getText().toString().length() > 0 && etPassword.getText().toString().length() > 0) {
-                logIn();
+                loginByAccount();
             } else {
                 if (etUserName.getText().toString().length() > 0) {
-                    ToastUtil.T_Info(UserLogInActivity.this,"请输入密码！");
+                    ToastUtil.T_Info(UserLogInActivity.this, "请输入密码！");
                 } else {
-                    ToastUtil.T_Info(UserLogInActivity.this,"请输入用户名！");
+                    ToastUtil.T_Info(UserLogInActivity.this, "请输入用户名！");
                 }
             }
         } else {
@@ -85,35 +82,22 @@ public class UserLogInActivity extends BaseActivity {
     }
 
     /**
-     * 用户登陆的网络请求
+     * 账号密码登录
      */
-    private void logIn() {
-        APIFactory.getInstance().logIn(new Subscriber<UserInfo>() {
+    private void loginByAccount() {
+        BmobUser.loginByAccount(etUserName.getText().toString(), etPassword.getText().toString(), new LogInListener<User>() {
             @Override
-            public void onCompleted() {
-                if (userInfoBean.getCode() == 200) {
-                    SPUtil.put(UserLogInActivity.this, AppHelper.userSpName, AppHelper.userSpStateKey, true);
-                    SPUtil.put(UserLogInActivity.this, AppHelper.userSpName, AppHelper.userSpAccountNumber, etUserName.getText().toString());
-                    SPUtil.put(UserLogInActivity.this, AppHelper.userSpName, AppHelper.userSpPasswordKey, etPassword.getText().toString());
-                    SPUtil.put(UserLogInActivity.this, AppHelper.userSpName, AppHelper.userSpUserInfoKey, new Gson().toJson(userInfoBean));
+            public void done(User user, BmobException e) {
+                if (e == null) {
+                    ToastUtil.T_Success(UserLogInActivity.this, "登录成功！");
                     EventBus.getDefault().post(new EventMessage(AppHelper.USER_IsLogIn));
                     finish();
                 } else {
-                    ToastUtil.T_Error(UserLogInActivity.this,"登录出错！");
+                    ToastUtil.T_Error(UserLogInActivity.this, "登录出错！");
+                    LogUtil.e(this.getClass(), "登录出错---code:" + e.getErrorCode() + ";message:" + e.getMessage());
                 }
             }
-
-            @Override
-            public void onError(Throwable e) {
-                ToastUtil.T_Error(UserLogInActivity.this,"登录出错！");
-                LogUtil.e(this.getClass(), "用户登陆出错: " + e);
-            }
-
-            @Override
-            public void onNext(UserInfo userInfo) {
-                userInfoBean = userInfo;
-            }
-        }, AppHelper.USER_API_KEY, etUserName.getText().toString(), etPassword.getText().toString());
+        });
     }
 
 }

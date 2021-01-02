@@ -99,15 +99,11 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation files('libs\\jcore-android-2.6.0.jar')
-    implementation files('libs\\jpush-android-3.9.0.jar')
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     implementation 'androidx.appcompat:appcompat:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 //    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    implementation 'androidx.legacy:legacy-support-v4:1.0.0'//下拉刷新控件
-    implementation 'androidx.drawerlayout:drawerlayout:1.1.1'//抽屉布局
 
     implementation project(":baselibrary")
 //    implementation project(":sqlitelibrary")
@@ -129,6 +125,10 @@ dependencies {
     implementation 'com.squareup.okhttp3:okhttp:3.14.1'
     implementation 'com.squareup.okio:okio:2.2.2'
 
+    implementation files('libs\\jcore-android-2.6.0.jar')
+    implementation files('libs\\jpush-android-3.9.0.jar')
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'//下拉刷新控件
+    implementation 'androidx.drawerlayout:drawerlayout:1.1.1'//抽屉布局
     implementation 'com.haibin:calendarview:3.4.6' //日历
     implementation 'com.github.huangyanbin:SmartTable:2.2.0'//表格
     implementation 'com.github.bumptech.glide:glide:4.9.0'//一个第三方的图片选择库

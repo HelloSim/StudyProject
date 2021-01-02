@@ -35,7 +35,7 @@ import rx.schedulers.Schedulers;
  */
 public class RetrofitUtil {
 
-    private UserAPIService userAPIService;
+    private NewsAPIService userAPIService;
     private BusAPIService busAPIService;
     private RouteAPIService routeAPIService;
 
@@ -58,9 +58,9 @@ public class RetrofitUtil {
         this.isUseCache = useCache;
     }
 
-    public UserAPIService getUserApiService() {
+    public NewsAPIService getUserApiService() {
         if (userAPIService == null && userRetrofit != null) {
-            userAPIService = userRetrofit.create(UserAPIService.class);
+            userAPIService = userRetrofit.create(NewsAPIService.class);
         }
         return userAPIService;
     }

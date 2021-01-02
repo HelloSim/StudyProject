@@ -21,23 +21,23 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
-import com.google.gson.Gson;
+import com.google.android.material.snackbar.Snackbar;
 import com.sim.baselibrary.base.BaseActivity;
 import com.sim.baselibrary.bean.EventMessage;
 import com.sim.baselibrary.callback.DialogInterface;
 import com.sim.baselibrary.utils.LogUtil;
-import com.sim.baselibrary.utils.SPUtil;
 import com.sim.baselibrary.utils.ToastUtil;
 import com.sim.traveltool.AppHelper;
 import com.sim.traveltool.R;
-import com.sim.traveltool.bean.UserInfo;
-import com.sim.traveltool.internet.APIFactory;
+import com.sim.traveltool.db.bean.User;
 
 import org.greenrobot.eventbus.EventBus;
 
 import java.io.File;
 
-import rx.Subscriber;
+import cn.bmob.v3.BmobUser;
+import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.UpdateListener;
 
 /**
  * @Auther Sim
@@ -49,39 +49,26 @@ public class UserUpdateActivity extends BaseActivity {
     private ImageView back;
     private LinearLayout parent;
 
-    private RelativeLayout rlUserImage;
-    private RelativeLayout rlUserNikeName;
-    private RelativeLayout rlUserAutograph;
-    private Button btnSignOut;
+    private RelativeLayout rlUserName;
+    private RelativeLayout rlPassword;
+    private RelativeLayout rlMobilePhoneNumber;
+    private RelativeLayout rlEmail;
 
-    private ImageView ivUserImage;
     private TextView tvUserName;
-    private TextView tvUserNikeName;
-    private TextView tvUserAutograph;
+    //    private TextView tvPassword;
+    private TextView tvMobilePhoneNumber;
+    private TextView tvEmail;
+    private Button btnLogOut;
 
-    private UserInfo userInfo;//修改前
-    private UserInfo newUserInfo;//修改后
-    private String userPassword;//密码
+    //修改密码弹窗
+    private PopupWindow updatePasswordPopupWindow;//弹窗
+    private View updatePasswordLayout;//布局
+    private EditText etOldPassword;
+    private EditText etNewPassword;
+    private EditText etNewPasswordAgain;
+    private Button btnPasswordCancel;
+    private Button btnPasswordConfirm;
 
-    //更新用户名弹窗
-    private PopupWindow updateNikeNamePopupWindow;//弹窗
-    private View updateNikeNameLayout;//布局
-    private EditText et_nike_name;
-    private Button btn_nike_name_cancel;
-    private Button btn_nike_name_confirm;
-
-    //更新签名弹窗
-    private PopupWindow updateAutographNamePopupWindow;//弹窗
-    private View updateAutographLayout;//布局
-    private EditText et_autograph;
-    private Button btn_autograph_cancel;
-    private Button btn_autograph_confirm;
-
-    private static final int REQUEST_CODE_GALLERY = 0x10;// 图库选取图片标识请求码
-    private static final int CROP_PHOTO = 0x12;// 裁剪图片标识请求码
-
-    private File imageFile = null;// 声明File对象
-    private Uri imageUri = null;// 裁剪后的图片uri
 
     @Override
     protected int getLayoutRes() {
@@ -92,76 +79,53 @@ public class UserUpdateActivity extends BaseActivity {
     protected void bindViews(Bundle savedInstanceState) {
         back = findViewById(R.id.back);
         parent = findViewById(R.id.parent);
-        rlUserImage = findViewById(R.id.rl_user_image);
-        rlUserNikeName = findViewById(R.id.rl_user_nikeName);
-        rlUserAutograph = findViewById(R.id.rl_user_autograph);
-        btnSignOut = findViewById(R.id.btn_sign_out);
-        ivUserImage = findViewById(R.id.iv_user_image);
-        tvUserName = findViewById(R.id.user_name);
-        tvUserNikeName = findViewById(R.id.user_nikeName);
-        tvUserAutograph = findViewById(R.id.user_autograph);
-        setViewClick(back, rlUserImage, rlUserNikeName, rlUserAutograph, btnSignOut);
+        rlUserName = findViewById(R.id.rl_user_name);
+        rlPassword = findViewById(R.id.rl_password);
+        rlMobilePhoneNumber = findViewById(R.id.rl_mobile_phone_number);
+        rlEmail = findViewById(R.id.rl_email);
+        tvUserName = findViewById(R.id.tv_user_name);
+        tvMobilePhoneNumber = findViewById(R.id.tv_mobile_phone_number);
+        tvEmail = findViewById(R.id.tv_email);
+        btnLogOut = findViewById(R.id.btn_log_out);
+        setViewClick(back, rlUserName, rlPassword, rlMobilePhoneNumber, rlEmail, btnLogOut);
     }
 
     @Override
     protected void initData() {
-        userPassword = String.valueOf(SPUtil.get(this, AppHelper.userSpName, AppHelper.userSpPasswordKey, ""));
-        userInfo = new Gson().fromJson((String) SPUtil.get(this, AppHelper.userSpName, AppHelper.userSpUserInfoKey, ""), UserInfo.class);
     }
 
     @Override
     protected void initView() {
-        if (userInfo != null) {
-            if (userInfo.getResult().getHeaderImg() != null)
-                Glide.with(this).load(userInfo.getResult().getHeaderImg()).into(ivUserImage);
-            if (userInfo.getResult().getName() != null)
-                tvUserName.setText(userInfo.getResult().getName());
-            if (userInfo.getResult().getNikeName() != null)
-                tvUserNikeName.setText(userInfo.getResult().getNikeName());
-            if (userInfo.getResult().getAutograph() != null)
-                tvUserAutograph.setText(userInfo.getResult().getAutograph());
+        if (BmobUser.isLogin()) {
+            User user = BmobUser.getCurrentUser(User.class);
+            tvUserName.setText(user.getUsername());
+            tvMobilePhoneNumber.setText(user.getMobilePhoneNumber());
+            tvEmail.setText(user.getEmail());
+        } else {
+            finish();
         }
 
         LayoutInflater inflater = (LayoutInflater) this.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
-        updateNikeNameLayout = inflater.inflate(R.layout.view_popup_update_nike_name, null);
-        updateAutographLayout = inflater.inflate(R.layout.view_popup_update_autograph, null);
-
-        updateNikeNamePopupWindow = showPopupWindow(updateNikeNameLayout, 300, 180);
-        updateAutographNamePopupWindow = showPopupWindow(updateAutographLayout, 300, 180);
-
-        et_nike_name = updateNikeNameLayout.findViewById(R.id.et_nike_name);
-        btn_nike_name_cancel = updateNikeNameLayout.findViewById(R.id.btn_nike_name_cancel);
-        btn_nike_name_confirm = updateNikeNameLayout.findViewById(R.id.btn_nike_name_confirm);
-        et_autograph = updateAutographLayout.findViewById(R.id.et_autograph);
-        btn_autograph_cancel = updateAutographLayout.findViewById(R.id.btn_autograph_cancel);
-        btn_autograph_confirm = updateAutographLayout.findViewById(R.id.btn_autograph_confirm);
-
-        if (userInfo.getResult().getNikeName() != null)
-            et_nike_name.setText(userInfo.getResult().getNikeName());
-        if (userInfo.getResult().getAutograph() != null)
-            et_autograph.setText(userInfo.getResult().getAutograph());
-
-        setViewClick(btn_nike_name_cancel, btn_nike_name_confirm, btn_autograph_cancel, btn_autograph_confirm);
+        updatePasswordLayout = inflater.inflate(R.layout.view_popup_update_password, null);
+        updatePasswordPopupWindow = showPopupWindow(updatePasswordLayout, 350, 380);
+        etOldPassword = updatePasswordLayout.findViewById(R.id.et_old_password);
+        etNewPassword = updatePasswordLayout.findViewById(R.id.et_new_password);
+        etNewPasswordAgain = updatePasswordLayout.findViewById(R.id.et_new_password_again);
+        btnPasswordCancel = updatePasswordLayout.findViewById(R.id.btn_password_cancel);
+        btnPasswordConfirm = updatePasswordLayout.findViewById(R.id.btn_password_confirm);
+        setViewClick(btnPasswordCancel, btnPasswordConfirm);
     }
 
     @Override
     public void onMultiClick(View view) {
         if (view == back) {
             finish();
-        } else if (view == rlUserImage) {
-            gallery();
-        } else if (view == rlUserNikeName) {
-            updateNikeNamePopupWindow.showAtLocation(parent, Gravity.CENTER, 0, 0);
-        } else if (view == rlUserAutograph) {
-            updateAutographNamePopupWindow.showAtLocation(parent, Gravity.CENTER, 0, 0);
-        } else if (view == btnSignOut) {
+        } else if (view == btnLogOut) {
             showDialog("退出登录", "是否确认退出？", "确认", "取消",
                     new DialogInterface() {
                         @Override
                         public void sureOnClick() {
-                            SPUtil.put(UserUpdateActivity.this, AppHelper.userSpName, AppHelper.userSpStateKey, false);
-                            SPUtil.remove(UserUpdateActivity.this, AppHelper.userSpName, AppHelper.userSpUserInfoKey);
-                            SPUtil.remove(UserUpdateActivity.this, AppHelper.userSpName, AppHelper.userSpPasswordKey);
+                            BmobUser.logOut();
                             EventBus.getDefault().post(new EventMessage(AppHelper.USER_noLogIn));
                             finish();
                         }
@@ -171,19 +135,25 @@ public class UserUpdateActivity extends BaseActivity {
 
                         }
                     });
-        } else if (view == btn_nike_name_cancel) {
-            updateNikeNamePopupWindow.dismiss();
-        } else if (view == btn_nike_name_confirm) {
-            if (userInfo != null) {
-                userInfo.getResult().setNikeName(et_nike_name.getText().toString());
-                updateUserInfo();
-            }
-        } else if (view == btn_autograph_cancel) {
-            updateAutographNamePopupWindow.dismiss();
-        } else if (view == btn_autograph_confirm) {
-            if (userInfo != null) {
-                userInfo.getResult().setAutograph(et_autograph.getText().toString());
-                updateUserInfo();
+        } else if (view == rlUserName) {
+
+        } else if (view == rlPassword) {
+            updatePasswordPopupWindow.showAtLocation(parent, Gravity.CENTER, 0, 0);
+        } else if (view == rlMobilePhoneNumber) {
+
+        } else if (view == rlEmail) {
+
+        } else if (view == btnPasswordCancel) {
+            updatePasswordPopupWindow.dismiss();
+        } else if (view == btnPasswordConfirm) {
+            if (etOldPassword.getText().length() > 0 && etNewPassword.getText().length() > 0 && etNewPasswordAgain.getText().length() > 0) {
+                if (etNewPassword.getText().toString().equals(etNewPasswordAgain.getText().toString())) {
+                    updatePassword(etOldPassword.getText().toString(), etNewPassword.getText().toString());
+                } else {
+                    ToastUtil.T_Info(UserUpdateActivity.this, "新密码输入不一致！");
+                }
+            } else {
+                ToastUtil.T_Info(UserUpdateActivity.this, "密码不能为空！");
             }
         } else {
             super.onMultiClick(view);
@@ -191,143 +161,44 @@ public class UserUpdateActivity extends BaseActivity {
     }
 
     /**
-     * 更新用户信息的网络请求
+     * 提供旧密码修改密码
      */
-    private void updateUserInfo() {
-        APIFactory.getInstance().updateUserInfo(new Subscriber<UserInfo>() {
+    private void updatePassword(String oldPassword, String newPassword) {
+        BmobUser.updateCurrentUserPassword(oldPassword, newPassword, new UpdateListener() {
             @Override
-            public void onCompleted() {
-                if (userInfo.getCode() == 200) {
-                    updateNikeNamePopupWindow.dismiss();
-                    updateAutographNamePopupWindow.dismiss();
-                    SPUtil.put(UserUpdateActivity.this, AppHelper.userSpName, AppHelper.userSpUserInfoKey, new Gson().toJson(userInfo));
-                    userInfo = new Gson().fromJson((String) SPUtil.get(UserUpdateActivity.this, AppHelper.userSpName, AppHelper.userSpUserInfoKey, ""), UserInfo.class);
-                    if (userInfo != null) {
-                        if (userInfo.getResult().getHeaderImg() != null)
-                            Glide.with(UserUpdateActivity.this).load(userInfo.getResult().getHeaderImg()).into(ivUserImage);
-                        if (userInfo.getResult().getName() != null)
-                            tvUserName.setText(userInfo.getResult().getName());
-                        if (userInfo.getResult().getNikeName() != null)
-                            tvUserNikeName.setText(userInfo.getResult().getNikeName());
-                        if (userInfo.getResult().getAutograph() != null)
-                            tvUserAutograph.setText(userInfo.getResult().getAutograph());
-                        if (userInfo.getResult().getNikeName() != null)
-                            et_nike_name.setText(userInfo.getResult().getNikeName());
-                        if (userInfo.getResult().getAutograph() != null)
-                            et_autograph.setText(userInfo.getResult().getAutograph());
-                        EventBus.getDefault().post(new EventMessage(AppHelper.USER_UpDate));
-                    }
+            public void done(BmobException e) {
+                if (e == null) {
+                    ToastUtil.T_Success(UserUpdateActivity.this, "修改成功！");
+                    updatePasswordPopupWindow.dismiss();
                 } else {
-                    ToastUtil.T_Error(UserUpdateActivity.this,"更新用户信息出错！");
+                    if (e.getMessage().contains("old password incorrect")) {
+                        ToastUtil.T_Error(UserUpdateActivity.this, "旧密码错误！");
+                    } else {
+                        ToastUtil.T_Error(UserUpdateActivity.this, "修改失败！");
+                        LogUtil.e(this.getClass(), "修改用户信息失败---code:" + e.getErrorCode() + ";message:" + e.getMessage());
+                    }
                 }
             }
+        });
+    }
 
+    /**
+     * 更新用户操作并同步更新本地的用户信息
+     */
+    private void updateUserInfo() {
+        User user = BmobUser.getCurrentUser(User.class);
+//        user.setMobilePhoneNumber("");
+        user.update(new UpdateListener() {
             @Override
-            public void onError(Throwable e) {
-                ToastUtil.T_Error(UserUpdateActivity.this,"更新用户信息出错！");
-                LogUtil.d(this.getClass(), "更新用户信息出错: " + e);
+            public void done(BmobException e) {
+                if (e == null) {
+                    ToastUtil.T_Success(UserUpdateActivity.this, "修改成功！");
+                } else {
+                    ToastUtil.T_Error(UserUpdateActivity.this, "修改失败！");
+                    LogUtil.e(this.getClass(), "修改用户信息失败---code:" + e.getErrorCode() + ";message:" + e.getMessage());
+                }
             }
-
-            @Override
-            public void onNext(UserInfo newUserInfo) {
-                userInfo = newUserInfo;
-            }
-        }, AppHelper.USER_API_KEY, userInfo.getResult().getName(), userPassword, userInfo.getResult().getHeaderImg(), userInfo.getResult().getNikeName(), userInfo.getResult().getAutograph(), userInfo.getResult().getPhone(), userInfo.getResult().getEmail(), userInfo.getResult().getRemarks(), userInfo.getResult().getVipGrade());
-    }
-
-    /**
-     * 图库选择图片
-     */
-    private void gallery() {
-        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        // 以startActivityForResult的方式启动一个activity用来获取返回的结果
-        startActivityForResult(intent, REQUEST_CODE_GALLERY);
-    }
-
-    /**
-     * 接收#startActivityForResult(Intent, int)调用的结果
-     *
-     * @param requestCode 请求码 识别这个结果来自谁
-     * @param resultCode  结果码
-     * @param data
-     */
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK) {// 操作成功了
-            switch (requestCode) {
-                case REQUEST_CODE_GALLERY:// 图库选择图片
-                    Uri uri = data.getData();// 获取图片的uri
-                    Intent intent_gallery_crop = new Intent("com.android.camera.action.CROP");
-                    intent_gallery_crop.setDataAndType(uri, "image/*");
-                    // 设置裁剪
-                    intent_gallery_crop.putExtra("crop", "true");
-                    intent_gallery_crop.putExtra("scale", true);
-                    // aspectX aspectY 是宽高的比例
-                    intent_gallery_crop.putExtra("aspectX", 1);
-                    intent_gallery_crop.putExtra("aspectY", 1);
-                    // outputX outputY 是裁剪图片宽高
-                    intent_gallery_crop.putExtra("outputX", 400);
-                    intent_gallery_crop.putExtra("outputY", 400);
-                    intent_gallery_crop.putExtra("return-data", false);
-                    // 创建文件保存裁剪的图片
-                    createImageFile();
-                    imageUri = Uri.fromFile(imageFile);
-                    if (imageUri != null) {
-                        intent_gallery_crop.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
-                        intent_gallery_crop.putExtra("outputFormat", Bitmap.CompressFormat.JPEG.toString());
-                    }
-                    startActivityForResult(intent_gallery_crop, CROP_PHOTO);
-                    break;
-                case CROP_PHOTO:// 裁剪图片
-                    try {
-                        if (imageUri != null) {
-                            displayImage(imageUri);
-                            userInfo.getResult().setHeaderImg(imageUri.toString());
-                            updateUserInfo();
-                        }
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                    break;
-            }
-
-        }
-    }
-
-    /**
-     * 创建File保存图片
-     */
-    private void createImageFile() {
-        try {
-            if (imageFile != null && imageFile.exists()) {
-                imageFile.delete();
-            }
-            // 新建文件
-            imageFile = new File(Environment.getExternalStorageDirectory(), System.currentTimeMillis() + "galleryDemo.jpg");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    /**
-     * 显示图片
-     *
-     * @param imageUri 图片的uri
-     */
-    private void displayImage(Uri imageUri) {
-        try {
-            // glide根据图片的uri加载图片
-            Glide.with(this)
-                    .load(imageUri)
-                    .diskCacheStrategy(DiskCacheStrategy.NONE)
-                    .placeholder(R.mipmap.ic_launcher_round)// 占位图设置：加载过程中显示的图片
-                    .error(R.mipmap.ic_launcher_round)// 异常占位图
-                    .transform(new CenterCrop())
-                    .into(ivUserImage);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        });
     }
 
 }

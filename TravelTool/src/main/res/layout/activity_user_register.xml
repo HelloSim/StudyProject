@@ -32,35 +32,17 @@
     </RelativeLayout>
 
     <LinearLayout
-        android:id="@+id/ll_user_image"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="200dp"
-        android:orientation="horizontal">
-
-        <ImageView
-            android:id="@+id/iv_user_image"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:padding="2dp"
-            android:src="@mipmap/ic_launcher_round" />
-
-    </LinearLayout>
-
-    <LinearLayout
         android:id="@+id/ll_user_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/ll_user_image"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="250dp"
         android:orientation="horizontal">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="用户名:"
+            android:text="账        号:"
             android:textColor="@color/white"
             tools:ignore="HardcodedText" />
 
@@ -88,7 +70,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="密    码 :"
+            android:text="密        码:"
             android:textColor="@color/white"
             tools:ignore="HardcodedText" />
 
@@ -106,7 +88,7 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/ll_nike_name"
+        android:id="@+id/ll_mobile_phone_number"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/ll_password"
@@ -117,28 +99,27 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="昵    称 :"
+            android:text="手机号码 :"
             android:textColor="@color/white"
             tools:ignore="HardcodedText" />
 
         <EditText
-            android:id="@+id/et_nike_name"
+            android:id="@+id/et_mobile_phone_number"
             android:layout_width="180dp"
             android:layout_height="40dp"
             android:layout_marginLeft="10dp"
             android:background="@drawable/blue_stroke"
             android:gravity="center_vertical"
-            android:hint="非必填"
             android:padding="2dp"
             android:textColor="@color/white" />
 
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/ll_autograph"
+        android:id="@+id/ll_email"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/ll_nike_name"
+        android:layout_below="@+id/ll_mobile_phone_number"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
         android:orientation="horizontal">
@@ -146,18 +127,17 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="签    名 :"
+            android:text="电子邮箱:"
             android:textColor="@color/white"
             tools:ignore="HardcodedText" />
 
         <EditText
-            android:id="@+id/et_autograph"
+            android:id="@+id/et_email"
             android:layout_width="180dp"
             android:layout_height="40dp"
             android:layout_marginLeft="10dp"
             android:background="@drawable/blue_stroke"
             android:gravity="center_vertical"
-            android:hint="非必填"
             android:padding="2dp"
             android:textColor="@color/white" />
 
@@ -166,7 +146,7 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/ll_autograph"
+        android:layout_below="@+id/ll_email"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="50dp"
         android:orientation="horizontal">

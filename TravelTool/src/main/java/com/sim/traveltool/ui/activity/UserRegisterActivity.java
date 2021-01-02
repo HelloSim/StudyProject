@@ -8,13 +8,13 @@ import android.widget.ImageView;
 
 import com.sim.baselibrary.base.BaseActivity;
 import com.sim.baselibrary.utils.LogUtil;
+import com.sim.baselibrary.utils.RegexUtil;
 import com.sim.baselibrary.utils.ToastUtil;
-import com.sim.traveltool.AppHelper;
 import com.sim.traveltool.R;
-import com.sim.traveltool.bean.UserInfo;
-import com.sim.traveltool.internet.APIFactory;
+import com.sim.traveltool.db.bean.User;
 
-import rx.Subscriber;
+import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.SaveListener;
 
 /**
  * @Auther Sim
@@ -26,11 +26,11 @@ public class UserRegisterActivity extends BaseActivity {
     private ImageView back;
     private EditText etUserName;
     private EditText etPassword;
-    private EditText etNikeName;
-    private EditText etAutograph;
+    private EditText etMobilePhoneNumber;
+    private EditText etEmail;
     private Button btnRegistered;
 
-    private UserInfo userInfoBean;
+    private User user = new User();
 
     @Override
     protected int getLayoutRes() {
@@ -42,8 +42,8 @@ public class UserRegisterActivity extends BaseActivity {
         back = findViewById(R.id.back);
         etUserName = findViewById(R.id.et_user_name);
         etPassword = findViewById(R.id.et_password);
-        etNikeName = findViewById(R.id.et_nike_name);
-        etAutograph = findViewById(R.id.et_autograph);
+        etMobilePhoneNumber = findViewById(R.id.et_mobile_phone_number);
+        etEmail = findViewById(R.id.et_email);
         btnRegistered = findViewById(R.id.btn_registered);
         setViewClick(back, btnRegistered);
     }
@@ -63,55 +63,60 @@ public class UserRegisterActivity extends BaseActivity {
         if (view == back) {
             finish();
         } else if (view == btnRegistered) {
-            if (etUserName.getText().toString().length() > 0 && etPassword.getText().toString().length() > 0) {
-                registerUser(etUserName.getText().toString(), etPassword.getText().toString(),
-                        null, etNikeName.getText().toString(), etAutograph.getText().toString(), null, null, null, null);
-            } else {
-                if (etUserName.getText().toString().length() <= 0) {
-                    ToastUtil.T_Info(UserRegisterActivity.this, "用户名不能为空！");
-                } else if (etPassword.getText().toString().length() <= 0) {
-                    ToastUtil.T_Info(UserRegisterActivity.this, "密码不能为空！");
-                }
+            if (etUserName.getText().toString().length() <= 0) {
+                ToastUtil.T_Info(UserRegisterActivity.this, "用户名不能为空！");
+                return;
             }
+            if (etPassword.getText().toString().length() <= 0) {
+                ToastUtil.T_Info(UserRegisterActivity.this, "密码不能为空！");
+                return;
+            }
+            if (!RegexUtil.checkPhone(etMobilePhoneNumber.getText().toString())) {
+                ToastUtil.T_Info(UserRegisterActivity.this, "请输入正确的手机号码！");
+                return;
+            }
+            if (!RegexUtil.email(etEmail.getText().toString())) {
+                ToastUtil.T_Info(UserRegisterActivity.this, "请输入正确的电子邮箱！");
+                return;
+            }
+            registerUser(etUserName.getText().toString(), etPassword.getText().toString(),
+                    etMobilePhoneNumber.getText().toString(), etEmail.getText().toString());
         } else {
             super.onMultiClick(view);
         }
     }
 
     /**
-     * 注册用户的网络请求
+     * 账号密码注册
      *
-     * @param name
-     * @param passwd
-     * @param headerImg
-     * @param nikeName
-     * @param autograph
-     * @param phone
-     * @param email
-     * @param remarks
-     * @param vipGrade
+     * @param username
+     * @param password
      */
-    private void registerUser(String name, String passwd, String headerImg, String nikeName, String autograph, String phone, String email, String remarks, String vipGrade) {
-        APIFactory.getInstance().registerUser(new Subscriber<UserInfo>() {
+    private void registerUser(String username, String password, String mobilePhoneNumber, String email) {
+        if (username != null) user.setUsername(username);
+        if (password != null) user.setPassword(password);
+        if (mobilePhoneNumber != null) user.setMobilePhoneNumber(mobilePhoneNumber);
+        if (email != null) user.setEmail(email);
+        user.signUp(new SaveListener<User>() {
             @Override
-            public void onCompleted() {
-                if (userInfoBean.getCode() == 200) {
+            public void done(User user, BmobException e) {
+                if (e == null) {
                     ToastUtil.T_Success(UserRegisterActivity.this, "注册成功！");
                     finish();
-                } else ToastUtil.T_Error(UserRegisterActivity.this, "注册失败！");
+                } else {
+                    if (e.getMessage().contains("username") && e.getMessage().contains("already taken")) {
+                        ToastUtil.T_Error(UserRegisterActivity.this, "账号已被注册！");
+                    } else if (e.getMessage().contains("mobilePhoneNumber") && e.getMessage().contains("already taken")) {
+                        ToastUtil.T_Error(UserRegisterActivity.this, "手机号码已被注册！");
+                    } else if (e.getMessage().contains("email") && e.getMessage().contains("already taken")) {
+                        ToastUtil.T_Error(UserRegisterActivity.this, "电子邮箱已被注册！");
+                    } else {
+                        ToastUtil.T_Error(UserRegisterActivity.this, "注册失败！");
+                        LogUtil.e(this.getClass(), "注册失败---coed:" + e.getErrorCode() + ";message:" + e.getMessage());
+                    }
+                }
             }
-
-            @Override
-            public void onError(Throwable e) {
-                ToastUtil.T_Error(UserRegisterActivity.this, "注册失败！");
-                LogUtil.e(this.getClass(), "注册用户出错: " + e);
-            }
-
-            @Override
-            public void onNext(UserInfo userInfo) {
-                userInfoBean = userInfo;
-            }
-        }, AppHelper.USER_API_KEY, name, passwd, headerImg, nikeName, autograph, phone, email, remarks, vipGrade);
+        });
     }
 
 }

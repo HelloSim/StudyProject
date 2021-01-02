@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
@@ -17,15 +16,12 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.bumptech.glide.Glide;
-import com.google.gson.Gson;
 import com.sim.baselibrary.base.BaseActivity;
 import com.sim.baselibrary.bean.EventMessage;
-import com.sim.baselibrary.utils.SPUtil;
 import com.sim.baselibrary.utils.ToastUtil;
 import com.sim.traveltool.AppHelper;
 import com.sim.traveltool.R;
-import com.sim.traveltool.bean.UserInfo;
+import com.sim.traveltool.db.bean.User;
 import com.sim.traveltool.ui.fragment.BusFragment;
 import com.sim.traveltool.ui.fragment.RecordFragment;
 import com.sim.traveltool.ui.fragment.WangyiFragment;
@@ -34,25 +30,21 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import cn.bmob.v3.BmobUser;
+
 public class MainActivity extends BaseActivity {
+
+    private DrawerLayout drawerLayout;
 
     private RadioGroup rgBottomBar;
     private RadioButton rbBottomBarBus;
     private RadioButton rbBottomBarWangyi;
     private RadioButton rbBottomBarRecord;
 
-    private RelativeLayout rlUserLogIn;
-    private RelativeLayout rlUserDetail;
+    private RelativeLayout rlUser;
     private RelativeLayout rlUserCollect;
     private RelativeLayout rlUserSetting;
-
-    private DrawerLayout drawerLayout;
-    private ImageView ivUserImage;
-    private TextView tvUserNikeName;
-
-    private boolean isLogIn = false;
-
-    private UserInfo userInfo;
+    private TextView tvUserName;
 
     private BusFragment busFragment;
     private WangyiFragment wangyiFragment;
@@ -77,18 +69,16 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void bindViews(Bundle savedInstanceState) {
+        drawerLayout = findViewById(R.id.dl_drawer);
         rgBottomBar = findViewById(R.id.rg_bottom_bar);
         rbBottomBarBus = findViewById(R.id.rb_bottom_bar_bus);
         rbBottomBarWangyi = findViewById(R.id.rb_bottom_bar_wangyi);
         rbBottomBarRecord = findViewById(R.id.rb_bottom_bar_record);
-        rlUserLogIn = findViewById(R.id.rl_user_log_in);
-        rlUserDetail = findViewById(R.id.rl_user_detail);
+        rlUser = findViewById(R.id.rl_user);
         rlUserCollect = findViewById(R.id.rl_user_collect);
         rlUserSetting = findViewById(R.id.rl_user_setting);
-        drawerLayout = findViewById(R.id.dl_drawer);
-        ivUserImage = findViewById(R.id.iv_user);
-        tvUserNikeName = findViewById(R.id.tv_user_nike_name);
-        setViewClick(rlUserLogIn, rlUserDetail, rlUserCollect);
+        tvUserName = findViewById(R.id.tv_user_name);
+        setViewClick(rlUser, rlUserCollect);
         rbBottomBarBus.setOnClickListener(this);
         rbBottomBarWangyi.setOnClickListener(this);
         rbBottomBarRecord.setOnClickListener(this);
@@ -99,11 +89,6 @@ public class MainActivity extends BaseActivity {
     protected void initData() {
         requestPermission(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 0x001);
         EventBus.getDefault().register(this);
-        if (!SPUtil.contains(this, AppHelper.userSpName, AppHelper.userSpStateKey)) {
-            SPUtil.put(this, AppHelper.userSpName, AppHelper.userSpStateKey, isLogIn);
-        } else {
-            isLogIn = (boolean) SPUtil.get(this, AppHelper.userSpName, AppHelper.userSpStateKey, false);
-        }
 
         handler = new Handler() {
             @Override
@@ -117,47 +102,25 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void initView() {
         rbBottomBarBus.performClick();
-        if (SPUtil.contains(this, AppHelper.userSpName, AppHelper.userSpStateKey)) {
-            isLogIn = (boolean) SPUtil.get(this, AppHelper.userSpName, AppHelper.userSpStateKey, false);
-        }
-        if (isLogIn) {
-            rlUserLogIn.setVisibility(View.GONE);
-            rlUserDetail.setVisibility(View.VISIBLE);
-            if (SPUtil.contains(this, AppHelper.userSpName, AppHelper.userSpUserInfoKey)) {
-                userInfo = new Gson().fromJson((String) SPUtil.get(this, AppHelper.userSpName, AppHelper.userSpUserInfoKey, ""), UserInfo.class);
-                if (userInfo != null) {
-                    if (userInfo.getResult().getHeaderImg() != null) {
-                        Glide.with(this).load(userInfo.getResult().getHeaderImg()).into(ivUserImage);
-                    }
-                    if (userInfo.getResult().getName() != null) {
-                        tvUserNikeName.setText(userInfo.getResult().getName());
-                    }
-                } else {
-                    isLogIn = false;
-                    rlUserDetail.setVisibility(View.GONE);
-                    rlUserLogIn.setVisibility(View.VISIBLE);
-                }
-            } else {
-                isLogIn = false;
-                rlUserDetail.setVisibility(View.GONE);
-                rlUserLogIn.setVisibility(View.VISIBLE);
-            }
+        if (BmobUser.isLogin()) {
+            User user = BmobUser.getCurrentUser(User.class);
+            tvUserName.setText(user.getUsername());
         } else {
-            rlUserDetail.setVisibility(View.GONE);
-            rlUserLogIn.setVisibility(View.VISIBLE);
+            tvUserName.setText("用户登录");
         }
     }
 
     @Override
     public void onMultiClick(View view) {
-        if (view == rlUserLogIn) {
+        if (view == rlUser) {
             drawerLayout.close();
-            startActivity(new Intent(this, UserLogInActivity.class));
-        } else if (view == rlUserDetail) {
-            drawerLayout.close();
-            startActivity(new Intent(this, UserUpdateActivity.class));
+            if (BmobUser.isLogin()) {
+                startActivity(new Intent(this, UserUpdateActivity.class));
+            } else {
+                startActivity(new Intent(this, UserLogInActivity.class));
+            }
         } else if (view == rlUserCollect) {
-            if (isLogIn) {
+            if (BmobUser.isLogin()) {
                 drawerLayout.close();
                 startActivity(new Intent(this, NewsCollectActivity.class));
             } else {
@@ -256,26 +219,13 @@ public class MainActivity extends BaseActivity {
      */
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onMessageEvent(EventMessage eventMessage) {
-        if (eventMessage.type == AppHelper.USER_IsLogIn || eventMessage.type == AppHelper.USER_UpDate) {
-            rlUserLogIn.setVisibility(View.GONE);
-            rlUserDetail.setVisibility(View.VISIBLE);
-            if (SPUtil.contains(this, AppHelper.userSpName, AppHelper.userSpUserInfoKey)) {
-                userInfo = new Gson().fromJson((String) SPUtil.get(this, AppHelper.userSpName, AppHelper.userSpUserInfoKey, ""), UserInfo.class);
-                if (userInfo.getResult().getHeaderImg() != null) {
-                    Glide.with(this).load(userInfo.getResult().getHeaderImg()).into(ivUserImage);
-                }
-                if (userInfo.getResult().getName() != null) {
-                    tvUserNikeName.setText(userInfo.getResult().getName());
-                }
+        if (eventMessage.type == AppHelper.USER_IsLogIn || eventMessage.type == AppHelper.USER_noLogIn) {
+            if (BmobUser.isLogin()) {
+                User user = BmobUser.getCurrentUser(User.class);
+                tvUserName.setText(user.getUsername());
             } else {
-                isLogIn = false;
-                rlUserDetail.setVisibility(View.GONE);
-                rlUserLogIn.setVisibility(View.VISIBLE);
+                tvUserName.setText("用户登录");
             }
-        } else if (eventMessage.type == AppHelper.USER_noLogIn) {
-            isLogIn = false;
-            rlUserDetail.setVisibility(View.GONE);
-            rlUserLogIn.setVisibility(View.VISIBLE);
         }
     }
 

@@ -33,40 +33,6 @@
     </RelativeLayout>
 
     <RelativeLayout
-        android:id="@+id/rl_user_image"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/card_shape"
-        android:padding="20dp">
-
-        <TextView
-            android:id="@+id/tv_user_image"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="10dp"
-            android:text="头像"
-            android:textSize="18sp" />
-
-        <ImageView
-            android:id="@+id/iv_user_image"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="10dp"
-            android:layout_toLeftOf="@+id/iv_user_image_go" />
-
-        <ImageView
-            android:id="@+id/iv_user_image_go"
-            android:layout_width="15dp"
-            android:layout_height="15dp"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:src="@mipmap/ic_to_right" />
-
-    </RelativeLayout>
-
-    <RelativeLayout
         android:id="@+id/rl_user_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -74,7 +40,6 @@
         android:padding="20dp">
 
         <TextView
-            android:id="@+id/user_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
@@ -101,32 +66,31 @@
     </RelativeLayout>
 
     <RelativeLayout
-        android:id="@+id/rl_user_nikeName"
+        android:id="@+id/rl_password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/card_shape"
         android:padding="20dp">
 
         <TextView
-            android:id="@+id/user_nikeName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="10dp"
-            android:text="昵称"
+            android:text="密码"
             android:textSize="18sp" />
 
         <TextView
-            android:id="@+id/tv_user_nikeName"
+            android:id="@+id/tv_password"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginRight="10dp"
-            android:layout_toLeftOf="@+id/iv_user_nikeName_go"
-            tools:text="飞翔的水牛" />
+            android:layout_toLeftOf="@+id/iv_password_go"
+            android:text="******" />
 
         <ImageView
-            android:id="@+id/iv_user_nikeName_go"
+            android:id="@+id/iv_password_go"
             android:layout_width="15dp"
             android:layout_height="15dp"
             android:layout_alignParentRight="true"
@@ -136,32 +100,65 @@
     </RelativeLayout>
 
     <RelativeLayout
-        android:id="@+id/rl_user_autograph"
+        android:id="@+id/rl_mobile_phone_number"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/card_shape"
         android:padding="20dp">
 
         <TextView
-            android:id="@+id/user_autograph"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="10dp"
-            android:text="签名"
+            android:text="手机号码"
             android:textSize="18sp" />
 
         <TextView
-            android:id="@+id/tv_user_autograph"
+            android:id="@+id/tv_mobile_phone_number"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginRight="10dp"
-            android:layout_toLeftOf="@+id/iv_user_autograph_go"
-            tools:text="没有个性，没有签名" />
+            android:layout_toLeftOf="@+id/iv_mobile_phone_number_go"
+            tools:text="13411094382" />
 
         <ImageView
-            android:id="@+id/iv_user_autograph_go"
+            android:id="@+id/iv_mobile_phone_number_go"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/ic_to_right" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_email"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/card_shape"
+        android:padding="20dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:text="电子邮箱"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/tv_email"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:layout_toLeftOf="@+id/iv_email_go"
+            tools:text="hellosim@aliyun.com" />
+
+        <ImageView
+            android:id="@+id/iv_email_go"
             android:layout_width="15dp"
             android:layout_height="15dp"
             android:layout_alignParentRight="true"
@@ -171,7 +168,7 @@
     </RelativeLayout>
 
     <Button
-        android:id="@+id/btn_sign_out"
+        android:id="@+id/btn_log_out"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"

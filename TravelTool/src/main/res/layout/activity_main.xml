@@ -92,7 +92,7 @@
                 android:orientation="vertical">
 
                 <RelativeLayout
-                    android:id="@+id/rl_user_log_in"
+                    android:id="@+id/rl_user"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/card_shape"
@@ -113,6 +113,7 @@
                         android:src="@mipmap/ic_to_right" />
 
                     <TextView
+                        android:id="@+id/tv_user_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
@@ -122,51 +123,6 @@
                         android:textColor="@color/black"
                         android:textSize="20sp"
                         android:textStyle="bold" />
-
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:id="@+id/rl_user_detail"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/card_shape"
-                    android:padding="20dp"
-                    android:visibility="gone">
-
-                    <ImageView
-                        android:id="@+id/iv_user"
-                        android:layout_width="60dp"
-                        android:layout_height="60dp"
-                        tools:src="@mipmap/ic_launcher" />
-
-                    <ImageView
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
-                        android:src="@mipmap/ic_to_right" />
-
-                    <TextView
-                        android:id="@+id/user_autograph"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/tv_user_nike_name"
-                        android:layout_marginLeft="20dp"
-                        android:layout_toRightOf="@+id/iv_user"
-                        android:textColor="#cccccc"
-                        android:textSize="16sp"
-                        tools:text="没有个性，没有签名" />
-
-                    <TextView
-                        android:id="@+id/tv_user_nike_name"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="20dp"
-                        android:layout_toRightOf="@+id/iv_user"
-                        android:textColor="@color/black"
-                        android:textSize="20sp"
-                        android:textStyle="bold"
-                        tools:text="用户昵称" />
 
                 </RelativeLayout>
 

@@ -41,13 +41,13 @@ public class RegexUtil {
      * @return
      */
     public static boolean checkPhone(String phone) {
-//        String regex = "^((1[3,5,8][0-9])|(14[5,7])|(17[0,6,7,8])|(19[7]))\\d{8}$";
-//        return regex(phone,regex);
-        if (phone == null || phone.length() != 11) {
-            return false;
-        } else {
-            return true;
-        }
+        String regex = "^((1[3,5,8][0-9])|(14[5,7])|(17[0,6,7,8])|(19[7]))\\d{8}$";
+        return regex(phone,regex);
+//        if (phone == null || phone.length() != 11) {
+//            return false;
+//        } else {
+//            return true;
+//        }
     }
 
     private static boolean regex(String value, String regex) {

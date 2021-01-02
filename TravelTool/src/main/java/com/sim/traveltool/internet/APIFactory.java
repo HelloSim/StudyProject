@@ -8,7 +8,6 @@ import com.sim.traveltool.bean.BusRealTimeDataBean;
 import com.sim.traveltool.bean.BusRealTimeLineDataBean;
 import com.sim.traveltool.bean.BusRouteDataBean;
 import com.sim.traveltool.bean.NewsWangYiBean;
-import com.sim.traveltool.bean.UserInfo;
 
 import rx.Observable;
 import rx.Subscriber;
@@ -94,35 +93,6 @@ public class APIFactory extends RetrofitUtil {
      */
     public void getWangYiNew(Subscriber<NewsWangYiBean> subscriber, String page, String count) {
         Observable observable = getUserApiService().getWangYiNews(page, count);
-        toSubscribe(observable, subscriber);
-    }
-
-
-    /**
-     * 用户登录的网络请求
-     */
-    public void logIn(Subscriber<UserInfo> subscriber, String apikey, String name, String passwd) {
-        Observable observable = getUserApiService().logIn(apikey, name, passwd);
-        toSubscribe(observable, subscriber);
-    }
-
-    /**
-     * 用户注册的网络请求
-     */
-    public void registerUser(Subscriber<UserInfo> subscriber, String apikey, String name, String passwd,
-                             String headerImg, String nikeName, String autograph,
-                             String phone, String email, String remarks, String vipGrade) {
-        Observable observable = getUserApiService().registerUser(apikey, name, passwd, headerImg, nikeName, autograph, phone, email, remarks, vipGrade);
-        toSubscribe(observable, subscriber);
-    }
-
-    /**
-     * 用户更新的网络请求
-     */
-    public void updateUserInfo(Subscriber<UserInfo> subscriber, String apikey, String name, String passwd,
-                               String headerImg, String nikeName, String autograph,
-                               String phone, String email, String remarks, String vipGrade) {
-        Observable observable = getUserApiService().updateUserInfo(apikey, name, passwd, headerImg, nikeName, autograph, phone, email, remarks, vipGrade);
         toSubscribe(observable, subscriber);
     }
 
