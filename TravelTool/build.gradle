@@ -110,7 +110,7 @@ dependencies {
     implementation 'androidx.drawerlayout:drawerlayout:1.1.1'//抽屉布局
 
     implementation project(":baselibrary")
-    implementation project(":sqlitelibrary")
+//    implementation project(":sqlitelibrary")
 
     annotationProcessor 'com.jakewharton:butterknife-compiler:10.0.0'//butterknife
 

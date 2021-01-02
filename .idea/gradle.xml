@@ -13,7 +13,6 @@
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/TravelTool" />
             <option value="$PROJECT_DIR$/baselibrary" />
-            <option value="$PROJECT_DIR$/sqlitelibrary" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />
