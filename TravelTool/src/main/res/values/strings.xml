@@ -19,6 +19,7 @@
     <string name="user_login">User Login</string>
     <string name="user_detail">Detail</string>
     <string name="user_setting">Setting</string>
+    <string name="login_no">Not logIn</string>
 
     <string name="year">year</string>
     <string name="month">month</string>
@@ -35,5 +36,7 @@
     <string name="record_end">Clock out</string>
     <string name="record_all">Record all</string>
     <string name="record_add_memo">add notes</string>
+    <string name="record_add_memo_success">Add note success!</string>
+    <string name="record_add_memo_fail">Add note failed!</string>
 
 </resources>

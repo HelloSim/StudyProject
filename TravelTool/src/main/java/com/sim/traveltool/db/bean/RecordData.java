@@ -1,5 +1,7 @@
 package com.sim.traveltool.db.bean;
 
+import com.bin.david.form.annotation.SmartColumn;
+import com.bin.david.form.annotation.SmartTable;
 import com.sim.baselibrary.utils.TimeUtil;
 
 import cn.bmob.v3.BmobObject;
@@ -9,19 +11,30 @@ import cn.bmob.v3.BmobObject;
  * @Time 2020/11/26 22:41
  * @Description 新的插入数据库的打卡记录实体
  */
+@SmartTable(name = "打卡详情")
 public class RecordData extends BmobObject {
 
-    // 仅在客户端使用，不希望被gson序列化提交到后端云，记得用transient修饰
+    // 仅在客户端使用，不希望被gson序列化提交到后端云，用transient修饰
+
     private String userSpAccountNumber;//打卡人
+    @SmartColumn(id = 1, name = "日期", fixed = true)
     private String date;//日期 2020-12-31
     private String yearAndMonth;//年月
+    @SmartColumn(id = 2, name = "星期")
     private String week;//周几 星期四
+    @SmartColumn(id = 3, name = "上班时间")
     private String startTime;//上班卡时间 09:00
+    @SmartColumn(id = 4, name = "下班时间")
     private String endTime;//下班卡时间 19:00
     private boolean isLate;//是否迟到 false
     private boolean isLeaveEarly;//是否早退
+    @SmartColumn(id = 5, name = "备忘")
     private String other;//其他
 
+    public RecordData(String date) {
+        this.date = date;
+        this.week = TimeUtil.getWeek(date);
+    }
 
     public RecordData(String userSpAccountNumber, String date, String yearAndMonth, String startTime, String endTime, String other) {
         this.userSpAccountNumber = userSpAccountNumber;

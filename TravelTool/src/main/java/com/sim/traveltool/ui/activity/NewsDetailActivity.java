@@ -23,9 +23,9 @@ import com.sim.traveltool.bean.NewsWangYiBean;
  */
 public class NewsDetailActivity extends BaseActivity {
 
-    ImageView back;
-    WebView webView;
-    ImageView collect;
+    private ImageView back;
+    private WebView webView;
+    private ImageView collect;
 
     private NewsWangYiBean.ResultBean news;
     private String fileName = "collect";
@@ -42,6 +42,12 @@ public class NewsDetailActivity extends BaseActivity {
         webView = findViewById(R.id.web_view);
         collect = findViewById(R.id.collect);
         setViewClick(back, collect);
+    }
+
+    @Override
+    protected void initData() {
+        news = (NewsWangYiBean.ResultBean) getIntent().getSerializableExtra("news");
+        isCollect = SPUtil.contains(this, fileName, news.getTitle());
     }
 
     @Override
@@ -87,12 +93,6 @@ public class NewsDetailActivity extends BaseActivity {
             webView.setWebViewClient(mWebviewclient);
             webView.loadUrl(news.getPath());
         }
-    }
-
-    @Override
-    protected void initData() {
-        news = (NewsWangYiBean.ResultBean) getIntent().getSerializableExtra("news");
-        isCollect = SPUtil.contains(this, fileName, news.getTitle());
     }
 
     @Override

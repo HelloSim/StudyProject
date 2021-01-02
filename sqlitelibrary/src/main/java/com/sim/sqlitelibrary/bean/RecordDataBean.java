@@ -1,8 +1,5 @@
 package com.sim.sqlitelibrary.bean;
 
-import com.bin.david.form.annotation.SmartColumn;
-import com.bin.david.form.annotation.SmartTable;
-
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.annotation.Id;
@@ -13,7 +10,6 @@ import org.greenrobot.greendao.annotation.Id;
  * @Description 新的插入数据库的打卡记录实体
  */
 @Entity
-@SmartTable(name = "打卡详情")
 public class RecordDataBean {
 
     @Id(autoincrement = true)
@@ -23,25 +19,20 @@ public class RecordDataBean {
 
     private String month;//月
 
-    @SmartColumn(id = 1, name = "日期", fixed = true)
     private String day;//日
 
-    @SmartColumn(id = 2, name = "星期")
     private String week;//周几
 
 //    private String isWorkingDay;//0工作日 1 假日 2节日
 
-    @SmartColumn(id = 3, name = "上班卡时间")
     private String startTime;//上班卡时间
 
-    @SmartColumn(id = 4, name = "下班卡时间")
     private String endTime;//下班卡时间
 
     private boolean isLate;//是否迟到
 
     private boolean isLeaveEarly;//是否早退
 
-    @SmartColumn(id = 5, name = "其他")
     private String other;//其他
 
     @Generated(hash = 1002308030)
@@ -53,20 +44,6 @@ public class RecordDataBean {
             String week, String startTime, String endTime, boolean isLate,
             boolean isLeaveEarly, String other) {
         this.id = id;
-        this.year = year;
-        this.month = month;
-        this.day = day;
-        this.week = week;
-        this.startTime = startTime;
-        this.endTime = endTime;
-        this.isLate = isLate;
-        this.isLeaveEarly = isLeaveEarly;
-        this.other = other;
-    }
-
-    public RecordDataBean(String year, String month, String day,
-                          String week, String startTime, String endTime,
-                          boolean isLate, boolean isLeaveEarly, String other) {
         this.year = year;
         this.month = month;
         this.day = day;

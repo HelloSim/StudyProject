@@ -35,10 +35,10 @@ import rx.Subscriber;
  */
 public class BusSearchActivity extends BaseActivity {
 
-    ImageView back;
-    EditText tvSearch;
-    TextView tvNotFound;
-    RecyclerView rlData;
+    private ImageView back;
+    private EditText tvSearch;
+    private TextView tvNotFound;
+    private RecyclerView rlData;
 
     private int searchType;
 
@@ -61,6 +61,11 @@ public class BusSearchActivity extends BaseActivity {
         tvNotFound = findViewById(R.id.tv_not_found);
         rlData = findViewById(R.id.rl_data);
         setViewClick(back);
+    }
+
+    @Override
+    protected void initData() {
+        searchType = getIntent().getIntExtra("searchType", AppHelper.RESULT_BUS);
     }
 
     @Override
@@ -137,11 +142,6 @@ public class BusSearchActivity extends BaseActivity {
     }
 
     @Override
-    protected void initData() {
-        searchType = getIntent().getIntExtra("searchType", AppHelper.RESULT_BUS);
-    }
-
-    @Override
     public void onMultiClick(View view) {
         if (view == back) {
             finish();
@@ -177,7 +177,7 @@ public class BusSearchActivity extends BaseActivity {
             @Override
             public void onError(Throwable e) {
                 ToastUtil.T_Error(BusSearchActivity.this, "搜索实时公交路线请求出错！");
-                LogUtil.d(BusSearchActivity.class, "搜索实时公交路线出错: " + e);
+                LogUtil.d(this.getClass(), "搜索实时公交路线出错: " + e);
             }
 
             @Override
@@ -210,7 +210,7 @@ public class BusSearchActivity extends BaseActivity {
             @Override
             public void onError(Throwable e) {
                 ToastUtil.T_Error(BusSearchActivity.this, "位置请求出错！");
-                LogUtil.d(BusSearchActivity.class, "位置请求出错: " + e);
+                LogUtil.d(this.getClass(), "位置请求出错: " + e);
             }
 
             @Override

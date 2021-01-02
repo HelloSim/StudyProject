@@ -23,12 +23,12 @@ import rx.Subscriber;
  */
 public class UserRegisterActivity extends BaseActivity {
 
-    ImageView back;
-    EditText etUserName;
-    EditText etPassword;
-    EditText etNikeName;
-    EditText etAutograph;
-    Button btnRegistered;
+    private ImageView back;
+    private EditText etUserName;
+    private EditText etPassword;
+    private EditText etNikeName;
+    private EditText etAutograph;
+    private Button btnRegistered;
 
     private UserInfo userInfoBean;
 
@@ -49,12 +49,12 @@ public class UserRegisterActivity extends BaseActivity {
     }
 
     @Override
-    protected void initView() {
+    protected void initData() {
 
     }
 
     @Override
-    protected void initData() {
+    protected void initView() {
 
     }
 
@@ -104,7 +104,7 @@ public class UserRegisterActivity extends BaseActivity {
             @Override
             public void onError(Throwable e) {
                 ToastUtil.T_Error(UserRegisterActivity.this, "注册失败！");
-                LogUtil.e(UserRegisterActivity.class, "注册用户出错: " + e);
+                LogUtil.e(this.getClass(), "注册用户出错: " + e);
             }
 
             @Override

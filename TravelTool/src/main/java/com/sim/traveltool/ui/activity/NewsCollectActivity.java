@@ -30,9 +30,9 @@ import java.util.Map;
  */
 public class NewsCollectActivity extends BaseActivity {
 
-    ImageView back;
-    LinearLayout parent;
-    RecyclerView newsRecyclerView;
+    private ImageView back;
+    private LinearLayout parent;
+    private RecyclerView newsRecyclerView;
 
     private String fileName = "collect";
     private Map<String, NewsWangYiBean.ResultBean> newsMap;
@@ -50,6 +50,17 @@ public class NewsCollectActivity extends BaseActivity {
         parent = findViewById(R.id.parent);
         newsRecyclerView = findViewById(R.id.recycle_view);
         setViewClick(back);
+    }
+
+    @Override
+    protected void initData() {
+        Gson gson = new Gson();
+        newsMap = (Map<String, NewsWangYiBean.ResultBean>) SPUtil.getAll(this, fileName);
+        Iterator it = newsMap.keySet().iterator();
+        while (it.hasNext()) {
+            String key = it.next().toString();
+            newsList.add(gson.fromJson(String.valueOf(newsMap.get(key)), NewsWangYiBean.ResultBean.class));
+        }
     }
 
     @Override
@@ -85,17 +96,6 @@ public class NewsCollectActivity extends BaseActivity {
                 return false;
             }
         });
-    }
-
-    @Override
-    protected void initData() {
-        Gson gson = new Gson();
-        newsMap = (Map<String, NewsWangYiBean.ResultBean>) SPUtil.getAll(this, fileName);
-        Iterator it = newsMap.keySet().iterator();
-        while (it.hasNext()) {
-            String key = it.next().toString();
-            newsList.add(gson.fromJson(String.valueOf(newsMap.get(key)), NewsWangYiBean.ResultBean.class));
-        }
     }
 
     @Override

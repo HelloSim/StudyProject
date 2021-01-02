@@ -102,14 +102,14 @@ public class RetrofitUtil {
                 Request request = chain.request();
                 if (!AppUtil.isNetworkConnected(mContext) || isUseCache) {//如果网络不可用或者设置只用网络
                     request = request.newBuilder().cacheControl(CacheControl.FORCE_CACHE).build();
-                    LogUtil.d(RetrofitUtil.class, "网络不可用请求拦截");
+                    LogUtil.d(this.getClass(), "网络不可用请求拦截");
                 } else if (AppUtil.isNetworkConnected(mContext) && !isUseCache) {//网络可用
                     request = request.newBuilder().cacheControl(CacheControl.FORCE_NETWORK).build();
-                    LogUtil.d(RetrofitUtil.class, "网络可用请求拦截");
+                    LogUtil.d(this.getClass(), "网络可用请求拦截");
                 }
                 Response response = chain.proceed(request);
                 if (AppUtil.isNetworkConnected(mContext)) {//如果网络可用
-                    LogUtil.d(RetrofitUtil.class, "网络可用响应拦截");
+                    LogUtil.d(this.getClass(), "网络可用响应拦截");
                     response = response.newBuilder()
 //                            //移除旧的
 //                            .removeHeader("User-Agent")

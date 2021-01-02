@@ -18,9 +18,9 @@ import com.sim.traveltool.R;
  */
 public class HideActivity extends BaseActivity implements CalendarView.OnMonthChangeListener, CalendarView.OnCalendarSelectListener {
 
-    ImageView back;
-    TextView tvNowMonth;
-    CalendarView calendarView;
+    private ImageView back;
+    private TextView tvNowMonth;
+    private CalendarView calendarView;
 
     @Override
     protected int getLayoutRes() {
@@ -33,6 +33,11 @@ public class HideActivity extends BaseActivity implements CalendarView.OnMonthCh
         tvNowMonth = findViewById(R.id.tv_now_year_and_month);
         calendarView = findViewById(R.id.calendarView);
         setViewClick(back);
+    }
+
+    @Override
+    protected void initData() {
+
     }
 
     @Override
@@ -50,11 +55,6 @@ public class HideActivity extends BaseActivity implements CalendarView.OnMonthCh
         //日期选择事件监听
         calendarView.setOnCalendarSelectListener(this);
         tvNowMonth.setText(calendarView.getSelectedCalendar().getYear() + "-" + calendarView.getSelectedCalendar().getMonth());
-    }
-
-    @Override
-    protected void initData() {
-
     }
 
     @Override

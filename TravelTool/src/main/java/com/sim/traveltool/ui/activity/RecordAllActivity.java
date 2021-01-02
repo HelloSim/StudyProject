@@ -8,19 +8,22 @@ import android.widget.TextView;
 
 import com.bin.david.form.core.SmartTable;
 import com.bin.david.form.data.CellInfo;
-import com.bin.david.form.data.column.Column;
 import com.bin.david.form.data.format.bg.BaseCellBackgroundFormat;
-import com.bin.david.form.data.format.tip.MultiLineBubbleTip;
 import com.bin.david.form.data.style.FontStyle;
 import com.bin.david.form.utils.DensityUtils;
 import com.haibin.calendarview.Calendar;
 import com.sim.baselibrary.base.BaseActivity;
-import com.sim.sqlitelibrary.bean.RecordDataBean;
+import com.sim.baselibrary.utils.LogUtil;
+import com.sim.baselibrary.utils.TimeUtil;
 import com.sim.traveltool.R;
-import com.sim.traveltool.db.RecordDataDaoUtil;
+import com.sim.traveltool.db.bean.RecordData;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.FindListener;
 
 /**
  * @Auther Sim
@@ -29,13 +32,15 @@ import java.util.List;
  */
 public class RecordAllActivity extends BaseActivity {
 
-    ImageView back;
-    TextView title;
-    SmartTable<RecordDataBean> table;
-    TextView no_record;
+    private ImageView back;
+    private TextView title;
+    private SmartTable<RecordData> table;
 
     private Calendar calendar;
-    private List<RecordDataBean> recordDataBeanList;
+    private String userSpAccountNumber;//用户账号
+
+    private List<RecordData> allDataList = new ArrayList<>();//当月打卡数据
+    private int days;//当月天数
 
     @Override
     protected int getLayoutRes() {
@@ -47,27 +52,56 @@ public class RecordAllActivity extends BaseActivity {
         back = findViewById(R.id.back);
         title = findViewById(R.id.title);
         table = findViewById(R.id.table_data);
-        no_record = findViewById(R.id.no_record);
         setViewClick(back);
     }
 
     @Override
-    protected void initView() {
-        List<String> dayColum = null;//日期列
-        ArrayList list = new ArrayList();//日期列的周六日内容格
-        for (Column column : table.getTableData().getColumns()) {
-            if (column.getColumnName().equals("日期")) {
-                dayColum = column.getDatas();
-            }
+    protected void initData() {
+        calendar = (Calendar) getIntent().getSerializableExtra("calendar");
+        userSpAccountNumber = getIntent().getStringExtra("userSpAccountNumber");
+        days = TimeUtil.getDaysByYearMonth(calendar.getYear(), calendar.getMonth());
+        for (int i = 1; i <= days; i++) {
+            RecordData recordData = new RecordData(getYearAndMonth(calendar) + "-" + i);
+            allDataList.add(recordData);
         }
+        BmobQuery<RecordData> bmobQuery = new BmobQuery<>();
+        bmobQuery.addWhereEqualTo("userSpAccountNumber", userSpAccountNumber);
+        bmobQuery.addWhereEqualTo("yearAndMonth", getYM(calendar));
+        bmobQuery.findObjects(new FindListener<RecordData>() {
+            @Override
+            public void done(List<RecordData> list, BmobException e) {
+                if (e == null) {
+                    if (list != null || list.size() > 0) {
+                        for (RecordData recordData1 : list) {
+                            for (int i = 0; i < allDataList.size(); i++) {
+                                if (recordData1.getDate().equals(allDataList.get(i).getDate())) {
+                                    allDataList.get(i).setStartTime(recordData1.getStartTime());
+                                    allDataList.get(i).setEndTime(recordData1.getEndTime());
+                                    allDataList.get(i).setOther(recordData1.getOther());
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                } else {
+                    LogUtil.e(this.getClass(), "查询指定日期数据失败" + e.getMessage());
+                }
+                table.setData(allDataList);
+            }
+        });
+    }
+
+    @Override
+    protected void initView() {
+        FontStyle.setDefaultTextSize(DensityUtils.sp2px(this, 18)); //设置全局字体大小
+        title.setText(getYearAndMonth(calendar) + getString(R.string.record_all));
+
+        ArrayList list = new ArrayList();//日期列的周六日内容格
         table.setZoom(false);//设置不可缩放
-//        table.setZoom(true, 2f, 0.5f);//设置缩放最大和最小值
         table.getConfig()
                 .setShowXSequence(false)//是否显示顶部序号列
                 .setShowYSequence(false)//是否显示左侧序号列
                 .setShowTableTitle(false)//是否显示表格标题
-//                .setTableTitleStyle(new FontStyle(RecordAllActivity.this, 18, Color.WHITE))//设置表格标题字体样式
-                .setCountStyle(new FontStyle(RecordAllActivity.this, 18, Color.WHITE))//设置统计行样式
                 .setContentCellBackgroundFormat(new BaseCellBackgroundFormat<CellInfo>() {
                     @Override
                     public int getBackGroundColor(CellInfo cellInfo) {
@@ -85,61 +119,6 @@ public class RecordAllActivity extends BaseActivity {
                     }
                 });
 
-        FontStyle fontStyle = new FontStyle(RecordAllActivity.this, 12, Color.parseColor("#636363"));
-        MultiLineBubbleTip<Column> tip = new MultiLineBubbleTip<Column>(this, R.mipmap.ic_round_rect, R.mipmap.ic_triangle, fontStyle) {
-            @Override
-            public boolean isShowTip(Column column, int position) {
-                return true;
-            }
-
-            @Override
-            public String[] format(Column column, int position) {
-                String[] strings = {RecordDataDaoUtil.getInstance().getYearMonth(RecordAllActivity.this, calendar) + "-" +
-                        table.getTableData().getColumns().get(0).getDatas().get(position) + ":",
-                        String.valueOf(column.getDatas().get(position))};
-                return strings;
-            }
-        };
-        tip.setColorFilter(Color.parseColor("#FA8072"));
-        tip.setAlpha(0.8f);
-        table.getProvider().setTip(tip);//批注
-//        table.getTableData().setOnRowClickListener(new TableData.OnRowClickListener<DaKaRecord>() {
-//            @Override
-//            public void onClick(Column column, DaKaRecord daKaRecord, int col, int row) {
-//                switch (col) {
-//                    case 0:
-//                        ToastUtil.T_Info(RecordAllActivity.this, daKaRecord.getDay());
-//                        break;
-//                    case 1:
-//                        ToastUtil.T_Info(RecordAllActivity.this, daKaRecord.getWeek());
-//                        break;
-//                    case 2:
-//                        ToastUtil.T_Info(RecordAllActivity.this, daKaRecord.getStartTime());
-//                        break;
-//                    case 3:
-//                        ToastUtil.T_Info(RecordAllActivity.this, daKaRecord.getEndTime());
-//                        break;
-//                    case 4:
-//                        ToastUtil.T_Info(RecordAllActivity.this, daKaRecord.getOther());
-//                        break;
-//                }
-//            }
-//        });//点击事件
-    }
-
-    @Override
-    protected void initData() {
-        FontStyle.setDefaultTextSize(DensityUtils.sp2px(this, 18)); //设置全局字体大小
-        calendar = (Calendar) getIntent().getSerializableExtra("calendar");
-        title.setText(RecordDataDaoUtil.getInstance().getMonth(this, calendar) + "月" + getString(R.string.record_all));
-        recordDataBeanList = RecordDataDaoUtil.getInstance().queryRecordForMonth(this, calendar);
-        if (recordDataBeanList != null && recordDataBeanList.size() > 0) {
-            table.setData(recordDataBeanList);
-            initView();
-        } else {
-            table.setVisibility(View.GONE);
-            no_record.setVisibility(View.VISIBLE);
-        }
     }
 
     @Override
@@ -149,6 +128,30 @@ public class RecordAllActivity extends BaseActivity {
         } else {
             super.onMultiClick(view);
         }
+    }
+
+    /**
+     * 获取年月日
+     *
+     * @param calendar
+     * @return
+     */
+    public String getYMD(Calendar calendar) {
+        return calendar.getYear() + "-" + calendar.getMonth() + "-" + calendar.getDay();
+    }
+
+    /**
+     * 获取年月
+     *
+     * @param calendar
+     * @return
+     */
+    public String getYM(Calendar calendar) {
+        return String.valueOf(calendar.getYear()) + calendar.getMonth();
+    }
+
+    public String getYearAndMonth(Calendar calendar) {
+        return calendar.getYear() + "-" + calendar.getMonth();
     }
 
 }

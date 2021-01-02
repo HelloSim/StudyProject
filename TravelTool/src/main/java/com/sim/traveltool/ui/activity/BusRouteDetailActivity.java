@@ -20,10 +20,10 @@ import com.sim.traveltool.bean.BusRouteDataBean;
  */
 public class BusRouteDetailActivity extends BaseActivity {
 
-    ImageView back;
-    TextView tvBusRoute;
-    TextView tvTimeDistance;
-    RecyclerView rlRouteDetail;
+    private ImageView back;
+    private TextView tvBusRoute;
+    private TextView tvTimeDistance;
+    private RecyclerView rlRouteDetail;
 
     private String tvStartLocation;//起点位置
     private String tvEndLocation;//终点位置
@@ -46,15 +46,6 @@ public class BusRouteDetailActivity extends BaseActivity {
     }
 
     @Override
-    protected void initView() {
-        tvBusRoute.setText(busRoute);
-        tvTimeDistance.setText(Integer.parseInt(data.getDuration()) / 60 + "分钟 | 步行" + data.getWalking_distance() + "米");
-        busRouteDetailAdapter = new BusRouteDetailAdapter(this, tvStartLocation, tvEndLocation, data.getSegments());
-        rlRouteDetail.setLayoutManager(new LinearLayoutManager(this));
-        rlRouteDetail.setAdapter(busRouteDetailAdapter);
-    }
-
-    @Override
     protected void initData() {
         tvStartLocation = getIntent().getStringExtra("tvStartLocation");
         tvEndLocation = getIntent().getStringExtra("tvEndLocation");
@@ -67,6 +58,15 @@ public class BusRouteDetailActivity extends BaseActivity {
                 busRoute.append(segmentsBean.getBus().getBuslines().get(0).getName().split("\\(", 2)[0]);
             }
         }
+    }
+
+    @Override
+    protected void initView() {
+        tvBusRoute.setText(busRoute);
+        tvTimeDistance.setText(Integer.parseInt(data.getDuration()) / 60 + "分钟 | 步行" + data.getWalking_distance() + "米");
+        busRouteDetailAdapter = new BusRouteDetailAdapter(this, tvStartLocation, tvEndLocation, data.getSegments());
+        rlRouteDetail.setLayoutManager(new LinearLayoutManager(this));
+        rlRouteDetail.setAdapter(busRouteDetailAdapter);
     }
 
     @Override

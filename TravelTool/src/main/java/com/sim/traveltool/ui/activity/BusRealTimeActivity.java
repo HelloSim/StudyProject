@@ -30,16 +30,16 @@ import rx.Subscriber;
  */
 public class BusRealTimeActivity extends BaseActivity {
 
-    ImageView back;
-    RecyclerView rlstationList;
-    TextView tvBusName;
-    TextView tvFromStation;
-    TextView tvToStation;
-    TextView tvBeginTime;
-    TextView tvEndTime;
-    TextView tvPrice;
-    ImageView ivRefresh;
-    ImageView ivReverse;
+    private ImageView back;
+    private RecyclerView rlstationList;
+    private TextView tvBusName;
+    private TextView tvFromStation;
+    private TextView tvToStation;
+    private TextView tvBeginTime;
+    private TextView tvEndTime;
+    private TextView tvPrice;
+    private ImageView ivRefresh;
+    private ImageView ivReverse;
 
     private String busName;//公交名
     private String lineId;//公交id
@@ -78,16 +78,6 @@ public class BusRealTimeActivity extends BaseActivity {
     }
 
     @Override
-    protected void initView() {
-        tvBusName.setText(busName);
-        tvFromStation.setText(fromStation);
-        tvToStation.setText(toStation);
-        tvBeginTime.setText(beginTime);
-        tvEndTime.setText(endTime);
-        tvPrice.setText(price + "元");
-    }
-
-    @Override
     protected void initData() {
         busName = getIntent().getStringExtra("busName");
         lineId = getIntent().getStringExtra("lineId");
@@ -109,6 +99,16 @@ public class BusRealTimeActivity extends BaseActivity {
                 }
             }
         };
+    }
+
+    @Override
+    protected void initView() {
+        tvBusName.setText(busName);
+        tvFromStation.setText(fromStation);
+        tvToStation.setText(toStation);
+        tvBeginTime.setText(beginTime);
+        tvEndTime.setText(endTime);
+        tvPrice.setText(price + "元");
     }
 
     @Override
@@ -144,7 +144,7 @@ public class BusRealTimeActivity extends BaseActivity {
             @Override
             public void onError(Throwable e) {
                 ToastUtil.T_Error(BusRealTimeActivity.this, "获取公交路线站点请求出错！");
-                LogUtil.e(BusRealTimeActivity.class, "获取公交路线站点请求出错: " + e);
+                LogUtil.e(this.getClass(), "获取公交路线站点请求出错: " + e);
             }
 
             @Override
@@ -184,7 +184,7 @@ public class BusRealTimeActivity extends BaseActivity {
             @Override
             public void onError(Throwable e) {
                 ToastUtil.T_Error(BusRealTimeActivity.this, "获取实时公交数据请求出错！");
-                LogUtil.e(BusRealTimeActivity.class, "获取实时公交数据的网络请求: " + e);
+                LogUtil.e(this.getClass(), "获取实时公交数据的网络请求: " + e);
             }
 
             @Override

@@ -29,11 +29,11 @@ import rx.Subscriber;
  */
 public class UserLogInActivity extends BaseActivity {
 
-    ImageView back;
-    EditText etUserName;
-    EditText etPassword;
-    Button btnRegistered;
-    Button btnLogIn;
+    private ImageView back;
+    private EditText etUserName;
+    private EditText etPassword;
+    private Button btnRegistered;
+    private Button btnLogIn;
 
     private UserInfo userInfoBean;
 
@@ -53,12 +53,12 @@ public class UserLogInActivity extends BaseActivity {
     }
 
     @Override
-    protected void initView() {
+    protected void initData() {
 
     }
 
     @Override
-    protected void initData() {
+    protected void initView() {
 
     }
 
@@ -106,7 +106,7 @@ public class UserLogInActivity extends BaseActivity {
             @Override
             public void onError(Throwable e) {
                 ToastUtil.T_Error(UserLogInActivity.this,"登录出错！");
-                LogUtil.e(UserLogInActivity.class, "用户登陆出错: " + e);
+                LogUtil.e(this.getClass(), "用户登陆出错: " + e);
             }
 
             @Override

@@ -19,6 +19,7 @@
     <string name="user_login">用户登录</string>
     <string name="user_detail">收藏</string>
     <string name="user_setting">设置</string>
+    <string name="login_no">未登录</string>
 
     <string name="year">年</string>
     <string name="month">月</string>
@@ -35,5 +36,7 @@
     <string name="record_end">下班打卡</string>
     <string name="record_all">打卡记录</string>
     <string name="record_add_memo">添加备忘</string>
+    <string name="record_add_memo_success">添加备忘成功！</string>
+    <string name="record_add_memo_fail">添加备忘失败！</string>
 
 </resources>

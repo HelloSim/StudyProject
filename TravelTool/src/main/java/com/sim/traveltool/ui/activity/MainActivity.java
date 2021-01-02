@@ -36,19 +36,19 @@ import org.greenrobot.eventbus.ThreadMode;
 
 public class MainActivity extends BaseActivity {
 
-    RadioGroup rgBottomBar;
-    RadioButton rbBottomBarBus;
-    RadioButton rbBottomBarWangyi;
-    RadioButton rbBottomBarRecord;
+    private RadioGroup rgBottomBar;
+    private RadioButton rbBottomBarBus;
+    private RadioButton rbBottomBarWangyi;
+    private RadioButton rbBottomBarRecord;
 
-    RelativeLayout rlUserLogIn;
-    RelativeLayout rlUserDetail;
-    RelativeLayout rlUserCollect;
-    RelativeLayout rlUserSetting;
+    private RelativeLayout rlUserLogIn;
+    private RelativeLayout rlUserDetail;
+    private RelativeLayout rlUserCollect;
+    private RelativeLayout rlUserSetting;
 
-    DrawerLayout drawerLayout;
-    ImageView ivUserImage;
-    TextView tvUserNikeName;
+    private DrawerLayout drawerLayout;
+    private ImageView ivUserImage;
+    private TextView tvUserNikeName;
 
     private boolean isLogIn = false;
 
@@ -96,6 +96,25 @@ public class MainActivity extends BaseActivity {
     }
 
     @Override
+    protected void initData() {
+        requestPermission(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 0x001);
+        EventBus.getDefault().register(this);
+        if (!SPUtil.contains(this, AppHelper.userSpName, AppHelper.userSpStateKey)) {
+            SPUtil.put(this, AppHelper.userSpName, AppHelper.userSpStateKey, isLogIn);
+        } else {
+            isLogIn = (boolean) SPUtil.get(this, AppHelper.userSpName, AppHelper.userSpStateKey, false);
+        }
+
+        handler = new Handler() {
+            @Override
+            public void handleMessage(Message msg) {
+                super.handleMessage(msg);
+                count = 0;
+            }
+        };
+    }
+
+    @Override
     protected void initView() {
         rbBottomBarBus.performClick();
         if (SPUtil.contains(this, AppHelper.userSpName, AppHelper.userSpStateKey)) {
@@ -127,25 +146,6 @@ public class MainActivity extends BaseActivity {
             rlUserDetail.setVisibility(View.GONE);
             rlUserLogIn.setVisibility(View.VISIBLE);
         }
-    }
-
-    @Override
-    protected void initData() {
-        requestPermission(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 0x001);
-        EventBus.getDefault().register(this);
-        if (!SPUtil.contains(this, AppHelper.userSpName, AppHelper.userSpStateKey)) {
-            SPUtil.put(this, AppHelper.userSpName, AppHelper.userSpStateKey, isLogIn);
-        } else {
-            isLogIn = (boolean) SPUtil.get(this, AppHelper.userSpName, AppHelper.userSpStateKey, false);
-        }
-
-        handler = new Handler() {
-            @Override
-            public void handleMessage(Message msg) {
-                super.handleMessage(msg);
-                count = 0;
-            }
-        };
     }
 
     @Override

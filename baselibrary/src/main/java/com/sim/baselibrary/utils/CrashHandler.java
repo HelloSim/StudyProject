@@ -75,7 +75,7 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
             try {
                 Thread.sleep(3000);
             } catch (InterruptedException e) {
-                LogUtil.e(CrashHandler.class, "uncaughtException : " + e);
+                LogUtil.e(this.getClass(), "uncaughtException : " + e);
             }
             //退出程序
             android.os.Process.killProcess(android.os.Process.myPid());
@@ -127,7 +127,7 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
                 infos.put("osVersion",osVersion);
             }
         } catch (PackageManager.NameNotFoundException e) {
-            LogUtil.e(CrashHandler.class, "收集设备信息时发生错误:" + e);
+            LogUtil.e(this.getClass(), "收集设备信息时发生错误:" + e);
         }
         Field[] fields = Build.class.getDeclaredFields();
         for (Field field : fields) {
@@ -135,7 +135,7 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
                 field.setAccessible(true);
                 infos.put(field.getName(), field.get(null).toString());
             } catch (Exception e) {
-                LogUtil.e(CrashHandler.class, "收集崩溃信息时发生错误:" + e);
+                LogUtil.e(this.getClass(), "收集崩溃信息时发生错误:" + e);
             }
         }
     }
@@ -175,7 +175,7 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
             }
             return true;
         } catch (Exception e) {
-            LogUtil.e(CrashHandler.class, "写入文件时发生错误:" + e);
+            LogUtil.e(this.getClass(), "写入文件时发生错误:" + e);
             return false;
         }
     }

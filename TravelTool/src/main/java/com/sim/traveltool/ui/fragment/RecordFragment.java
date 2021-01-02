@@ -1,7 +1,6 @@
 package com.sim.traveltool.ui.fragment;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -21,6 +20,7 @@ import com.sim.baselibrary.base.BaseFragment;
 import com.sim.baselibrary.callback.SuccessOrFailListener;
 import com.sim.baselibrary.utils.LogUtil;
 import com.sim.baselibrary.utils.SPUtil;
+import com.sim.baselibrary.utils.StringUtil;
 import com.sim.baselibrary.utils.TimeUtil;
 import com.sim.baselibrary.utils.ToastUtil;
 import com.sim.traveltool.AppHelper;
@@ -46,34 +46,32 @@ import cn.bmob.v3.listener.UpdateListener;
 public class RecordFragment extends BaseFragment implements CalendarView.OnMonthChangeListener,
         CalendarView.OnCalendarSelectListener {
 
-    private Context mContext;
+    private TextView tvNowMonth;
+    private CalendarView calendarView;
 
-    TextView tvNowMonth;
-    CalendarView calendarView;
+    private LinearLayout parent;
+    private ImageView ivMore;
+    private TextView tvRecordTimeStart;
+    private TextView tvRecordTimeEnd;
+    private Button btnRecord;
 
-    LinearLayout parent;
-    ImageView ivMore;
-    TextView tvRecordTimeStart;
-    TextView tvRecordTimeEnd;
-    Button btnRecord;
+    private boolean isLogIn = false;//是否登录
+    private String userSpAccountNumber;//用户账号
 
-    private boolean isLogIn = false;
-    private String userSpAccountNumber;
-
-    Calendar calendar;//选中的日期
-    RecordData recordData;//当天的打卡数据
+    private Calendar calendar;//选中的日期
+    private RecordData recordData;//当天的打卡数据
 
     //更多弹窗
     private PopupWindow morePopupWindow;//弹窗
     private View moreLayout;//布局
-    Button btnAllRecord;
-    Button btnOther;
+    private Button btnAllRecord;
+    private Button btnOther;
     //添加备忘弹窗
     private PopupWindow otherPopupWindow;//弹窗
     private View otherLayout;//布局
-    EditText etOther;
-    Button btnCancel;
-    Button btnConfirm;
+    private EditText etOther;
+    private Button btnCancel;
+    private Button btnConfirm;
 
 
     @Override
@@ -103,14 +101,13 @@ public class RecordFragment extends BaseFragment implements CalendarView.OnMonth
 
     @Override
     protected void initView(View view) {
-        mContext = getContext();
         calendar = calendarView.getSelectedCalendar();
         tvNowMonth.setText(calendar.getYear() + "-" + calendar.getMonth());
-        if (SPUtil.contains(mContext, AppHelper.userSpName, AppHelper.userSpStateKey)) {
-            isLogIn = (boolean) SPUtil.get(mContext, AppHelper.userSpName, AppHelper.userSpStateKey, false);
+        if (SPUtil.contains(getContext(), AppHelper.userSpName, AppHelper.userSpStateKey)) {
+            isLogIn = (boolean) SPUtil.get(getContext(), AppHelper.userSpName, AppHelper.userSpStateKey, false);
             if (isLogIn) {
-                if (SPUtil.contains(mContext, AppHelper.userSpName, AppHelper.userSpAccountNumber)) {
-                    userSpAccountNumber = (String) SPUtil.get(mContext, AppHelper.userSpName, AppHelper.userSpAccountNumber, "");
+                if (SPUtil.contains(getContext(), AppHelper.userSpName, AppHelper.userSpAccountNumber)) {
+                    userSpAccountNumber = (String) SPUtil.get(getContext(), AppHelper.userSpName, AppHelper.userSpAccountNumber, "");
                     showInfo(calendar, true);
                 } else {
                     isLogIn = false;
@@ -118,7 +115,7 @@ public class RecordFragment extends BaseFragment implements CalendarView.OnMonth
             } else {
                 tvRecordTimeStart.setText(getString(R.string.record_no));
                 tvRecordTimeEnd.setText(getString(R.string.record_no));
-                btnRecord.setText("未登录");
+                btnRecord.setText(StringUtil.getContent(getString(R.string.login_no)));
             }
         }
 
@@ -146,20 +143,21 @@ public class RecordFragment extends BaseFragment implements CalendarView.OnMonth
         } else if (view == btnAllRecord) {
             morePopupWindow.dismiss();
             if (isLogIn) {
-                Intent intent = new Intent(mContext, RecordAllActivity.class);
+                Intent intent = new Intent(getContext(), RecordAllActivity.class);
                 Bundle bundle = new Bundle();
+                bundle.putString("userSpAccountNumber", userSpAccountNumber);
                 bundle.putSerializable("calendar", calendar);
                 intent.putExtras(bundle);
                 startActivity(intent);
             } else {
-                ToastUtil.T_Info(mContext, "请先登录！");
+                ToastUtil.T_Info(getContext(), StringUtil.getContent(getString(R.string.login_no)));
             }
         } else if (view == btnOther) {
             morePopupWindow.dismiss();
             if (isLogIn) {
                 otherPopupWindow.showAtLocation(parent, Gravity.CENTER, 0, 0);
             } else {
-                ToastUtil.T_Info(mContext, "请先登录！");
+                ToastUtil.T_Info(getContext(), StringUtil.getContent(getString(R.string.login_no)));
             }
         } else if (view == btnCancel) {
             otherPopupWindow.dismiss();
@@ -170,16 +168,30 @@ public class RecordFragment extends BaseFragment implements CalendarView.OnMonth
                     @Override
                     public void success(Object... values) {
                         List<RecordData> list = (List<RecordData>) values[0];
-                        if (list != null || list.size() != 0) {
+                        if (list != null && list.size() > 0) {
                             RecordData newRecordData = new RecordData(list.get(0).getUserSpAccountNumber(), list.get(0).getDate(), list.get(0).getYearAndMonth(), list.get(0).getStartTime(), list.get(0).getEndTime(), etOther.getText().toString());
                             newRecordData.update(list.get(0).getObjectId(), new UpdateListener() {
                                 @Override
                                 public void done(BmobException e) {
                                     if (e == null) {
-                                        ToastUtil.T_Info(mContext, "添加备忘成功！");
+                                        ToastUtil.T_Info(getContext(), StringUtil.getContent(getString(R.string.record_add_memo_success)));
                                     } else {
-                                        ToastUtil.T_Info(mContext, "添加备忘失败！");
+                                        ToastUtil.T_Info(getContext(), StringUtil.getContent(getString(R.string.record_add_memo_fail)));
                                         LogUtil.d(this.getClass(), "修改指定日期备忘出错：" + e.getMessage());
+                                    }
+                                }
+                            });
+                        } else {
+                            RecordData newRecordData = new RecordData(userSpAccountNumber, getYMD(calendar), getYM(calendar), null, null, etOther.getText().toString());
+                            newRecordData.save(new SaveListener<String>() {
+                                @Override
+                                public void done(String s, BmobException e) {
+                                    if (e == null) {
+                                        showInfo(calendar, true);
+                                        ToastUtil.T_Info(getContext(), (getString(R.string.record_add_memo_success)));
+                                    } else {
+                                        ToastUtil.T_Info(getContext(), (getString(R.string.record_add_memo_fail)));
+                                        LogUtil.d(this.getClass(), "添加指定日期备忘出错：" + e.getMessage());
                                     }
                                 }
                             });
@@ -192,7 +204,7 @@ public class RecordFragment extends BaseFragment implements CalendarView.OnMonth
                     }
                 });
             } else {
-                ToastUtil.T_Info(mContext, "请先登录！");
+                ToastUtil.T_Info(getContext(), StringUtil.getContent(getString(R.string.login_no)));
             }
         } else if (view == btnRecord) {
             if (isLogIn) {
@@ -232,10 +244,10 @@ public class RecordFragment extends BaseFragment implements CalendarView.OnMonth
                     }
                 } else {
                     calendarView.scrollToCurrent(true);
-                    ToastUtil.T_Info(mContext, getString(R.string.record_only_today));
+                    ToastUtil.T_Info(getContext(), getString(R.string.record_only_today));
                 }
             } else {
-                ToastUtil.T_Info(mContext, "请先登录！");
+                ToastUtil.T_Info(getContext(), StringUtil.getContent(getString(R.string.login_no)));
             }
         } else {
             super.onMultiClick(view);
@@ -331,10 +343,10 @@ public class RecordFragment extends BaseFragment implements CalendarView.OnMonth
                     public void done(BmobException e) {
                         if (e == null) {
                             showInfo(calendar, true);
-                            ToastUtil.T_Info(mContext, (getString(R.string.record_success)));
+                            ToastUtil.T_Info(getContext(), (getString(R.string.record_success)));
                         } else {
-                            ToastUtil.T_Info(mContext, (getString(R.string.record_failure)));
-                            LogUtil.d(this.getClass(), "修改当天上班数据出错：" + e.getMessage());
+                            ToastUtil.T_Info(getContext(), (getString(R.string.record_failure)));
+                            LogUtil.d(this.getClass(), "修改上班打卡时间失败：" + e.getMessage());
                         }
                     }
                 });
@@ -346,10 +358,10 @@ public class RecordFragment extends BaseFragment implements CalendarView.OnMonth
                     public void done(BmobException e) {
                         if (e == null) {
                             showInfo(calendar, true);
-                            ToastUtil.T_Info(mContext, (getString(R.string.record_success)));
+                            ToastUtil.T_Info(getContext(), (getString(R.string.record_success)));
                         } else {
-                            ToastUtil.T_Info(mContext, (getString(R.string.record_failure)));
-                            LogUtil.d(this.getClass(), "修改当天下班数据出错：" + e.getMessage());
+                            ToastUtil.T_Info(getContext(), (getString(R.string.record_failure)));
+                            LogUtil.d(this.getClass(), "修改下班打卡时间出错：" + e.getMessage());
                         }
                     }
                 });
@@ -363,10 +375,10 @@ public class RecordFragment extends BaseFragment implements CalendarView.OnMonth
                     public void done(String s, BmobException e) {
                         if (e == null) {
                             showInfo(calendar, true);
-                            ToastUtil.T_Info(mContext, (getString(R.string.record_success)));
+                            ToastUtil.T_Info(getContext(), (getString(R.string.record_success)));
                         } else {
-                            ToastUtil.T_Info(mContext, (getString(R.string.record_failure)));
-                            LogUtil.d(this.getClass(), "插入当天上班数据出错：" + e.getMessage());
+                            ToastUtil.T_Info(getContext(), (getString(R.string.record_failure)));
+                            LogUtil.d(this.getClass(), "插入上班时间数据出错：" + e.getMessage());
                         }
                     }
                 });
@@ -378,10 +390,10 @@ public class RecordFragment extends BaseFragment implements CalendarView.OnMonth
                     public void done(String s, BmobException e) {
                         if (e == null) {
                             showInfo(calendar, true);
-                            ToastUtil.T_Info(mContext, (getString(R.string.record_success)));
+                            ToastUtil.T_Info(getContext(), (getString(R.string.record_success)));
                         } else {
-                            ToastUtil.T_Info(mContext, (getString(R.string.record_failure)));
-                            LogUtil.d(this.getClass(), "插入当天下班数据出错：" + e.getMessage());
+                            ToastUtil.T_Info(getContext(), (getString(R.string.record_failure)));
+                            LogUtil.d(this.getClass(), "插入下班时间数据出错：" + e.getMessage());
                         }
                     }
                 });
@@ -425,7 +437,6 @@ public class RecordFragment extends BaseFragment implements CalendarView.OnMonth
                 if (e == null) {
                     successOrFailListener.success(list);
                 } else {
-                    LogUtil.d(RecordData.class, "数据库查询失败:" + e.getMessage());
                     successOrFailListener.fail(e.getMessage());
                 }
             }

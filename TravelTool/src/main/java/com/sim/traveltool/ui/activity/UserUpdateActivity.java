@@ -46,18 +46,18 @@ import rx.Subscriber;
  */
 public class UserUpdateActivity extends BaseActivity {
 
-    ImageView back;
-    LinearLayout parent;
+    private ImageView back;
+    private LinearLayout parent;
 
-    RelativeLayout rlUserImage;
-    RelativeLayout rlUserNikeName;
-    RelativeLayout rlUserAutograph;
-    Button btnSignOut;
+    private RelativeLayout rlUserImage;
+    private RelativeLayout rlUserNikeName;
+    private RelativeLayout rlUserAutograph;
+    private Button btnSignOut;
 
-    ImageView ivUserImage;
-    TextView tvUserName;
-    TextView tvUserNikeName;
-    TextView tvUserAutograph;
+    private ImageView ivUserImage;
+    private TextView tvUserName;
+    private TextView tvUserNikeName;
+    private TextView tvUserAutograph;
 
     private UserInfo userInfo;//修改前
     private UserInfo newUserInfo;//修改后
@@ -104,6 +104,12 @@ public class UserUpdateActivity extends BaseActivity {
     }
 
     @Override
+    protected void initData() {
+        userPassword = String.valueOf(SPUtil.get(this, AppHelper.userSpName, AppHelper.userSpPasswordKey, ""));
+        userInfo = new Gson().fromJson((String) SPUtil.get(this, AppHelper.userSpName, AppHelper.userSpUserInfoKey, ""), UserInfo.class);
+    }
+
+    @Override
     protected void initView() {
         if (userInfo != null) {
             if (userInfo.getResult().getHeaderImg() != null)
@@ -136,12 +142,6 @@ public class UserUpdateActivity extends BaseActivity {
             et_autograph.setText(userInfo.getResult().getAutograph());
 
         setViewClick(btn_nike_name_cancel, btn_nike_name_confirm, btn_autograph_cancel, btn_autograph_confirm);
-    }
-
-    @Override
-    protected void initData() {
-        userPassword = String.valueOf(SPUtil.get(this, AppHelper.userSpName, AppHelper.userSpPasswordKey, ""));
-        userInfo = new Gson().fromJson((String) SPUtil.get(this, AppHelper.userSpName, AppHelper.userSpUserInfoKey, ""), UserInfo.class);
     }
 
     @Override
@@ -225,7 +225,7 @@ public class UserUpdateActivity extends BaseActivity {
             @Override
             public void onError(Throwable e) {
                 ToastUtil.T_Error(UserUpdateActivity.this,"更新用户信息出错！");
-                LogUtil.d(UserUpdateActivity.class, "更新用户信息出错: " + e);
+                LogUtil.d(this.getClass(), "更新用户信息出错: " + e);
             }
 
             @Override

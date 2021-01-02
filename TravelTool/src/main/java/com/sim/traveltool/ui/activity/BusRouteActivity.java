@@ -30,9 +30,9 @@ import rx.Subscriber;
  */
 public class BusRouteActivity extends BaseActivity {
 
-    ImageView back;
-    TextView tvFromAndToLocation;
-    RecyclerView rlLocationList;
+    private ImageView back;
+    private TextView tvFromAndToLocation;
+    private RecyclerView rlLocationList;
 
     private String tvStartLocation;//要显示的起始位置
     private String tvEndLocation;//要显示的终点位置
@@ -60,6 +60,24 @@ public class BusRouteActivity extends BaseActivity {
     }
 
     @Override
+    protected void initData() {
+        tvStartLocation = getIntent().getStringExtra("tvStartStation");
+        tvEndLocation = getIntent().getStringExtra("tvEndStation");
+        getLocation(true, tvStartLocation);
+        getLocation(false, tvEndLocation);
+
+    }
+
+    @Override
+    public void onMultiClick(View view) {
+        if (view == back) {
+            finish();
+        } else {
+            super.onMultiClick(view);
+        }
+    }
+
+    @Override
     protected void initView() {
         tvFromAndToLocation.setText(tvStartLocation + " -> " + tvEndLocation);
 
@@ -78,24 +96,6 @@ public class BusRouteActivity extends BaseActivity {
                 startActivity(intent);
             }
         });
-    }
-
-    @Override
-    protected void initData() {
-        tvStartLocation = getIntent().getStringExtra("tvStartStation");
-        tvEndLocation = getIntent().getStringExtra("tvEndStation");
-        getLocation(true, tvStartLocation);
-        getLocation(false, tvEndLocation);
-
-    }
-
-    @Override
-    public void onMultiClick(View view) {
-        if (view == back) {
-            finish();
-        } else {
-            super.onMultiClick(view);
-        }
     }
 
     /**
@@ -123,7 +123,7 @@ public class BusRouteActivity extends BaseActivity {
             @Override
             public void onError(Throwable e) {
                 ToastUtil.T_Error(BusRouteActivity.this, "位置信息请求出错！");
-                LogUtil.e(BusRealTimeActivity.class, "位置信息请求出错: " + e);
+                LogUtil.e(this.getClass(), "位置信息请求出错: " + e);
             }
 
             @Override
@@ -153,7 +153,7 @@ public class BusRouteActivity extends BaseActivity {
             @Override
             public void onError(Throwable e) {
                 ToastUtil.T_Error(BusRouteActivity.this, "出行方案请求出错！");
-                LogUtil.e(BusRouteActivity.class, "出行方案请求出错: " + e);
+                LogUtil.e(this.getClass(), "出行方案请求出错: " + e);
             }
 
             @Override
