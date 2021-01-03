@@ -7,6 +7,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.sim.baselibrary.base.BaseActivity;
 import com.sim.baselibrary.bean.EventMessage;
 import com.sim.baselibrary.utils.LogUtil;
@@ -18,7 +19,9 @@ import com.sim.traveltool.db.bean.User;
 
 import org.greenrobot.eventbus.EventBus;
 
+import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.LogInListener;
 import cn.bmob.v3.listener.SaveListener;
 
 /**
@@ -84,13 +87,34 @@ public class UserLogInActivity extends BaseActivity {
     /**
      * 账号密码登录
      */
-    private void loginByAccount() {
+    private void login() {
         final User user = new User();
         user.setUsername(etUserName.getText().toString());
         user.setPassword(etPassword.getText().toString());
         user.login(new SaveListener<User>() {
             @Override
             public void done(User bmobUser, BmobException e) {
+                if (e == null) {
+                    ToastUtil.T_Success(UserLogInActivity.this, getString(R.string.login_success));
+                    EventBus.getDefault().post(new EventMessage(AppHelper.USER_IsLogIn));
+                    SPUtil.put(UserLogInActivity.this, AppHelper.userSpName, AppHelper.userSpStateKey, true);
+                    finish();
+                } else {
+                    ToastUtil.T_Error(UserLogInActivity.this, getString(R.string.login_fail));
+                    LogUtil.e(this.getClass(), "登录出错---code:" + e.getErrorCode() + ";message:" + e.getMessage());
+                }
+            }
+        });
+    }
+
+    /**
+     * 账号/手机号码/邮箱+密码登录
+     */
+    private void loginByAccount() {
+        //此处替换为你的用户名密码
+        BmobUser.loginByAccount("username", "password", new LogInListener<User>() {
+            @Override
+            public void done(User user, BmobException e) {
                 if (e == null) {
                     ToastUtil.T_Success(UserLogInActivity.this, getString(R.string.login_success));
                     EventBus.getDefault().post(new EventMessage(AppHelper.USER_IsLogIn));
