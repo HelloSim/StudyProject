@@ -1,12 +1,7 @@
 package com.sim.traveltool.ui.activity;
 
 import android.app.Activity;
-import android.content.Intent;
-import android.graphics.Bitmap;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
-import android.provider.MediaStore;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,22 +13,17 @@ import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.load.resource.bitmap.CenterCrop;
-import com.google.android.material.snackbar.Snackbar;
 import com.sim.baselibrary.base.BaseActivity;
 import com.sim.baselibrary.bean.EventMessage;
 import com.sim.baselibrary.callback.DialogInterface;
 import com.sim.baselibrary.utils.LogUtil;
+import com.sim.baselibrary.utils.SPUtil;
 import com.sim.baselibrary.utils.ToastUtil;
 import com.sim.traveltool.AppHelper;
 import com.sim.traveltool.R;
 import com.sim.traveltool.db.bean.User;
 
 import org.greenrobot.eventbus.EventBus;
-
-import java.io.File;
 
 import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.exception.BmobException;
@@ -69,6 +59,8 @@ public class UserUpdateActivity extends BaseActivity {
     private Button btnPasswordCancel;
     private Button btnPasswordConfirm;
 
+    private User user;
+
 
     @Override
     protected int getLayoutRes() {
@@ -92,12 +84,14 @@ public class UserUpdateActivity extends BaseActivity {
 
     @Override
     protected void initData() {
+        if (BmobUser.isLogin()) {
+            user = BmobUser.getCurrentUser(User.class);
+        }
     }
 
     @Override
     protected void initView() {
-        if (BmobUser.isLogin()) {
-            User user = BmobUser.getCurrentUser(User.class);
+        if (user != null) {
             tvUserName.setText(user.getUsername());
             tvMobilePhoneNumber.setText(user.getMobilePhoneNumber());
             tvEmail.setText(user.getEmail());
@@ -127,6 +121,7 @@ public class UserUpdateActivity extends BaseActivity {
                         public void sureOnClick() {
                             BmobUser.logOut();
                             EventBus.getDefault().post(new EventMessage(AppHelper.USER_noLogIn));
+                            SPUtil.put(UserUpdateActivity.this, AppHelper.userSpName, AppHelper.userSpStateKey, false);
                             finish();
                         }
 

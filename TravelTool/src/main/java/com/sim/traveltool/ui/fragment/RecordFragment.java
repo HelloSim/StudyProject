@@ -20,6 +20,7 @@ import com.sim.baselibrary.base.BaseFragment;
 import com.sim.baselibrary.bean.EventMessage;
 import com.sim.baselibrary.callback.SuccessOrFailListener;
 import com.sim.baselibrary.utils.LogUtil;
+import com.sim.baselibrary.utils.SPUtil;
 import com.sim.baselibrary.utils.StringUtil;
 import com.sim.baselibrary.utils.TimeUtil;
 import com.sim.baselibrary.utils.ToastUtil;
@@ -107,13 +108,16 @@ public class RecordFragment extends BaseFragment implements CalendarView.OnMonth
     protected void initView(View view) {
         calendar = calendarView.getSelectedCalendar();
         tvNowMonth.setText(calendar.getYear() + "-" + calendar.getMonth());
-        if (BmobUser.isLogin()) {
+        if (SPUtil.contains(getContext(), AppHelper.userSpName, AppHelper.userSpStateKey) &&
+                ((boolean) SPUtil.get(getContext(), AppHelper.userSpName, AppHelper.userSpStateKey, false)) && BmobUser.isLogin()) {
             user = BmobUser.getCurrentUser(User.class);
-            showInfo(calendar, true);
-        } else {
+        }
+        if (user == null) {
             tvRecordTimeStart.setText(getString(R.string.record_no));
             tvRecordTimeEnd.setText(getString(R.string.record_no));
             btnRecord.setText(StringUtil.getContent(getString(R.string.login_no)));
+        } else {
+            showInfo(calendar, true);
         }
 
         LayoutInflater inflater = (LayoutInflater) getActivity().getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
@@ -140,7 +144,7 @@ public class RecordFragment extends BaseFragment implements CalendarView.OnMonth
             morePopupWindow.showAsDropDown(ivMore, 0, 0);
         } else if (view == btnAllRecord) {
             morePopupWindow.dismiss();
-            if (BmobUser.isLogin()) {
+            if (user != null) {
                 Intent intent = new Intent(getContext(), RecordAllActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putString("username", user.getUsername());
@@ -152,7 +156,7 @@ public class RecordFragment extends BaseFragment implements CalendarView.OnMonth
             }
         } else if (view == btnOther) {
             morePopupWindow.dismiss();
-            if (BmobUser.isLogin()) {
+            if (user != null) {
                 otherPopupWindow.showAtLocation(parent, Gravity.CENTER, 0, 0);
             } else {
                 ToastUtil.T_Info(getContext(), StringUtil.getContent(getString(R.string.login_no)));
@@ -161,7 +165,7 @@ public class RecordFragment extends BaseFragment implements CalendarView.OnMonth
             otherPopupWindow.dismiss();
         } else if (view == btnConfirm) {
             otherPopupWindow.dismiss();
-            if (BmobUser.isLogin()) {
+            if (user != null) {
                 query(user.getUsername(), getYMD(calendarView.getSelectedCalendar()), new SuccessOrFailListener() {
                     @Override
                     public void success(Object... values) {
@@ -205,7 +209,7 @@ public class RecordFragment extends BaseFragment implements CalendarView.OnMonth
                 ToastUtil.T_Info(getContext(), StringUtil.getContent(getString(R.string.login_no)));
             }
         } else if (view == btnRecord) {
-            if (BmobUser.isLogin()) {
+            if (user != null) {
                 if (calendar.isCurrentDay()) {//是否当天
                     if (btnRecord.getText().equals(getString(R.string.record_start))) {//上班卡
                         if (tvRecordTimeStart.getText().equals(getString(R.string.record_no))) {//未打上班卡
@@ -284,7 +288,7 @@ public class RecordFragment extends BaseFragment implements CalendarView.OnMonth
      * 根据数据进行显示
      */
     private void showInfo(Calendar calendar, boolean inInit) {
-        if (BmobUser.isLogin()) {
+        if (user != null) {
             query(user.getUsername(), getYMD(calendar), new SuccessOrFailListener() {
                 @Override
                 public void success(Object... values) {
@@ -341,7 +345,7 @@ public class RecordFragment extends BaseFragment implements CalendarView.OnMonth
      * @param type 1:上班卡 2:下班卡
      */
     private void record(int type) {
-        if (BmobUser.isLogin()) {
+        if (user != null) {
             query(user.getUsername(), getYMD(calendarView.getSelectedCalendar()), new SuccessOrFailListener() {
                 @Override
                 public void success(Object... values) {
@@ -475,65 +479,63 @@ public class RecordFragment extends BaseFragment implements CalendarView.OnMonth
      */
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onMessageEvent(EventMessage eventMessage) {
-        if (eventMessage.type == AppHelper.USER_IsLogIn || eventMessage.type == AppHelper.USER_noLogIn) {
-            if (BmobUser.isLogin()) {
-                user = BmobUser.getCurrentUser(User.class);
-                query(user.getUsername(), getYMD(calendarView.getSelectedCalendar()), new SuccessOrFailListener() {
-                    @Override
-                    public void success(Object... values) {
-                        ArrayList<RecordData> list = (ArrayList<RecordData>) values[0];
-                        if (list != null && list.size() > 0) {
-                            RecordData selectedRecordData = list.get(0);
-                            if (calendarView.getSelectedCalendar().getYear() == calendar.getYear()
-                                    && calendarView.getSelectedCalendar().getMonth() == calendar.getMonth()
-                                    && calendarView.getSelectedCalendar().getDay() == calendar.getDay()) {
-                                recordData = selectedRecordData;
-                            }
-                            tvRecordTimeStart.setText((selectedRecordData.getStartTime() == null || selectedRecordData.getStartTime().length() == 0) ? getString(R.string.record_no) : selectedRecordData.getStartTime());
-                            tvRecordTimeEnd.setText((selectedRecordData.getEndTime() == null || selectedRecordData.getEndTime().length() == 0) ? getString(R.string.record_no) : selectedRecordData.getEndTime());
-                            tvRecordTimeStart.setTextColor(selectedRecordData.isLate() ? Color.RED : Color.WHITE);
-                            tvRecordTimeEnd.setTextColor(selectedRecordData.isLeaveEarly() ? Color.RED : Color.WHITE);
-                            if (tvRecordTimeStart.getText().equals(getString(R.string.record_no))) {//是否已打上班卡
-                                if (TimeUtil.getHour() >= 14) {
-                                    btnRecord.setText(getString(R.string.record_end));
-                                } else {
-                                    btnRecord.setText(getString(R.string.record_start));
-                                }
-                            } else {
-                                btnRecord.setText(getString(R.string.record_end));
-                            }
-                        } else {
-                            tvRecordTimeStart.setText(getString(R.string.record_no));
-                            tvRecordTimeEnd.setText(getString(R.string.record_no));
-                            tvRecordTimeStart.setTextColor(Color.WHITE);
-                            tvRecordTimeEnd.setTextColor(Color.WHITE);
+        if (eventMessage.type == AppHelper.USER_IsLogIn) {
+            user = BmobUser.getCurrentUser(User.class);
+            query(user.getUsername(), getYMD(calendarView.getSelectedCalendar()), new SuccessOrFailListener() {
+                @Override
+                public void success(Object... values) {
+                    ArrayList<RecordData> list = (ArrayList<RecordData>) values[0];
+                    if (list != null && list.size() > 0) {
+                        RecordData selectedRecordData = list.get(0);
+                        if (calendarView.getSelectedCalendar().getYear() == calendar.getYear()
+                                && calendarView.getSelectedCalendar().getMonth() == calendar.getMonth()
+                                && calendarView.getSelectedCalendar().getDay() == calendar.getDay()) {
+                            recordData = selectedRecordData;
+                        }
+                        tvRecordTimeStart.setText((selectedRecordData.getStartTime() == null || selectedRecordData.getStartTime().length() == 0) ? getString(R.string.record_no) : selectedRecordData.getStartTime());
+                        tvRecordTimeEnd.setText((selectedRecordData.getEndTime() == null || selectedRecordData.getEndTime().length() == 0) ? getString(R.string.record_no) : selectedRecordData.getEndTime());
+                        tvRecordTimeStart.setTextColor(selectedRecordData.isLate() ? Color.RED : Color.WHITE);
+                        tvRecordTimeEnd.setTextColor(selectedRecordData.isLeaveEarly() ? Color.RED : Color.WHITE);
+                        if (tvRecordTimeStart.getText().equals(getString(R.string.record_no))) {//是否已打上班卡
                             if (TimeUtil.getHour() >= 14) {
                                 btnRecord.setText(getString(R.string.record_end));
                             } else {
                                 btnRecord.setText(getString(R.string.record_start));
                             }
+                        } else {
+                            btnRecord.setText(getString(R.string.record_end));
                         }
-                    }
-
-                    @Override
-                    public void fail(Object... values) {
-                        user = null;
+                    } else {
                         tvRecordTimeStart.setText(getString(R.string.record_no));
                         tvRecordTimeEnd.setText(getString(R.string.record_no));
                         tvRecordTimeStart.setTextColor(Color.WHITE);
                         tvRecordTimeEnd.setTextColor(Color.WHITE);
-                        btnRecord.setText(getString(R.string.login_no));
+                        if (TimeUtil.getHour() >= 14) {
+                            btnRecord.setText(getString(R.string.record_end));
+                        } else {
+                            btnRecord.setText(getString(R.string.record_start));
+                        }
                     }
-                });
-            } else {
-                user = null;
-                recordData = null;
-                tvRecordTimeStart.setText(getString(R.string.record_no));
-                tvRecordTimeEnd.setText(getString(R.string.record_no));
-                tvRecordTimeStart.setTextColor(Color.WHITE);
-                tvRecordTimeEnd.setTextColor(Color.WHITE);
-                btnRecord.setText(getString(R.string.login_no));
-            }
+                }
+
+                @Override
+                public void fail(Object... values) {
+                    user = null;
+                    tvRecordTimeStart.setText(getString(R.string.record_no));
+                    tvRecordTimeEnd.setText(getString(R.string.record_no));
+                    tvRecordTimeStart.setTextColor(Color.WHITE);
+                    tvRecordTimeEnd.setTextColor(Color.WHITE);
+                    btnRecord.setText(getString(R.string.login_no));
+                }
+            });
+        } else if (eventMessage.type == AppHelper.USER_noLogIn) {
+            user = null;
+            recordData = null;
+            tvRecordTimeStart.setText(getString(R.string.record_no));
+            tvRecordTimeEnd.setText(getString(R.string.record_no));
+            tvRecordTimeStart.setTextColor(Color.WHITE);
+            tvRecordTimeEnd.setTextColor(Color.WHITE);
+            btnRecord.setText(getString(R.string.login_no));
         }
     }
 

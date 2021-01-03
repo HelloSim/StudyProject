@@ -18,6 +18,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.sim.baselibrary.base.BaseActivity;
 import com.sim.baselibrary.bean.EventMessage;
+import com.sim.baselibrary.utils.SPUtil;
 import com.sim.baselibrary.utils.ToastUtil;
 import com.sim.traveltool.AppHelper;
 import com.sim.traveltool.R;
@@ -56,6 +57,8 @@ public class MainActivity extends BaseActivity {
     private Handler handler;
     private int count = 0;
 
+    private User user;
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -90,6 +93,11 @@ public class MainActivity extends BaseActivity {
         requestPermission(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 0x001);
         EventBus.getDefault().register(this);
 
+        if (SPUtil.contains(this, AppHelper.userSpName, AppHelper.userSpStateKey) &&
+                ((boolean) SPUtil.get(this, AppHelper.userSpName, AppHelper.userSpStateKey, false)) && BmobUser.isLogin()) {
+            user = BmobUser.getCurrentUser(User.class);
+        }
+
         handler = new Handler() {
             @Override
             public void handleMessage(Message msg) {
@@ -102,8 +110,7 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void initView() {
         rbBottomBarBus.performClick();
-        if (BmobUser.isLogin()) {
-            User user = BmobUser.getCurrentUser(User.class);
+        if (user != null) {
             tvUserName.setText(user.getUsername());
         } else {
             tvUserName.setText(getString(R.string.user_login));
@@ -114,13 +121,13 @@ public class MainActivity extends BaseActivity {
     public void onMultiClick(View view) {
         if (view == rlUser) {
             drawerLayout.close();
-            if (BmobUser.isLogin()) {
+            if (user != null) {
                 startActivity(new Intent(this, UserUpdateActivity.class));
             } else {
                 startActivity(new Intent(this, UserLogInActivity.class));
             }
         } else if (view == rlUserCollect) {
-            if (BmobUser.isLogin()) {
+            if (user != null) {
                 drawerLayout.close();
                 startActivity(new Intent(this, NewsCollectActivity.class));
             } else {
@@ -219,13 +226,12 @@ public class MainActivity extends BaseActivity {
      */
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onMessageEvent(EventMessage eventMessage) {
-        if (eventMessage.type == AppHelper.USER_IsLogIn || eventMessage.type == AppHelper.USER_noLogIn) {
-            if (BmobUser.isLogin()) {
-                User user = BmobUser.getCurrentUser(User.class);
-                tvUserName.setText(user.getUsername());
-            } else {
-                tvUserName.setText(getString(R.string.user_login));
-            }
+        if (eventMessage.type == AppHelper.USER_IsLogIn){
+            user = BmobUser.getCurrentUser(User.class);
+            tvUserName.setText(user.getUsername());
+        } else if (eventMessage.type == AppHelper.USER_noLogIn) {
+            user = null;
+            tvUserName.setText(getString(R.string.user_login));
         }
     }
 

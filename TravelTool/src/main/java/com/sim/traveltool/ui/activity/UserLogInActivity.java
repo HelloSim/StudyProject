@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import com.sim.baselibrary.base.BaseActivity;
 import com.sim.baselibrary.bean.EventMessage;
 import com.sim.baselibrary.utils.LogUtil;
+import com.sim.baselibrary.utils.SPUtil;
 import com.sim.baselibrary.utils.ToastUtil;
 import com.sim.traveltool.AppHelper;
 import com.sim.traveltool.R;
@@ -91,6 +92,7 @@ public class UserLogInActivity extends BaseActivity {
                 if (e == null) {
                     ToastUtil.T_Success(UserLogInActivity.this, getString(R.string.login_success));
                     EventBus.getDefault().post(new EventMessage(AppHelper.USER_IsLogIn));
+                    SPUtil.put(UserLogInActivity.this, AppHelper.userSpName, AppHelper.userSpStateKey, true);
                     finish();
                 } else {
                     ToastUtil.T_Error(UserLogInActivity.this, getString(R.string.login_fail));
