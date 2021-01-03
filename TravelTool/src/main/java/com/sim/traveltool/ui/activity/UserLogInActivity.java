@@ -18,9 +18,8 @@ import com.sim.traveltool.db.bean.User;
 
 import org.greenrobot.eventbus.EventBus;
 
-import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.exception.BmobException;
-import cn.bmob.v3.listener.LogInListener;
+import cn.bmob.v3.listener.SaveListener;
 
 /**
  * @Auther Sim
@@ -86,9 +85,12 @@ public class UserLogInActivity extends BaseActivity {
      * 账号密码登录
      */
     private void loginByAccount() {
-        BmobUser.loginByAccount(etUserName.getText().toString(), etPassword.getText().toString(), new LogInListener<User>() {
+        final User user = new User();
+        user.setUsername(etUserName.getText().toString());
+        user.setPassword(etPassword.getText().toString());
+        user.login(new SaveListener<User>() {
             @Override
-            public void done(User user, BmobException e) {
+            public void done(User bmobUser, BmobException e) {
                 if (e == null) {
                     ToastUtil.T_Success(UserLogInActivity.this, getString(R.string.login_success));
                     EventBus.getDefault().post(new EventMessage(AppHelper.USER_IsLogIn));

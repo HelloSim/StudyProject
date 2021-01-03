@@ -41,6 +41,7 @@ import java.util.List;
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.FetchUserInfoListener;
 import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.SaveListener;
 import cn.bmob.v3.listener.UpdateListener;
@@ -62,7 +63,6 @@ public class RecordFragment extends BaseFragment implements CalendarView.OnMonth
     private TextView tvRecordTimeEnd;
     private Button btnRecord;
 
-    private Calendar calendar;//选中的日期
     private User user;//已登录的用户信息
     private RecordData recordData;//当天的打卡数据
 
@@ -106,8 +106,7 @@ public class RecordFragment extends BaseFragment implements CalendarView.OnMonth
 
     @Override
     protected void initView(View view) {
-        calendar = calendarView.getSelectedCalendar();
-        tvNowMonth.setText(calendar.getYear() + "-" + calendar.getMonth());
+        tvNowMonth.setText(calendarView.getSelectedCalendar().getYear() + "-" + calendarView.getSelectedCalendar().getMonth());
         if (SPUtil.contains(getContext(), AppHelper.userSpName, AppHelper.userSpStateKey) &&
                 ((boolean) SPUtil.get(getContext(), AppHelper.userSpName, AppHelper.userSpStateKey, false)) && BmobUser.isLogin()) {
             user = BmobUser.getCurrentUser(User.class);
@@ -117,7 +116,7 @@ public class RecordFragment extends BaseFragment implements CalendarView.OnMonth
             tvRecordTimeEnd.setText(getString(R.string.record_no));
             btnRecord.setText(StringUtil.getContent(getString(R.string.login_no)));
         } else {
-            showInfo(calendar, true);
+            showInfo(calendarView.getSelectedCalendar());
         }
 
         LayoutInflater inflater = (LayoutInflater) getActivity().getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
@@ -148,7 +147,7 @@ public class RecordFragment extends BaseFragment implements CalendarView.OnMonth
                 Intent intent = new Intent(getContext(), RecordAllActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putString("username", user.getUsername());
-                bundle.putSerializable("calendar", calendar);
+                bundle.putSerializable("calendar", calendarView.getSelectedCalendar());
                 intent.putExtras(bundle);
                 startActivity(intent);
             } else {
@@ -184,12 +183,12 @@ public class RecordFragment extends BaseFragment implements CalendarView.OnMonth
                                 }
                             });
                         } else {
-                            RecordData newRecordData = new RecordData(user.getUsername(), getYMD(calendar), getYM(calendar), null, null, etOther.getText().toString());
+                            RecordData newRecordData = new RecordData(user.getUsername(), getYMD(calendarView.getSelectedCalendar()), getYM(calendarView.getSelectedCalendar()), null, null, etOther.getText().toString());
                             newRecordData.save(new SaveListener<String>() {
                                 @Override
                                 public void done(String s, BmobException e) {
                                     if (e == null) {
-                                        showInfo(calendar, true);
+                                        showInfo(calendarView.getSelectedCalendar());
                                         ToastUtil.T_Info(getContext(), (getString(R.string.record_add_memo_success)));
                                     } else {
                                         ToastUtil.T_Info(getContext(), (getString(R.string.record_add_memo_fail)));
@@ -210,7 +209,7 @@ public class RecordFragment extends BaseFragment implements CalendarView.OnMonth
             }
         } else if (view == btnRecord) {
             if (user != null) {
-                if (calendar.isCurrentDay()) {//是否当天
+                if (calendarView.getSelectedCalendar().isCurrentDay()) {//是否当天
                     if (btnRecord.getText().equals(getString(R.string.record_start))) {//上班卡
                         if (tvRecordTimeStart.getText().equals(getString(R.string.record_no))) {//未打上班卡
                             record(1);
@@ -269,7 +268,6 @@ public class RecordFragment extends BaseFragment implements CalendarView.OnMonth
 
     @Override
     public void onCalendarOutOfRange(Calendar calendar) {
-        this.calendar = calendar;
     }
 
     /**
@@ -280,14 +278,13 @@ public class RecordFragment extends BaseFragment implements CalendarView.OnMonth
      */
     @Override
     public void onCalendarSelect(Calendar calendar, boolean isClick) {
-        this.calendar = calendar;
-        showInfo(calendar, false);
+        showInfo(calendar);
     }
 
     /**
      * 根据数据进行显示
      */
-    private void showInfo(Calendar calendar, boolean inInit) {
+    private void showInfo(Calendar calendar) {
         if (user != null) {
             query(user.getUsername(), getYMD(calendar), new SuccessOrFailListener() {
                 @Override
@@ -295,7 +292,7 @@ public class RecordFragment extends BaseFragment implements CalendarView.OnMonth
                     ArrayList<RecordData> list = (ArrayList<RecordData>) values[0];
                     if (list != null && list.size() > 0) {
                         RecordData selectedRecordData = list.get(0);
-                        if (inInit) {
+                        if (calendar.isCurrentDay()) {
                             recordData = selectedRecordData;
                         }
                         tvRecordTimeStart.setText((selectedRecordData.getStartTime() == null || selectedRecordData.getStartTime().length() == 0) ? getString(R.string.record_no) : selectedRecordData.getStartTime());
@@ -363,12 +360,12 @@ public class RecordFragment extends BaseFragment implements CalendarView.OnMonth
             if (recordData != null) {//已有当天数据
                 if (type == 1) {//修改当天数据（上班）
                     String startTime = new SimpleDateFormat("HH:mm").format(System.currentTimeMillis());
-                    RecordData newRecordData = new RecordData(user.getUsername(), getYMD(calendar), getYM(calendar), startTime, recordData.getEndTime(), recordData.getOther());
+                    RecordData newRecordData = new RecordData(user.getUsername(), getYMD(calendarView.getSelectedCalendar()), getYM(calendarView.getSelectedCalendar()), startTime, recordData.getEndTime(), recordData.getOther());
                     newRecordData.update(recordData.getObjectId(), new UpdateListener() {
                         @Override
                         public void done(BmobException e) {
                             if (e == null) {
-                                showInfo(calendar, true);
+                                showInfo(calendarView.getSelectedCalendar());
                                 ToastUtil.T_Info(getContext(), (getString(R.string.record_success)));
                             } else {
                                 ToastUtil.T_Info(getContext(), (getString(R.string.record_failure)));
@@ -378,12 +375,12 @@ public class RecordFragment extends BaseFragment implements CalendarView.OnMonth
                     });
                 } else {//修改当天数据（下班）
                     String endTime = new SimpleDateFormat("HH:mm").format(System.currentTimeMillis());
-                    RecordData newRecordData = new RecordData(user.getUsername(), getYMD(calendar), getYM(calendar), recordData.getStartTime(), endTime, recordData.getOther());
+                    RecordData newRecordData = new RecordData(user.getUsername(), getYMD(calendarView.getSelectedCalendar()), getYM(calendarView.getSelectedCalendar()), recordData.getStartTime(), endTime, recordData.getOther());
                     newRecordData.update(recordData.getObjectId(), new UpdateListener() {
                         @Override
                         public void done(BmobException e) {
                             if (e == null) {
-                                showInfo(calendar, true);
+                                showInfo(calendarView.getSelectedCalendar());
                                 ToastUtil.T_Info(getContext(), (getString(R.string.record_success)));
                             } else {
                                 ToastUtil.T_Info(getContext(), (getString(R.string.record_failure)));
@@ -395,12 +392,12 @@ public class RecordFragment extends BaseFragment implements CalendarView.OnMonth
             } else {//没有当天数据
                 if (type == 1) {//插入当天数据（上班）
                     String startTime = new SimpleDateFormat("HH:mm").format(System.currentTimeMillis());
-                    RecordData newRecordData = new RecordData(user.getUsername(), getYMD(calendar), getYM(calendar), startTime, null, null);
+                    RecordData newRecordData = new RecordData(user.getUsername(), getYMD(calendarView.getSelectedCalendar()), getYM(calendarView.getSelectedCalendar()), startTime, null, null);
                     newRecordData.save(new SaveListener<String>() {
                         @Override
                         public void done(String s, BmobException e) {
                             if (e == null) {
-                                showInfo(calendar, true);
+                                showInfo(calendarView.getSelectedCalendar());
                                 ToastUtil.T_Info(getContext(), (getString(R.string.record_success)));
                             } else {
                                 ToastUtil.T_Info(getContext(), (getString(R.string.record_failure)));
@@ -410,12 +407,12 @@ public class RecordFragment extends BaseFragment implements CalendarView.OnMonth
                     });
                 } else {//插入当天数据（下班）
                     String endTime = new SimpleDateFormat("HH:mm").format(System.currentTimeMillis());
-                    RecordData newRecordData = new RecordData(user.getUsername(), getYMD(calendar), getYM(calendar), null, endTime, null);
+                    RecordData newRecordData = new RecordData(user.getUsername(), getYMD(calendarView.getSelectedCalendar()), getYM(calendarView.getSelectedCalendar()), null, endTime, null);
                     newRecordData.save(new SaveListener<String>() {
                         @Override
                         public void done(String s, BmobException e) {
                             if (e == null) {
-                                showInfo(calendar, true);
+                                showInfo(calendarView.getSelectedCalendar());
                                 ToastUtil.T_Info(getContext(), (getString(R.string.record_success)));
                             } else {
                                 ToastUtil.T_Info(getContext(), (getString(R.string.record_failure)));
@@ -473,6 +470,22 @@ public class RecordFragment extends BaseFragment implements CalendarView.OnMonth
     }
 
     /**
+     * 同步控制台数据到缓存中
+     */
+    private void fetchUserInfo() {
+        BmobUser.fetchUserInfo(new FetchUserInfoListener<BmobUser>() {
+            @Override
+            public void done(BmobUser user, BmobException e) {
+                if (e == null) {
+                    LogUtil.e(this.getClass(), "更新用户本地缓存信息成功");
+                } else {
+                    LogUtil.e(this.getClass(), "更新用户本地缓存信息失败---code:" + e.getErrorCode() + ";message:" + e.getMessage());
+                }
+            }
+        });
+    }
+
+    /**
      * 接收消息事件
      *
      * @param eventMessage
@@ -481,53 +494,8 @@ public class RecordFragment extends BaseFragment implements CalendarView.OnMonth
     public void onMessageEvent(EventMessage eventMessage) {
         if (eventMessage.type == AppHelper.USER_IsLogIn) {
             user = BmobUser.getCurrentUser(User.class);
-            query(user.getUsername(), getYMD(calendarView.getSelectedCalendar()), new SuccessOrFailListener() {
-                @Override
-                public void success(Object... values) {
-                    ArrayList<RecordData> list = (ArrayList<RecordData>) values[0];
-                    if (list != null && list.size() > 0) {
-                        RecordData selectedRecordData = list.get(0);
-                        if (calendarView.getSelectedCalendar().getYear() == calendar.getYear()
-                                && calendarView.getSelectedCalendar().getMonth() == calendar.getMonth()
-                                && calendarView.getSelectedCalendar().getDay() == calendar.getDay()) {
-                            recordData = selectedRecordData;
-                        }
-                        tvRecordTimeStart.setText((selectedRecordData.getStartTime() == null || selectedRecordData.getStartTime().length() == 0) ? getString(R.string.record_no) : selectedRecordData.getStartTime());
-                        tvRecordTimeEnd.setText((selectedRecordData.getEndTime() == null || selectedRecordData.getEndTime().length() == 0) ? getString(R.string.record_no) : selectedRecordData.getEndTime());
-                        tvRecordTimeStart.setTextColor(selectedRecordData.isLate() ? Color.RED : Color.WHITE);
-                        tvRecordTimeEnd.setTextColor(selectedRecordData.isLeaveEarly() ? Color.RED : Color.WHITE);
-                        if (tvRecordTimeStart.getText().equals(getString(R.string.record_no))) {//是否已打上班卡
-                            if (TimeUtil.getHour() >= 14) {
-                                btnRecord.setText(getString(R.string.record_end));
-                            } else {
-                                btnRecord.setText(getString(R.string.record_start));
-                            }
-                        } else {
-                            btnRecord.setText(getString(R.string.record_end));
-                        }
-                    } else {
-                        tvRecordTimeStart.setText(getString(R.string.record_no));
-                        tvRecordTimeEnd.setText(getString(R.string.record_no));
-                        tvRecordTimeStart.setTextColor(Color.WHITE);
-                        tvRecordTimeEnd.setTextColor(Color.WHITE);
-                        if (TimeUtil.getHour() >= 14) {
-                            btnRecord.setText(getString(R.string.record_end));
-                        } else {
-                            btnRecord.setText(getString(R.string.record_start));
-                        }
-                    }
-                }
-
-                @Override
-                public void fail(Object... values) {
-                    user = null;
-                    tvRecordTimeStart.setText(getString(R.string.record_no));
-                    tvRecordTimeEnd.setText(getString(R.string.record_no));
-                    tvRecordTimeStart.setTextColor(Color.WHITE);
-                    tvRecordTimeEnd.setTextColor(Color.WHITE);
-                    btnRecord.setText(getString(R.string.login_no));
-                }
-            });
+            fetchUserInfo();
+            showInfo(calendarView.getSelectedCalendar());
         } else if (eventMessage.type == AppHelper.USER_noLogIn) {
             user = null;
             recordData = null;

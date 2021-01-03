@@ -18,6 +18,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.sim.baselibrary.base.BaseActivity;
 import com.sim.baselibrary.bean.EventMessage;
+import com.sim.baselibrary.utils.LogUtil;
 import com.sim.baselibrary.utils.SPUtil;
 import com.sim.baselibrary.utils.ToastUtil;
 import com.sim.traveltool.AppHelper;
@@ -32,6 +33,8 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import cn.bmob.v3.BmobUser;
+import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.FetchUserInfoListener;
 
 public class MainActivity extends BaseActivity {
 
@@ -220,6 +223,22 @@ public class MainActivity extends BaseActivity {
     }
 
     /**
+     * 同步控制台数据到缓存中
+     */
+    private void fetchUserInfo() {
+        BmobUser.fetchUserInfo(new FetchUserInfoListener<BmobUser>() {
+            @Override
+            public void done(BmobUser user, BmobException e) {
+                if (e == null) {
+                    LogUtil.e(this.getClass(), "更新用户本地缓存信息成功");
+                } else {
+                    LogUtil.e(this.getClass(), "更新用户本地缓存信息失败---code:" + e.getErrorCode() + ";message:" + e.getMessage());
+                }
+            }
+        });
+    }
+
+    /**
      * 接收消息事件
      *
      * @param eventMessage
@@ -228,6 +247,7 @@ public class MainActivity extends BaseActivity {
     public void onMessageEvent(EventMessage eventMessage) {
         if (eventMessage.type == AppHelper.USER_IsLogIn){
             user = BmobUser.getCurrentUser(User.class);
+            fetchUserInfo();
             tvUserName.setText(user.getUsername());
         } else if (eventMessage.type == AppHelper.USER_noLogIn) {
             user = null;

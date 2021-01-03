@@ -37,7 +37,7 @@ public class RecordAllActivity extends BaseActivity {
     private SmartTable<RecordData> table;
 
     private Calendar calendar;
-    private String userSpAccountNumber;//用户账号
+    private String username;//用户账号
 
     private List<RecordData> allDataList = new ArrayList<>();//当月打卡数据
     private int days;//当月天数
@@ -58,14 +58,14 @@ public class RecordAllActivity extends BaseActivity {
     @Override
     protected void initData() {
         calendar = (Calendar) getIntent().getSerializableExtra("calendar");
-        userSpAccountNumber = getIntent().getStringExtra("userSpAccountNumber");
+        username = getIntent().getStringExtra("username");
         days = TimeUtil.getDaysByYearMonth(calendar.getYear(), calendar.getMonth());
         for (int i = 1; i <= days; i++) {
             RecordData recordData = new RecordData(getYearAndMonth(calendar) + "-" + i);
             allDataList.add(recordData);
         }
         BmobQuery<RecordData> bmobQuery = new BmobQuery<>();
-        bmobQuery.addWhereEqualTo("userSpAccountNumber", userSpAccountNumber);
+        bmobQuery.addWhereEqualTo("username", username);
         bmobQuery.addWhereEqualTo("yearAndMonth", getYM(calendar));
         bmobQuery.findObjects(new FindListener<RecordData>() {
             @Override
