@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.View;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -16,6 +17,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.sim.baselibrary.base.BaseActivity;
 import com.sim.baselibrary.bean.EventMessage;
 import com.sim.baselibrary.utils.LogUtil;
@@ -229,6 +231,22 @@ public class MainActivity extends BaseActivity {
         BmobUser.fetchUserInfo(new FetchUserInfoListener<BmobUser>() {
             @Override
             public void done(BmobUser user, BmobException e) {
+                if (e == null) {
+                    LogUtil.e(this.getClass(), "更新用户本地缓存信息成功");
+                } else {
+                    LogUtil.e(this.getClass(), "更新用户本地缓存信息失败---code:" + e.getErrorCode() + ";message:" + e.getMessage());
+                }
+            }
+        });
+    }
+
+    /**
+     * 获取控制台最新JSON数据，不同步到缓存中
+     */
+    private void fetchUserJsonInfo() {
+        BmobUser.fetchUserJsonInfo(new FetchUserInfoListener<String>() {
+            @Override
+            public void done(String json, BmobException e) {
                 if (e == null) {
                     LogUtil.e(this.getClass(), "更新用户本地缓存信息成功");
                 } else {

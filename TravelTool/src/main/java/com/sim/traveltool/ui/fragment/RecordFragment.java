@@ -486,6 +486,22 @@ public class RecordFragment extends BaseFragment implements CalendarView.OnMonth
     }
 
     /**
+     * 获取控制台最新JSON数据，不同步到缓存中
+     */
+    private void fetchUserJsonInfo() {
+        BmobUser.fetchUserJsonInfo(new FetchUserInfoListener<String>() {
+            @Override
+            public void done(String json, BmobException e) {
+                if (e == null) {
+                    LogUtil.e(this.getClass(), "更新用户本地缓存信息成功");
+                } else {
+                    LogUtil.e(this.getClass(), "更新用户本地缓存信息失败---code:" + e.getErrorCode() + ";message:" + e.getMessage());
+                }
+            }
+        });
+    }
+
+    /**
      * 接收消息事件
      *
      * @param eventMessage
