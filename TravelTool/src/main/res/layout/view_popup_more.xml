@@ -13,7 +13,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/button_bg_blue_retangle"
-        android:text="月打卡记录"
+        android:text="@string/record_all"
+        android:textAllCaps="false"
         android:textColor="@color/white"
         android:textSize="18sp" />
 
@@ -23,7 +24,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:background="@drawable/button_bg_blue_retangle"
-        android:text="添加工作日备忘"
+        android:text="@string/record_add_memo"
+        android:textAllCaps="false"
         android:textColor="@color/white"
         android:textSize="18sp" />
 

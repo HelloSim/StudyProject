@@ -121,7 +121,7 @@ public class UserUpdateActivity extends BaseActivity {
         if (view == back) {
             finish();
         } else if (view == btnLogOut) {
-            showDialog("退出登录", "是否确认退出？", "确认", "取消",
+            showDialog(getString(R.string.logout), getString(R.string.confirm_logout), getString(R.string.ok), getString(R.string.cancel),
                     new DialogInterface() {
                         @Override
                         public void sureOnClick() {
@@ -150,10 +150,10 @@ public class UserUpdateActivity extends BaseActivity {
                 if (etNewPassword.getText().toString().equals(etNewPasswordAgain.getText().toString())) {
                     updatePassword(etOldPassword.getText().toString(), etNewPassword.getText().toString());
                 } else {
-                    ToastUtil.T_Info(UserUpdateActivity.this, "新密码输入不一致！");
+                    ToastUtil.T_Info(UserUpdateActivity.this, getString(R.string.inconsistent));
                 }
             } else {
-                ToastUtil.T_Info(UserUpdateActivity.this, "密码不能为空！");
+                ToastUtil.T_Info(UserUpdateActivity.this, getString(R.string.password_no_null));
             }
         } else {
             super.onMultiClick(view);
@@ -168,13 +168,13 @@ public class UserUpdateActivity extends BaseActivity {
             @Override
             public void done(BmobException e) {
                 if (e == null) {
-                    ToastUtil.T_Success(UserUpdateActivity.this, "修改成功！");
+                    ToastUtil.T_Success(UserUpdateActivity.this, getString(R.string.update_success));
                     updatePasswordPopupWindow.dismiss();
                 } else {
                     if (e.getMessage().contains("old password incorrect")) {
-                        ToastUtil.T_Error(UserUpdateActivity.this, "旧密码错误！");
+                        ToastUtil.T_Error(UserUpdateActivity.this, getString(R.string.login_fail_password));
                     } else {
-                        ToastUtil.T_Error(UserUpdateActivity.this, "修改失败！");
+                        ToastUtil.T_Error(UserUpdateActivity.this, getString(R.string.update_fail));
                         LogUtil.e(this.getClass(), "修改用户信息失败---code:" + e.getErrorCode() + ";message:" + e.getMessage());
                     }
                 }
@@ -192,9 +192,9 @@ public class UserUpdateActivity extends BaseActivity {
             @Override
             public void done(BmobException e) {
                 if (e == null) {
-                    ToastUtil.T_Success(UserUpdateActivity.this, "修改成功！");
+                    ToastUtil.T_Success(UserUpdateActivity.this, getString(R.string.update_success));
                 } else {
-                    ToastUtil.T_Error(UserUpdateActivity.this, "修改失败！");
+                    ToastUtil.T_Error(UserUpdateActivity.this, getString(R.string.update_fail));
                     LogUtil.e(this.getClass(), "修改用户信息失败---code:" + e.getErrorCode() + ";message:" + e.getMessage());
                 }
             }

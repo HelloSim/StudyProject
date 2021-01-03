@@ -25,7 +25,7 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:layout_marginLeft="10dp"
-            android:text="登录"
+            android:text="@string/login"
             android:textColor="@color/white"
             android:textSize="20sp" />
 
@@ -33,23 +33,28 @@
 
     <LinearLayout
         android:id="@+id/ll_user_name"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
         android:layout_marginTop="200dp"
-        android:orientation="horizontal">
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:paddingLeft="80dp"
+        android:paddingRight="80dp">
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="用户名:"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/username"
             android:textColor="@color/white"
             tools:ignore="HardcodedText" />
 
         <EditText
             android:id="@+id/et_user_name"
-            android:layout_width="180dp"
+            android:layout_width="0dp"
             android:layout_height="40dp"
+            android:layout_weight="2"
             android:layout_marginLeft="10dp"
             android:background="@drawable/blue_stroke"
             android:gravity="center_vertical"
@@ -60,24 +65,29 @@
 
     <LinearLayout
         android:id="@+id/ll_password"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/ll_user_name"
-        android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
-        android:orientation="horizontal">
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:paddingLeft="80dp"
+        android:paddingRight="80dp">
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
             android:textColor="@color/white"
-            android:text="密    码 :"
+            android:text="@string/password"
             tools:ignore="HardcodedText" />
 
         <EditText
             android:id="@+id/et_password"
-            android:layout_width="180dp"
+            android:layout_width="0dp"
             android:layout_height="40dp"
+            android:layout_weight="2"
             android:layout_marginLeft="10dp"
             android:background="@drawable/blue_stroke"
             android:gravity="center_vertical"
@@ -100,7 +110,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/button_bg"
-            android:text="注册"
+            android:text="@string/register"
             android:textAllCaps="false"
             android:textColor="@color/white" />
 
@@ -110,7 +120,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
             android:background="@drawable/button_bg"
-            android:text="登录"
+            android:text="@string/login"
             android:textAllCaps="false"
             android:textColor="@color/white" />
     </LinearLayout>

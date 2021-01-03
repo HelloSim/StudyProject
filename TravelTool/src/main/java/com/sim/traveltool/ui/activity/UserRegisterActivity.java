@@ -64,19 +64,19 @@ public class UserRegisterActivity extends BaseActivity {
             finish();
         } else if (view == btnRegistered) {
             if (etUserName.getText().toString().length() <= 0) {
-                ToastUtil.T_Info(UserRegisterActivity.this, "用户名不能为空！");
+                ToastUtil.T_Info(UserRegisterActivity.this, getString(R.string.username_no_null));
                 return;
             }
             if (etPassword.getText().toString().length() <= 0) {
-                ToastUtil.T_Info(UserRegisterActivity.this, "密码不能为空！");
+                ToastUtil.T_Info(UserRegisterActivity.this,  getString(R.string.password_no_null));
                 return;
             }
             if (!RegexUtil.checkPhone(etMobilePhoneNumber.getText().toString())) {
-                ToastUtil.T_Info(UserRegisterActivity.this, "请输入正确的手机号码！");
+                ToastUtil.T_Info(UserRegisterActivity.this, getString(R.string.phone_no_null));
                 return;
             }
             if (!RegexUtil.email(etEmail.getText().toString())) {
-                ToastUtil.T_Info(UserRegisterActivity.this, "请输入正确的电子邮箱！");
+                ToastUtil.T_Info(UserRegisterActivity.this, getString(R.string.email_no_null));
                 return;
             }
             registerUser(etUserName.getText().toString(), etPassword.getText().toString(),
@@ -101,17 +101,17 @@ public class UserRegisterActivity extends BaseActivity {
             @Override
             public void done(User user, BmobException e) {
                 if (e == null) {
-                    ToastUtil.T_Success(UserRegisterActivity.this, "注册成功！");
+                    ToastUtil.T_Success(UserRegisterActivity.this, getString(R.string.register_success));
                     finish();
                 } else {
                     if (e.getMessage().contains("username") && e.getMessage().contains("already taken")) {
-                        ToastUtil.T_Error(UserRegisterActivity.this, "账号已被注册！");
+                        ToastUtil.T_Error(UserRegisterActivity.this, getString(R.string.register_fail_username));
                     } else if (e.getMessage().contains("mobilePhoneNumber") && e.getMessage().contains("already taken")) {
-                        ToastUtil.T_Error(UserRegisterActivity.this, "手机号码已被注册！");
+                        ToastUtil.T_Error(UserRegisterActivity.this, getString(R.string.register_fail_phone));
                     } else if (e.getMessage().contains("email") && e.getMessage().contains("already taken")) {
-                        ToastUtil.T_Error(UserRegisterActivity.this, "电子邮箱已被注册！");
+                        ToastUtil.T_Error(UserRegisterActivity.this, getString(R.string.register_fail_email));
                     } else {
-                        ToastUtil.T_Error(UserRegisterActivity.this, "注册失败！");
+                        ToastUtil.T_Error(UserRegisterActivity.this, getString(R.string.register_fail));
                         LogUtil.e(this.getClass(), "注册失败---coed:" + e.getErrorCode() + ";message:" + e.getMessage());
                     }
                 }

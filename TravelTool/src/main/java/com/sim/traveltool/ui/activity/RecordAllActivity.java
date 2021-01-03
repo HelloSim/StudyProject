@@ -94,7 +94,7 @@ public class RecordAllActivity extends BaseActivity {
     @Override
     protected void initView() {
         FontStyle.setDefaultTextSize(DensityUtils.sp2px(this, 18)); //设置全局字体大小
-        title.setText(getYearAndMonth(calendar) + getString(R.string.record_all));
+        title.setText(getYearAndMonth(calendar));
 
         ArrayList list = new ArrayList();//日期列的周六日内容格
         table.setZoom(false);//设置不可缩放

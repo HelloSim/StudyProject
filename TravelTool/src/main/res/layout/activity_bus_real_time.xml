@@ -22,7 +22,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="实时公交搜索"
+            android:text="@string/bus_real_time_search"
             android:textColor="@color/white"
             android:textSize="20sp" />
 
@@ -82,7 +82,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="首班:"
+            android:text="@string/bus_stara_time"
             android:textColor="@color/dark_gray"
             android:textSize="16sp" />
 
@@ -97,7 +97,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-            android:text="末班:"
+            android:text="@string/bus_end_time"
             android:textColor="@color/dark_gray"
             android:textSize="16sp" />
 
@@ -112,7 +112,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-            android:text="票价:"
+            android:text="@string/bus_price"
             android:textColor="@color/dark_gray"
             android:textSize="16sp" />
 

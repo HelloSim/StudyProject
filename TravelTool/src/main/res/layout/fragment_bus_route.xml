@@ -74,7 +74,8 @@
         android:layout_marginTop="10dp"
         android:layout_marginRight="20dp"
         android:background="@drawable/button_bg_blue_retangle"
-        android:text="查询方案"
+        android:text="@string/bus_transfer_plan"
+        android:textAllCaps="false"
         android:textColor="@color/white"
         android:textSize="18sp" />
 

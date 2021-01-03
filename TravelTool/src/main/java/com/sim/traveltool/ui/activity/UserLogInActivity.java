@@ -71,9 +71,9 @@ public class UserLogInActivity extends BaseActivity {
                 loginByAccount();
             } else {
                 if (etUserName.getText().toString().length() > 0) {
-                    ToastUtil.T_Info(UserLogInActivity.this, "请输入密码！");
+                    ToastUtil.T_Info(UserLogInActivity.this, getString(R.string.enter_password));
                 } else {
-                    ToastUtil.T_Info(UserLogInActivity.this, "请输入用户名！");
+                    ToastUtil.T_Info(UserLogInActivity.this, getString(R.string.enter_username));
                 }
             }
         } else {
@@ -89,11 +89,11 @@ public class UserLogInActivity extends BaseActivity {
             @Override
             public void done(User user, BmobException e) {
                 if (e == null) {
-                    ToastUtil.T_Success(UserLogInActivity.this, "登录成功！");
+                    ToastUtil.T_Success(UserLogInActivity.this, getString(R.string.login_success));
                     EventBus.getDefault().post(new EventMessage(AppHelper.USER_IsLogIn));
                     finish();
                 } else {
-                    ToastUtil.T_Error(UserLogInActivity.this, "登录出错！");
+                    ToastUtil.T_Error(UserLogInActivity.this, getString(R.string.login_fail));
                     LogUtil.e(this.getClass(), "登录出错---code:" + e.getErrorCode() + ";message:" + e.getMessage());
                 }
             }

@@ -16,7 +16,7 @@ public class RecordData extends BmobObject {
 
     // 仅在客户端使用，不希望被gson序列化提交到后端云，用transient修饰
 
-    private String userSpAccountNumber;//打卡人
+    private String username;//打卡人
     @SmartColumn(id = 1, name = "日期", fixed = true)
     private String date;//日期 2020-12-31
     private String yearAndMonth;//年月
@@ -36,8 +36,8 @@ public class RecordData extends BmobObject {
         this.week = TimeUtil.getWeek(date);
     }
 
-    public RecordData(String userSpAccountNumber, String date, String yearAndMonth, String startTime, String endTime, String other) {
-        this.userSpAccountNumber = userSpAccountNumber;
+    public RecordData(String username, String date, String yearAndMonth, String startTime, String endTime, String other) {
+        this.username = username;
         this.date = date;
         this.yearAndMonth = yearAndMonth;
         this.week = TimeUtil.getWeek(date);
@@ -64,12 +64,12 @@ public class RecordData extends BmobObject {
     }
 
 
-    public String getUserSpAccountNumber() {
-        return userSpAccountNumber;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUserSpAccountNumber(String userSpAccountNumber) {
-        this.userSpAccountNumber = userSpAccountNumber;
+    public void setUsername(String userSpAccountNumber) {
+        this.username = userSpAccountNumber;
     }
 
     public String getDate() {
@@ -139,7 +139,7 @@ public class RecordData extends BmobObject {
     @Override
     public String toString() {
         return "RecordData{" +
-                "userSpAccountNumber='" + userSpAccountNumber + '\'' +
+                "username='" + username + '\'' +
                 ", date='" + date + '\'' +
                 ", week='" + week + '\'' +
                 ", startTime='" + startTime + '\'' +
