@@ -33,18 +33,77 @@
         <item name="android:gravity">center_vertical</item>
     </style>
 
-    <!--顶部按钮样式-->
-    <style name="MainTopButtonStyle">
-        <item name="android:layout_width">20dp</item>
-        <item name="android:layout_height">20dp</item>
-        <item name="android:layout_marginRight">30dp</item>
-    </style>
-
     <style name="mypopwindow_anim_style">
         <item name="android:windowEnterAnimation">@anim/popshow_anim_bottom</item>
         <!-- 指定显示的动画xml -->
         <item name="android:windowExitAnimation">@anim/pophide_anim_bottom</item>
         <!-- 指定消失的动画xml -->
+    </style>
+
+
+    <!--    ShapeableImageView的shapeAppearanceOverlay属性样式-->
+    <style name="circleImageStyle"><!-- 圆形图片 -->
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item>
+    </style>
+
+    <style name="roundedCornerImageStyle"><!-- 圆角图片 -->
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">25dp</item>
+    </style>
+
+    <style name="cutImageStyle"><!-- 切角图片 -->
+        <item name="cornerFamily">cut</item>
+        <item name="cornerSize">15dp</item>
+    </style>
+
+    <style name="diamondImageStyle"><!-- 菱形图片 -->
+        <item name="cornerFamily">cut</item>
+        <item name="cornerSize">50%</item>
+    </style>
+
+    <style name="topLeftRoundImageStyle"><!-- 左上角90度扇形图片 -->
+        <item name="cornerFamilyTopLeft">rounded</item>
+        <item name="cornerSizeTopLeft">100%</item>
+    </style>
+
+    <style name="rocketImageStyle"><!-- 火箭头图片 -->
+        <item name="cornerFamilyTopLeft">rounded</item>
+        <item name="cornerFamilyTopRight">rounded</item>
+        <item name="cornerSizeTopLeft">70%</item>
+        <item name="cornerSizeTopRight">70%</item>
+    </style>
+
+    <style name="waterImageStyle"><!-- 水滴 -->
+        <item name="cornerFamilyBottomLeft">rounded</item>
+        <item name="cornerFamilyBottomRight">rounded</item>
+        <item name="cornerFamilyTopLeft">rounded</item>
+        <item name="cornerFamilyTopRight">rounded</item>
+        <item name="cornerSizeBottomLeft">25dp</item>
+        <item name="cornerSizeBottomRight">25dp</item>
+        <item name="cornerSizeTopLeft">70%</item>
+        <item name="cornerSizeTopRight">70%</item>
+    </style>
+
+    <style name="leafImageStyle"><!-- 叶子图片 -->
+        <item name="cornerFamilyTopLeft">rounded</item>
+        <item name="cornerFamilyBottomRight">rounded</item>
+        <item name="cornerSizeTopLeft">50%</item>
+        <item name="cornerSizeBottomRight">50%</item>
+    </style>
+
+    <style name="tipImageStyle"><!-- tip图片 -->
+        <item name="cornerFamilyTopLeft">rounded</item>
+        <item name="cornerSizeTopLeft">50%</item>
+
+        <item name="cornerFamilyBottomLeft">rounded</item>
+        <item name="cornerSizeBottomLeft">50%</item>
+
+        <item name="cornerFamilyTopRight">cut</item>
+        <item name="cornerSizeTopRight">50%</item>
+
+        <item name="cornerFamilyBottomRight">cut</item>
+        <item name="cornerSizeBottomRight">50%</item>
     </style>
 
 </resources>
