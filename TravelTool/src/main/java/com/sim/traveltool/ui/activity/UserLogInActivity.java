@@ -100,8 +100,12 @@ public class UserLogInActivity extends BaseActivity {
                     SPUtil.put(UserLogInActivity.this, AppHelper.userSpName, AppHelper.userSpStateKey, true);
                     finish();
                 } else {
-                    ToastUtil.T_Error(UserLogInActivity.this, getString(R.string.login_fail));
-                    LogUtil.e(this.getClass(), "登录出错---code:" + e.getErrorCode() + ";message:" + e.getMessage());
+                    if (e.getMessage().contains("username or password incorrect")) {
+                        ToastUtil.T_Error(UserLogInActivity.this, getString(R.string.login_fail_for_username_or_password));
+                    }else {
+                        ToastUtil.T_Error(UserLogInActivity.this, getString(R.string.login_fail));
+                        LogUtil.e(this.getClass(), "登录出错---code:" + e.getErrorCode() + ";message:" + e.getMessage());
+                    }
                 }
             }
         });
@@ -112,7 +116,7 @@ public class UserLogInActivity extends BaseActivity {
      */
     private void loginByAccount() {
         //此处替换为你的用户名密码
-        BmobUser.loginByAccount("username", "password", new LogInListener<User>() {
+        BmobUser.loginByAccount(etUserName.getText().toString(), etPassword.getText().toString(), new LogInListener<User>() {
             @Override
             public void done(User user, BmobException e) {
                 if (e == null) {
@@ -121,8 +125,12 @@ public class UserLogInActivity extends BaseActivity {
                     SPUtil.put(UserLogInActivity.this, AppHelper.userSpName, AppHelper.userSpStateKey, true);
                     finish();
                 } else {
-                    ToastUtil.T_Error(UserLogInActivity.this, getString(R.string.login_fail));
-                    LogUtil.e(this.getClass(), "登录出错---code:" + e.getErrorCode() + ";message:" + e.getMessage());
+                    if (e.getMessage().contains("username or password incorrect")) {
+                        ToastUtil.T_Error(UserLogInActivity.this, getString(R.string.login_fail_for_username_or_password));
+                    }else {
+                        ToastUtil.T_Error(UserLogInActivity.this, getString(R.string.login_fail));
+                        LogUtil.e(this.getClass(), "登录出错---code:" + e.getErrorCode() + ";message:" + e.getMessage());
+                    }
                 }
             }
         });

@@ -23,6 +23,7 @@
     <string name="enter_username">Please input Username!</string>
     <string name="login_success">login successful!</string>
     <string name="login_fail">Login failed!</string>
+    <string name="login_fail_for_username_or_password">username or password incorrect!</string>
     <string name="login_fail_password">Wrong password!</string>
     <string name="username_no_null">Username can not be empty!</string>
     <string name="password_no_null">Password can not be empty!</string>
