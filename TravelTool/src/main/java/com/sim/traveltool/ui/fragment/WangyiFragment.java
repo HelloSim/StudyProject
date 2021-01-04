@@ -30,7 +30,7 @@ import rx.Subscriber;
 public class WangyiFragment extends BaseFragment {
 
     private RecyclerView newsRecyclerView;
-    private ArrayList<NewsWangYiBean.ResultBean> newsList = new ArrayList<>();
+    private ArrayList<NewsWangYiBean.NewsBean> newsList = new ArrayList<>();
     private NewsAdapter newsAdapter;
 
     private SwipeRefreshLayout refreshLayout;

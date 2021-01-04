@@ -9,19 +9,24 @@ import android.widget.LinearLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.gson.Gson;
 import com.sim.baselibrary.base.BaseActivity;
 import com.sim.baselibrary.callback.ItemClickSupport;
 import com.sim.baselibrary.callback.OnMultiClickListener;
-import com.sim.baselibrary.utils.SPUtil;
+import com.sim.baselibrary.utils.ToastUtil;
 import com.sim.traveltool.R;
 import com.sim.traveltool.adapter.NewsAdapter;
 import com.sim.traveltool.bean.NewsWangYiBean;
+import com.sim.traveltool.db.bean.User;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.Map;
+import java.util.List;
+
+import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.BmobUser;
+import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.FindListener;
+import cn.bmob.v3.listener.UpdateListener;
 
 /**
  * @Auther Sim
@@ -34,9 +39,8 @@ public class NewsCollectActivity extends BaseActivity {
     private LinearLayout parent;
     private RecyclerView newsRecyclerView;
 
-    private String fileName = "collect";
-    private Map<String, NewsWangYiBean.ResultBean> newsMap;
-    private ArrayList<NewsWangYiBean.ResultBean> newsList = new ArrayList<>();
+    private User user;
+    private ArrayList<NewsWangYiBean.NewsBean> collectionNewsBeanArrayList = new ArrayList<>();
     private NewsAdapter newsAdapter;
 
     @Override
@@ -54,18 +58,30 @@ public class NewsCollectActivity extends BaseActivity {
 
     @Override
     protected void initData() {
-        Gson gson = new Gson();
-        newsMap = (Map<String, NewsWangYiBean.ResultBean>) SPUtil.getAll(this, fileName);
-        Iterator it = newsMap.keySet().iterator();
-        while (it.hasNext()) {
-            String key = it.next().toString();
-            newsList.add(gson.fromJson(String.valueOf(newsMap.get(key)), NewsWangYiBean.ResultBean.class));
+        if (BmobUser.isLogin()) {
+            user = BmobUser.getCurrentUser(User.class);
+            BmobQuery<NewsWangYiBean.NewsBean> bmobQuery = new BmobQuery<>();
+            bmobQuery.addWhereEqualTo("username", user.getUsername());
+            bmobQuery.findObjects(new FindListener<NewsWangYiBean.NewsBean>() {
+                @Override
+                public void done(List<NewsWangYiBean.NewsBean> list, BmobException e) {
+                    if (e == null && list != null && list.size() > 0) {
+                        for (NewsWangYiBean.NewsBean bean : list) {
+                            collectionNewsBeanArrayList.add(bean);
+                            newsAdapter.notifyDataSetChanged();
+                        }
+                    }
+                }
+            });
+        } else {
+            ToastUtil.T_Error(this, getString(R.string.login_no));
+            finish();
         }
     }
 
     @Override
     protected void initView() {
-        newsAdapter = new NewsAdapter(this, newsList);
+        newsAdapter = new NewsAdapter(this, collectionNewsBeanArrayList);
         newsRecyclerView.setLayoutManager(new LinearLayoutManager(NewsCollectActivity.this));
         newsRecyclerView.setAdapter(newsAdapter);
         ItemClickSupport.addTo(newsRecyclerView).setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
@@ -83,9 +99,19 @@ public class NewsCollectActivity extends BaseActivity {
                     @Override
                     public void sureOnClick() {
                         if (OnMultiClickListener.isNoFastClick()) {
-                            SPUtil.remove(NewsCollectActivity.this, fileName, newsList.get(position).getTitle());
-                            newsList.remove(position);
-                            newsAdapter.notifyDataSetChanged();
+                            NewsWangYiBean.NewsBean bean = new NewsWangYiBean.NewsBean();
+                            bean.setObjectId(collectionNewsBeanArrayList.get(position).getObjectId());
+                            bean.delete(new UpdateListener() {
+
+                                @Override
+                                public void done(BmobException e) {
+                                    if (e == null) {
+                                        collectionNewsBeanArrayList.remove(position);
+                                        newsAdapter.notifyDataSetChanged();
+                                    }
+                                }
+
+                            });
                         }
                     }
 

@@ -22,11 +22,11 @@ import java.util.ArrayList;
  * @Time 2020/4/27 1:05
  * @Description 新闻列表界面的RecyclerView适配器
  */
-public class NewsAdapter extends BaseAdapter<NewsAdapter.ViewHolder, NewsWangYiBean.ResultBean> {
+public class NewsAdapter extends BaseAdapter<NewsAdapter.ViewHolder, NewsWangYiBean.NewsBean> {
 
     private Context mContext;
 
-    public NewsAdapter(Context context, ArrayList<NewsWangYiBean.ResultBean> news) {
+    public NewsAdapter(Context context, ArrayList<NewsWangYiBean.NewsBean> news) {
         super(news);
         this.mContext = context;
     }
@@ -56,7 +56,7 @@ public class NewsAdapter extends BaseAdapter<NewsAdapter.ViewHolder, NewsWangYiB
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        NewsWangYiBean.ResultBean resultBean = getItem(position);
+        NewsWangYiBean.NewsBean resultBean = getItem(position);
         Glide.with(mContext)
                 .load(resultBean.getImage())
                 .into(holder.newsImage);

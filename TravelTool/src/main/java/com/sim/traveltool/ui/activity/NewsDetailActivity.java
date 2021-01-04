@@ -10,11 +10,20 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageView;
 
-import com.google.gson.Gson;
 import com.sim.baselibrary.base.BaseActivity;
-import com.sim.baselibrary.utils.SPUtil;
+import com.sim.baselibrary.utils.ToastUtil;
 import com.sim.traveltool.R;
 import com.sim.traveltool.bean.NewsWangYiBean;
+import com.sim.traveltool.db.bean.User;
+
+import java.util.List;
+
+import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.BmobUser;
+import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.FindListener;
+import cn.bmob.v3.listener.SaveListener;
+import cn.bmob.v3.listener.UpdateListener;
 
 /**
  * @Auther Sim
@@ -27,8 +36,10 @@ public class NewsDetailActivity extends BaseActivity {
     private WebView webView;
     private ImageView collect;
 
-    private NewsWangYiBean.ResultBean news;
-    private String fileName = "collect";
+    private NewsWangYiBean.NewsBean news;//传进来的news
+    private NewsWangYiBean.NewsBean collectionNewsBean;//收藏中的news
+    private User user;
+
     private boolean isCollect = false;//是否收藏
 
     @Override
@@ -46,13 +57,43 @@ public class NewsDetailActivity extends BaseActivity {
 
     @Override
     protected void initData() {
-        news = (NewsWangYiBean.ResultBean) getIntent().getSerializableExtra("news");
-        isCollect = SPUtil.contains(this, fileName, news.getTitle());
+        news = (NewsWangYiBean.NewsBean) getIntent().getSerializableExtra("news");
+        if (BmobUser.isLogin()) {
+            user = BmobUser.getCurrentUser(User.class);
+            BmobQuery<NewsWangYiBean.NewsBean> bmobQuery = new BmobQuery<>();
+            bmobQuery.addWhereEqualTo("username", user.getUsername());
+            bmobQuery.addWhereEqualTo("title", news.getTitle());
+            bmobQuery.findObjects(new FindListener<NewsWangYiBean.NewsBean>() {
+                @Override
+                public void done(List<NewsWangYiBean.NewsBean> list, BmobException e) {
+                    if (e == null && list != null && list.size() == 1) {
+                        isCollect = false;
+                        for (NewsWangYiBean.NewsBean bean : list) {
+                            if (bean.getTitle().equals(news.getTitle())) {
+                                collect.setImageResource(R.mipmap.ic_collect_yes);
+                                collectionNewsBean = list.get(0);
+                                isCollect = true;
+                            }
+                        }
+                    } else {
+                        collect.setImageResource(R.mipmap.ic_collect_not);
+                        collectionNewsBean = null;
+                        isCollect = false;
+                    }
+                }
+            });
+        } else {
+            collect.setImageResource(R.mipmap.ic_collect_not);
+            collectionNewsBean = null;
+            isCollect = false;
+            ToastUtil.T_Error(this, getString(R.string.login_no));
+            finish();
+        }
     }
 
     @Override
     protected void initView() {
-        if (isCollect) {
+        if (isCollect && collectionNewsBean != null) {
             collect.setImageResource(R.mipmap.ic_collect_yes);
         } else {
             collect.setImageResource(R.mipmap.ic_collect_not);
@@ -100,14 +141,38 @@ public class NewsDetailActivity extends BaseActivity {
         if (view == back) {
             finish();
         } else if (view == collect) {
-            if (isCollect) {
-                SPUtil.remove(NewsDetailActivity.this, fileName, news.getTitle());
-                collect.setImageResource(R.mipmap.ic_collect_not);
-                isCollect = false;
+            if (isCollect && collectionNewsBean != null) {
+                NewsWangYiBean.NewsBean bean = new NewsWangYiBean.NewsBean();
+                bean.setObjectId(collectionNewsBean.getObjectId());
+                bean.delete(new UpdateListener() {
+
+                    @Override
+                    public void done(BmobException e) {
+                        if (e == null) {
+                            collectionNewsBean = null;
+                            collect.setImageResource(R.mipmap.ic_collect_not);
+                            isCollect = false;
+                        }
+                    }
+
+                });
             } else {
-                SPUtil.put(NewsDetailActivity.this, fileName, news.getTitle(), new Gson().toJson(news));
-                collect.setImageResource(R.mipmap.ic_collect_yes);
-                isCollect = true;
+                NewsWangYiBean.NewsBean bean = new NewsWangYiBean.NewsBean();
+                bean.setUsername(user.getUsername());
+                bean.setTitle(news.getTitle());
+                bean.setPath(news.getPath());
+                bean.setImage(news.getImage());
+                bean.setPasstime(news.getPasstime());
+                bean.save(new SaveListener<String>() {
+                    @Override
+                    public void done(String s, BmobException e) {
+                        if (e == null) {
+                            collectionNewsBean = bean;
+                            collect.setImageResource(R.mipmap.ic_collect_yes);
+                            isCollect = true;
+                        }
+                    }
+                });
             }
         } else {
             super.onMultiClick(view);

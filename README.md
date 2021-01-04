@@ -264,48 +264,56 @@ API接口：
 网易新闻、用户相关：https://api.apiopen.top/api.html
 
 
-#versionName "3.1.1"
+# versionName "3.1.1"
 新添 CrashHandler 奔溃异常处理类
 新添 腾讯Bugly 异常log上报
 
-#versionName "3.1.3"
+# versionName "3.1.3"
 versionCode 7
 移除 bugly 代码和依赖
 整理 权限申请部分代码
 测试 CrashHandler 奔溃处理类日志信息写入文件
 
-#versionName "3.1.4"
+# versionName "3.1.4"
 versionCode 8
 新添 腾讯Bugly 异常log上报
 新添 腾讯Bugly 版本更新
 新添 腾讯Bugly 热更新
 
-#versionName "3.1.6"
+# versionName "3.1.6"
 versionCode 10
 修复 月打卡页面返回按键失效的Bug
 跳过3.1.5版本
 
-#versionName "3.1.7"
+# versionName "3.1.7"
 versionCode 11
 整合公交位置、出行线路搜索界面
 其他改动
 
-#versionName "3.1.8"
+# versionName "3.1.8"
 versionCode 12
 修复 网易页面长按奔溃bug
 
-#versionName "3.2.8"
+# versionName "3.2.8"
 versionCode 13
 修改 公交模块导航栏部分
 废弃 实时公交搜索功能（后续看看有没有代替方案）
 
-#versionName "3.2.9"
+# versionName "3.2.9"
 versionCode 14
 去除 正式包的日志打印(修改封装)
 封装 一些基本类
 接入 极光推送
 
-#versionName "3.2.10"
+# versionName "3.2.10"
 versionCode 15
 封装 一些Base基本类
 修改 打卡页面布局
+
+# versionName "3.3.1"
+versionCode 16
+修改 打卡数据库的存储方式改为后端云
+
+# versionCode 18
+versionName "3.3.3"
+修改 登录状态判断细节、登录方式、更新本地缓存用户信息

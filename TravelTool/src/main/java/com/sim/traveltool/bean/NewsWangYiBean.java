@@ -3,6 +3,8 @@ package com.sim.traveltool.bean;
 import java.io.Serializable;
 import java.util.List;
 
+import cn.bmob.v3.BmobObject;
+
 /**
  * @Auther Sim
  * @Time 2020/4/27 1:05
@@ -17,7 +19,7 @@ public class NewsWangYiBean implements Serializable {
 
     private int code;
     private String message;
-    private List<ResultBean> result;
+    private List<NewsBean> result;
 
     public int getCode() {
         return code;
@@ -35,15 +37,16 @@ public class NewsWangYiBean implements Serializable {
         this.message = message;
     }
 
-    public List<ResultBean> getResult() {
+    public List<NewsBean> getResult() {
         return result;
     }
 
-    public void setResult(List<ResultBean> result) {
+    public void setResult(List<NewsBean> result) {
         this.result = result;
     }
 
-    public static class ResultBean implements Serializable {
+    public static class NewsBean extends BmobObject implements Serializable {
+
         /**
          * path : https://news.163.com/19/0308/05/E9NLBIT30001875O.html
          * image : http://cms-bucket.ws.126.net/2019/03/08/cdf92f27b0c54b59a7fa5a43789af2f6.png?imageView&thumbnail=140y88&quality=85
@@ -51,10 +54,19 @@ public class NewsWangYiBean implements Serializable {
          * passtime : 2019-03-08 10:00:35
          */
 
+        private String username;//用户
         private String path;
         private String image;
         private String title;
         private String passtime;
+
+        public String getUsername() {
+            return username;
+        }
+
+        public void setUsername(String username) {
+            this.username = username;
+        }
 
         public String getPath() {
             return path;
