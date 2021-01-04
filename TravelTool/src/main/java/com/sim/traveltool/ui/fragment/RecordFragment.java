@@ -299,14 +299,16 @@ public class RecordFragment extends BaseFragment implements CalendarView.OnMonth
                         tvRecordTimeEnd.setText((selectedRecordData.getEndTime() == null || selectedRecordData.getEndTime().length() == 0) ? getString(R.string.record_no) : selectedRecordData.getEndTime());
                         tvRecordTimeStart.setTextColor(selectedRecordData.isLate() ? Color.RED : Color.WHITE);
                         tvRecordTimeEnd.setTextColor(selectedRecordData.isLeaveEarly() ? Color.RED : Color.WHITE);
-                        if (tvRecordTimeStart.getText().equals(getString(R.string.record_no))) {//是否已打上班卡
-                            if (TimeUtil.getHour() >= 14) {
-                                btnRecord.setText(getString(R.string.record_end));
-                            } else {
-                                btnRecord.setText(getString(R.string.record_start));
-                            }
-                        } else {
+                        if (!tvRecordTimeEnd.getText().equals(getString(R.string.record_no))) {
                             btnRecord.setText(getString(R.string.record_end));
+                        }
+                        if (!tvRecordTimeStart.getText().equals(getString(R.string.record_no))) {//是否已打上班卡
+                            btnRecord.setText(getString(R.string.record_end));
+                        }
+                        if (TimeUtil.getHour() >= 14) {
+                            btnRecord.setText(getString(R.string.record_end));
+                        } else {
+                            btnRecord.setText(getString(R.string.record_start));
                         }
                     } else {
                         tvRecordTimeStart.setText(getString(R.string.record_no));

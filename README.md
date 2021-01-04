@@ -317,3 +317,9 @@ versionCode 16
 # versionCode 18
 versionName "3.3.3"
 修改 登录状态判断细节、登录方式、更新本地缓存用户信息
+
+#versionCode 19
+versionName "3.3.4"
+修复 无法登录Bug
+修改 去掉无用manger代码、自定义圆形view代码
+修改 新闻收藏模块改用后端云存储方式
