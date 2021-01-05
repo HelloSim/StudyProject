@@ -4,6 +4,7 @@ import com.bin.david.form.annotation.SmartColumn;
 import com.bin.david.form.annotation.SmartTable;
 import com.sim.baselibrary.utils.TimeUtil;
 
+import cn.bmob.v3.BmobACL;
 import cn.bmob.v3.BmobObject;
 
 /**
@@ -34,6 +35,10 @@ public class RecordBean extends BmobObject {
     public RecordBean(String date) {
         this.date = date;
         this.week = TimeUtil.getWeek(date);
+//        BmobACL bmobACL = new BmobACL();
+//        bmobACL.setWriteAccess(user, true);//设置此帖子为当前用户可写
+//        bmobACL.setReadAccess(user, true);//设置此帖子为某种角色可读
+//        this.setACL(bmobACL);
     }
 
     public RecordBean(User user, String date, String yearAndMonth, String startTime, String endTime, String other) {
@@ -61,6 +66,10 @@ public class RecordBean extends BmobObject {
             }
         }
         this.other = other;
+//        BmobACL bmobACL = new BmobACL();
+//        bmobACL.setWriteAccess(user, true);//设置为当前用户可写
+//        bmobACL.setReadAccess(user, true);//设置为当前用户可读
+//        this.setACL(bmobACL);
     }
 
 
