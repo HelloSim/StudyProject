@@ -5,12 +5,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_gravity="center"
-    android:background="@color/black"
     android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="60dp"
+        android:background="@color/black"
         android:gravity="center"
         android:orientation="horizontal">
 
@@ -30,7 +30,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:background="@color/black"
+        android:background="@color/white"
         android:orientation="horizontal"
         android:padding="10dp">
 
@@ -40,7 +40,7 @@
             android:layout_height="match_parent"
             android:layout_centerInParent="true"
             android:gravity="center"
-            android:textColor="@color/white"
+            android:textColor="@color/black"
             android:textSize="20sp"
             tools:text="2020-1" />
 
@@ -50,13 +50,13 @@
         android:id="@+id/calendarLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/black">
+        android:background="@color/white">
 
         <com.haibin.calendarview.CalendarView
             android:id="@+id/calendarView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#00000000"
+            android:background="@color/white"
             app:month_view="com.example.sim.view.CalendarView.SimpleMonthView" />
 
     </com.haibin.calendarview.CalendarLayout>
@@ -64,8 +64,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:background="@color/black">
+        android:background="@color/white">
 
         <TextView
             android:id="@+id/tv_record_time_start"
@@ -76,7 +75,7 @@
             android:layout_toLeftOf="@+id/tv_symbol"
             android:gravity="center"
             android:text="@string/record_no"
-            android:textColor="@color/white"
+            android:textColor="@color/black"
             android:textSize="20sp" />
 
         <TextView
@@ -85,7 +84,7 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:text="-"
-            android:textColor="@color/white"
+            android:textColor="@color/black"
             android:textSize="20sp" />
 
         <TextView
@@ -97,7 +96,7 @@
             android:layout_toRightOf="@+id/tv_symbol"
             android:gravity="center"
             android:text="@string/record_no"
-            android:textColor="@color/white"
+            android:textColor="@color/black"
             android:textSize="20sp" />
 
     </RelativeLayout>
@@ -105,8 +104,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="10dp"
-        android:background="@color/black"
+        android:background="@color/white"
         android:orientation="vertical">
 
         <Button
@@ -114,7 +112,7 @@
             android:layout_width="120dp"
             android:layout_height="120dp"
             android:layout_centerInParent="true"
-            android:background="@drawable/draw_circle_blue"
+            android:background="@drawable/round_blue"
             android:text="@string/record_start"
             android:textAllCaps="false"
             android:textColor="@color/white"

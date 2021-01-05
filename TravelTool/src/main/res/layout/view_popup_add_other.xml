@@ -19,7 +19,7 @@
         android:layout_width="200dp"
         android:layout_height="50dp"
         android:layout_marginTop="15dp"
-        android:background="@drawable/blue_stroke"
+        android:background="@drawable/edit_bg"
         android:maxLength="20"
         android:textColor="@color/black"
         android:textSize="18sp" />

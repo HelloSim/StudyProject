@@ -12,13 +12,13 @@
         android:layout_marginLeft="20dp"
         android:layout_marginTop="10dp"
         android:layout_marginRight="20dp"
-        android:background="@drawable/blue_stroke"
+        android:background="@drawable/edit_bg"
         android:focusable="false"
         android:gravity="center_vertical"
         android:hint="请输入路线名称如：8"
         android:padding="5dp"
-        android:textColor="@color/white"
-        android:textColorHint="@color/dark_gray"
+        android:textColor="@color/black"
+        android:textColorHint="@color/text_gray"
         android:textSize="20sp" />
 
     <TextView
@@ -27,7 +27,7 @@
         android:layout_marginTop="20dp"
         android:gravity="center"
         android:text="接口已废弃，后续更换实现。。。"
-        android:textColor="@color/dark_gray"
+        android:textColor="@color/text_gray"
         android:textSize="12sp" />
 
 </LinearLayout>

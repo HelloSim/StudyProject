@@ -2,13 +2,12 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/black"
     android:orientation="vertical">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:background="#00000000">
+        android:background="@color/black">
 
         <ImageView
             android:id="@+id/back"
@@ -41,7 +40,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:background="#00000000"
         android:padding="5dp">
 
         <ImageView
@@ -58,7 +56,7 @@
             android:layout_centerVertical="true"
             android:layout_marginRight="20dp"
             android:layout_toLeftOf="@+id/iv_reverse"
-            android:textColor="@color/white"
+            android:textColor="@color/black"
             android:textSize="18sp" />
 
         <TextView
@@ -68,7 +66,7 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="20dp"
             android:layout_toRightOf="@+id/iv_reverse"
-            android:textColor="@color/white"
+            android:textColor="@color/black"
             android:textSize="18sp" />
 
     </RelativeLayout>
@@ -83,14 +81,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/bus_stara_time"
-            android:textColor="@color/dark_gray"
+            android:textColor="@color/text_gray"
             android:textSize="16sp" />
 
         <TextView
             android:id="@+id/tv_begin_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/dark_gray"
+            android:textColor="@color/text_gray"
             android:textSize="16sp" />
 
         <TextView
@@ -98,14 +96,14 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:text="@string/bus_end_time"
-            android:textColor="@color/dark_gray"
+            android:textColor="@color/text_gray"
             android:textSize="16sp" />
 
         <TextView
             android:id="@+id/tv_end_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/dark_gray"
+            android:textColor="@color/text_gray"
             android:textSize="16sp" />
 
         <TextView
@@ -113,14 +111,14 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:text="@string/bus_price"
-            android:textColor="@color/dark_gray"
+            android:textColor="@color/text_gray"
             android:textSize="16sp" />
 
         <TextView
             android:id="@+id/tv_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/dark_gray"
+            android:textColor="@color/text_gray"
             android:textSize="16sp" />
 
     </LinearLayout>

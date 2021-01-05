@@ -1,11 +1,14 @@
 package com.sim.traveltool.ui.activity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.PopupWindow;
 
 import com.sim.baselibrary.base.BaseActivity;
 import com.sim.baselibrary.bean.EventMessage;
@@ -33,8 +36,13 @@ public class UserLogInActivity extends BaseActivity {
     private ImageView back;
     private EditText etUserName;
     private EditText etPassword;
-    private Button btnRegistered;
     private Button btnLogIn;
+    private ImageView ivMore;
+
+    //更多弹窗
+    private PopupWindow morePopupWindow;//弹窗
+    private View moreLayout;//布局
+    private Button btnRegistered;
 
     @Override
     protected int getLayoutRes() {
@@ -46,9 +54,9 @@ public class UserLogInActivity extends BaseActivity {
         back = findViewById(R.id.back);
         etUserName = findViewById(R.id.et_user_name);
         etPassword = findViewById(R.id.et_password);
-        btnRegistered = findViewById(R.id.btn_registered);
         btnLogIn = findViewById(R.id.btn_log_in);
-        setViewClick(back, btnRegistered, btnLogIn);
+        ivMore = findViewById(R.id.iv_more);
+        setViewClick(back, btnLogIn, ivMore);
     }
 
     @Override
@@ -58,16 +66,18 @@ public class UserLogInActivity extends BaseActivity {
 
     @Override
     protected void initView() {
+        LayoutInflater inflater = (LayoutInflater) getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
+        moreLayout = inflater.inflate(R.layout.view_popup_login_more, null);
 
+        morePopupWindow = showPopupWindow(moreLayout, 200, 100);
+        btnRegistered = moreLayout.findViewById(R.id.btn_registered);
+        setViewClick(btnRegistered);
     }
 
     @Override
     public void onMultiClick(View view) {
         if (view == back) {
             finish();
-        } else if (view == btnRegistered) {
-            Intent intent = new Intent(this, UserRegisterActivity.class);
-            startActivity(intent);
         } else if (view == btnLogIn) {
             if (etUserName.getText().toString().length() > 0 && etPassword.getText().toString().length() > 0) {
                 loginByAccount();
@@ -78,6 +88,12 @@ public class UserLogInActivity extends BaseActivity {
                     ToastUtil.T_Info(UserLogInActivity.this, getString(R.string.enter_username));
                 }
             }
+        } else if (view == ivMore) {
+            morePopupWindow.showAsDropDown(ivMore, 0, 0);
+        } else if (view == btnRegistered) {
+            morePopupWindow.dismiss();
+            Intent intent = new Intent(this, UserRegisterActivity.class);
+            startActivity(intent);
         } else {
             super.onMultiClick(view);
         }
@@ -101,7 +117,7 @@ public class UserLogInActivity extends BaseActivity {
                 } else {
                     if (e.getMessage().contains("username or password incorrect")) {
                         ToastUtil.T_Error(UserLogInActivity.this, getString(R.string.login_fail_for_username_or_password));
-                    }else {
+                    } else {
                         ToastUtil.T_Error(UserLogInActivity.this, getString(R.string.login_fail));
                         LogUtil.e(this.getClass(), "登录出错---code:" + e.getErrorCode() + ";message:" + e.getMessage());
                     }
@@ -126,7 +142,7 @@ public class UserLogInActivity extends BaseActivity {
                 } else {
                     if (e.getMessage().contains("username or password incorrect")) {
                         ToastUtil.T_Error(UserLogInActivity.this, getString(R.string.login_fail_for_username_or_password));
-                    }else {
+                    } else {
                         ToastUtil.T_Error(UserLogInActivity.this, getString(R.string.login_fail));
                         LogUtil.e(this.getClass(), "登录出错---code:" + e.getErrorCode() + ";message:" + e.getMessage());
                     }

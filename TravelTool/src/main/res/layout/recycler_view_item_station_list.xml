@@ -32,6 +32,6 @@
         android:layout_toRightOf="@+id/tv_station_num"
         android:layout_marginLeft="10dp"
         android:textSize="18sp"
-        android:textColor="@color/dark_gray"/>
+        android:textColor="@color/text_gray"/>
 
 </RelativeLayout>

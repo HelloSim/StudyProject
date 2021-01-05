@@ -97,9 +97,9 @@ public class RecordFragment extends BaseFragment implements CalendarView.OnMonth
         setViewClick(ivMore, btnRecord);
 
         calendarView.setWeekStarWithSun();//设置星期日周起始
-        calendarView.setWeeColor(Color.TRANSPARENT, Color.WHITE);//设置星期栏的背景、字体颜色
-        calendarView.setThemeColor(Color.WHITE, Color.TRANSPARENT);//定制颜色：选中的标记颜色、标记背景色
-        calendarView.setTextColor(Color.WHITE, Color.WHITE, Color.GRAY, Color.WHITE, Color.GRAY);//设置文本颜色：今天字体颜色、当前月份字体颜色、其它月份字体颜色、当前月份农历字体颜色、其它农历字体颜色
+        calendarView.setWeeColor(Color.TRANSPARENT, Color.BLACK);//设置星期栏的背景、字体颜色
+        calendarView.setThemeColor(Color.GREEN, Color.RED);//定制颜色：选中的标记颜色、标记背景色
+        calendarView.setTextColor(Color.RED, Color.BLACK, Color.GRAY, Color.BLACK, Color.GRAY);//设置文本颜色：今天字体颜色、当前月份字体颜色、其它月份字体颜色、当前月份农历字体颜色、其它农历字体颜色
         calendarView.setOnMonthChangeListener(this);//月份改变事件监听
         calendarView.setOnCalendarSelectListener(this);//日期选择事件监听
     }
@@ -120,7 +120,7 @@ public class RecordFragment extends BaseFragment implements CalendarView.OnMonth
         }
 
         LayoutInflater inflater = (LayoutInflater) getActivity().getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
-        moreLayout = inflater.inflate(R.layout.view_popup_more, null);
+        moreLayout = inflater.inflate(R.layout.view_popup_record_more, null);
         otherLayout = inflater.inflate(R.layout.view_popup_add_other, null);
         morePopupWindow = showPopupWindow(moreLayout, 200, 150);
         otherPopupWindow = showPopupWindow(otherLayout, 300, 180);
@@ -297,8 +297,8 @@ public class RecordFragment extends BaseFragment implements CalendarView.OnMonth
                         }
                         tvRecordTimeStart.setText((selectedRecordBean.getStartTime() == null || selectedRecordBean.getStartTime().length() == 0) ? getString(R.string.record_no) : selectedRecordBean.getStartTime());
                         tvRecordTimeEnd.setText((selectedRecordBean.getEndTime() == null || selectedRecordBean.getEndTime().length() == 0) ? getString(R.string.record_no) : selectedRecordBean.getEndTime());
-                        tvRecordTimeStart.setTextColor(selectedRecordBean.isLate() ? Color.RED : Color.WHITE);
-                        tvRecordTimeEnd.setTextColor(selectedRecordBean.isLeaveEarly() ? Color.RED : Color.WHITE);
+                        tvRecordTimeStart.setTextColor(selectedRecordBean.isLate() ? Color.RED : Color.BLACK);
+                        tvRecordTimeEnd.setTextColor(selectedRecordBean.isLeaveEarly() ? Color.RED : Color.BLACK);
                         if (TimeUtil.getHour() >= 14) {
                             btnRecord.setText(getString(R.string.record_end));
                         } else {
@@ -313,8 +313,8 @@ public class RecordFragment extends BaseFragment implements CalendarView.OnMonth
                     } else {
                         tvRecordTimeStart.setText(getString(R.string.record_no));
                         tvRecordTimeEnd.setText(getString(R.string.record_no));
-                        tvRecordTimeStart.setTextColor(Color.WHITE);
-                        tvRecordTimeEnd.setTextColor(Color.WHITE);
+                        tvRecordTimeStart.setTextColor(Color.BLACK);
+                        tvRecordTimeEnd.setTextColor(Color.BLACK);
                         if (TimeUtil.getHour() >= 14) {
                             btnRecord.setText(getString(R.string.record_end));
                         } else {
@@ -331,8 +331,8 @@ public class RecordFragment extends BaseFragment implements CalendarView.OnMonth
         } else {
             tvRecordTimeStart.setText(getString(R.string.record_no));
             tvRecordTimeEnd.setText(getString(R.string.record_no));
-            tvRecordTimeStart.setTextColor(Color.WHITE);
-            tvRecordTimeEnd.setTextColor(Color.WHITE);
+            tvRecordTimeStart.setTextColor(Color.BLACK);
+            tvRecordTimeEnd.setTextColor(Color.BLACK);
             btnRecord.setText(getString(R.string.login_no));
         }
 
@@ -519,8 +519,8 @@ public class RecordFragment extends BaseFragment implements CalendarView.OnMonth
             recordBean = null;
             tvRecordTimeStart.setText(getString(R.string.record_no));
             tvRecordTimeEnd.setText(getString(R.string.record_no));
-            tvRecordTimeStart.setTextColor(Color.WHITE);
-            tvRecordTimeEnd.setTextColor(Color.WHITE);
+            tvRecordTimeStart.setTextColor(Color.BLACK);
+            tvRecordTimeEnd.setTextColor(Color.BLACK);
             btnRecord.setText(getString(R.string.login_no));
         }
     }

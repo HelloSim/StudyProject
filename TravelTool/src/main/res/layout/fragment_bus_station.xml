@@ -13,13 +13,13 @@
         android:layout_marginLeft="20dp"
         android:layout_marginTop="10dp"
         android:layout_marginRight="20dp"
-        android:background="@drawable/blue_stroke"
+        android:background="@drawable/edit_bg"
         android:focusable="false"
         android:gravity="center_vertical"
         android:hint="请输入站点名称如：拱北口岸"
         android:padding="5dp"
         android:textColor="@color/white"
-        android:textColorHint="@color/dark_gray"
+        android:textColorHint="@color/text_gray"
         android:textSize="20sp" />
 
     <Button
@@ -42,7 +42,7 @@
         android:gravity="center"
         android:text="站点公交查询功能，后续实现。。。"
         android:textAllCaps="false"
-        android:textColor="@color/dark_gray"
+        android:textColor="@color/text_gray"
         android:textSize="12sp" />
 
 </LinearLayout>
