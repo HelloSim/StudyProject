@@ -12,7 +12,7 @@ import cn.bmob.v3.BmobObject;
  * @Description 新的插入数据库的打卡记录实体
  */
 @SmartTable(name = "打卡详情")
-public class RecordData extends BmobObject {
+public class RecordBean extends BmobObject {
 
     // 仅在客户端使用，不希望被gson序列化提交到后端云，用transient修饰
 
@@ -31,12 +31,12 @@ public class RecordData extends BmobObject {
     @SmartColumn(id = 5, name = "备忘")
     private String other;//其他
 
-    public RecordData(String date) {
+    public RecordBean(String date) {
         this.date = date;
         this.week = TimeUtil.getWeek(date);
     }
 
-    public RecordData(User user, String date, String yearAndMonth, String startTime, String endTime, String other) {
+    public RecordBean(User user, String date, String yearAndMonth, String startTime, String endTime, String other) {
         this.user = user;
         this.date = date;
         this.yearAndMonth = yearAndMonth;

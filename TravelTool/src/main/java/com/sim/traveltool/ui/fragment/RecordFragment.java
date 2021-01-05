@@ -26,7 +26,7 @@ import com.sim.baselibrary.utils.TimeUtil;
 import com.sim.baselibrary.utils.ToastUtil;
 import com.sim.traveltool.AppHelper;
 import com.sim.traveltool.R;
-import com.sim.traveltool.db.bean.RecordData;
+import com.sim.traveltool.db.bean.RecordBean;
 import com.sim.traveltool.db.bean.User;
 import com.sim.traveltool.ui.activity.RecordAllActivity;
 
@@ -64,7 +64,7 @@ public class RecordFragment extends BaseFragment implements CalendarView.OnMonth
     private Button btnRecord;
 
     private User user;//已登录的用户信息
-    private RecordData recordData;//当天的打卡数据
+    private RecordBean recordBean;//当天的打卡数据
 
     //更多弹窗
     private PopupWindow morePopupWindow;//弹窗
@@ -168,10 +168,10 @@ public class RecordFragment extends BaseFragment implements CalendarView.OnMonth
                 query(user, getYMD(calendarView.getSelectedCalendar()), new SuccessOrFailListener() {
                     @Override
                     public void success(Object... values) {
-                        List<RecordData> list = (List<RecordData>) values[0];
+                        List<RecordBean> list = (List<RecordBean>) values[0];
                         if (list != null && list.size() > 0) {
-                            RecordData newRecordData = new RecordData(list.get(0).getUser(), list.get(0).getDate(), list.get(0).getYearAndMonth(), list.get(0).getStartTime(), list.get(0).getEndTime(), etOther.getText().toString());
-                            newRecordData.update(list.get(0).getObjectId(), new UpdateListener() {
+                            RecordBean newRecordBean = new RecordBean(list.get(0).getUser(), list.get(0).getDate(), list.get(0).getYearAndMonth(), list.get(0).getStartTime(), list.get(0).getEndTime(), etOther.getText().toString());
+                            newRecordBean.update(list.get(0).getObjectId(), new UpdateListener() {
                                 @Override
                                 public void done(BmobException e) {
                                     if (e == null) {
@@ -183,8 +183,8 @@ public class RecordFragment extends BaseFragment implements CalendarView.OnMonth
                                 }
                             });
                         } else {
-                            RecordData newRecordData = new RecordData(user, getYMD(calendarView.getSelectedCalendar()), getYM(calendarView.getSelectedCalendar()), null, null, etOther.getText().toString());
-                            newRecordData.save(new SaveListener<String>() {
+                            RecordBean newRecordBean = new RecordBean(user, getYMD(calendarView.getSelectedCalendar()), getYM(calendarView.getSelectedCalendar()), null, null, etOther.getText().toString());
+                            newRecordBean.save(new SaveListener<String>() {
                                 @Override
                                 public void done(String s, BmobException e) {
                                     if (e == null) {
@@ -289,16 +289,16 @@ public class RecordFragment extends BaseFragment implements CalendarView.OnMonth
             query(user, getYMD(calendar), new SuccessOrFailListener() {
                 @Override
                 public void success(Object... values) {
-                    ArrayList<RecordData> list = (ArrayList<RecordData>) values[0];
+                    ArrayList<RecordBean> list = (ArrayList<RecordBean>) values[0];
                     if (list != null && list.size() > 0) {
-                        RecordData selectedRecordData = list.get(0);
+                        RecordBean selectedRecordBean = list.get(0);
                         if (calendar.isCurrentDay()) {
-                            recordData = selectedRecordData;
+                            recordBean = selectedRecordBean;
                         }
-                        tvRecordTimeStart.setText((selectedRecordData.getStartTime() == null || selectedRecordData.getStartTime().length() == 0) ? getString(R.string.record_no) : selectedRecordData.getStartTime());
-                        tvRecordTimeEnd.setText((selectedRecordData.getEndTime() == null || selectedRecordData.getEndTime().length() == 0) ? getString(R.string.record_no) : selectedRecordData.getEndTime());
-                        tvRecordTimeStart.setTextColor(selectedRecordData.isLate() ? Color.RED : Color.WHITE);
-                        tvRecordTimeEnd.setTextColor(selectedRecordData.isLeaveEarly() ? Color.RED : Color.WHITE);
+                        tvRecordTimeStart.setText((selectedRecordBean.getStartTime() == null || selectedRecordBean.getStartTime().length() == 0) ? getString(R.string.record_no) : selectedRecordBean.getStartTime());
+                        tvRecordTimeEnd.setText((selectedRecordBean.getEndTime() == null || selectedRecordBean.getEndTime().length() == 0) ? getString(R.string.record_no) : selectedRecordBean.getEndTime());
+                        tvRecordTimeStart.setTextColor(selectedRecordBean.isLate() ? Color.RED : Color.WHITE);
+                        tvRecordTimeEnd.setTextColor(selectedRecordBean.isLeaveEarly() ? Color.RED : Color.WHITE);
                         if (TimeUtil.getHour() >= 14) {
                             btnRecord.setText(getString(R.string.record_end));
                         } else {
@@ -348,9 +348,9 @@ public class RecordFragment extends BaseFragment implements CalendarView.OnMonth
             query(user, getYMD(calendarView.getSelectedCalendar()), new SuccessOrFailListener() {
                 @Override
                 public void success(Object... values) {
-                    ArrayList<RecordData> list = (ArrayList<RecordData>) values[0];
+                    ArrayList<RecordBean> list = (ArrayList<RecordBean>) values[0];
                     if (list != null && list.size() > 0) {
-                        recordData = list.get(0);
+                        recordBean = list.get(0);
                     }
                 }
 
@@ -359,11 +359,11 @@ public class RecordFragment extends BaseFragment implements CalendarView.OnMonth
                     LogUtil.d(this.getClass(), "查询选中日期数据失败！");
                 }
             });
-            if (recordData != null) {//已有当天数据
+            if (recordBean != null) {//已有当天数据
                 if (type == 1) {//修改当天数据（上班）
                     String startTime = new SimpleDateFormat("HH:mm").format(System.currentTimeMillis());
-                    RecordData newRecordData = new RecordData(user, getYMD(calendarView.getSelectedCalendar()), getYM(calendarView.getSelectedCalendar()), startTime, recordData.getEndTime(), recordData.getOther());
-                    newRecordData.update(recordData.getObjectId(), new UpdateListener() {
+                    RecordBean newRecordBean = new RecordBean(user, getYMD(calendarView.getSelectedCalendar()), getYM(calendarView.getSelectedCalendar()), startTime, recordBean.getEndTime(), recordBean.getOther());
+                    newRecordBean.update(recordBean.getObjectId(), new UpdateListener() {
                         @Override
                         public void done(BmobException e) {
                             if (e == null) {
@@ -377,8 +377,8 @@ public class RecordFragment extends BaseFragment implements CalendarView.OnMonth
                     });
                 } else {//修改当天数据（下班）
                     String endTime = new SimpleDateFormat("HH:mm").format(System.currentTimeMillis());
-                    RecordData newRecordData = new RecordData(user, getYMD(calendarView.getSelectedCalendar()), getYM(calendarView.getSelectedCalendar()), recordData.getStartTime(), endTime, recordData.getOther());
-                    newRecordData.update(recordData.getObjectId(), new UpdateListener() {
+                    RecordBean newRecordBean = new RecordBean(user, getYMD(calendarView.getSelectedCalendar()), getYM(calendarView.getSelectedCalendar()), recordBean.getStartTime(), endTime, recordBean.getOther());
+                    newRecordBean.update(recordBean.getObjectId(), new UpdateListener() {
                         @Override
                         public void done(BmobException e) {
                             if (e == null) {
@@ -394,8 +394,8 @@ public class RecordFragment extends BaseFragment implements CalendarView.OnMonth
             } else {//没有当天数据
                 if (type == 1) {//插入当天数据（上班）
                     String startTime = new SimpleDateFormat("HH:mm").format(System.currentTimeMillis());
-                    RecordData newRecordData = new RecordData(user, getYMD(calendarView.getSelectedCalendar()), getYM(calendarView.getSelectedCalendar()), startTime, null, null);
-                    newRecordData.save(new SaveListener<String>() {
+                    RecordBean newRecordBean = new RecordBean(user, getYMD(calendarView.getSelectedCalendar()), getYM(calendarView.getSelectedCalendar()), startTime, null, null);
+                    newRecordBean.save(new SaveListener<String>() {
                         @Override
                         public void done(String s, BmobException e) {
                             if (e == null) {
@@ -409,8 +409,8 @@ public class RecordFragment extends BaseFragment implements CalendarView.OnMonth
                     });
                 } else {//插入当天数据（下班）
                     String endTime = new SimpleDateFormat("HH:mm").format(System.currentTimeMillis());
-                    RecordData newRecordData = new RecordData(user, getYMD(calendarView.getSelectedCalendar()), getYM(calendarView.getSelectedCalendar()), null, endTime, null);
-                    newRecordData.save(new SaveListener<String>() {
+                    RecordBean newRecordBean = new RecordBean(user, getYMD(calendarView.getSelectedCalendar()), getYM(calendarView.getSelectedCalendar()), null, endTime, null);
+                    newRecordBean.save(new SaveListener<String>() {
                         @Override
                         public void done(String s, BmobException e) {
                             if (e == null) {
@@ -456,12 +456,12 @@ public class RecordFragment extends BaseFragment implements CalendarView.OnMonth
      * @param successOrFailListener
      */
     public void query(User user, String date, SuccessOrFailListener successOrFailListener) {
-        BmobQuery<RecordData> bmobQuery = new BmobQuery<RecordData>();
+        BmobQuery<RecordBean> bmobQuery = new BmobQuery<RecordBean>();
         bmobQuery.addWhereEqualTo("user", user);
         bmobQuery.addWhereEqualTo("date", date);
-        bmobQuery.findObjects(new FindListener<RecordData>() {
+        bmobQuery.findObjects(new FindListener<RecordBean>() {
             @Override
-            public void done(List<RecordData> list, BmobException e) {
+            public void done(List<RecordBean> list, BmobException e) {
                 if (e == null) {
                     successOrFailListener.success(list);
                 } else {
@@ -516,7 +516,7 @@ public class RecordFragment extends BaseFragment implements CalendarView.OnMonth
             showInfo(calendarView.getSelectedCalendar());
         } else if (eventMessage.type == AppHelper.USER_noLogIn) {
             user = null;
-            recordData = null;
+            recordBean = null;
             tvRecordTimeStart.setText(getString(R.string.record_no));
             tvRecordTimeEnd.setText(getString(R.string.record_no));
             tvRecordTimeStart.setTextColor(Color.WHITE);

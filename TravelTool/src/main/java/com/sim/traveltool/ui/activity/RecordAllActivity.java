@@ -16,7 +16,7 @@ import com.sim.baselibrary.base.BaseActivity;
 import com.sim.baselibrary.utils.LogUtil;
 import com.sim.baselibrary.utils.TimeUtil;
 import com.sim.traveltool.R;
-import com.sim.traveltool.db.bean.RecordData;
+import com.sim.traveltool.db.bean.RecordBean;
 import com.sim.traveltool.db.bean.User;
 
 import java.util.ArrayList;
@@ -35,12 +35,12 @@ public class RecordAllActivity extends BaseActivity {
 
     private ImageView back;
     private TextView title;
-    private SmartTable<RecordData> table;
+    private SmartTable<RecordBean> table;
 
     private Calendar calendar;
     private User user;//用户账号
 
-    private List<RecordData> allDataList = new ArrayList<>();//当月打卡数据
+    private List<RecordBean> allDataList = new ArrayList<>();//当月打卡数据
     private int days;//当月天数
 
     @Override
@@ -62,23 +62,23 @@ public class RecordAllActivity extends BaseActivity {
         user = (User)getIntent().getSerializableExtra("user");
         days = TimeUtil.getDaysByYearMonth(calendar.getYear(), calendar.getMonth());
         for (int i = 1; i <= days; i++) {
-            RecordData recordData = new RecordData(getYearAndMonth(calendar) + "-" + i);
-            allDataList.add(recordData);
+            RecordBean recordBean = new RecordBean(getYearAndMonth(calendar) + "-" + i);
+            allDataList.add(recordBean);
         }
-        BmobQuery<RecordData> bmobQuery = new BmobQuery<>();
+        BmobQuery<RecordBean> bmobQuery = new BmobQuery<>();
         bmobQuery.addWhereEqualTo("user", user);
         bmobQuery.addWhereEqualTo("yearAndMonth", getYM(calendar));
-        bmobQuery.findObjects(new FindListener<RecordData>() {
+        bmobQuery.findObjects(new FindListener<RecordBean>() {
             @Override
-            public void done(List<RecordData> list, BmobException e) {
+            public void done(List<RecordBean> list, BmobException e) {
                 if (e == null) {
                     if (list != null || list.size() > 0) {
-                        for (RecordData recordData1 : list) {
+                        for (RecordBean recordBean1 : list) {
                             for (int i = 0; i < allDataList.size(); i++) {
-                                if (recordData1.getDate().equals(allDataList.get(i).getDate())) {
-                                    allDataList.get(i).setStartTime(recordData1.getStartTime());
-                                    allDataList.get(i).setEndTime(recordData1.getEndTime());
-                                    allDataList.get(i).setOther(recordData1.getOther());
+                                if (recordBean1.getDate().equals(allDataList.get(i).getDate())) {
+                                    allDataList.get(i).setStartTime(recordBean1.getStartTime());
+                                    allDataList.get(i).setEndTime(recordBean1.getEndTime());
+                                    allDataList.get(i).setOther(recordBean1.getOther());
                                     break;
                                 }
                             }
