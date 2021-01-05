@@ -17,6 +17,7 @@ import com.sim.baselibrary.utils.LogUtil;
 import com.sim.baselibrary.utils.TimeUtil;
 import com.sim.traveltool.R;
 import com.sim.traveltool.db.bean.RecordData;
+import com.sim.traveltool.db.bean.User;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,7 +38,7 @@ public class RecordAllActivity extends BaseActivity {
     private SmartTable<RecordData> table;
 
     private Calendar calendar;
-    private String username;//用户账号
+    private User user;//用户账号
 
     private List<RecordData> allDataList = new ArrayList<>();//当月打卡数据
     private int days;//当月天数
@@ -58,14 +59,14 @@ public class RecordAllActivity extends BaseActivity {
     @Override
     protected void initData() {
         calendar = (Calendar) getIntent().getSerializableExtra("calendar");
-        username = getIntent().getStringExtra("username");
+        user = (User)getIntent().getSerializableExtra("user");
         days = TimeUtil.getDaysByYearMonth(calendar.getYear(), calendar.getMonth());
         for (int i = 1; i <= days; i++) {
             RecordData recordData = new RecordData(getYearAndMonth(calendar) + "-" + i);
             allDataList.add(recordData);
         }
         BmobQuery<RecordData> bmobQuery = new BmobQuery<>();
-        bmobQuery.addWhereEqualTo("username", username);
+        bmobQuery.addWhereEqualTo("user", user);
         bmobQuery.addWhereEqualTo("yearAndMonth", getYM(calendar));
         bmobQuery.findObjects(new FindListener<RecordData>() {
             @Override

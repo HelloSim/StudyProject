@@ -1,5 +1,7 @@
 package com.sim.traveltool.bean;
 
+import com.sim.traveltool.db.bean.User;
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -54,18 +56,18 @@ public class NewsWangYiBean implements Serializable {
          * passtime : 2019-03-08 10:00:35
          */
 
-        private String username;//用户
+        private User user;//用户
         private String path;
         private String image;
         private String title;
         private String passtime;
 
-        public String getUsername() {
-            return username;
+        public User getUser() {
+            return user;
         }
 
-        public void setUsername(String username) {
-            this.username = username;
+        public void setUser(User user) {
+            this.user = user;
         }
 
         public String getPath() {

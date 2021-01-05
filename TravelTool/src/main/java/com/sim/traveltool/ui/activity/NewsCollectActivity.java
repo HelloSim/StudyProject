@@ -61,7 +61,7 @@ public class NewsCollectActivity extends BaseActivity {
         if (BmobUser.isLogin()) {
             user = BmobUser.getCurrentUser(User.class);
             BmobQuery<NewsWangYiBean.NewsBean> bmobQuery = new BmobQuery<>();
-            bmobQuery.addWhereEqualTo("username", user.getUsername());
+            bmobQuery.addWhereEqualTo("user", user);
             bmobQuery.findObjects(new FindListener<NewsWangYiBean.NewsBean>() {
                 @Override
                 public void done(List<NewsWangYiBean.NewsBean> list, BmobException e) {

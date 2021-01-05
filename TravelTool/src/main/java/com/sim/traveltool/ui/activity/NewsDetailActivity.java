@@ -61,7 +61,7 @@ public class NewsDetailActivity extends BaseActivity {
         if (BmobUser.isLogin()) {
             user = BmobUser.getCurrentUser(User.class);
             BmobQuery<NewsWangYiBean.NewsBean> bmobQuery = new BmobQuery<>();
-            bmobQuery.addWhereEqualTo("username", user.getUsername());
+            bmobQuery.addWhereEqualTo("user", user);
             bmobQuery.addWhereEqualTo("title", news.getTitle());
             bmobQuery.findObjects(new FindListener<NewsWangYiBean.NewsBean>() {
                 @Override
@@ -158,7 +158,7 @@ public class NewsDetailActivity extends BaseActivity {
                 });
             } else {
                 NewsWangYiBean.NewsBean bean = new NewsWangYiBean.NewsBean();
-                bean.setUsername(user.getUsername());
+                bean.setUser(user);
                 bean.setTitle(news.getTitle());
                 bean.setPath(news.getPath());
                 bean.setImage(news.getImage());
