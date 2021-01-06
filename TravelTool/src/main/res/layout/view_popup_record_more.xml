@@ -11,14 +11,12 @@
     <Button
         android:id="@+id/all_record"
         style="@style/buttonStyle"
-        android:background="@drawable/button_bg"
         android:text="@string/record_all" />
 
     <Button
         android:id="@+id/btn_updata_other"
         style="@style/buttonStyle"
         android:layout_marginTop="10dp"
-        android:background="@drawable/button_bg"
         android:text="@string/record_add_memo" />
 
 </LinearLayout>

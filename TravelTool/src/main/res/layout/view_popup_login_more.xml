@@ -11,7 +11,6 @@
     <Button
         android:id="@+id/btn_registered"
         style="@style/buttonStyle"
-        android:background="@drawable/button_bg_blue"
         android:text="@string/register" />
 
 </LinearLayout>

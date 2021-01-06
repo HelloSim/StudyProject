@@ -24,23 +24,19 @@
         <EditText
             android:id="@+id/et_user_name"
             style="@style/editViewStyle"
-            android:background="@drawable/edit_bg"
             android:hint="@string/username" />
 
         <EditText
             android:id="@+id/et_password"
-            style="@style/editViewStyle"
+            style="@style/editViewStyleNumberPassword"
             android:layout_marginTop="10dp"
-            android:background="@drawable/edit_bg"
-            android:hint="@string/password"
-            android:inputType="textPassword" />
+            android:hint="@string/password" />
 
         <Button
             android:id="@+id/btn_log_in"
             style="@style/buttonStyle"
             android:layout_width="match_parent"
             android:layout_marginTop="30dp"
-            android:background="@drawable/button_bg"
             android:text="@string/login" />
 
     </LinearLayout>

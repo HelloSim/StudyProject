@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/black"
     android:orientation="vertical">
 
     <com.sim.traveltool.ui.view.TitleView
@@ -18,7 +17,6 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:background="@color/black"
         android:orientation="horizontal"
         android:padding="5dp">
 
@@ -26,7 +24,6 @@
             android:id="@+id/tv_now_year_and_month"
             style="@style/textViewStyle"
             android:layout_centerInParent="true"
-            android:textColor="@color/white"
             tools:text="2020年1月" />
 
     </RelativeLayout>
@@ -34,14 +31,12 @@
     <com.haibin.calendarview.CalendarLayout
         android:id="@+id/calendarLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/black">
+        android:layout_height="wrap_content">
 
         <com.haibin.calendarview.CalendarView
             android:id="@+id/calendarView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#00000000"
             app:month_view="com.example.sim.view.CalendarView.SimpleMonthView" />
 
     </com.haibin.calendarview.CalendarLayout>

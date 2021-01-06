@@ -41,7 +41,8 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white">
+        android:background="@color/white"
+        android:padding="20dp">
 
         <TextView
             android:id="@+id/tv_record_time_start"

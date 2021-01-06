@@ -2,7 +2,7 @@ package com.sim.traveltool.ui.fragment;
 
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
+import android.widget.EditText;
 
 import com.sim.baselibrary.base.BaseFragment;
 import com.sim.traveltool.R;
@@ -14,7 +14,7 @@ import com.sim.traveltool.R;
  */
 public class BusStationFragment extends BaseFragment {
 
-    private TextView tvStation;
+    private EditText tvStation;
     private Button btnStation;
 
     @Override

@@ -6,21 +6,14 @@
     android:background="@color/transparent"
     android:orientation="vertical">
 
-    <TextView
+    <EditText
         android:id="@+id/tv_station"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
+        style="@style/editViewStyle"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="10dp"
         android:layout_marginRight="20dp"
-        android:background="@drawable/edit_bg"
         android:focusable="false"
-        android:gravity="center_vertical"
-        android:hint="请输入站点名称如：拱北口岸"
-        android:padding="5dp"
-        android:textColor="@color/white"
-        android:textColorHint="@color/text_gray"
-        android:textSize="20sp" />
+        android:hint="请输入站点名称如：拱北口岸" />
 
     <Button
         android:id="@+id/btn_station"
@@ -29,7 +22,6 @@
         android:layout_marginLeft="20dp"
         android:layout_marginTop="10dp"
         android:layout_marginRight="20dp"
-        android:background="@drawable/button_bg_blue"
         android:text="@string/BusStation" />
 
     <TextView

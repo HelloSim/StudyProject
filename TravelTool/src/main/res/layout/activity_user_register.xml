@@ -22,30 +22,24 @@
         <EditText
             android:id="@+id/et_user_name"
             style="@style/editViewStyle"
-            android:background="@drawable/edit_bg"
             android:hint="@string/username" />
 
         <EditText
             android:id="@+id/et_password"
-            style="@style/editViewStyle"
+            style="@style/editViewStyleNumberPassword"
             android:layout_marginTop="10dp"
-            android:background="@drawable/edit_bg"
-            android:hint="@string/password"
-            android:inputType="textPassword"
-            android:maxLength="20" />
+            android:hint="@string/password" />
 
         <EditText
             android:id="@+id/et_mobile_phone_number"
             style="@style/editViewStyle"
             android:layout_marginTop="10dp"
-            android:background="@drawable/edit_bg"
             android:hint="@string/phone" />
 
         <EditText
             android:id="@+id/et_email"
             style="@style/editViewStyle"
             android:layout_marginTop="10dp"
-            android:background="@drawable/edit_bg"
             android:hint="@string/email" />
 
         <Button
@@ -53,7 +47,6 @@
             style="@style/buttonStyle"
             android:layout_width="match_parent"
             android:layout_marginTop="30dp"
-            android:background="@drawable/button_bg"
             android:text="@string/register" />
 
     </LinearLayout>
