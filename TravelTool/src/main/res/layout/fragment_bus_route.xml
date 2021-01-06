@@ -68,15 +68,12 @@
 
     <Button
         android:id="@+id/btn_route"
+        style="@style/buttonStyle"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="10dp"
         android:layout_marginRight="20dp"
-        android:background="@drawable/button_bg_blue_retangle"
-        android:text="@string/bus_transfer_plan"
-        android:textAllCaps="false"
-        android:textColor="@color/white"
-        android:textSize="18sp" />
+        android:background="@drawable/button_bg_blue"
+        android:text="@string/bus_transfer_plan" />
 
 </LinearLayout>

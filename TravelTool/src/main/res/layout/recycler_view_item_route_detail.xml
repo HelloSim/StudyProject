@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
-        android:background="@drawable/button_bg_blue_retangle"
+        android:background="@drawable/button_bg_blue"
         android:gravity="center_horizontal"
         android:orientation="vertical"
         android:padding="5dp"
@@ -32,10 +32,8 @@
 
             <TextView
                 android:id="@+id/tv_item_start"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                style="@style/textViewStyle"
                 android:textColor="@color/white"
-                android:textSize="18sp"
                 tools:text="省科干学院(公交站)" />
 
         </LinearLayout>
@@ -47,7 +45,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
-        android:background="@drawable/button_bg_blue_retangle"
+        android:background="@drawable/button_bg_blue"
         android:gravity="center_horizontal"
         android:orientation="vertical"
         android:padding="5dp"
@@ -68,10 +66,8 @@
 
             <TextView
                 android:id="@+id/tv_item_walk"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                style="@style/textViewStyle"
                 android:textColor="@color/white"
-                android:textSize="18sp"
                 tools:text="步行463米到达省科干学院" />
 
         </LinearLayout>
@@ -83,7 +79,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
-        android:background="@drawable/button_bg_blue_retangle"
+        android:background="@drawable/button_bg_blue"
         android:gravity="center_horizontal"
         android:orientation="vertical"
         android:padding="5dp"
@@ -103,15 +99,13 @@
                 <ImageView
                     android:layout_width="25dp"
                     android:layout_height="25dp"
+                    android:layout_marginRight="5dp"
                     android:src="@mipmap/ic_bus" />
 
                 <TextView
                     android:id="@+id/tv_item_bus"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
+                    style="@style/textViewStyle"
                     android:textColor="@color/white"
-                    android:textSize="18sp"
                     tools:text="803路（省科干学院-湖心路口总站）" />
 
             </LinearLayout>
@@ -131,7 +125,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
-        android:background="@drawable/button_bg_blue_retangle"
+        android:background="@drawable/button_bg_blue"
         android:gravity="center_horizontal"
         android:orientation="vertical"
         android:padding="5dp"
@@ -152,10 +146,8 @@
 
             <TextView
                 android:id="@+id/tv_item_end"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                style="@style/textViewStyle"
                 android:textColor="@color/white"
-                android:textSize="18sp"
                 tools:text="拱北" />
 
         </LinearLayout>

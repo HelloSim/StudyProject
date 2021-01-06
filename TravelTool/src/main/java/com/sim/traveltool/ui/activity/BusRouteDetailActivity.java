@@ -2,7 +2,6 @@ package com.sim.traveltool.ui.activity;
 
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -12,6 +11,7 @@ import com.sim.baselibrary.base.BaseActivity;
 import com.sim.traveltool.R;
 import com.sim.traveltool.adapter.BusRouteDetailAdapter;
 import com.sim.traveltool.bean.BusRouteDataBean;
+import com.sim.traveltool.ui.view.TitleView;
 
 /**
  * @Auther Sim
@@ -20,7 +20,7 @@ import com.sim.traveltool.bean.BusRouteDataBean;
  */
 public class BusRouteDetailActivity extends BaseActivity {
 
-    private ImageView back;
+    private TitleView titleView;
     private TextView tvBusRoute;
     private TextView tvTimeDistance;
     private RecyclerView rlRouteDetail;
@@ -38,11 +38,16 @@ public class BusRouteDetailActivity extends BaseActivity {
 
     @Override
     protected void bindViews(Bundle savedInstanceState) {
-        back = findViewById(R.id.back);
+        titleView = findViewById(R.id.titleView);
         tvBusRoute = findViewById(R.id.tv_bus_route);
         tvTimeDistance = findViewById(R.id.tv_time_distance);
         rlRouteDetail = findViewById(R.id.rl_route_detail);
-        setViewClick(back);
+        titleView.setLeftClickListener(new TitleView.LeftClickListener() {
+            @Override
+            public void onClick(View leftView) {
+                finish();
+            }
+        });
     }
 
     @Override
@@ -67,15 +72,6 @@ public class BusRouteDetailActivity extends BaseActivity {
         busRouteDetailAdapter = new BusRouteDetailAdapter(this, tvStartLocation, tvEndLocation, data.getSegments());
         rlRouteDetail.setLayoutManager(new LinearLayoutManager(this));
         rlRouteDetail.setAdapter(busRouteDetailAdapter);
-    }
-
-    @Override
-    public void onMultiClick(View view) {
-        if (view == back) {
-            finish();
-        } else {
-            super.onMultiClick(view);
-        }
     }
 
 }

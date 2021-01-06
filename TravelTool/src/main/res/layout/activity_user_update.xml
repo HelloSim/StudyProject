@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/parent"
     android:layout_width="match_parent"
@@ -7,30 +8,13 @@
     android:background="@color/white"
     android:orientation="vertical">
 
-    <RelativeLayout
+    <com.sim.traveltool.ui.view.TitleView
+        android:id="@+id/titleView"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:background="@color/black"
-        android:gravity="center_vertical"
-        android:orientation="horizontal">
-
-        <ImageView
-            android:id="@+id/back"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="10dp"
-            android:src="@mipmap/ic_to_left" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:text="@string/user_info"
-            android:textColor="@color/white"
-            android:textSize="20sp" />
-
-    </RelativeLayout>
+        android:layout_height="wrap_content"
+        app:leftImageSrc="@mipmap/ic_to_left"
+        app:showLeft="true"
+        app:title="@string/user_info" />
 
     <RelativeLayout
         android:id="@+id/rl_user_name"
@@ -40,17 +24,14 @@
         android:padding="20dp">
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/textViewStyle"
             android:layout_centerVertical="true"
             android:layout_marginLeft="10dp"
-            android:text="@string/username"
-            android:textSize="18sp" />
+            android:text="@string/username" />
 
         <TextView
             android:id="@+id/tv_user_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/textViewStyleGray"
             android:layout_centerVertical="true"
             android:layout_marginRight="10dp"
             android:layout_toLeftOf="@+id/iv_user_name_go"
@@ -73,17 +54,14 @@
         android:padding="20dp">
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/textViewStyle"
             android:layout_centerVertical="true"
             android:layout_marginLeft="10dp"
-            android:text="@string/password"
-            android:textSize="18sp" />
+            android:text="@string/password" />
 
         <TextView
             android:id="@+id/tv_password"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/textViewStyleGray"
             android:layout_centerVertical="true"
             android:layout_marginRight="10dp"
             android:layout_toLeftOf="@+id/iv_password_go"
@@ -107,17 +85,14 @@
         android:padding="20dp">
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/textViewStyle"
             android:layout_centerVertical="true"
             android:layout_marginLeft="10dp"
-            android:text="@string/phone"
-            android:textSize="18sp" />
+            android:text="@string/phone" />
 
         <TextView
             android:id="@+id/tv_mobile_phone_number"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/textViewStyleGray"
             android:layout_centerVertical="true"
             android:layout_marginRight="10dp"
             android:layout_toLeftOf="@+id/iv_mobile_phone_number_go"
@@ -141,17 +116,14 @@
         android:padding="20dp">
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/textViewStyle"
             android:layout_centerVertical="true"
             android:layout_marginLeft="10dp"
-            android:text="@string/email"
-            android:textSize="18sp" />
+            android:text="@string/email" />
 
         <TextView
             android:id="@+id/tv_email"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/textViewStyleGray"
             android:layout_centerVertical="true"
             android:layout_marginRight="10dp"
             android:layout_toLeftOf="@+id/iv_email_go"
@@ -169,14 +141,11 @@
 
     <Button
         android:id="@+id/btn_log_out"
+        style="@style/buttonStyle"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:background="@drawable/button_bg"
-        android:text="@string/logout"
-        android:textAllCaps="false"
-        android:textColor="@color/white"
-        android:textSize="20sp" />
+        android:text="@string/logout" />
 
 </LinearLayout>

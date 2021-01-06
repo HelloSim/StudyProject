@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 
 import com.sim.baselibrary.base.BaseActivity;
 import com.sim.baselibrary.utils.LogUtil;
@@ -12,6 +11,7 @@ import com.sim.baselibrary.utils.RegexUtil;
 import com.sim.baselibrary.utils.ToastUtil;
 import com.sim.traveltool.R;
 import com.sim.traveltool.db.bean.User;
+import com.sim.traveltool.ui.view.TitleView;
 
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.SaveListener;
@@ -23,7 +23,7 @@ import cn.bmob.v3.listener.SaveListener;
  */
 public class UserRegisterActivity extends BaseActivity {
 
-    private ImageView back;
+    private TitleView titleView;
     private EditText etUserName;
     private EditText etPassword;
     private EditText etMobilePhoneNumber;
@@ -39,13 +39,19 @@ public class UserRegisterActivity extends BaseActivity {
 
     @Override
     protected void bindViews(Bundle savedInstanceState) {
-        back = findViewById(R.id.back);
+        titleView = findViewById(R.id.titleView);
         etUserName = findViewById(R.id.et_user_name);
         etPassword = findViewById(R.id.et_password);
         etMobilePhoneNumber = findViewById(R.id.et_mobile_phone_number);
         etEmail = findViewById(R.id.et_email);
         btnRegistered = findViewById(R.id.btn_registered);
-        setViewClick(back, btnRegistered);
+        setViewClick(btnRegistered);
+        titleView.setLeftClickListener(new TitleView.LeftClickListener() {
+            @Override
+            public void onClick(View leftView) {
+                finish();
+            }
+        });
     }
 
     @Override
@@ -60,15 +66,13 @@ public class UserRegisterActivity extends BaseActivity {
 
     @Override
     public void onMultiClick(View view) {
-        if (view == back) {
-            finish();
-        } else if (view == btnRegistered) {
+        if (view == btnRegistered) {
             if (etUserName.getText().toString().length() <= 0) {
                 ToastUtil.T_Info(UserRegisterActivity.this, getString(R.string.username_no_null));
                 return;
             }
             if (etPassword.getText().toString().length() <= 0) {
-                ToastUtil.T_Info(UserRegisterActivity.this,  getString(R.string.password_no_null));
+                ToastUtil.T_Info(UserRegisterActivity.this, getString(R.string.password_no_null));
                 return;
             }
             if (!RegexUtil.checkPhone(etMobilePhoneNumber.getText().toString())) {

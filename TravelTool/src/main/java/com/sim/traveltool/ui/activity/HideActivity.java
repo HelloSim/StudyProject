@@ -3,13 +3,13 @@ package com.sim.traveltool.ui.activity;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.haibin.calendarview.Calendar;
 import com.haibin.calendarview.CalendarView;
 import com.sim.baselibrary.base.BaseActivity;
 import com.sim.traveltool.R;
+import com.sim.traveltool.ui.view.TitleView;
 
 /**
  * @Auther Sim
@@ -18,7 +18,7 @@ import com.sim.traveltool.R;
  */
 public class HideActivity extends BaseActivity implements CalendarView.OnMonthChangeListener, CalendarView.OnCalendarSelectListener {
 
-    private ImageView back;
+    private TitleView titleView;
     private TextView tvNowMonth;
     private CalendarView calendarView;
 
@@ -29,10 +29,15 @@ public class HideActivity extends BaseActivity implements CalendarView.OnMonthCh
 
     @Override
     protected void bindViews(Bundle savedInstanceState) {
-        back = findViewById(R.id.back);
+        titleView = findViewById(R.id.titleView);
         tvNowMonth = findViewById(R.id.tv_now_year_and_month);
         calendarView = findViewById(R.id.calendarView);
-        setViewClick(back);
+        titleView.setLeftClickListener(new TitleView.LeftClickListener() {
+            @Override
+            public void onClick(View leftView) {
+                finish();
+            }
+        });
     }
 
     @Override
@@ -55,15 +60,6 @@ public class HideActivity extends BaseActivity implements CalendarView.OnMonthCh
         //日期选择事件监听
         calendarView.setOnCalendarSelectListener(this);
         tvNowMonth.setText(calendarView.getSelectedCalendar().getYear() + "-" + calendarView.getSelectedCalendar().getMonth());
-    }
-
-    @Override
-    public void onMultiClick(View view) {
-        if (view == back) {
-            finish();
-        } else {
-            super.onMultiClick(view);
-        }
     }
 
     /**

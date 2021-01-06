@@ -6,7 +6,6 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -23,6 +22,7 @@ import com.sim.traveltool.adapter.BusStationNameAdapter;
 import com.sim.traveltool.bean.BusLocationDataBean;
 import com.sim.traveltool.bean.BusRealTimeLineDataBean;
 import com.sim.traveltool.internet.APIFactory;
+import com.sim.traveltool.ui.view.TitleView;
 
 import java.util.ArrayList;
 
@@ -35,7 +35,7 @@ import rx.Subscriber;
  */
 public class BusSearchActivity extends BaseActivity {
 
-    private ImageView back;
+    private TitleView titleView;
     private EditText tvSearch;
     private TextView tvNotFound;
     private RecyclerView rlData;
@@ -56,11 +56,16 @@ public class BusSearchActivity extends BaseActivity {
 
     @Override
     protected void bindViews(Bundle savedInstanceState) {
-        back = findViewById(R.id.back);
+        titleView = findViewById(R.id.titleView);
         tvSearch = findViewById(R.id.tv_search);
         tvNotFound = findViewById(R.id.tv_not_found);
         rlData = findViewById(R.id.rl_data);
-        setViewClick(back);
+        titleView.setLeftClickListener(new TitleView.LeftClickListener() {
+            @Override
+            public void onClick(View leftView) {
+                finish();
+            }
+        });
     }
 
     @Override
@@ -139,15 +144,6 @@ public class BusSearchActivity extends BaseActivity {
                 }
             }
         });
-    }
-
-    @Override
-    public void onMultiClick(View view) {
-        if (view == back) {
-            finish();
-        } else {
-            super.onMultiClick(view);
-        }
     }
 
     /**

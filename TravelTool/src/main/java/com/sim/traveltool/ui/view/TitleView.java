@@ -3,6 +3,7 @@ package com.sim.traveltool.ui.view;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Color;
+import android.text.TextPaint;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.View;
@@ -21,9 +22,10 @@ import com.sim.traveltool.R;
 public class TitleView extends RelativeLayout {
 
     // 定义组件
-    private ImageView ivBack, ivRight;
+    private ImageView ivLeft, ivRight;
     private TextView titleTextView;
 
+    private boolean showLeft, showRight;
     private String titleText;// 文字
     private int leftImageSrc, rightImageSrc;// 左右两个ImageView的资源
 
@@ -31,13 +33,14 @@ public class TitleView extends RelativeLayout {
     private LayoutParams mLeftParams, mTitlepParams, mRightParams;
 
     // 点击监听接口
-    private backClickListener backClickListener;
-    private rightClickListener rightClickListener;
+    private LeftClickListener leftClickListener;
+    private RightClickListener rightClickListener;
+    private ClickListener clickListener;
 
     public TitleView(Context context, AttributeSet attrs) {
         super(context, attrs);
         initVariable(context, attrs);
-        initView(context);
+        initView(context, showLeft, showRight);
     }
 
     /**
@@ -49,9 +52,11 @@ public class TitleView extends RelativeLayout {
     private void initVariable(Context context, AttributeSet attrs) {
         // 将attrs中的值存储到TypedArray中
         TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.TitleBar);
+        showLeft = ta.getBoolean(R.styleable.TitleBar_showLeft, false);
+        showRight = ta.getBoolean(R.styleable.TitleBar_showRight, false);
         titleText = ta.getString(R.styleable.TitleBar_title);
-        leftImageSrc = ta.getResourceId(R.styleable.TitleBar_leftBackground, Color.TRANSPARENT);
-        rightImageSrc = ta.getResourceId(R.styleable.TitleBar_rightBackground, Color.TRANSPARENT);
+        leftImageSrc = ta.getResourceId(R.styleable.TitleBar_leftImageSrc, Color.TRANSPARENT);
+        rightImageSrc = ta.getResourceId(R.styleable.TitleBar_rightImageSrc, Color.TRANSPARENT);
         ta.recycle();// 注意！此处获取完属性值后要添加recycle()方法，避免重新创建时发生错误
     }
 
@@ -60,59 +65,66 @@ public class TitleView extends RelativeLayout {
      *
      * @param context
      */
-    private void initView(Context context) {
+    private void initView(Context context, boolean showBack, boolean showIcon) {
         setBackgroundColor(Color.BLACK);
 
-        // 创建childView
-        ivBack = new ImageView(context);
-        ivRight = new ImageView(context);
         titleTextView = new TextView(context);
-
-        // 设置childview属性
-        ivBack.setBackgroundResource(leftImageSrc);
-        ivBack.setPadding(20, 10, 20, 10);
-
-        ivRight.setBackgroundResource(rightImageSrc);
-        ivRight.setPadding(20, 10, 20, 10);
-
         titleTextView.setText(titleText);
         titleTextView.setTextColor(Color.WHITE);
         titleTextView.setTextSize(20);
+        titleTextView.setPadding(0, 30, 0, 30);
+        TextPaint tp = titleTextView.getPaint();
+        tp.setFakeBoldText(true);
         titleTextView.setGravity(Gravity.CENTER);
-
-        // 设置布局并添加到ViewGroup中,此处最好是WRAP_CONTENT，不然Measure时控件会过大，会使设置控件高度为wrap_content时失效
-        mLeftParams = new LayoutParams(DensityUtil.dp2px(context, 25), DensityUtil.dp2px(context, 25));
-        mLeftParams.addRule(RelativeLayout.ALIGN_PARENT_LEFT, TRUE);
-        mLeftParams.addRule(RelativeLayout.CENTER_VERTICAL, TRUE);
-        mLeftParams.setMargins(10, 10, 10, 10);
-        // 添加到ViewGroup
-        addView(ivBack, mLeftParams);
-
-        mRightParams = new LayoutParams(DensityUtil.dp2px(context, 30), DensityUtil.dp2px(context, 30));
-        mRightParams.addRule(RelativeLayout.ALIGN_PARENT_RIGHT, TRUE);
-        mRightParams.addRule(RelativeLayout.CENTER_VERTICAL, TRUE);
-        mRightParams.setMargins(10, 10, 10, 10);
-        addView(ivRight, mRightParams);
-
         mTitlepParams = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
         mTitlepParams.addRule(RelativeLayout.CENTER_IN_PARENT, TRUE);
         addView(titleTextView, mTitlepParams);
 
-        // 设置监听
-        ivBack.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (backClickListener != null)
-                    backClickListener.onClick();
-            }
-        });
-        ivRight.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (rightClickListener != null)
-                    rightClickListener.onClick();
-            }
-        });
+        if (showBack) {
+            ivLeft = new ImageView(context);
+            ivLeft.setBackgroundResource(leftImageSrc);
+            ivLeft.setPadding(40, 30, 40, 30);
+            mLeftParams = new LayoutParams(60, 60);
+            mLeftParams.addRule(RelativeLayout.ALIGN_PARENT_LEFT, TRUE);
+            mLeftParams.addRule(RelativeLayout.CENTER_VERTICAL, TRUE);
+            mLeftParams.setMargins(30, 10, 10, 10);
+            addView(ivLeft, mLeftParams);
+            ivLeft.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (clickListener != null) {
+                        clickListener.left(ivLeft);
+                    } else {
+                        if (leftClickListener != null) {
+                            leftClickListener.onClick(ivLeft);
+                        }
+                    }
+                }
+            });
+        }
+
+        if (showIcon) {
+            ivRight = new ImageView(context);
+            ivRight.setBackgroundResource(rightImageSrc);
+            ivRight.setPadding(40, 30, 40, 30);
+            mRightParams = new LayoutParams(80, 80);
+            mRightParams.addRule(RelativeLayout.ALIGN_PARENT_RIGHT, TRUE);
+            mRightParams.addRule(RelativeLayout.CENTER_VERTICAL, TRUE);
+            mRightParams.setMargins(10, 10, 30, 10);
+            addView(ivRight, mRightParams);
+            ivRight.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (clickListener != null) {
+                        clickListener.right(ivRight);
+                    } else {
+                        if (rightClickListener != null) {
+                            rightClickListener.onClick(ivRight);
+                        }
+                    }
+                }
+            });
+        }
     }
 
     @Override
@@ -161,39 +173,48 @@ public class TitleView extends RelativeLayout {
     /**
      * 设置按钮点击监听回调接口
      */
-    public interface backClickListener {
-        void onClick();
+    public interface LeftClickListener {
+        void onClick(View leftView);
     }
 
-    public interface rightClickListener {
-        void onClick();
+    public interface RightClickListener {
+        void onClick(View rightView);
+    }
+
+    public interface ClickListener {
+        void left(View leftView);
+
+        void right(View right);
     }
 
     /**
      * 添加按钮监听
      */
-    public void setBackClickListener(backClickListener backClickListener) {
-        this.backClickListener = backClickListener;
+    public void setLeftClickListener(LeftClickListener leftClickListener) {
+        this.leftClickListener = leftClickListener;
     }
 
-    public void setRightClickListener(rightClickListener rightClickListener) {
+    public void setRightClickListener(RightClickListener rightClickListener) {
         this.rightClickListener = rightClickListener;
     }
 
-    /**
-     * 设置按钮是否显示
-     */
-    public void setButtonVisable(boolean leftBtnVisable, boolean rightBtnVisable) {
-        if (leftBtnVisable) {
-            ivBack.setVisibility(View.VISIBLE);
-        } else {
-            ivBack.setVisibility(View.GONE);
-        }
-        if (rightBtnVisable) {
-            ivRight.setVisibility(View.VISIBLE);
-        } else {
-            ivRight.setVisibility(View.GONE);
-        }
+    public void setClickListener(ClickListener clickListener) {
+        this.clickListener = clickListener;
+    }
+
+    public void setTitleTextView(String titleText) {
+        this.titleText = titleText;
+        titleTextView.setText(titleText);
+    }
+
+    public void setLeftImage(int leftImageSrc) {
+        this.leftImageSrc = leftImageSrc;
+        ivLeft.setBackgroundResource(leftImageSrc);
+    }
+
+    public void setRightImage(int rightImageSrc) {
+        this.rightImageSrc = rightImageSrc;
+        ivRight.setBackgroundResource(rightImageSrc);
     }
 
 }

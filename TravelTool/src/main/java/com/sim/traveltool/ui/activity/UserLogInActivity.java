@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.PopupWindow;
 
 import com.sim.baselibrary.base.BaseActivity;
@@ -18,6 +17,7 @@ import com.sim.baselibrary.utils.ToastUtil;
 import com.sim.traveltool.AppHelper;
 import com.sim.traveltool.R;
 import com.sim.traveltool.db.bean.User;
+import com.sim.traveltool.ui.view.TitleView;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -33,11 +33,10 @@ import cn.bmob.v3.listener.SaveListener;
  */
 public class UserLogInActivity extends BaseActivity {
 
-    private ImageView back;
+    private TitleView titleView;
     private EditText etUserName;
     private EditText etPassword;
     private Button btnLogIn;
-    private ImageView ivMore;
 
     //更多弹窗
     private PopupWindow morePopupWindow;//弹窗
@@ -51,12 +50,22 @@ public class UserLogInActivity extends BaseActivity {
 
     @Override
     protected void bindViews(Bundle savedInstanceState) {
-        back = findViewById(R.id.back);
+        titleView = findViewById(R.id.titleView);
         etUserName = findViewById(R.id.et_user_name);
         etPassword = findViewById(R.id.et_password);
         btnLogIn = findViewById(R.id.btn_log_in);
-        ivMore = findViewById(R.id.iv_more);
-        setViewClick(back, btnLogIn, ivMore);
+        setViewClick(btnLogIn);
+        titleView.setClickListener(new TitleView.ClickListener() {
+            @Override
+            public void left(View leftView) {
+                finish();
+            }
+
+            @Override
+            public void right(View right) {
+                morePopupWindow.showAsDropDown(right, 0, 0);
+            }
+        });
     }
 
     @Override
@@ -76,9 +85,7 @@ public class UserLogInActivity extends BaseActivity {
 
     @Override
     public void onMultiClick(View view) {
-        if (view == back) {
-            finish();
-        } else if (view == btnLogIn) {
+        if (view == btnLogIn) {
             if (etUserName.getText().toString().length() > 0 && etPassword.getText().toString().length() > 0) {
                 loginByAccount();
             } else {
@@ -88,8 +95,6 @@ public class UserLogInActivity extends BaseActivity {
                     ToastUtil.T_Info(UserLogInActivity.this, getString(R.string.enter_username));
                 }
             }
-        } else if (view == ivMore) {
-            morePopupWindow.showAsDropDown(ivMore, 0, 0);
         } else if (view == btnRegistered) {
             morePopupWindow.dismiss();
             Intent intent = new Intent(this, UserRegisterActivity.class);

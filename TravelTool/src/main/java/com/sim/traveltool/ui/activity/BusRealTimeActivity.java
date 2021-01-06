@@ -18,6 +18,7 @@ import com.sim.traveltool.adapter.BusStationListAdapter;
 import com.sim.traveltool.bean.BusRealTimeBusStopDataBean;
 import com.sim.traveltool.bean.BusRealTimeDataBean;
 import com.sim.traveltool.internet.APIFactory;
+import com.sim.traveltool.ui.view.TitleView;
 
 import java.util.ArrayList;
 
@@ -30,16 +31,14 @@ import rx.Subscriber;
  */
 public class BusRealTimeActivity extends BaseActivity {
 
-    private ImageView back;
-    private RecyclerView rlstationList;
-    private TextView tvBusName;
+    private TitleView titleView;
     private TextView tvFromStation;
     private TextView tvToStation;
     private TextView tvBeginTime;
     private TextView tvEndTime;
     private TextView tvPrice;
-    private ImageView ivRefresh;
     private ImageView ivReverse;
+    private RecyclerView rlstationList;
 
     private String busName;//公交名
     private String lineId;//公交id
@@ -64,17 +63,27 @@ public class BusRealTimeActivity extends BaseActivity {
 
     @Override
     protected void bindViews(Bundle savedInstanceState) {
-        back = findViewById(R.id.back);
+        titleView = findViewById(R.id.titleView);
         rlstationList = findViewById(R.id.rl_station_list);
-        tvBusName = findViewById(R.id.tv_bus_name);
         tvFromStation = findViewById(R.id.tv_from_station);
         tvToStation = findViewById(R.id.tv_to_station);
         tvBeginTime = findViewById(R.id.tv_begin_time);
         tvEndTime = findViewById(R.id.tv_end_time);
         tvPrice = findViewById(R.id.tv_price);
-        ivRefresh = findViewById(R.id.iv_refresh);
         ivReverse = findViewById(R.id.iv_reverse);
-        setViewClick(back, ivRefresh, ivReverse);
+        setViewClick(ivReverse);
+        titleView.setClickListener(new TitleView.ClickListener() {
+            @Override
+            public void left(View leftView) {
+                finish();
+            }
+
+            @Override
+            public void right(View right) {
+                handler.removeMessages(REFRESH);
+                getBusListOnRoad(busName, fromStation);
+            }
+        });
     }
 
     @Override
@@ -103,7 +112,7 @@ public class BusRealTimeActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-        tvBusName.setText(busName);
+        titleView.setTitleTextView(busName);
         tvFromStation.setText(fromStation);
         tvToStation.setText(toStation);
         tvBeginTime.setText(beginTime);
@@ -113,12 +122,7 @@ public class BusRealTimeActivity extends BaseActivity {
 
     @Override
     public void onMultiClick(View view) {
-        if (view == back) {
-            finish();
-        } else if (view == ivRefresh) {
-            handler.removeMessages(REFRESH);
-            getBusListOnRoad(busName, fromStation);
-        } else if (view == ivReverse) {
+        if (view == ivReverse) {
 
         } else {
             super.onMultiClick(view);
@@ -164,11 +168,11 @@ public class BusRealTimeActivity extends BaseActivity {
      */
     private void getBusListOnRoad(String lineName, String fromStation) {
         busListOnRoadListList.clear();
-        ivRefresh.setImageDrawable(getResources().getDrawable(R.mipmap.ic_bus_refresh_gray));
+        titleView.setLeftImage(R.mipmap.ic_bus_refresh_gray);
         APIFactory.getInstance().getBusListOnRoad(new Subscriber<BusRealTimeDataBean>() {
             @Override
             public void onCompleted() {
-                ivRefresh.setImageDrawable(getResources().getDrawable(R.mipmap.ic_bus_refresh_blue));
+                titleView.setLeftImage(R.mipmap.ic_bus_refresh_blue);
                 //30s做一次更新查询
                 handler.sendEmptyMessageDelayed(REFRESH, 30000);
                 if (stationListAdapter == null) {

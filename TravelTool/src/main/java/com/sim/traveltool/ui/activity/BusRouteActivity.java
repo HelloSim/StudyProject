@@ -3,7 +3,6 @@ package com.sim.traveltool.ui.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -18,6 +17,7 @@ import com.sim.traveltool.adapter.BusRouteAdapter;
 import com.sim.traveltool.bean.BusLocationDesignatedDataBean;
 import com.sim.traveltool.bean.BusRouteDataBean;
 import com.sim.traveltool.internet.APIFactory;
+import com.sim.traveltool.ui.view.TitleView;
 
 import java.util.ArrayList;
 
@@ -30,7 +30,7 @@ import rx.Subscriber;
  */
 public class BusRouteActivity extends BaseActivity {
 
-    private ImageView back;
+    private TitleView titleView;
     private TextView tvFromAndToLocation;
     private RecyclerView rlLocationList;
 
@@ -53,10 +53,15 @@ public class BusRouteActivity extends BaseActivity {
 
     @Override
     protected void bindViews(Bundle savedInstanceState) {
-        back = findViewById(R.id.back);
+        titleView = findViewById(R.id.titleView);
         tvFromAndToLocation = findViewById(R.id.tv_from_and_to_location);
         rlLocationList = findViewById(R.id.rl_location_list);
-        setViewClick(back);
+        titleView.setLeftClickListener(new TitleView.LeftClickListener() {
+            @Override
+            public void onClick(View leftView) {
+                finish();
+            }
+        });
     }
 
     @Override
@@ -69,19 +74,10 @@ public class BusRouteActivity extends BaseActivity {
     }
 
     @Override
-    public void onMultiClick(View view) {
-        if (view == back) {
-            finish();
-        } else {
-            super.onMultiClick(view);
-        }
-    }
-
-    @Override
     protected void initView() {
         tvFromAndToLocation.setText(tvStartLocation + " -> " + tvEndLocation);
 
-        routeAdapter = new BusRouteAdapter( routeDataList);
+        routeAdapter = new BusRouteAdapter(routeDataList);
         rlLocationList.setLayoutManager(new LinearLayoutManager(this));
         rlLocationList.setAdapter(routeAdapter);
         ItemClickSupport.addTo(rlLocationList).setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {

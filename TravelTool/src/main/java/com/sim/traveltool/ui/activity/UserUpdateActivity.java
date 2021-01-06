@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
@@ -22,6 +21,7 @@ import com.sim.baselibrary.utils.ToastUtil;
 import com.sim.traveltool.AppHelper;
 import com.sim.traveltool.R;
 import com.sim.traveltool.db.bean.User;
+import com.sim.traveltool.ui.view.TitleView;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -36,7 +36,7 @@ import cn.bmob.v3.listener.UpdateListener;
  */
 public class UserUpdateActivity extends BaseActivity {
 
-    private ImageView back;
+    private TitleView titleView;
     private LinearLayout parent;
 
     private RelativeLayout rlUserName;
@@ -69,7 +69,7 @@ public class UserUpdateActivity extends BaseActivity {
 
     @Override
     protected void bindViews(Bundle savedInstanceState) {
-        back = findViewById(R.id.back);
+        titleView = findViewById(R.id.titleView);
         parent = findViewById(R.id.parent);
         rlUserName = findViewById(R.id.rl_user_name);
         rlPassword = findViewById(R.id.rl_password);
@@ -79,7 +79,13 @@ public class UserUpdateActivity extends BaseActivity {
         tvMobilePhoneNumber = findViewById(R.id.tv_mobile_phone_number);
         tvEmail = findViewById(R.id.tv_email);
         btnLogOut = findViewById(R.id.btn_log_out);
-        setViewClick(back, rlUserName, rlPassword, rlMobilePhoneNumber, rlEmail, btnLogOut);
+        setViewClick(rlUserName, rlPassword, rlMobilePhoneNumber, rlEmail, btnLogOut);
+        titleView.setLeftClickListener(new TitleView.LeftClickListener() {
+            @Override
+            public void onClick(View leftView) {
+                finish();
+            }
+        });
     }
 
     @Override
@@ -112,9 +118,7 @@ public class UserUpdateActivity extends BaseActivity {
 
     @Override
     public void onMultiClick(View view) {
-        if (view == back) {
-            finish();
-        } else if (view == btnLogOut) {
+        if (view == btnLogOut) {
             showDialog(getString(R.string.logout), getString(R.string.confirm_logout), getString(R.string.ok), getString(R.string.cancel),
                     new DialogInterface() {
                         @Override

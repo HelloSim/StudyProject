@@ -3,8 +3,6 @@ package com.sim.traveltool.ui.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -17,6 +15,7 @@ import com.sim.traveltool.R;
 import com.sim.traveltool.adapter.NewsAdapter;
 import com.sim.traveltool.bean.NewsWangYiBean;
 import com.sim.traveltool.db.bean.User;
+import com.sim.traveltool.ui.view.TitleView;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -35,8 +34,7 @@ import cn.bmob.v3.listener.UpdateListener;
  */
 public class NewsCollectActivity extends BaseActivity {
 
-    private ImageView back;
-    private LinearLayout parent;
+    private TitleView titleView;
     private RecyclerView newsRecyclerView;
 
     private User user;
@@ -50,10 +48,14 @@ public class NewsCollectActivity extends BaseActivity {
 
     @Override
     protected void bindViews(Bundle savedInstanceState) {
-        back = findViewById(R.id.back);
-        parent = findViewById(R.id.parent);
+        titleView = findViewById(R.id.titleView);
         newsRecyclerView = findViewById(R.id.recycle_view);
-        setViewClick(back);
+        titleView.setLeftClickListener(new TitleView.LeftClickListener() {
+            @Override
+            public void onClick(View leftView) {
+                finish();
+            }
+        });
     }
 
     @Override
@@ -123,14 +125,4 @@ public class NewsCollectActivity extends BaseActivity {
             }
         });
     }
-
-    @Override
-    public void onMultiClick(View view) {
-        if (view == back) {
-            finish();
-        } else {
-            super.onMultiClick(view);
-        }
-    }
-
 }

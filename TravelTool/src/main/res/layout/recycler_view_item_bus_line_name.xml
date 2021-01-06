@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/item_parent"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="5dp"
-    android:background="@drawable/button_bg_blue_retangle"
+    android:background="@drawable/button_bg_blue"
     android:gravity="center_vertical"
     android:orientation="horizontal"
     android:padding="5dp">
@@ -23,17 +24,15 @@
 
         <TextView
             android:id="@+id/tv_bus_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/textViewStyle"
             android:textColor="@color/white"
-            android:textSize="24sp" />
+            tools:text="1路" />
 
         <TextView
             android:id="@+id/tv_bus_line_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/textViewStyleGray"
             android:textColor="@color/gray"
-            android:textSize="18sp" />
+            tools:text="城轨珠海站->香洲" />
 
     </LinearLayout>
 

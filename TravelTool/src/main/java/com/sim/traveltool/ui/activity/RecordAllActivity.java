@@ -3,8 +3,6 @@ package com.sim.traveltool.ui.activity;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.bin.david.form.core.SmartTable;
 import com.bin.david.form.data.CellInfo;
@@ -18,6 +16,7 @@ import com.sim.baselibrary.utils.TimeUtil;
 import com.sim.traveltool.R;
 import com.sim.traveltool.db.bean.RecordBean;
 import com.sim.traveltool.db.bean.User;
+import com.sim.traveltool.ui.view.TitleView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,8 +32,7 @@ import cn.bmob.v3.listener.FindListener;
  */
 public class RecordAllActivity extends BaseActivity {
 
-    private ImageView back;
-    private TextView title;
+    private TitleView titleView;
     private SmartTable<RecordBean> table;
 
     private Calendar calendar;
@@ -50,16 +48,20 @@ public class RecordAllActivity extends BaseActivity {
 
     @Override
     protected void bindViews(Bundle savedInstanceState) {
-        back = findViewById(R.id.back);
-        title = findViewById(R.id.title);
+        titleView = findViewById(R.id.titleView);
         table = findViewById(R.id.table_data);
-        setViewClick(back);
+        titleView.setLeftClickListener(new TitleView.LeftClickListener() {
+            @Override
+            public void onClick(View leftView) {
+                finish();
+            }
+        });
     }
 
     @Override
     protected void initData() {
         calendar = (Calendar) getIntent().getSerializableExtra("calendar");
-        user = (User)getIntent().getSerializableExtra("user");
+        user = (User) getIntent().getSerializableExtra("user");
         days = TimeUtil.getDaysByYearMonth(calendar.getYear(), calendar.getMonth());
         for (int i = 1; i <= days; i++) {
             RecordBean recordBean = new RecordBean(getYearAndMonth(calendar) + "-" + i);
@@ -95,7 +97,7 @@ public class RecordAllActivity extends BaseActivity {
     @Override
     protected void initView() {
         FontStyle.setDefaultTextSize(DensityUtils.sp2px(this, 18)); //设置全局字体大小
-        title.setText(getYearAndMonth(calendar));
+        titleView.setTitleTextView(getYearAndMonth(calendar));
 
         ArrayList list = new ArrayList();//日期列的周六日内容格
         table.setZoom(false);//设置不可缩放
@@ -120,15 +122,6 @@ public class RecordAllActivity extends BaseActivity {
                     }
                 });
 
-    }
-
-    @Override
-    public void onMultiClick(View view) {
-        if (view == back) {
-            finish();
-        } else {
-            super.onMultiClick(view);
-        }
     }
 
     /**

@@ -10,23 +10,15 @@
 
     <Button
         android:id="@+id/all_record"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/button_bg_blue_retangle"
-        android:text="@string/record_all"
-        android:textAllCaps="false"
-        android:textColor="@color/white"
-        android:textSize="18sp" />
+        style="@style/buttonStyle"
+        android:background="@drawable/button_bg"
+        android:text="@string/record_all" />
 
     <Button
         android:id="@+id/btn_updata_other"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        style="@style/buttonStyle"
         android:layout_marginTop="10dp"
-        android:background="@drawable/button_bg_blue_retangle"
-        android:text="@string/record_add_memo"
-        android:textAllCaps="false"
-        android:textColor="@color/white"
-        android:textSize="18sp" />
+        android:background="@drawable/button_bg"
+        android:text="@string/record_add_memo" />
 
 </LinearLayout>

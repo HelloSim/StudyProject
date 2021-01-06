@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/item_parent"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="5dp"
-    android:background="@drawable/button_bg_blue_retangle"
+    android:background="@drawable/button_bg_blue"
     android:gravity="center_vertical"
     android:orientation="vertical"
     android:padding="5dp">
@@ -24,18 +25,15 @@
 
         <TextView
             android:id="@+id/tv_bus_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/textViewStyle"
             android:textColor="@color/white"
-            android:textSize="24sp" />
+            tools:text="K8路(珠海港--拱北口岸总站)" />
 
     </LinearLayout>
 
     <TextView
         android:id="@+id/tv_route_roughly"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/gray"
-        android:textSize="18sp" />
+        style="@style/textViewStyleGray"
+        tools:text="56分钟 | 步行100米" />
 
 </LinearLayout>

@@ -3,8 +3,8 @@
     android:id="@+id/ll_station_content"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@color/transparent">
+    android:background="@color/transparent"
+    android:orientation="vertical">
 
     <TextView
         android:id="@+id/tv_station"
@@ -24,25 +24,18 @@
 
     <Button
         android:id="@+id/btn_station"
+        style="@style/buttonStyle"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="10dp"
         android:layout_marginRight="20dp"
-        android:background="@drawable/button_bg_blue_retangle"
-        android:text="@string/BusStation"
-        android:textAllCaps="false"
-        android:textColor="@color/white"
-        android:textSize="18sp" />
+        android:background="@drawable/button_bg_blue"
+        android:text="@string/BusStation" />
 
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        style="@style/textViewStyleGray"
+        android:layout_gravity="center_horizontal"
         android:layout_marginTop="20dp"
-        android:gravity="center"
-        android:text="站点公交查询功能，后续实现。。。"
-        android:textAllCaps="false"
-        android:textColor="@color/text_gray"
-        android:textSize="12sp" />
+        android:text="站点公交查询功能，后续实现。。。" />
 
 </LinearLayout>

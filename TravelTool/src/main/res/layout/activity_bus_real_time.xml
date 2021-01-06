@@ -1,40 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <RelativeLayout
+    <com.sim.traveltool.ui.view.TitleView
+        android:id="@+id/titleView"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:background="@color/black">
-
-        <ImageView
-            android:id="@+id/back"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:layout_centerVertical="true"
-            android:src="@mipmap/ic_to_left" />
-
-        <TextView
-            android:id="@+id/tv_bus_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:text="@string/bus_real_time_search"
-            android:textColor="@color/white"
-            android:textSize="20sp" />
-
-        <ImageView
-            android:id="@+id/iv_refresh"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            android:layout_centerVertical="true"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="20dp"
-            android:src="@mipmap/ic_bus_refresh_blue"/>
-
-    </RelativeLayout>
+        android:layout_height="wrap_content"
+        app:leftImageSrc="@mipmap/ic_to_left"
+        app:rightImageSrc="@mipmap/ic_bus_refresh_blue"
+        app:showLeft="true"
+        app:showRight="true"
+        app:title="@string/bus_real_time_search" />
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -51,23 +31,19 @@
 
         <TextView
             android:id="@+id/tv_from_station"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/textViewStyle"
             android:layout_centerVertical="true"
             android:layout_marginRight="20dp"
             android:layout_toLeftOf="@+id/iv_reverse"
-            android:textColor="@color/black"
-            android:textSize="18sp" />
+            tools:text="起点站" />
 
         <TextView
             android:id="@+id/tv_to_station"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/textViewStyle"
             android:layout_centerVertical="true"
             android:layout_marginLeft="20dp"
             android:layout_toRightOf="@+id/iv_reverse"
-            android:textColor="@color/black"
-            android:textSize="18sp" />
+            tools:text="终点站" />
 
     </RelativeLayout>
 
@@ -78,48 +54,33 @@
         android:orientation="horizontal">
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/bus_stara_time"
-            android:textColor="@color/text_gray"
-            android:textSize="16sp" />
+            style="@style/textViewStyleGray"
+            android:text="@string/bus_stara_time" />
 
         <TextView
             android:id="@+id/tv_begin_time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/text_gray"
-            android:textSize="16sp" />
+            style="@style/textViewStyleGray"
+            tools:text="06:00" />
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/textViewStyleGray"
             android:layout_marginLeft="10dp"
-            android:text="@string/bus_end_time"
-            android:textColor="@color/text_gray"
-            android:textSize="16sp" />
+            android:text="@string/bus_end_time" />
 
         <TextView
             android:id="@+id/tv_end_time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/text_gray"
-            android:textSize="16sp" />
+            style="@style/textViewStyleGray"
+            tools:text="23:00" />
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/textViewStyleGray"
             android:layout_marginLeft="10dp"
-            android:text="@string/bus_price"
-            android:textColor="@color/text_gray"
-            android:textSize="16sp" />
+            android:text="@string/bus_price" />
 
         <TextView
             android:id="@+id/tv_price"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/text_gray"
-            android:textSize="16sp" />
+            style="@style/textViewStyleGray"
+            tools:text="1元" />
 
     </LinearLayout>
 
@@ -127,6 +88,6 @@
         android:id="@+id/rl_station_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="10dp"/>
+        android:layout_marginTop="10dp" />
 
 </LinearLayout>

@@ -8,13 +8,13 @@ import android.webkit.SslErrorHandler;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.ImageView;
 
 import com.sim.baselibrary.base.BaseActivity;
 import com.sim.baselibrary.utils.ToastUtil;
 import com.sim.traveltool.R;
 import com.sim.traveltool.bean.NewsWangYiBean;
 import com.sim.traveltool.db.bean.User;
+import com.sim.traveltool.ui.view.TitleView;
 
 import java.util.List;
 
@@ -32,9 +32,8 @@ import cn.bmob.v3.listener.UpdateListener;
  */
 public class NewsDetailActivity extends BaseActivity {
 
-    private ImageView back;
+    private TitleView titleView;
     private WebView webView;
-    private ImageView collect;
 
     private NewsWangYiBean.NewsBean news;//传进来的news
     private NewsWangYiBean.NewsBean collectionNewsBean;//收藏中的news
@@ -49,10 +48,51 @@ public class NewsDetailActivity extends BaseActivity {
 
     @Override
     protected void bindViews(Bundle savedInstanceState) {
-        back = findViewById(R.id.back);
+        titleView = findViewById(R.id.titleView);
         webView = findViewById(R.id.web_view);
-        collect = findViewById(R.id.collect);
-        setViewClick(back, collect);
+        titleView.setClickListener(new TitleView.ClickListener() {
+            @Override
+            public void left(View leftView) {
+                finish();
+            }
+
+            @Override
+            public void right(View right) {
+                if (isCollect && collectionNewsBean != null) {
+                    NewsWangYiBean.NewsBean bean = new NewsWangYiBean.NewsBean();
+                    bean.setObjectId(collectionNewsBean.getObjectId());
+                    bean.delete(new UpdateListener() {
+
+                        @Override
+                        public void done(BmobException e) {
+                            if (e == null) {
+                                collectionNewsBean = null;
+                                titleView.setRightImage(R.mipmap.ic_collect_not);
+                                isCollect = false;
+                            }
+                        }
+
+                    });
+                } else {
+                    NewsWangYiBean.NewsBean bean = new NewsWangYiBean.NewsBean();
+                    bean.setUser(user);
+                    bean.setTitle(news.getTitle());
+                    bean.setPath(news.getPath());
+                    bean.setImage(news.getImage());
+                    bean.setPasstime(news.getPasstime());
+                    bean.save(new SaveListener<String>() {
+                        @Override
+                        public void done(String s, BmobException e) {
+                            if (e == null) {
+                                collectionNewsBean = bean;
+                                titleView.setRightImage(R.mipmap.ic_collect_yes);
+                                isCollect = true;
+                            }
+                        }
+                    });
+                }
+            }
+        });
     }
 
     @Override
@@ -70,20 +110,20 @@ public class NewsDetailActivity extends BaseActivity {
                         isCollect = false;
                         for (NewsWangYiBean.NewsBean bean : list) {
                             if (bean.getTitle().equals(news.getTitle())) {
-                                collect.setImageResource(R.mipmap.ic_collect_yes);
+                                titleView.setRightImage(R.mipmap.ic_collect_yes);
                                 collectionNewsBean = list.get(0);
                                 isCollect = true;
                             }
                         }
                     } else {
-                        collect.setImageResource(R.mipmap.ic_collect_not);
+                        titleView.setRightImage(R.mipmap.ic_collect_not);
                         collectionNewsBean = null;
                         isCollect = false;
                     }
                 }
             });
         } else {
-            collect.setImageResource(R.mipmap.ic_collect_not);
+            titleView.setRightImage(R.mipmap.ic_collect_not);
             collectionNewsBean = null;
             isCollect = false;
             ToastUtil.T_Error(this, getString(R.string.login_no));
@@ -94,9 +134,9 @@ public class NewsDetailActivity extends BaseActivity {
     @Override
     protected void initView() {
         if (isCollect && collectionNewsBean != null) {
-            collect.setImageResource(R.mipmap.ic_collect_yes);
+            titleView.setRightImage(R.mipmap.ic_collect_yes);
         } else {
-            collect.setImageResource(R.mipmap.ic_collect_not);
+            titleView.setRightImage(R.mipmap.ic_collect_not);
         }
         if (news != null) {
             //启用支持javascript
@@ -133,49 +173,6 @@ public class NewsDetailActivity extends BaseActivity {
             };
             webView.setWebViewClient(mWebviewclient);
             webView.loadUrl(news.getPath());
-        }
-    }
-
-    @Override
-    public void onMultiClick(View view) {
-        if (view == back) {
-            finish();
-        } else if (view == collect) {
-            if (isCollect && collectionNewsBean != null) {
-                NewsWangYiBean.NewsBean bean = new NewsWangYiBean.NewsBean();
-                bean.setObjectId(collectionNewsBean.getObjectId());
-                bean.delete(new UpdateListener() {
-
-                    @Override
-                    public void done(BmobException e) {
-                        if (e == null) {
-                            collectionNewsBean = null;
-                            collect.setImageResource(R.mipmap.ic_collect_not);
-                            isCollect = false;
-                        }
-                    }
-
-                });
-            } else {
-                NewsWangYiBean.NewsBean bean = new NewsWangYiBean.NewsBean();
-                bean.setUser(user);
-                bean.setTitle(news.getTitle());
-                bean.setPath(news.getPath());
-                bean.setImage(news.getImage());
-                bean.setPasstime(news.getPasstime());
-                bean.save(new SaveListener<String>() {
-                    @Override
-                    public void done(String s, BmobException e) {
-                        if (e == null) {
-                            collectionNewsBean = bean;
-                            collect.setImageResource(R.mipmap.ic_collect_yes);
-                            isCollect = true;
-                        }
-                    }
-                });
-            }
-        } else {
-            super.onMultiClick(view);
         }
     }
 

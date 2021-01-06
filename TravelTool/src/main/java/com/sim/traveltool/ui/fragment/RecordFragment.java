@@ -9,7 +9,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
@@ -29,6 +28,7 @@ import com.sim.traveltool.R;
 import com.sim.traveltool.db.bean.RecordBean;
 import com.sim.traveltool.db.bean.User;
 import com.sim.traveltool.ui.activity.RecordAllActivity;
+import com.sim.traveltool.ui.view.TitleView;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -58,7 +58,7 @@ public class RecordFragment extends BaseFragment implements CalendarView.OnMonth
     private CalendarView calendarView;
 
     private LinearLayout parent;
-    private ImageView ivMore;
+    private TitleView titleView;
     private TextView tvRecordTimeStart;
     private TextView tvRecordTimeEnd;
     private Button btnRecord;
@@ -90,11 +90,17 @@ public class RecordFragment extends BaseFragment implements CalendarView.OnMonth
         calendarView = view.findViewById(R.id.calendarView);
 
         parent = view.findViewById(R.id.parent);
-        ivMore = view.findViewById(R.id.iv_more);
+        titleView = view.findViewById(R.id.titleView);
         tvRecordTimeStart = view.findViewById(R.id.tv_record_time_start);
         tvRecordTimeEnd = view.findViewById(R.id.tv_record_time_end);
         btnRecord = view.findViewById(R.id.btn_record);
-        setViewClick(ivMore, btnRecord);
+        setViewClick(btnRecord);
+        titleView.setRightClickListener(new TitleView.RightClickListener() {
+            @Override
+            public void onClick(View leftView) {
+                morePopupWindow.showAsDropDown(leftView, 0, 0);
+            }
+        });
 
         calendarView.setWeekStarWithSun();//设置星期日周起始
         calendarView.setWeeColor(Color.TRANSPARENT, Color.BLACK);//设置星期栏的背景、字体颜色
@@ -139,9 +145,7 @@ public class RecordFragment extends BaseFragment implements CalendarView.OnMonth
 
     @Override
     public void onMultiClick(View view) {
-        if (view == ivMore) {
-            morePopupWindow.showAsDropDown(ivMore, 0, 0);
-        } else if (view == btnAllRecord) {
+        if (view == btnAllRecord) {
             morePopupWindow.dismiss();
             if (user != null) {
                 Intent intent = new Intent(getContext(), RecordAllActivity.class);
