@@ -1,6 +1,7 @@
 package com.sim.traveltool.ui.fragment;
 
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.sim.baselibrary.base.BaseFragment;
@@ -13,7 +14,7 @@ import com.sim.traveltool.R;
  */
 public class BusRealTimeFragment extends BaseFragment {
 
-    private TextView tvSearch;
+    private EditText etSearch;
 
     @Override
     protected int getLayoutRes() {
@@ -22,8 +23,8 @@ public class BusRealTimeFragment extends BaseFragment {
 
     @Override
     protected void bindViews(View view) {
-        tvSearch = view.findViewById(R.id.tv_search);
-        setViewClick(tvSearch);
+        etSearch = view.findViewById(R.id.et_search);
+        setViewClick(etSearch);
     }
 
     @Override
@@ -37,7 +38,7 @@ public class BusRealTimeFragment extends BaseFragment {
 
     @Override
     public void onMultiClick(View view) {
-        if (view == tvSearch) {
+        if (view == etSearch) {
 //            startActivity(new Intent(getActivity(), BusSearchActivity.class).putExtra("searchType", AppHelper.RESULT_BUS));
         } else {
             super.onMultiClick(view);

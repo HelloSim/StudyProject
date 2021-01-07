@@ -14,12 +14,12 @@
         android:id="@+id/iv_search"
         android:layout_width="30dp"
         android:layout_height="30dp"
-        android:layout_marginRight="5dp"
         android:src="@mipmap/ic_search" />
 
     <TextView
         android:id="@+id/tv_location_name"
         style="@style/textViewStyle"
+        android:layout_marginLeft="5dp"
         android:textColor="@color/white"
         tools:text="省科干学院(公交站)" />
 

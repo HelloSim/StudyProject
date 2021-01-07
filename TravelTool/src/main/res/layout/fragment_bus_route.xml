@@ -1,16 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/ll_route_content"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/transparent"
     android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
+        android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp"
+        android:layout_marginRight="10dp"
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
@@ -19,28 +21,21 @@
             android:layout_height="40dp"
             android:src="@mipmap/ic_bus_route_start" />
 
-        <TextView
-            android:id="@+id/tv_start_station"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="50dp"
-            android:background="@drawable/edit_bg"
+        <EditText
+            android:id="@+id/et_start_station"
+            style="@style/editViewStyle"
             android:focusable="false"
-            android:gravity="center_vertical"
             android:hint="请输入起始站如：省科干学院"
-            android:padding="5dp"
-            android:textColor="@color/black"
-            android:textColorHint="@color/text_gray"
-            android:textSize="16sp" />
+            tools:text="省科干学院（公交站）" />
 
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="10dp"
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
@@ -49,20 +44,12 @@
             android:layout_height="40dp"
             android:src="@mipmap/ic_bus_route_end" />
 
-        <TextView
-            android:id="@+id/tv_end_station"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="50dp"
-            android:background="@drawable/edit_bg"
+        <EditText
+            android:id="@+id/et_end_station"
+            style="@style/editViewStyle"
             android:focusable="false"
-            android:gravity="center_vertical"
             android:hint="请输入终点站如：华发商都"
-            android:padding="5dp"
-            android:textColor="@color/black"
-            android:textColorHint="@color/text_gray"
-            android:textSize="16sp" />
+            tools:text="华发商都" />
 
     </LinearLayout>
 
@@ -70,9 +57,7 @@
         android:id="@+id/btn_route"
         style="@style/buttonStyle"
         android:layout_width="match_parent"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginRight="20dp"
+        android:layout_margin="10dp"
         android:text="@string/bus_transfer_plan" />
 
 </LinearLayout>

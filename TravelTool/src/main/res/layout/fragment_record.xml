@@ -4,7 +4,6 @@
     android:id="@+id/parent"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_gravity="center"
     android:orientation="vertical">
 
     <com.sim.traveltool.ui.view.TitleView
@@ -19,72 +18,57 @@
         android:id="@+id/tv_now_year_and_month"
         style="@style/textViewStyle"
         android:layout_gravity="center_horizontal"
-        android:layout_margin="10dp"
+        android:layout_marginTop="10dp"
         tools:text="2020-1" />
-
 
     <com.haibin.calendarview.CalendarLayout
         android:id="@+id/calendarLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white">
+        android:layout_marginTop="10dp">
 
         <com.haibin.calendarview.CalendarView
             android:id="@+id/calendarView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/white"
             app:month_view="com.example.sim.view.CalendarView.SimpleMonthView" />
 
     </com.haibin.calendarview.CalendarLayout>
 
-    <RelativeLayout
-        android:layout_width="match_parent"
+    <LinearLayout
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@color/white"
+        android:layout_gravity="center_horizontal"
         android:padding="20dp">
 
         <TextView
             android:id="@+id/tv_record_time_start"
             style="@style/textViewStyle"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="10dp"
-            android:layout_toLeftOf="@+id/tv_symbol"
             android:text="@string/record_no" />
 
         <TextView
             android:id="@+id/tv_symbol"
             style="@style/textViewStyle"
-            android:layout_centerInParent="true"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
             android:text="-" />
 
         <TextView
             android:id="@+id/tv_record_time_end"
             style="@style/textViewStyle"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="10dp"
-            android:layout_toRightOf="@+id/tv_symbol"
             android:text="@string/record_no" />
 
-    </RelativeLayout>
+    </LinearLayout>
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/white"
-        android:orientation="vertical">
-
-        <Button
-            android:id="@+id/btn_record"
-            android:layout_width="120dp"
-            android:layout_height="120dp"
-            android:layout_centerInParent="true"
-            android:background="@drawable/round_blue"
-            android:text="@string/record_start"
-            android:textAllCaps="false"
-            android:textColor="@color/white"
-            android:textSize="22sp" />
-
-    </RelativeLayout>
+    <Button
+        android:id="@+id/btn_record"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/round_blue"
+        android:text="@string/record_start"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:textSize="22sp" />
 
 </LinearLayout>

@@ -14,12 +14,12 @@
         android:id="@+id/iv_search"
         android:layout_width="30dp"
         android:layout_height="30dp"
-        android:layout_marginRight="5dp"
         android:src="@mipmap/ic_search" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
         android:orientation="vertical">
 
         <TextView
@@ -31,7 +31,6 @@
         <TextView
             android:id="@+id/tv_bus_line_name"
             style="@style/textViewStyleGray"
-            android:textColor="@color/gray"
             tools:text="城轨珠海站->香洲" />
 
     </LinearLayout>

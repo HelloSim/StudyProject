@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
     android:orientation="vertical">
 
     <com.sim.traveltool.ui.view.TitleView
@@ -20,12 +19,12 @@
         style="@style/textViewStyle"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
         tools:text="起点站 -> 站点站" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rl_location_list"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:layout_marginTop="10dp" />
 
 </LinearLayout>

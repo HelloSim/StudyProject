@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -16,15 +17,13 @@
     <EditText
         android:id="@+id/tv_search"
         style="@style/editViewStyle"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginRight="20dp" />
+        android:layout_margin="10dp"
+        tools:text="省科干学院（公交站）" />
 
     <TextView
         android:id="@+id/tv_not_found"
         style="@style/textViewStyleGray"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="10dp"
         android:text="@string/no_data"
         android:visibility="gone" />
 
@@ -32,9 +31,8 @@
         android:id="@+id/rl_data"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginRight="20dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
         android:visibility="gone" />
 
 </LinearLayout>

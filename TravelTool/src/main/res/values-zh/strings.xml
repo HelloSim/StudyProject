@@ -61,9 +61,9 @@
     <string name="getStationList_fail">获取公交路线站点请求出错！</string>
     <string name="getBusListOnRoad_fail">获取实时公交数据请求出错！</string>
     <string name="bus_real_time_search">实时公交搜索</string>
-    <string name="bus_stara_time">首班：</string>
-    <string name="bus_end_time">末班：</string>
-    <string name="bus_price">票价：</string>
+    <string name="bus_stara_time">首班:</string>
+    <string name="bus_end_time">末班:</string>
+    <string name="bus_price">票价:</string>
     <string name="bus_transfer_plan">换乘方案</string>
     <string name="no_data">没有找到相应的数据</string>
 

@@ -37,7 +37,7 @@ public class BusRealTimeActivity extends BaseActivity {
     private TextView tvBeginTime;
     private TextView tvEndTime;
     private TextView tvPrice;
-    private ImageView ivReverse;
+    private TextView tvReverse;
     private RecyclerView rlstationList;
 
     private String busName;//公交名
@@ -70,8 +70,8 @@ public class BusRealTimeActivity extends BaseActivity {
         tvBeginTime = findViewById(R.id.tv_begin_time);
         tvEndTime = findViewById(R.id.tv_end_time);
         tvPrice = findViewById(R.id.tv_price);
-        ivReverse = findViewById(R.id.iv_reverse);
-        setViewClick(ivReverse);
+        tvReverse = findViewById(R.id.tv_reverse);
+        setViewClick(tvReverse);
         titleView.setClickListener(new TitleView.ClickListener() {
             @Override
             public void left(View leftView) {
@@ -122,7 +122,7 @@ public class BusRealTimeActivity extends BaseActivity {
 
     @Override
     public void onMultiClick(View view) {
-        if (view == ivReverse) {
+        if (view == tvReverse) {
 
         } else {
             super.onMultiClick(view);

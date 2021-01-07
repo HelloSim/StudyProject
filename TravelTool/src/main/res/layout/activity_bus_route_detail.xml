@@ -17,22 +17,21 @@
     <TextView
         android:id="@+id/tv_bus_route"
         style="@style/textViewStyle"
-        android:layout_gravity="center"
+        android:layout_gravity="center_horizontal"
         android:layout_marginTop="10dp"
         tools:text="K8路 > 806路" />
 
     <TextView
         android:id="@+id/tv_time_distance"
         style="@style/textViewStyleGray"
-        android:layout_gravity="center"
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="10dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="10dp"
         tools:text="1小时16分钟 | 步行826米" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rl_route_detail"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="5dp" />
+        android:layout_marginTop="10dp" />
 
 </LinearLayout>

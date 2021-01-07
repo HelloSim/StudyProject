@@ -16,40 +16,38 @@
         app:showRight="true"
         app:title="@string/bus_real_time_search" />
 
-    <RelativeLayout
-        android:layout_width="match_parent"
+    <LinearLayout
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
         android:layout_marginTop="10dp"
-        android:padding="5dp">
-
-        <ImageView
-            android:id="@+id/iv_reverse"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_centerInParent="true"
-            android:src="@mipmap/ic_reverse_white" />
+        android:gravity="center"
+        android:orientation="horizontal">
 
         <TextView
             android:id="@+id/tv_from_station"
             style="@style/textViewStyle"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="20dp"
-            android:layout_toLeftOf="@+id/iv_reverse"
             tools:text="起点站" />
+
+        <TextView
+            android:id="@+id/tv_reverse"
+            style="@style/textViewStyle"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:text=" > > " />
 
         <TextView
             android:id="@+id/tv_to_station"
             style="@style/textViewStyle"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="20dp"
-            android:layout_toRightOf="@+id/iv_reverse"
             tools:text="终点站" />
 
-    </RelativeLayout>
+    </LinearLayout>
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="10dp"
         android:gravity="center"
         android:orientation="horizontal">
 

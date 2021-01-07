@@ -1,17 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/ll_station_content"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/transparent"
     android:orientation="vertical">
 
     <EditText
         android:id="@+id/tv_station"
         style="@style/editViewStyle"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginRight="20dp"
+        android:layout_margin="10dp"
         android:focusable="false"
         android:hint="请输入站点名称如：拱北口岸" />
 
@@ -19,9 +18,7 @@
         android:id="@+id/btn_station"
         style="@style/buttonStyle"
         android:layout_width="match_parent"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginRight="20dp"
+        android:layout_margin="10dp"
         android:text="@string/BusStation" />
 
     <TextView

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/white">
+    android:layout_height="match_parent">
 
     <com.sim.traveltool.ui.view.TitleView
         android:id="@+id/titleView"
@@ -27,26 +27,26 @@
         <EditText
             android:id="@+id/et_password"
             style="@style/editViewStyleNumberPassword"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="5dp"
             android:hint="@string/password" />
 
         <EditText
             android:id="@+id/et_mobile_phone_number"
             style="@style/editViewStyle"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="5dp"
             android:hint="@string/phone" />
 
         <EditText
             android:id="@+id/et_email"
             style="@style/editViewStyle"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="5dp"
             android:hint="@string/email" />
 
         <Button
             android:id="@+id/btn_registered"
             style="@style/buttonStyle"
             android:layout_width="match_parent"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="10dp"
             android:text="@string/register" />
 
     </LinearLayout>

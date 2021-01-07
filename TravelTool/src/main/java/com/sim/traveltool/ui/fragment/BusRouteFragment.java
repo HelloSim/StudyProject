@@ -3,6 +3,7 @@ package com.sim.traveltool.ui.fragment;
 import android.content.Intent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -20,8 +21,8 @@ import com.sim.traveltool.ui.activity.BusSearchActivity;
  */
 public class BusRouteFragment extends BaseFragment {
 
-    private TextView tvStartStation;
-    private TextView tvEndStation;
+    private EditText etStartStation;
+    private EditText etEndStation;
     private Button btnRoute;
 
     @Override
@@ -31,10 +32,10 @@ public class BusRouteFragment extends BaseFragment {
 
     @Override
     protected void bindViews(View view) {
-        tvStartStation = view.findViewById(R.id.tv_start_station);
-        tvEndStation = view.findViewById(R.id.tv_end_station);
+        etStartStation = view.findViewById(R.id.et_start_station);
+        etEndStation = view.findViewById(R.id.et_end_station);
         btnRoute = view.findViewById(R.id.btn_route);
-        setViewClick(tvStartStation, tvEndStation, btnRoute);
+        setViewClick(etStartStation, etEndStation, btnRoute);
     }
 
     @Override
@@ -48,15 +49,15 @@ public class BusRouteFragment extends BaseFragment {
 
     @Override
     public void onMultiClick(View view) {
-        if (view == tvStartStation) {
+        if (view == etStartStation) {
             startActivityForResult(new Intent(getActivity(), BusSearchActivity.class).putExtra("searchType", AppHelper.RESULT_START_STATION), AppHelper.RESULT_START_STATION);
-        } else if (view == tvEndStation) {
+        } else if (view == etEndStation) {
             startActivityForResult(new Intent(getActivity(), BusSearchActivity.class).putExtra("searchType", AppHelper.RESULT_END_STATION), AppHelper.RESULT_END_STATION);
         } else if (view == btnRoute) {
-            if (tvStartStation.getText().length() > 0 && tvEndStation.getText().length() > 0) {
+            if (etStartStation.getText().length() > 0 && etEndStation.getText().length() > 0) {
                 Intent intent = new Intent(getActivity(), BusRouteActivity.class);
-                intent.putExtra("tvStartStation", tvStartStation.getText().toString());
-                intent.putExtra("tvEndStation", tvEndStation.getText().toString());
+                intent.putExtra("tvStartStation", etStartStation.getText().toString());
+                intent.putExtra("tvEndStation", etEndStation.getText().toString());
                 startActivity(intent);
             }
         } else {
@@ -69,11 +70,11 @@ public class BusRouteFragment extends BaseFragment {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == AppHelper.RESULT_START_STATION) {
             if ((data != null)) {
-                tvStartStation.setText(data.getStringExtra("name"));
+                etStartStation.setText(data.getStringExtra("name"));
             }
         } else if (requestCode == AppHelper.RESULT_END_STATION) {
             if ((data != null)) {
-                tvEndStation.setText(data.getStringExtra("name"));
+                etEndStation.setText(data.getStringExtra("name"));
             }
         }
     }

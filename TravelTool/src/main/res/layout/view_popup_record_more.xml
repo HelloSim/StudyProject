@@ -3,7 +3,7 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_centerVertical="true"
-    android:background="@drawable/popup_layout_bg"
+    android:background="@drawable/popup_layout_bg_black"
     android:gravity="center"
     android:orientation="vertical"
     android:padding="10dp">
@@ -16,7 +16,7 @@
     <Button
         android:id="@+id/btn_updata_other"
         style="@style/buttonStyle"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="20dp"
         android:text="@string/record_add_memo" />
 
 </LinearLayout>

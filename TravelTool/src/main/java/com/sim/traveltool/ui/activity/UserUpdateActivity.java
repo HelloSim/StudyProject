@@ -107,7 +107,7 @@ public class UserUpdateActivity extends BaseActivity {
 
         LayoutInflater inflater = (LayoutInflater) this.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
         updatePasswordLayout = inflater.inflate(R.layout.view_popup_update_password, null);
-        updatePasswordPopupWindow = showPopupWindow(updatePasswordLayout, 350, 380);
+        updatePasswordPopupWindow = showPopupWindow(updatePasswordLayout, 300, 330);
         etOldPassword = updatePasswordLayout.findViewById(R.id.et_old_password);
         etNewPassword = updatePasswordLayout.findViewById(R.id.et_new_password);
         etNewPasswordAgain = updatePasswordLayout.findViewById(R.id.et_new_password_again);
