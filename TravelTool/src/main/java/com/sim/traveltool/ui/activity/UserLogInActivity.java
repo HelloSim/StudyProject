@@ -78,7 +78,7 @@ public class UserLogInActivity extends BaseActivity {
         LayoutInflater inflater = (LayoutInflater) getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
         moreLayout = inflater.inflate(R.layout.view_popup_login_more, null);
 
-        morePopupWindow = showPopupWindow(moreLayout, 200, 100);
+        morePopupWindow = showPopupWindow(moreLayout, 150, 100);
         btnRegistered = moreLayout.findViewById(R.id.btn_registered);
         setViewClick(btnRegistered);
     }

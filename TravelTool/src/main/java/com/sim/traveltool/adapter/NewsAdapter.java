@@ -4,12 +4,12 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 
 import com.bumptech.glide.Glide;
+import com.google.android.material.imageview.ShapeableImageView;
 import com.sim.baselibrary.base.BaseAdapter;
 import com.sim.baselibrary.base.BaseViewHolder;
 import com.sim.traveltool.R;
@@ -65,7 +65,7 @@ public class NewsAdapter extends BaseAdapter<NewsAdapter.ViewHolder, NewsWangYiB
     }
 
     public class ViewHolder extends BaseViewHolder {
-        ImageView newsImage;
+        ShapeableImageView newsImage;
         TextView newsTitle;
         TextView newsTime;
 

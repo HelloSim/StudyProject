@@ -128,7 +128,7 @@ public class RecordFragment extends BaseFragment implements CalendarView.OnMonth
         LayoutInflater inflater = (LayoutInflater) getActivity().getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
         moreLayout = inflater.inflate(R.layout.view_popup_record_more, null);
         otherLayout = inflater.inflate(R.layout.view_popup_add_other, null);
-        morePopupWindow = showPopupWindow(moreLayout, 200, 150);
+        morePopupWindow = showPopupWindow(moreLayout, 150, 150);
         otherPopupWindow = showPopupWindow(otherLayout, 300, 180);
         btnAllRecord = moreLayout.findViewById(R.id.all_record);
         btnOther = moreLayout.findViewById(R.id.btn_updata_other);

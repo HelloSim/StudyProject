@@ -94,7 +94,7 @@
 
     <style name="roundedCornerImageStyle"><!-- 圆角图片 -->
         <item name="cornerFamily">rounded</item>
-        <item name="cornerSize">25dp</item>
+        <item name="cornerSize">15dp</item>
     </style>
 
     <style name="cutImageStyle"><!-- 切角图片 -->
