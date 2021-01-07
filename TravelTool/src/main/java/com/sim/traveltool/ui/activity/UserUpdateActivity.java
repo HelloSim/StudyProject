@@ -2,6 +2,7 @@ package com.sim.traveltool.ui.activity;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,10 +13,12 @@ import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.sim.baselibrary.base.BaseActivity;
 import com.sim.baselibrary.bean.EventMessage;
 import com.sim.baselibrary.callback.DialogInterface;
 import com.sim.baselibrary.utils.LogUtil;
+import com.sim.baselibrary.utils.RegexUtil;
 import com.sim.baselibrary.utils.SPUtil;
 import com.sim.baselibrary.utils.ToastUtil;
 import com.sim.traveltool.AppHelper;
@@ -27,6 +30,7 @@ import org.greenrobot.eventbus.EventBus;
 
 import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.FetchUserInfoListener;
 import cn.bmob.v3.listener.UpdateListener;
 
 /**
@@ -58,6 +62,14 @@ public class UserUpdateActivity extends BaseActivity {
     private EditText etNewPasswordAgain;
     private Button btnPasswordCancel;
     private Button btnPasswordConfirm;
+
+    private PopupWindow updateEmailPopupWindow;//弹窗
+    private View updateEmailLayout;//布局
+    private TextView tvOldEmail;
+    private TextView tvOldEmailVerified;
+    private EditText etNewEmail;
+    private Button btnEmailCancel;
+    private Button btnEmailConfirm;
 
     private User user;
 
@@ -105,6 +117,7 @@ public class UserUpdateActivity extends BaseActivity {
             finish();
         }
 
+
         LayoutInflater inflater = (LayoutInflater) this.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
         updatePasswordLayout = inflater.inflate(R.layout.view_popup_update_password, null);
         updatePasswordPopupWindow = showPopupWindow(updatePasswordLayout, 300, 330);
@@ -113,7 +126,18 @@ public class UserUpdateActivity extends BaseActivity {
         etNewPasswordAgain = updatePasswordLayout.findViewById(R.id.et_new_password_again);
         btnPasswordCancel = updatePasswordLayout.findViewById(R.id.btn_password_cancel);
         btnPasswordConfirm = updatePasswordLayout.findViewById(R.id.btn_password_confirm);
-        setViewClick(btnPasswordCancel, btnPasswordConfirm);
+
+        updateEmailLayout = inflater.inflate(R.layout.view_popup_update_email, null);
+        updateEmailPopupWindow = showPopupWindow(updateEmailLayout, 300, 330);
+        tvOldEmail = updateEmailLayout.findViewById(R.id.tv_old_email);
+        tvOldEmailVerified = updateEmailLayout.findViewById(R.id.tv_old_email_verified);
+        etNewEmail = updateEmailLayout.findViewById(R.id.et_new_email);
+        btnEmailCancel = updateEmailLayout.findViewById(R.id.btn_email_cancel);
+        btnEmailConfirm = updateEmailLayout.findViewById(R.id.btn_email_confirm);
+        tvOldEmail.setText(user.getEmail());
+        tvOldEmailVerified.setText(user.getEmailVerified() ? getString(R.string.email_verified_yes) : getString(R.string.email_verified_no));
+
+        setViewClick(btnPasswordCancel, btnPasswordConfirm, tvOldEmailVerified, btnEmailCancel, btnEmailConfirm);
     }
 
     @Override
@@ -141,7 +165,7 @@ public class UserUpdateActivity extends BaseActivity {
         } else if (view == rlMobilePhoneNumber) {
 
         } else if (view == rlEmail) {
-
+            updateEmailPopupWindow.showAtLocation(parent, Gravity.CENTER, 0, 0);
         } else if (view == btnPasswordCancel) {
             updatePasswordPopupWindow.dismiss();
         } else if (view == btnPasswordConfirm) {
@@ -153,6 +177,18 @@ public class UserUpdateActivity extends BaseActivity {
                 }
             } else {
                 ToastUtil.T_Info(UserUpdateActivity.this, getString(R.string.password_no_null));
+            }
+        } else if (view == tvOldEmailVerified) {
+            if (tvOldEmailVerified.getText().equals(getString(R.string.email_verified_no))) {
+                emailVerify();
+            }
+        } else if (view == btnEmailCancel) {
+            updateEmailPopupWindow.dismiss();
+        } else if (view == btnEmailConfirm) {
+            if (etNewEmail.getText().length() > 0 && !RegexUtil.email(etNewEmail.getText().toString())) {
+                ToastUtil.T_Info(this, getString(R.string.email_no_null));
+            } else {
+                updateUserInfo(etNewEmail.getText().toString());
             }
         } else {
             super.onMultiClick(view);
@@ -182,19 +218,58 @@ public class UserUpdateActivity extends BaseActivity {
     }
 
     /**
-     * 更新用户操作并同步更新本地的用户信息
+     * 发送验证邮件
      */
-    private void updateUserInfo() {
+    private void emailVerify() {
         User user = BmobUser.getCurrentUser(User.class);
-//        user.setMobilePhoneNumber("");
+        BmobUser.requestEmailVerify(user.getEmail(), new UpdateListener() {
+
+            @Override
+            public void done(BmobException e) {
+                if (e == null) {
+                    ToastUtil.T_Success(UserUpdateActivity.this, "请求验证邮件成功，请到" + user.getEmail() + "邮箱中进行激活账户！");
+                } else {
+                    ToastUtil.T_Error(UserUpdateActivity.this, "请求验证邮件失败！");
+                    LogUtil.e(this.getClass(), "修改用户信息失败---code:" + e.getErrorCode() + ";message:" + e.getMessage());
+                }
+            }
+        });
+    }
+
+    /**
+     * 修改邮箱
+     */
+    private void updateUserInfo(String email) {
+        User user = BmobUser.getCurrentUser(User.class);
+        user.setEmail(email);
         user.update(new UpdateListener() {
             @Override
             public void done(BmobException e) {
                 if (e == null) {
                     ToastUtil.T_Success(UserUpdateActivity.this, getString(R.string.update_success));
+                    updateEmailPopupWindow.dismiss();
+                    tvOldEmail.setText(user.getEmail());
+                    tvEmail.setText(user.getEmail());
+                    fetchUserInfo();
                 } else {
                     ToastUtil.T_Error(UserUpdateActivity.this, getString(R.string.update_fail));
                     LogUtil.e(this.getClass(), "修改用户信息失败---code:" + e.getErrorCode() + ";message:" + e.getMessage());
+                }
+            }
+        });
+    }
+
+    /**
+     * 同步控制台数据到缓存中
+     */
+    private void fetchUserInfo() {
+        BmobUser.fetchUserInfo(new FetchUserInfoListener<BmobUser>() {
+            @Override
+            public void done(BmobUser user, BmobException e) {
+                if (e == null) {
+                    LogUtil.d(this.getClass(), "更新用户本地缓存信息成功");
+                } else {
+                    LogUtil.e(this.getClass(), "更新用户本地缓存信息失败;message:" + e.getMessage());
                 }
             }
         });

@@ -49,6 +49,9 @@
     <string name="old_password">old password</string>
     <string name="new_password">new Password</string>
     <string name="again">input again</string>
+    <string name="new_email">新邮箱</string>
+    <string name="email_verified_no">当前邮箱未验证</string>
+    <string name="email_verified_yes">当前邮箱已验证</string>
 
 
     <string name="BusRealTime">RealTime Bus</string>

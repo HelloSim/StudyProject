@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="300dp"
+    android:layout_height="330dp"
+    android:background="@drawable/card_shape_gray"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <TextView
+        style="@style/textViewStyle"
+        android:text="@string/update_password" />
+
+    <LinearLayout
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_old_email"
+            style="@style/textViewStyle"
+            android:layout_gravity="center_horizontal"
+            tools:text="123456789@qq.com" />
+
+        <TextView
+            android:id="@+id/tv_old_email_verified"
+            style="@style/textViewStyleGray"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="5dp"
+            android:text="@string/email_verified_no" />
+
+        <EditText
+            android:id="@+id/et_new_email"
+            style="@style/editViewStyle"
+            android:layout_marginTop="20dp"
+            android:hint="@string/new_email" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp">
+
+        <Button
+            android:id="@+id/btn_email_cancel"
+            style="@style/buttonStyle"
+            android:text="@string/cancel" />
+
+        <Button
+            android:id="@+id/btn_email_confirm"
+            style="@style/buttonStyle"
+            android:layout_marginLeft="20dp"
+            android:text="@string/ok" />
+
+    </LinearLayout>
+
+</LinearLayout>
