@@ -2,7 +2,6 @@ package com.sim.traveltool.ui.fragment;
 
 import android.view.View;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import com.sim.baselibrary.base.BaseFragment;
 import com.sim.traveltool.R;
