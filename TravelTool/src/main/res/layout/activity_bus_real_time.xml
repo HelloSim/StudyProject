@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:leftImageSrc="@mipmap/ic_to_left"
-        app:rightImageSrc="@mipmap/ic_bus_refresh_blue"
+        app:rightImageSrc="@drawable/refresh_bg"
         app:showLeft="true"
         app:showRight="true"
         app:title="@string/bus_real_time_search" />

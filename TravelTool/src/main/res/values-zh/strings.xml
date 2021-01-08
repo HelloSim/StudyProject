@@ -50,7 +50,7 @@
     <string name="new_password">新密码</string>
     <string name="again">再次输入</string>
     <string name="new_email">新邮箱</string>
-    <string name="email_verified_no">当前邮箱未验证</string>
+    <string name="email_verified_no">点击验证邮箱</string>
     <string name="email_verified_yes">当前邮箱已验证</string>
 
     <string name="BusRealTime">实时公交</string>

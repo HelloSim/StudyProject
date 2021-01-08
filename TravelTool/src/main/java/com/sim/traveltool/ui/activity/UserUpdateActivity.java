@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
@@ -67,11 +68,12 @@ public class UserUpdateActivity extends BaseActivity {
     private View updateEmailLayout;//布局
     private TextView tvOldEmail;
     private TextView tvOldEmailVerified;
+    private ImageView ivRefresh;
     private EditText etNewEmail;
     private Button btnEmailCancel;
     private Button btnEmailConfirm;
 
-    private User user;
+    private User mUser;
 
 
     @Override
@@ -103,16 +105,16 @@ public class UserUpdateActivity extends BaseActivity {
     @Override
     protected void initData() {
         if (BmobUser.isLogin()) {
-            user = BmobUser.getCurrentUser(User.class);
+            mUser = BmobUser.getCurrentUser(User.class);
         }
     }
 
     @Override
     protected void initView() {
-        if (user != null) {
-            tvUserName.setText(user.getUsername());
-            tvMobilePhoneNumber.setText(user.getMobilePhoneNumber());
-            tvEmail.setText(user.getEmail());
+        if (mUser != null) {
+            tvUserName.setText(mUser.getUsername());
+            tvMobilePhoneNumber.setText(mUser.getMobilePhoneNumber());
+            tvEmail.setText(mUser.getEmail());
         } else {
             finish();
         }
@@ -128,16 +130,17 @@ public class UserUpdateActivity extends BaseActivity {
         btnPasswordConfirm = updatePasswordLayout.findViewById(R.id.btn_password_confirm);
 
         updateEmailLayout = inflater.inflate(R.layout.view_popup_update_email, null);
-        updateEmailPopupWindow = showPopupWindow(updateEmailLayout, 300, 330);
+        updateEmailPopupWindow = showPopupWindow(updateEmailLayout, 350, 330);
         tvOldEmail = updateEmailLayout.findViewById(R.id.tv_old_email);
         tvOldEmailVerified = updateEmailLayout.findViewById(R.id.tv_old_email_verified);
+        ivRefresh = updateEmailLayout.findViewById(R.id.iv_refresh);
         etNewEmail = updateEmailLayout.findViewById(R.id.et_new_email);
         btnEmailCancel = updateEmailLayout.findViewById(R.id.btn_email_cancel);
         btnEmailConfirm = updateEmailLayout.findViewById(R.id.btn_email_confirm);
-        tvOldEmail.setText(user.getEmail());
-        tvOldEmailVerified.setText(user.getEmailVerified() ? getString(R.string.email_verified_yes) : getString(R.string.email_verified_no));
+        tvOldEmail.setText(mUser.getEmail());
+        tvOldEmailVerified.setText(mUser.getEmailVerified() ? getString(R.string.email_verified_yes) : getString(R.string.email_verified_no));
 
-        setViewClick(btnPasswordCancel, btnPasswordConfirm, tvOldEmailVerified, btnEmailCancel, btnEmailConfirm);
+        setViewClick(btnPasswordCancel, btnPasswordConfirm, tvOldEmailVerified, ivRefresh, btnEmailCancel, btnEmailConfirm);
     }
 
     @Override
@@ -182,6 +185,10 @@ public class UserUpdateActivity extends BaseActivity {
             if (tvOldEmailVerified.getText().equals(getString(R.string.email_verified_no))) {
                 emailVerify();
             }
+        } else if (view == ivRefresh) {
+            if (tvOldEmailVerified.getText().equals(getString(R.string.email_verified_no))) {
+                fetchUserInfo();
+            }
         } else if (view == btnEmailCancel) {
             updateEmailPopupWindow.dismiss();
         } else if (view == btnEmailConfirm) {
@@ -196,6 +203,30 @@ public class UserUpdateActivity extends BaseActivity {
     }
 
     /**
+     * 同步控制台数据到缓存中
+     */
+    private void fetchUserInfo() {
+        BmobUser.fetchUserInfo(new FetchUserInfoListener<BmobUser>() {
+            @Override
+            public void done(BmobUser user, BmobException e) {
+                if (e == null) {
+                    mUser = BmobUser.getCurrentUser(User.class);
+                    if (mUser != null) {
+                        tvUserName.setText(mUser.getUsername());
+                        tvMobilePhoneNumber.setText(mUser.getMobilePhoneNumber());
+                        tvEmail.setText(mUser.getEmail());
+                        tvOldEmail.setText(mUser.getEmail());
+                        tvOldEmailVerified.setText(mUser.getEmailVerified() ? getString(R.string.email_verified_yes) : getString(R.string.email_verified_no));
+                    }
+                    LogUtil.d(this.getClass(), "更新用户本地缓存信息成功");
+                } else {
+                    LogUtil.e(this.getClass(), "更新用户本地缓存信息失败;message:" + e.getMessage());
+                }
+            }
+        });
+    }
+
+    /**
      * 提供旧密码修改密码
      */
     private void updatePassword(String oldPassword, String newPassword) {
@@ -205,6 +236,7 @@ public class UserUpdateActivity extends BaseActivity {
                 if (e == null) {
                     ToastUtil.T_Success(UserUpdateActivity.this, getString(R.string.update_success));
                     updatePasswordPopupWindow.dismiss();
+                    fetchUserInfo();
                 } else {
                     if (e.getMessage().contains("old password incorrect")) {
                         ToastUtil.T_Error(UserUpdateActivity.this, getString(R.string.login_fail_password));
@@ -212,25 +244,6 @@ public class UserUpdateActivity extends BaseActivity {
                         ToastUtil.T_Error(UserUpdateActivity.this, getString(R.string.update_fail));
                         LogUtil.e(this.getClass(), "修改用户信息失败---code:" + e.getErrorCode() + ";message:" + e.getMessage());
                     }
-                }
-            }
-        });
-    }
-
-    /**
-     * 发送验证邮件
-     */
-    private void emailVerify() {
-        User user = BmobUser.getCurrentUser(User.class);
-        BmobUser.requestEmailVerify(user.getEmail(), new UpdateListener() {
-
-            @Override
-            public void done(BmobException e) {
-                if (e == null) {
-                    ToastUtil.T_Success(UserUpdateActivity.this, "请求验证邮件成功，请到" + user.getEmail() + "邮箱中进行激活账户！");
-                } else {
-                    ToastUtil.T_Error(UserUpdateActivity.this, "请求验证邮件失败！");
-                    LogUtil.e(this.getClass(), "修改用户信息失败---code:" + e.getErrorCode() + ";message:" + e.getMessage());
                 }
             }
         });
@@ -248,8 +261,6 @@ public class UserUpdateActivity extends BaseActivity {
                 if (e == null) {
                     ToastUtil.T_Success(UserUpdateActivity.this, getString(R.string.update_success));
                     updateEmailPopupWindow.dismiss();
-                    tvOldEmail.setText(user.getEmail());
-                    tvEmail.setText(user.getEmail());
                     fetchUserInfo();
                 } else {
                     ToastUtil.T_Error(UserUpdateActivity.this, getString(R.string.update_fail));
@@ -260,16 +271,18 @@ public class UserUpdateActivity extends BaseActivity {
     }
 
     /**
-     * 同步控制台数据到缓存中
+     * 发送验证邮件
      */
-    private void fetchUserInfo() {
-        BmobUser.fetchUserInfo(new FetchUserInfoListener<BmobUser>() {
+    private void emailVerify() {
+        User user = BmobUser.getCurrentUser(User.class);
+        BmobUser.requestEmailVerify(user.getEmail(), new UpdateListener() {
             @Override
-            public void done(BmobUser user, BmobException e) {
+            public void done(BmobException e) {
                 if (e == null) {
-                    LogUtil.d(this.getClass(), "更新用户本地缓存信息成功");
+                    ToastUtil.T_Success(UserUpdateActivity.this, "请求验证邮件成功，请到" + user.getEmail() + "邮箱中进行激活账户！");
                 } else {
-                    LogUtil.e(this.getClass(), "更新用户本地缓存信息失败;message:" + e.getMessage());
+                    ToastUtil.T_Error(UserUpdateActivity.this, "请求验证邮件失败！");
+                    LogUtil.e(this.getClass(), "修改用户信息失败---code:" + e.getErrorCode() + ";message:" + e.getMessage());
                 }
             }
         });

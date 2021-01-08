@@ -167,11 +167,9 @@ public class BusRealTimeActivity extends BaseActivity {
      */
     private void getBusListOnRoad(String lineName, String fromStation) {
         busListOnRoadListList.clear();
-        titleView.setLeftImage(R.mipmap.ic_bus_refresh_gray);
         APIFactory.getInstance().getBusListOnRoad(new Subscriber<BusRealTimeDataBean>() {
             @Override
             public void onCompleted() {
-                titleView.setLeftImage(R.mipmap.ic_bus_refresh_blue);
                 //30s做一次更新查询
                 handler.sendEmptyMessageDelayed(REFRESH, 30000);
                 if (stationListAdapter == null) {
