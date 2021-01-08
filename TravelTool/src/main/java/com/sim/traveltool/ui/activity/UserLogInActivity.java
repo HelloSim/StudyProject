@@ -1,6 +1,7 @@
 package com.sim.traveltool.ui.activity;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -32,6 +33,8 @@ import cn.bmob.v3.listener.SaveListener;
  * @Description 登陆页面
  */
 public class UserLogInActivity extends BaseActivity {
+
+    private Context context;
 
     private TitleView titleView;
     private EditText etUserName;
@@ -70,7 +73,7 @@ public class UserLogInActivity extends BaseActivity {
 
     @Override
     protected void initData() {
-
+        context = this;
     }
 
     @Override
@@ -90,9 +93,9 @@ public class UserLogInActivity extends BaseActivity {
                 loginByAccount();
             } else {
                 if (etUserName.getText().toString().length() > 0) {
-                    ToastUtil.T_Info(UserLogInActivity.this, getString(R.string.enter_password));
+                    ToastUtil.T_Info(context, "请输入密码！");
                 } else {
-                    ToastUtil.T_Info(UserLogInActivity.this, getString(R.string.enter_username));
+                    ToastUtil.T_Info(context, "请输入用户名！");
                 }
             }
         } else if (view == btnRegistered) {
@@ -115,16 +118,16 @@ public class UserLogInActivity extends BaseActivity {
             @Override
             public void done(User bmobUser, BmobException e) {
                 if (e == null) {
-                    ToastUtil.T_Success(UserLogInActivity.this, getString(R.string.login_success));
+                    ToastUtil.T_Success(context, "登录成功！");
                     EventBus.getDefault().post(new EventMessage(AppHelper.USER_IsLogIn));
-                    SPUtil.put(UserLogInActivity.this, AppHelper.userSpName, AppHelper.userSpStateKey, true);
+                    SPUtil.put(context, AppHelper.userSpName, AppHelper.userSpStateKey, true);
                     finish();
                 } else {
                     if (e.getMessage().contains("username or password incorrect")) {
-                        ToastUtil.T_Error(UserLogInActivity.this, getString(R.string.login_fail_for_username_or_password));
+                        ToastUtil.T_Error(context, "用户名或密码不正确！");
                     } else {
-                        ToastUtil.T_Error(UserLogInActivity.this, getString(R.string.login_fail));
-                        LogUtil.e(this.getClass(), "登录出错---code:" + e.getErrorCode() + ";message:" + e.getMessage());
+                        ToastUtil.T_Error(context, "登录出错！");
+                        LogUtil.e(getClass(), "登录出错---code:" + e.getErrorCode() + ";message:" + e.getMessage());
                     }
                 }
             }
@@ -140,16 +143,16 @@ public class UserLogInActivity extends BaseActivity {
             @Override
             public void done(User user, BmobException e) {
                 if (e == null) {
-                    ToastUtil.T_Success(UserLogInActivity.this, getString(R.string.login_success));
+                    ToastUtil.T_Success(context, "登录成功！");
                     EventBus.getDefault().post(new EventMessage(AppHelper.USER_IsLogIn));
-                    SPUtil.put(UserLogInActivity.this, AppHelper.userSpName, AppHelper.userSpStateKey, true);
+                    SPUtil.put(context, AppHelper.userSpName, AppHelper.userSpStateKey, true);
                     finish();
                 } else {
                     if (e.getMessage().contains("username or password incorrect")) {
-                        ToastUtil.T_Error(UserLogInActivity.this, getString(R.string.login_fail_for_username_or_password));
+                        ToastUtil.T_Error(context, "用户名或密码不正确！");
                     } else {
-                        ToastUtil.T_Error(UserLogInActivity.this, getString(R.string.login_fail));
-                        LogUtil.e(this.getClass(), "登录出错---code:" + e.getErrorCode() + ";message:" + e.getMessage());
+                        ToastUtil.T_Error(context, "登录出错！");
+                        LogUtil.e(getClass(), "登录出错---code:" + e.getErrorCode() + ";message:" + e.getMessage());
                     }
                 }
             }

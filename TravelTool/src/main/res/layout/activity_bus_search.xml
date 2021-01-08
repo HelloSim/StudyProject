@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         app:leftImageSrc="@mipmap/ic_to_left"
         app:showLeft="true"
-        app:title="@string/search" />
+        app:title="搜索" />
 
     <EditText
         android:id="@+id/tv_search"
@@ -24,7 +24,7 @@
         android:id="@+id/tv_not_found"
         style="@style/textViewStyleGray"
         android:layout_gravity="center_horizontal"
-        android:text="@string/no_data"
+        android:text="没有找到相应的数据"
         android:visibility="gone" />
 
     <androidx.recyclerview.widget.RecyclerView

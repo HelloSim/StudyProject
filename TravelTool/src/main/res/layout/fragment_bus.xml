@@ -9,7 +9,7 @@
     <com.sim.traveltool.ui.view.TitleView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:title="@string/bus" />
+        app:title="出行" />
 
     <FrameLayout
         android:layout_width="match_parent"

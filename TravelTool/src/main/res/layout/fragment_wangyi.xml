@@ -8,7 +8,7 @@
     <com.sim.traveltool.ui.view.TitleView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:title="@string/wangyi" />
+        app:title="网易" />
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/refresh"

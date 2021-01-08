@@ -126,7 +126,7 @@ public class NewsDetailActivity extends BaseActivity {
             titleView.setRightImage(R.mipmap.ic_collect_not);
             collectionNewsBean = null;
             isCollect = false;
-            ToastUtil.T_Error(this, getString(R.string.login_no));
+            ToastUtil.T_Error(this, "未登录");
             finish();
         }
     }

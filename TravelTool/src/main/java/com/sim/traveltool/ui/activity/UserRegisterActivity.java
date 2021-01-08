@@ -1,5 +1,6 @@
 package com.sim.traveltool.ui.activity;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -13,8 +14,12 @@ import com.sim.traveltool.R;
 import com.sim.traveltool.db.bean.User;
 import com.sim.traveltool.ui.view.TitleView;
 
+import cn.bmob.v3.BmobSMS;
+import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.QueryListener;
 import cn.bmob.v3.listener.SaveListener;
+import cn.bmob.v3.listener.UpdateListener;
 
 /**
  * @Auther Sim
@@ -22,6 +27,8 @@ import cn.bmob.v3.listener.SaveListener;
  * @Description 用户注册页面
  */
 public class UserRegisterActivity extends BaseActivity {
+
+    private Context context;
 
     private TitleView titleView;
     private EditText etUserName;
@@ -56,7 +63,7 @@ public class UserRegisterActivity extends BaseActivity {
 
     @Override
     protected void initData() {
-
+        context = this;
     }
 
     @Override
@@ -68,19 +75,19 @@ public class UserRegisterActivity extends BaseActivity {
     public void onMultiClick(View view) {
         if (view == btnRegistered) {
             if (etUserName.getText().toString().length() <= 0) {
-                ToastUtil.T_Info(UserRegisterActivity.this, getString(R.string.username_no_null));
+                ToastUtil.T_Info(context, "用户名不能为空！");
                 return;
             }
             if (etPassword.getText().toString().length() <= 0) {
-                ToastUtil.T_Info(UserRegisterActivity.this, getString(R.string.password_no_null));
+                ToastUtil.T_Info(context, "密码不能为空！");
                 return;
             }
             if (!RegexUtil.checkPhone(etMobilePhoneNumber.getText().toString())) {
-                ToastUtil.T_Info(UserRegisterActivity.this, getString(R.string.phone_no_null));
+                ToastUtil.T_Info(context, "请输入正确的手机号码！");
                 return;
             }
             if (!RegexUtil.email(etEmail.getText().toString())) {
-                ToastUtil.T_Info(UserRegisterActivity.this, getString(R.string.email_no_null));
+                ToastUtil.T_Info(context, "请输入正确的电子邮箱！");
                 return;
             }
             registerUser(etUserName.getText().toString(), etPassword.getText().toString(),
@@ -105,19 +112,68 @@ public class UserRegisterActivity extends BaseActivity {
             @Override
             public void done(User user, BmobException e) {
                 if (e == null) {
-                    ToastUtil.T_Success(UserRegisterActivity.this, getString(R.string.register_success));
+                    ToastUtil.T_Success(context, "注册成功！");
                     finish();
                 } else {
                     if (e.getMessage().contains("username") && e.getMessage().contains("already taken")) {
-                        ToastUtil.T_Error(UserRegisterActivity.this, getString(R.string.register_fail_username));
+                        ToastUtil.T_Error(context, "账号已被注册！");
                     } else if (e.getMessage().contains("mobilePhoneNumber") && e.getMessage().contains("already taken")) {
-                        ToastUtil.T_Error(UserRegisterActivity.this, getString(R.string.register_fail_phone));
+                        ToastUtil.T_Error(context, "手机号码已被注册！");
                     } else if (e.getMessage().contains("email") && e.getMessage().contains("already taken")) {
-                        ToastUtil.T_Error(UserRegisterActivity.this, getString(R.string.register_fail_email));
+                        ToastUtil.T_Error(context, "电子邮箱已被注册！");
                     } else {
-                        ToastUtil.T_Error(UserRegisterActivity.this, getString(R.string.register_fail));
-                        LogUtil.e(this.getClass(), "注册失败---coed:" + e.getErrorCode() + ";message:" + e.getMessage());
+                        ToastUtil.T_Error(context, "注册失败！");
+                        LogUtil.e(getClass(), "注册失败---coed:" + e.getErrorCode() + ";message:" + e.getMessage());
                     }
+                }
+            }
+        });
+    }
+
+    /**
+     * 发送验证码短信
+     */
+    private void requestSMSCode() {
+        //template 如果是自定义短信模板，此处替换为你在控制台设置的自定义短信模板名称；如果没有对应的自定义短信模板，则使用默认短信模板，默认模板名称为空字符串""。
+        BmobSMS.requestSMSCode(BmobUser.getCurrentUser(User.class).getMobilePhoneNumber(), "", new QueryListener<Integer>() {
+            @Override
+            public void done(Integer smsId, BmobException e) {
+                if (e == null) {
+                    ToastUtil.T_Success(context, "发送验证码成功！");
+                } else {
+                    LogUtil.e(getClass(), "发送验证码失败---code:" + e.getErrorCode() + ";message:" + e.getMessage());
+                }
+            }
+        });
+    }
+
+    /**
+     * 手机绑定
+     *
+     * @param code
+     */
+    private void phoneVerify(String code) {
+        BmobSMS.verifySmsCode(BmobUser.getCurrentUser(User.class).getMobilePhoneNumber(), code, new UpdateListener() {
+            @Override
+            public void done(BmobException e) {
+                if (e == null) {
+                    LogUtil.d(getClass(), "验证码验证成功！");
+                    User user = BmobUser.getCurrentUser(User.class);
+                    user.setMobilePhoneNumber(BmobUser.getCurrentUser(User.class).getMobilePhoneNumber());
+                    user.setMobilePhoneNumberVerified(true);
+                    user.update(new UpdateListener() {
+                        @Override
+                        public void done(BmobException e) {
+                            if (e == null) {
+                                ToastUtil.T_Success(context, "绑定手机号码成功！");
+                            } else {
+                                ToastUtil.T_Success(context, "绑定手机号码失败！");
+                                LogUtil.e(getClass(), "绑定/解绑手机号码失败---code:" + e.getErrorCode() + ";message:" + e.getMessage());
+                            }
+                        }
+                    });
+                } else {
+                    LogUtil.d(getClass(), "验证码验证失败！");
                 }
             }
         });

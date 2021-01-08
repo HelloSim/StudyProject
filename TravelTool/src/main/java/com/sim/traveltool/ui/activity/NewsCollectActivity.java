@@ -76,7 +76,7 @@ public class NewsCollectActivity extends BaseActivity {
                 }
             });
         } else {
-            ToastUtil.T_Error(this, getString(R.string.login_no));
+            ToastUtil.T_Error(this, "未登录");
             finish();
         }
     }
@@ -97,7 +97,7 @@ public class NewsCollectActivity extends BaseActivity {
         ItemClickSupport.addTo(newsRecyclerView).setOnItemLongClickListener(new ItemClickSupport.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClicked(RecyclerView recyclerView, int position, View v) {
-                showDialog(null, "取消收藏", getString(R.string.ok), getString(R.string.cancel), new com.sim.baselibrary.callback.DialogInterface() {
+                showDialog(null, "取消收藏", "确认", "取消", new com.sim.baselibrary.callback.DialogInterface() {
                     @Override
                     public void sureOnClick() {
                         if (OnMultiClickListener.isNoFastClick()) {

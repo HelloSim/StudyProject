@@ -13,7 +13,7 @@
         app:rightImageSrc="@mipmap/ic_collect_not"
         app:showLeft="true"
         app:showRight="true"
-        app:title="@string/details" />
+        app:title="详情" />
 
     <WebView
         android:id="@+id/web_view"

@@ -10,10 +10,10 @@
         android:layout_height="wrap_content"
         app:leftImageSrc="@mipmap/ic_to_left"
         app:showLeft="true"
-        app:title="@string/register" />
+        app:title="注册" />
 
     <LinearLayout
-        android:layout_width="200dp"
+        android:layout_width="280dp"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:orientation="vertical">
@@ -21,32 +21,32 @@
         <EditText
             android:id="@+id/et_user_name"
             style="@style/editViewStyle"
-            android:hint="@string/username" />
+            android:hint="账号" />
 
         <EditText
             android:id="@+id/et_password"
             style="@style/editViewStyleNumberPassword"
             android:layout_marginTop="5dp"
-            android:hint="@string/password" />
+            android:hint="密码" />
 
         <EditText
             android:id="@+id/et_mobile_phone_number"
             style="@style/editViewStyle"
             android:layout_marginTop="5dp"
-            android:hint="@string/phone" />
+            android:hint="手机号码" />
 
         <EditText
             android:id="@+id/et_email"
             style="@style/editViewStyle"
             android:layout_marginTop="5dp"
-            android:hint="@string/email" />
+            android:hint="电子邮箱" />
 
         <Button
             android:id="@+id/btn_registered"
             style="@style/buttonStyle"
             android:layout_width="match_parent"
             android:layout_marginTop="10dp"
-            android:text="@string/register" />
+            android:text="注册" />
 
     </LinearLayout>
 

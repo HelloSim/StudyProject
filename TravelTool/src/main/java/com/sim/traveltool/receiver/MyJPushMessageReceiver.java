@@ -24,13 +24,13 @@ public class MyJPushMessageReceiver extends JPushMessageReceiver {
 
     @Override
     public void onMessage(Context context, CustomMessage customMessage) {
-        LogUtil.e(this.getClass(), "[onMessage] " + customMessage);
+        LogUtil.e(getClass(), "[onMessage] " + customMessage);
 //        processCustomMessage(context,customMessage);
     }
 
     @Override
     public void onNotifyMessageOpened(Context context, NotificationMessage message) {
-        LogUtil.e(this.getClass(), "[onNotifyMessageOpened] " + message);
+        LogUtil.e(getClass(), "[onNotifyMessageOpened] " + message);
         try {
             //打开自定义的Activity
             Intent i = new Intent(context, MainActivity.class);
@@ -48,48 +48,48 @@ public class MyJPushMessageReceiver extends JPushMessageReceiver {
 
     @Override
     public void onMultiActionClicked(Context context, Intent intent) {
-        LogUtil.e(this.getClass(), "[onMultiActionClicked] 用户点击了通知栏按钮");
+        LogUtil.e(getClass(), "[onMultiActionClicked] 用户点击了通知栏按钮");
         String nActionExtra = intent.getExtras().getString(JPushInterface.EXTRA_NOTIFICATION_ACTION_EXTRA);
 
         //开发者根据不同 Action 携带的 extra 字段来分配不同的动作。
         if (nActionExtra == null) {
-            LogUtil.d(this.getClass(), "ACTION_NOTIFICATION_CLICK_ACTION nActionExtra is null");
+            LogUtil.d(getClass(), "ACTION_NOTIFICATION_CLICK_ACTION nActionExtra is null");
             return;
         }
         if (nActionExtra.equals("my_extra1")) {
-            LogUtil.e(this.getClass(), "[onMultiActionClicked] 用户点击通知栏按钮一");
+            LogUtil.e(getClass(), "[onMultiActionClicked] 用户点击通知栏按钮一");
         } else if (nActionExtra.equals("my_extra2")) {
-            LogUtil.e(this.getClass(), "[onMultiActionClicked] 用户点击通知栏按钮二");
+            LogUtil.e(getClass(), "[onMultiActionClicked] 用户点击通知栏按钮二");
         } else if (nActionExtra.equals("my_extra3")) {
-            LogUtil.e(this.getClass(), "[onMultiActionClicked] 用户点击通知栏按钮三");
+            LogUtil.e(getClass(), "[onMultiActionClicked] 用户点击通知栏按钮三");
         } else {
-            LogUtil.e(this.getClass(), "[onMultiActionClicked] 用户点击通知栏按钮未定义");
+            LogUtil.e(getClass(), "[onMultiActionClicked] 用户点击通知栏按钮未定义");
         }
     }
 
     @Override
     public void onNotifyMessageArrived(Context context, NotificationMessage message) {
-        LogUtil.e(this.getClass(), "[onNotifyMessageArrived] " + message);
+        LogUtil.e(getClass(), "[onNotifyMessageArrived] " + message);
     }
 
     @Override
     public void onNotifyMessageDismiss(Context context, NotificationMessage message) {
-        LogUtil.e(this.getClass(), "[onNotifyMessageDismiss] " + message);
+        LogUtil.e(getClass(), "[onNotifyMessageDismiss] " + message);
     }
 
     @Override
     public void onRegister(Context context, String registrationId) {
-        LogUtil.e(this.getClass(), "[onRegister] " + registrationId);
+        LogUtil.e(getClass(), "[onRegister] " + registrationId);
     }
 
     @Override
     public void onConnected(Context context, boolean isConnected) {
-        LogUtil.e(this.getClass(), "[onConnected] " + isConnected);
+        LogUtil.e(getClass(), "[onConnected] " + isConnected);
     }
 
     @Override
     public void onCommandResult(Context context, CmdMessage cmdMessage) {
-        LogUtil.e(this.getClass(), "[onCommandResult] " + cmdMessage);
+        LogUtil.e(getClass(), "[onCommandResult] " + cmdMessage);
     }
 
     @Override
@@ -141,7 +141,7 @@ public class MyJPushMessageReceiver extends JPushMessageReceiver {
     @Override
     public void onNotificationSettingsCheck(Context context, boolean isOn, int source) {
         super.onNotificationSettingsCheck(context, isOn, source);
-        LogUtil.e(this.getClass(), "[onNotificationSettingsCheck] isOn:" + isOn + ",source:" + source);
+        LogUtil.e(getClass(), "[onNotificationSettingsCheck] isOn:" + isOn + ",source:" + source);
     }
 
 }

@@ -62,9 +62,9 @@ public class BusFragment extends BaseFragment {
         viewPager = view.findViewById(R.id.view_pager);
 
         titleDatas = new ArrayList<>();
-        titleDatas.add(getContext().getString(R.string.BusRealTime));
-        titleDatas.add(getContext().getString(R.string.BusRoute));
-        titleDatas.add(getContext().getString(R.string.BusStation));
+        titleDatas.add("实时公交");
+        titleDatas.add("出行路线");
+        titleDatas.add("站点查询");
     }
 
     @Override

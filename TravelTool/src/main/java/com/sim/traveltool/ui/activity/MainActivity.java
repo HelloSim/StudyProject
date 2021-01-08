@@ -116,7 +116,7 @@ public class MainActivity extends BaseActivity {
         if (user != null) {
             tvUserName.setText(user.getUsername());
         } else {
-            tvUserName.setText(getString(R.string.user_login));
+            tvUserName.setText("用户登录");
         }
     }
 
@@ -125,7 +125,7 @@ public class MainActivity extends BaseActivity {
         if (view == rlUser) {
             drawerLayout.close();
             if (user != null) {
-                startActivity(new Intent(this, UserUpdateActivity.class));
+                startActivity(new Intent(this, UserInfoActivity.class));
             } else {
                 startActivity(new Intent(this, UserLogInActivity.class));
             }
@@ -134,7 +134,7 @@ public class MainActivity extends BaseActivity {
                 drawerLayout.close();
                 startActivity(new Intent(this, NewsCollectActivity.class));
             } else {
-                ToastUtil.T_Error(this, getString(R.string.login_no));
+                ToastUtil.T_Error(this, "未登录");
             }
         } else {
             super.onMultiClick(view);
@@ -230,9 +230,9 @@ public class MainActivity extends BaseActivity {
             @Override
             public void done(BmobUser user, BmobException e) {
                 if (e == null) {
-                    LogUtil.e(this.getClass(), "更新用户本地缓存信息成功");
+                    LogUtil.e(getClass(), "更新用户本地缓存信息成功");
                 } else {
-                    LogUtil.e(this.getClass(), "更新用户本地缓存信息失败---code:" + e.getErrorCode() + ";message:" + e.getMessage());
+                    LogUtil.e(getClass(), "更新用户本地缓存信息失败---code:" + e.getErrorCode() + ";message:" + e.getMessage());
                 }
             }
         });
@@ -246,9 +246,9 @@ public class MainActivity extends BaseActivity {
             @Override
             public void done(String json, BmobException e) {
                 if (e == null) {
-                    LogUtil.e(this.getClass(), "更新用户本地缓存信息成功");
+                    LogUtil.e(getClass(), "更新用户本地缓存信息成功");
                 } else {
-                    LogUtil.e(this.getClass(), "更新用户本地缓存信息失败---code:" + e.getErrorCode() + ";message:" + e.getMessage());
+                    LogUtil.e(getClass(), "更新用户本地缓存信息失败---code:" + e.getErrorCode() + ";message:" + e.getMessage());
                 }
             }
         });
@@ -267,7 +267,7 @@ public class MainActivity extends BaseActivity {
             tvUserName.setText(user.getUsername());
         } else if (eventMessage.type == AppHelper.USER_noLogIn) {
             user = null;
-            tvUserName.setText(getString(R.string.user_login));
+            tvUserName.setText("用户登录");
         }
     }
 
@@ -279,7 +279,7 @@ public class MainActivity extends BaseActivity {
     @Override
     public void onBackPressed() {
         if ((System.currentTimeMillis() - exitTime) > 2000) {
-            Toast.makeText(getApplicationContext(), getString(R.string.exit), Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "再按一次退出程序！", Toast.LENGTH_SHORT).show();
             exitTime = System.currentTimeMillis();
         } else {
             finish();

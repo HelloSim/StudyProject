@@ -120,7 +120,7 @@ public class WangyiFragment extends BaseFragment {
 
             @Override
             public void onError(Throwable e) {
-                LogUtil.e(this.getClass(), "获取网易新闻出错: " + e);
+                LogUtil.e(getClass(), "获取网易新闻出错: " + e);
             }
 
             @Override

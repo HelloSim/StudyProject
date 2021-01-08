@@ -118,9 +118,9 @@ public class RecordFragment extends BaseFragment implements CalendarView.OnMonth
             user = BmobUser.getCurrentUser(User.class);
         }
         if (user == null) {
-            tvRecordTimeStart.setText(getString(R.string.record_no));
-            tvRecordTimeEnd.setText(getString(R.string.record_no));
-            btnRecord.setText(StringUtil.getContent(getString(R.string.login_no)));
+            tvRecordTimeStart.setText("未打卡");
+            tvRecordTimeEnd.setText("未打卡");
+            btnRecord.setText("未登录");
         } else {
             showInfo(calendarView.getSelectedCalendar());
         }
@@ -155,14 +155,14 @@ public class RecordFragment extends BaseFragment implements CalendarView.OnMonth
                 intent.putExtras(bundle);
                 startActivity(intent);
             } else {
-                ToastUtil.T_Info(getContext(), StringUtil.getContent(getString(R.string.login_no)));
+                ToastUtil.T_Info(getContext(), "未登录");
             }
         } else if (view == btnOther) {
             morePopupWindow.dismiss();
             if (user != null) {
                 otherPopupWindow.showAtLocation(parent, Gravity.CENTER, 0, 0);
             } else {
-                ToastUtil.T_Info(getContext(), StringUtil.getContent(getString(R.string.login_no)));
+                ToastUtil.T_Info(getContext(), "未登录");
             }
         } else if (view == btnCancel) {
             otherPopupWindow.dismiss();
@@ -179,10 +179,10 @@ public class RecordFragment extends BaseFragment implements CalendarView.OnMonth
                                 @Override
                                 public void done(BmobException e) {
                                     if (e == null) {
-                                        ToastUtil.T_Info(getContext(), StringUtil.getContent(getString(R.string.record_add_memo_success)));
+                                        ToastUtil.T_Info(getContext(), "添加备忘成功！");
                                     } else {
-                                        ToastUtil.T_Info(getContext(), StringUtil.getContent(getString(R.string.record_add_memo_fail)));
-                                        LogUtil.d(this.getClass(), "修改指定日期备忘出错：" + e.getMessage());
+                                        ToastUtil.T_Info(getContext(), "添加备忘失败！");
+                                        LogUtil.d(getClass(), "修改指定日期备忘出错：" + e.getMessage());
                                     }
                                 }
                             });
@@ -193,10 +193,10 @@ public class RecordFragment extends BaseFragment implements CalendarView.OnMonth
                                 public void done(String s, BmobException e) {
                                     if (e == null) {
                                         showInfo(calendarView.getSelectedCalendar());
-                                        ToastUtil.T_Info(getContext(), (getString(R.string.record_add_memo_success)));
+                                        ToastUtil.T_Info(getContext(), "添加备忘成功！");
                                     } else {
-                                        ToastUtil.T_Info(getContext(), (getString(R.string.record_add_memo_fail)));
-                                        LogUtil.d(this.getClass(), "添加指定日期备忘出错：" + e.getMessage());
+                                        ToastUtil.T_Info(getContext(), "添加备忘失败！");
+                                        LogUtil.d(getClass(), "添加指定日期备忘出错：" + e.getMessage());
                                     }
                                 }
                             });
@@ -205,20 +205,20 @@ public class RecordFragment extends BaseFragment implements CalendarView.OnMonth
 
                     @Override
                     public void fail(Object... values) {
-                        LogUtil.e(this.getClass(), "修改指定日期备忘出错！");
+                        LogUtil.e(getClass(), "修改指定日期备忘出错！");
                     }
                 });
             } else {
-                ToastUtil.T_Info(getContext(), StringUtil.getContent(getString(R.string.login_no)));
+                ToastUtil.T_Info(getContext(), "未登录");
             }
         } else if (view == btnRecord) {
             if (user != null) {
                 if (calendarView.getSelectedCalendar().isCurrentDay()) {//是否当天
-                    if (btnRecord.getText().equals(getString(R.string.record_start))) {//上班卡
-                        if (tvRecordTimeStart.getText().equals(getString(R.string.record_no))) {//未打上班卡
+                    if (btnRecord.getText().equals("上班打卡")) {//上班卡
+                        if (tvRecordTimeStart.getText().equals("未打卡")) {//未打上班卡
                             record(1);
                         } else {//已打上班卡
-                            showDialog(null, getString(R.string.record_update), getString(R.string.ok), getString(R.string.cancel), new com.sim.baselibrary.callback.DialogInterface() {
+                            showDialog(null, "更新打卡记录！", "确认", "取消", new com.sim.baselibrary.callback.DialogInterface() {
                                 @Override
                                 public void sureOnClick() {
                                     record(1);
@@ -231,10 +231,10 @@ public class RecordFragment extends BaseFragment implements CalendarView.OnMonth
                             });
                         }
                     } else {//下班卡
-                        if (tvRecordTimeEnd.getText().equals(getString(R.string.record_no))) {//未打下班卡
+                        if (tvRecordTimeEnd.getText().equals("未打卡")) {//未打下班卡
                             record(2);
                         } else {//已打下班卡
-                            showDialog(null, getString(R.string.record_update), getString(R.string.ok), getString(R.string.cancel), new com.sim.baselibrary.callback.DialogInterface() {
+                            showDialog(null, "更新打卡记录！", "确认", "取消", new com.sim.baselibrary.callback.DialogInterface() {
                                 @Override
                                 public void sureOnClick() {
                                     record(2);
@@ -249,10 +249,10 @@ public class RecordFragment extends BaseFragment implements CalendarView.OnMonth
                     }
                 } else {
                     calendarView.scrollToCurrent(true);
-                    ToastUtil.T_Info(getContext(), getString(R.string.record_only_today));
+                    ToastUtil.T_Info(getContext(), "只能操作当天打卡！");
                 }
             } else {
-                ToastUtil.T_Info(getContext(), StringUtil.getContent(getString(R.string.login_no)));
+                ToastUtil.T_Info(getContext(), "未登录");
             }
         } else {
             super.onMultiClick(view);
@@ -299,45 +299,45 @@ public class RecordFragment extends BaseFragment implements CalendarView.OnMonth
                         if (calendar.isCurrentDay()) {
                             recordBean = selectedRecordBean;
                         }
-                        tvRecordTimeStart.setText((selectedRecordBean.getStartTime() == null || selectedRecordBean.getStartTime().length() == 0) ? getString(R.string.record_no) : selectedRecordBean.getStartTime());
-                        tvRecordTimeEnd.setText((selectedRecordBean.getEndTime() == null || selectedRecordBean.getEndTime().length() == 0) ? getString(R.string.record_no) : selectedRecordBean.getEndTime());
+                        tvRecordTimeStart.setText((selectedRecordBean.getStartTime() == null || selectedRecordBean.getStartTime().length() == 0) ? "未打卡" : selectedRecordBean.getStartTime());
+                        tvRecordTimeEnd.setText((selectedRecordBean.getEndTime() == null || selectedRecordBean.getEndTime().length() == 0) ? "未打卡" : selectedRecordBean.getEndTime());
                         tvRecordTimeStart.setTextColor(selectedRecordBean.isLate() ? Color.RED : Color.BLACK);
                         tvRecordTimeEnd.setTextColor(selectedRecordBean.isLeaveEarly() ? Color.RED : Color.BLACK);
                         if (TimeUtil.getHour() >= 14) {
-                            btnRecord.setText(getString(R.string.record_end));
+                            btnRecord.setText("下班打卡");
                         } else {
-                            btnRecord.setText(getString(R.string.record_start));
+                            btnRecord.setText("上班打卡");
                         }
-                        if (!tvRecordTimeEnd.getText().equals(getString(R.string.record_no))) {
-                            btnRecord.setText(getString(R.string.record_end));
+                        if (!tvRecordTimeEnd.getText().equals("未打卡")) {
+                            btnRecord.setText("下班打卡");
                         }
-                        if (!tvRecordTimeStart.getText().equals(getString(R.string.record_no))) {//是否已打上班卡
-                            btnRecord.setText(getString(R.string.record_end));
+                        if (!tvRecordTimeStart.getText().equals("未打卡")) {//是否已打上班卡
+                            btnRecord.setText("下班打卡");
                         }
                     } else {
-                        tvRecordTimeStart.setText(getString(R.string.record_no));
-                        tvRecordTimeEnd.setText(getString(R.string.record_no));
+                        tvRecordTimeStart.setText("未打卡");
+                        tvRecordTimeEnd.setText("未打卡");
                         tvRecordTimeStart.setTextColor(Color.BLACK);
                         tvRecordTimeEnd.setTextColor(Color.BLACK);
                         if (TimeUtil.getHour() >= 14) {
-                            btnRecord.setText(getString(R.string.record_end));
+                            btnRecord.setText("下班打卡");
                         } else {
-                            btnRecord.setText(getString(R.string.record_start));
+                            btnRecord.setText("上班打卡");
                         }
                     }
                 }
 
                 @Override
                 public void fail(Object... values) {
-                    LogUtil.d(this.getClass(), "查询选中日期数据失败！");
+                    LogUtil.d(getClass(), "查询选中日期数据失败！");
                 }
             });
         } else {
-            tvRecordTimeStart.setText(getString(R.string.record_no));
-            tvRecordTimeEnd.setText(getString(R.string.record_no));
+            tvRecordTimeStart.setText("未打卡");
+            tvRecordTimeEnd.setText("未打卡");
             tvRecordTimeStart.setTextColor(Color.BLACK);
             tvRecordTimeEnd.setTextColor(Color.BLACK);
-            btnRecord.setText(getString(R.string.login_no));
+            btnRecord.setText("未登录");
         }
 
     }
@@ -360,7 +360,7 @@ public class RecordFragment extends BaseFragment implements CalendarView.OnMonth
 
                 @Override
                 public void fail(Object... values) {
-                    LogUtil.d(this.getClass(), "查询选中日期数据失败！");
+                    LogUtil.d(getClass(), "查询选中日期数据失败！");
                 }
             });
             if (recordBean != null) {//已有当天数据
@@ -372,10 +372,10 @@ public class RecordFragment extends BaseFragment implements CalendarView.OnMonth
                         public void done(BmobException e) {
                             if (e == null) {
                                 showInfo(calendarView.getSelectedCalendar());
-                                ToastUtil.T_Info(getContext(), (getString(R.string.record_success)));
+                                ToastUtil.T_Info(getContext(), "打卡成功！");
                             } else {
-                                ToastUtil.T_Info(getContext(), (getString(R.string.record_failure)));
-                                LogUtil.d(this.getClass(), "修改上班打卡时间失败：" + e.getMessage());
+                                ToastUtil.T_Info(getContext(), "打卡失败！");
+                                LogUtil.d(getClass(), "修改上班打卡时间失败：" + e.getMessage());
                             }
                         }
                     });
@@ -387,10 +387,10 @@ public class RecordFragment extends BaseFragment implements CalendarView.OnMonth
                         public void done(BmobException e) {
                             if (e == null) {
                                 showInfo(calendarView.getSelectedCalendar());
-                                ToastUtil.T_Info(getContext(), (getString(R.string.record_success)));
+                                ToastUtil.T_Info(getContext(), "打卡成功！");
                             } else {
-                                ToastUtil.T_Info(getContext(), (getString(R.string.record_failure)));
-                                LogUtil.d(this.getClass(), "修改下班打卡时间出错：" + e.getMessage());
+                                ToastUtil.T_Info(getContext(), "打卡失败！");
+                                LogUtil.d(getClass(), "修改下班打卡时间出错：" + e.getMessage());
                             }
                         }
                     });
@@ -404,10 +404,10 @@ public class RecordFragment extends BaseFragment implements CalendarView.OnMonth
                         public void done(String s, BmobException e) {
                             if (e == null) {
                                 showInfo(calendarView.getSelectedCalendar());
-                                ToastUtil.T_Info(getContext(), (getString(R.string.record_success)));
+                                ToastUtil.T_Info(getContext(), "打卡成功！");
                             } else {
-                                ToastUtil.T_Info(getContext(), (getString(R.string.record_failure)));
-                                LogUtil.d(this.getClass(), "插入上班时间数据出错：" + e.getMessage());
+                                ToastUtil.T_Info(getContext(), "打卡失败！");
+                                LogUtil.d(getClass(), "插入上班时间数据出错：" + e.getMessage());
                             }
                         }
                     });
@@ -419,17 +419,17 @@ public class RecordFragment extends BaseFragment implements CalendarView.OnMonth
                         public void done(String s, BmobException e) {
                             if (e == null) {
                                 showInfo(calendarView.getSelectedCalendar());
-                                ToastUtil.T_Info(getContext(), (getString(R.string.record_success)));
+                                ToastUtil.T_Info(getContext(), "打卡成功！");
                             } else {
-                                ToastUtil.T_Info(getContext(), (getString(R.string.record_failure)));
-                                LogUtil.d(this.getClass(), "插入下班时间数据出错：" + e.getMessage());
+                                ToastUtil.T_Info(getContext(), "打卡失败！");
+                                LogUtil.d(getClass(), "插入下班时间数据出错：" + e.getMessage());
                             }
                         }
                     });
                 }
             }
         } else {
-            ToastUtil.T_Info(getContext(), StringUtil.getContent(getString(R.string.login_no)));
+            ToastUtil.T_Info(getContext(), "未登录");
         }
     }
 
@@ -483,9 +483,9 @@ public class RecordFragment extends BaseFragment implements CalendarView.OnMonth
             @Override
             public void done(BmobUser user, BmobException e) {
                 if (e == null) {
-                    LogUtil.e(this.getClass(), "更新用户本地缓存信息成功");
+                    LogUtil.e(getClass(), "更新用户本地缓存信息成功");
                 } else {
-                    LogUtil.e(this.getClass(), "更新用户本地缓存信息失败---code:" + e.getErrorCode() + ";message:" + e.getMessage());
+                    LogUtil.e(getClass(), "更新用户本地缓存信息失败---code:" + e.getErrorCode() + ";message:" + e.getMessage());
                 }
             }
         });
@@ -499,9 +499,9 @@ public class RecordFragment extends BaseFragment implements CalendarView.OnMonth
             @Override
             public void done(String json, BmobException e) {
                 if (e == null) {
-                    LogUtil.e(this.getClass(), "更新用户本地缓存信息成功");
+                    LogUtil.e(getClass(), "更新用户本地缓存信息成功");
                 } else {
-                    LogUtil.e(this.getClass(), "更新用户本地缓存信息失败---code:" + e.getErrorCode() + ";message:" + e.getMessage());
+                    LogUtil.e(getClass(), "更新用户本地缓存信息失败---code:" + e.getErrorCode() + ";message:" + e.getMessage());
                 }
             }
         });
@@ -521,11 +521,11 @@ public class RecordFragment extends BaseFragment implements CalendarView.OnMonth
         } else if (eventMessage.type == AppHelper.USER_noLogIn) {
             user = null;
             recordBean = null;
-            tvRecordTimeStart.setText(getString(R.string.record_no));
-            tvRecordTimeEnd.setText(getString(R.string.record_no));
+            tvRecordTimeStart.setText("未打卡");
+            tvRecordTimeEnd.setText("未打卡");
             tvRecordTimeStart.setTextColor(Color.BLACK);
             tvRecordTimeEnd.setTextColor(Color.BLACK);
-            btnRecord.setText(getString(R.string.login_no));
+            btnRecord.setText("未登录");
         }
     }
 

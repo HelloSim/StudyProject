@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         app:rightImageSrc="@mipmap/ic_more"
         app:showRight="true"
-        app:title="@string/record" />
+        app:title="打卡" />
 
     <TextView
         android:id="@+id/tv_now_year_and_month"
@@ -44,7 +44,7 @@
         <TextView
             android:id="@+id/tv_record_time_start"
             style="@style/textViewStyle"
-            android:text="@string/record_no" />
+            android:text="未打卡" />
 
         <TextView
             android:id="@+id/tv_symbol"
@@ -56,7 +56,7 @@
         <TextView
             android:id="@+id/tv_record_time_end"
             style="@style/textViewStyle"
-            android:text="@string/record_no" />
+            android:text="未打卡" />
 
     </LinearLayout>
 
@@ -66,7 +66,7 @@
         android:layout_height="120dp"
         android:layout_gravity="center_horizontal"
         android:background="@drawable/round_blue"
-        android:text="@string/record_start"
+        android:text="上班打卡"
         android:textAllCaps="false"
         android:textColor="@color/white"
         android:textSize="22sp" />

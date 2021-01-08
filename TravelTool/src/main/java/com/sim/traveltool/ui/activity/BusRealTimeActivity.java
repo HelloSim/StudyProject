@@ -139,15 +139,15 @@ public class BusRealTimeActivity extends BaseActivity {
             @Override
             public void onCompleted() {
                 if (stationList == null) {
-                    ToastUtil.T_Error(BusRealTimeActivity.this, getString(R.string.getStationList_fail));
+                    ToastUtil.T_Error(BusRealTimeActivity.this, "获取公交路线站点请求出错！");
                     finish();
                 }
             }
 
             @Override
             public void onError(Throwable e) {
-                ToastUtil.T_Error(BusRealTimeActivity.this, getString(R.string.getStationList_fail));
-                LogUtil.e(this.getClass(), "获取公交路线站点请求出错: " + e);
+                ToastUtil.T_Error(BusRealTimeActivity.this, "获取公交路线站点请求出错！");
+                LogUtil.e(getClass(), "获取公交路线站点请求出错: " + e);
             }
 
             @Override
@@ -184,8 +184,8 @@ public class BusRealTimeActivity extends BaseActivity {
 
             @Override
             public void onError(Throwable e) {
-                ToastUtil.T_Error(BusRealTimeActivity.this, getString(R.string.getBusListOnRoad_fail));
-                LogUtil.e(this.getClass(), "获取实时公交数据的网络请求: " + e);
+                ToastUtil.T_Error(BusRealTimeActivity.this, "获取实时公交数据请求出错！");
+                LogUtil.e(getClass(), "获取实时公交数据的网络请求: " + e);
             }
 
             @Override

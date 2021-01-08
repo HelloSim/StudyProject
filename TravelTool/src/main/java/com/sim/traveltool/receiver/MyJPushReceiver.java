@@ -30,24 +30,24 @@ public class MyJPushReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         try {
             Bundle bundle = intent.getExtras();
-            LogUtil.d(this.getClass(), "[MyReceiver] onReceive - " + intent.getAction() + ", extras: " + printBundle(bundle));
+            LogUtil.d(getClass(), "[MyReceiver] onReceive - " + intent.getAction() + ", extras: " + printBundle(bundle));
 
             if (JPushInterface.ACTION_REGISTRATION_ID.equals(intent.getAction())) {
                 String regId = bundle.getString(JPushInterface.EXTRA_REGISTRATION_ID);
-                LogUtil.d(this.getClass(), "[MyReceiver] 接收Registration Id : " + regId);
+                LogUtil.d(getClass(), "[MyReceiver] 接收Registration Id : " + regId);
                 //send the Registration Id to your server...
 
             } else if (JPushInterface.ACTION_MESSAGE_RECEIVED.equals(intent.getAction())) {
-                LogUtil.d(this.getClass(), "[MyReceiver] 接收到推送下来的自定义消息: " + bundle.getString(JPushInterface.EXTRA_MESSAGE));
+                LogUtil.d(getClass(), "[MyReceiver] 接收到推送下来的自定义消息: " + bundle.getString(JPushInterface.EXTRA_MESSAGE));
 //                processCustomMessage(context, bundle);
 
             } else if (JPushInterface.ACTION_NOTIFICATION_RECEIVED.equals(intent.getAction())) {
-                LogUtil.d(this.getClass(), "[MyReceiver] 接收到推送下来的通知");
+                LogUtil.d(getClass(), "[MyReceiver] 接收到推送下来的通知");
                 int notifactionId = bundle.getInt(JPushInterface.EXTRA_NOTIFICATION_ID);
-                LogUtil.d(this.getClass(), "[MyReceiver] 接收到推送下来的通知的ID: " + notifactionId);
+                LogUtil.d(getClass(), "[MyReceiver] 接收到推送下来的通知的ID: " + notifactionId);
 
             } else if (JPushInterface.ACTION_NOTIFICATION_OPENED.equals(intent.getAction())) {
-                LogUtil.d(this.getClass(), "[MyReceiver] 用户点击打开了通知");
+                LogUtil.d(getClass(), "[MyReceiver] 用户点击打开了通知");
 
                 //打开自定义的Activity
                 Intent i = new Intent(context, MainActivity.class);
@@ -58,9 +58,9 @@ public class MyJPushReceiver extends BroadcastReceiver {
 
             } else if (JPushInterface.ACTION_CONNECTION_CHANGE.equals(intent.getAction())) {
                 boolean connected = intent.getBooleanExtra(JPushInterface.EXTRA_CONNECTION_CHANGE, false);
-                LogUtil.w(this.getClass(), "[MyReceiver]" + intent.getAction() + " connected state change to " + connected);
+                LogUtil.w(getClass(), "[MyReceiver]" + intent.getAction() + " connected state change to " + connected);
             } else {
-                LogUtil.d(this.getClass(), "[MyReceiver] Unhandled intent - " + intent.getAction());
+                LogUtil.d(getClass(), "[MyReceiver] Unhandled intent - " + intent.getAction());
             }
         } catch (Exception e) {
 
@@ -78,7 +78,7 @@ public class MyJPushReceiver extends BroadcastReceiver {
                 sb.append("\nkey:" + key + ", value:" + bundle.getBoolean(key));
             } else if (key.equals(JPushInterface.EXTRA_EXTRA)) {
                 if (TextUtils.isEmpty(bundle.getString(JPushInterface.EXTRA_EXTRA))) {
-                    LogUtil.i(this.getClass(), "This message has no Extra data");
+                    LogUtil.i(getClass(), "This message has no Extra data");
                     continue;
                 }
 
@@ -92,7 +92,7 @@ public class MyJPushReceiver extends BroadcastReceiver {
                                 myKey + " - " + json.optString(myKey) + "]");
                     }
                 } catch (JSONException e) {
-                    LogUtil.e(this.getClass(), "Get message extra JSON error!");
+                    LogUtil.e(getClass(), "Get message extra JSON error!");
                 }
 
             } else {

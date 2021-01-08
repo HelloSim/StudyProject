@@ -118,8 +118,8 @@ public class BusRouteActivity extends BaseActivity {
 
             @Override
             public void onError(Throwable e) {
-                ToastUtil.T_Error(BusRouteActivity.this, getString(R.string.getLocation_fail));
-                LogUtil.e(this.getClass(), "位置信息请求出错: " + e);
+                ToastUtil.T_Error(BusRouteActivity.this, "位置信息请求出错！");
+                LogUtil.e(getClass(), "位置信息请求出错: " + e);
             }
 
             @Override
@@ -140,7 +140,7 @@ public class BusRouteActivity extends BaseActivity {
             @Override
             public void onCompleted() {
                 if (routeDataList == null || routeDataList.size() == 0) {
-                    ToastUtil.toast(BusRouteActivity.this, getString(R.string.getRoute_no));
+                    ToastUtil.toast(BusRouteActivity.this, "未查询到换乘信息！");
                     finish();
                 }
                 routeAdapter.notifyDataSetChanged();
@@ -148,8 +148,8 @@ public class BusRouteActivity extends BaseActivity {
 
             @Override
             public void onError(Throwable e) {
-                ToastUtil.T_Error(BusRouteActivity.this, getString(R.string.getRoute_fail));
-                LogUtil.e(this.getClass(), "出行方案请求出错: " + e);
+                ToastUtil.T_Error(BusRouteActivity.this, "出行方案请求出错！");
+                LogUtil.e(getClass(), "出行方案请求出错: " + e);
             }
 
             @Override

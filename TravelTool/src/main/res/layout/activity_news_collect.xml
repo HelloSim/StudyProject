@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         app:leftImageSrc="@mipmap/ic_to_left"
         app:showLeft="true"
-        app:title="@string/user_detail" />
+        app:title="收藏" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycle_view"

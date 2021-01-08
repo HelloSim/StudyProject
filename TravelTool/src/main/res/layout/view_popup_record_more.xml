@@ -11,12 +11,12 @@
     <Button
         android:id="@+id/all_record"
         style="@style/buttonStyle"
-        android:text="@string/record_all" />
+        android:text="打卡记录" />
 
     <Button
         android:id="@+id/btn_updata_other"
         style="@style/buttonStyle"
         android:layout_marginTop="20dp"
-        android:text="@string/record_add_memo" />
+        android:text="添加备忘" />
 
 </LinearLayout>

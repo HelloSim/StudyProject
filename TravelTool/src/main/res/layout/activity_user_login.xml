@@ -12,10 +12,10 @@
         app:rightImageSrc="@mipmap/ic_more"
         app:showLeft="true"
         app:showRight="true"
-        app:title="@string/login" />
+        app:title="登录" />
 
     <LinearLayout
-        android:layout_width="200dp"
+        android:layout_width="280dp"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:orientation="vertical">
@@ -23,20 +23,20 @@
         <EditText
             android:id="@+id/et_user_name"
             style="@style/editViewStyle"
-            android:hint="@string/username" />
+            android:hint="账号" />
 
         <EditText
             android:id="@+id/et_password"
             style="@style/editViewStyleNumberPassword"
             android:layout_marginTop="5dp"
-            android:hint="@string/password" />
+            android:hint="密码" />
 
         <Button
             android:id="@+id/btn_log_in"
             style="@style/buttonStyle"
             android:layout_width="match_parent"
             android:layout_marginTop="10dp"
-            android:text="@string/login" />
+            android:text="登录" />
 
     </LinearLayout>
 

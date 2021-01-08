@@ -9,7 +9,7 @@
 
     <TextView
         style="@style/textViewStyle"
-        android:text="@string/update_password" />
+        android:text="验证邮箱" />
 
     <TextView
         android:id="@+id/tv_old_email"
@@ -27,7 +27,7 @@
         <TextView
             android:id="@+id/tv_old_email_verified"
             style="@style/textViewStyleGray"
-            android:text="@string/email_verified_no" />
+            android:text="点击验证邮箱" />
 
         <ImageView
             android:id="@+id/iv_refresh"
@@ -44,7 +44,7 @@
         android:layout_marginLeft="20dp"
         android:layout_marginTop="20dp"
         android:layout_marginRight="20dp"
-        android:hint="@string/new_email" />
+        android:hint="新邮箱" />
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -54,13 +54,13 @@
         <Button
             android:id="@+id/btn_email_cancel"
             style="@style/buttonStyle"
-            android:text="@string/cancel" />
+            android:text="取消" />
 
         <Button
             android:id="@+id/btn_email_confirm"
             style="@style/buttonStyle"
             android:layout_marginLeft="20dp"
-            android:text="@string/ok" />
+            android:text="确认" />
 
     </LinearLayout>
 

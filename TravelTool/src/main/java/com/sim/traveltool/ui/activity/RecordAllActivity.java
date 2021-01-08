@@ -87,7 +87,7 @@ public class RecordAllActivity extends BaseActivity {
                         }
                     }
                 } else {
-                    LogUtil.e(this.getClass(), "查询指定日期数据失败" + e.getMessage());
+                    LogUtil.e(getClass(), "查询指定日期数据失败" + e.getMessage());
                 }
                 table.setData(allDataList);
             }

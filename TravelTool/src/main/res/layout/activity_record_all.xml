@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         app:leftImageSrc="@mipmap/ic_to_left"
         app:showLeft="true"
-        app:title="@string/record_all" />
+        app:title="打卡记录" />
 
     <com.bin.david.form.core.SmartTable
         android:id="@+id/table_data"

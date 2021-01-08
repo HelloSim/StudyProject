@@ -172,8 +172,8 @@ public class BusSearchActivity extends BaseActivity {
 
             @Override
             public void onError(Throwable e) {
-                ToastUtil.T_Error(BusSearchActivity.this, getString(R.string.getLineListByLineName_fail));
-                LogUtil.d(this.getClass(), "搜索实时公交路线出错: " + e);
+                ToastUtil.T_Error(BusSearchActivity.this, "搜索实时公交路线请求出错");
+                LogUtil.d(getClass(), "搜索实时公交路线出错: " + e);
             }
 
             @Override
@@ -205,8 +205,8 @@ public class BusSearchActivity extends BaseActivity {
 
             @Override
             public void onError(Throwable e) {
-                ToastUtil.T_Error(BusSearchActivity.this, getString(R.string.getStartLocation_fail));
-                LogUtil.d(this.getClass(), "位置请求出错: " + e);
+                ToastUtil.T_Error(BusSearchActivity.this, "位置请求出错！");
+                LogUtil.d(getClass(), "位置请求出错: " + e);
             }
 
             @Override

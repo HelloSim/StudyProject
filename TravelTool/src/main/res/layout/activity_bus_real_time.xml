@@ -14,7 +14,7 @@
         app:rightImageSrc="@drawable/refresh_bg"
         app:showLeft="true"
         app:showRight="true"
-        app:title="@string/bus_real_time_search" />
+        app:title="实时公交搜索" />
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -53,7 +53,7 @@
 
         <TextView
             style="@style/textViewStyleGray"
-            android:text="@string/bus_stara_time" />
+            android:text="首班:" />
 
         <TextView
             android:id="@+id/tv_begin_time"
@@ -63,7 +63,7 @@
         <TextView
             style="@style/textViewStyleGray"
             android:layout_marginLeft="10dp"
-            android:text="@string/bus_end_time" />
+            android:text="末班:" />
 
         <TextView
             android:id="@+id/tv_end_time"
@@ -73,7 +73,7 @@
         <TextView
             style="@style/textViewStyleGray"
             android:layout_marginLeft="10dp"
-            android:text="@string/bus_price" />
+            android:text="票价:" />
 
         <TextView
             android:id="@+id/tv_price"
