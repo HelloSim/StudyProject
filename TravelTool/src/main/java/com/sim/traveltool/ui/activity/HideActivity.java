@@ -70,7 +70,7 @@ public class HideActivity extends BaseActivity implements CalendarView.OnMonthCh
      */
     @Override
     public void onMonthChange(int years, int months) {
-        tvNowMonth.setText(years + getString(R.string.year) + months + getString(R.string.month));
+        tvNowMonth.setText(years + "年" + months + "月");
     }
 
     @Override

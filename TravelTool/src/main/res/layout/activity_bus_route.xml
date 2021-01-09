@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         app:leftImageSrc="@mipmap/ic_to_left"
         app:showLeft="true"
-        app:title="@string/bus_transfer_plan" />
+        app:title="换乘方案" />
 
     <TextView
         android:id="@+id/tv_from_and_to_location"

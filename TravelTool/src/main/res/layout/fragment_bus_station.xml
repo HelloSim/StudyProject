@@ -17,7 +17,7 @@
         style="@style/buttonStyle"
         android:layout_width="match_parent"
         android:layout_margin="10dp"
-        android:text="@string/BusStation" />
+        android:text="站点查询" />
 
     <TextView
         style="@style/textViewStyleGray"
