@@ -4,15 +4,19 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.PopupWindow;
+import android.widget.TextView;
 
 import com.sim.baselibrary.base.BaseActivity;
 import com.sim.baselibrary.bean.EventMessage;
 import com.sim.baselibrary.utils.LogUtil;
+import com.sim.baselibrary.utils.RegexUtil;
 import com.sim.baselibrary.utils.SPUtil;
 import com.sim.baselibrary.utils.ToastUtil;
 import com.sim.traveltool.AppHelper;
@@ -22,10 +26,11 @@ import com.sim.traveltool.ui.view.TitleView;
 
 import org.greenrobot.eventbus.EventBus;
 
+import cn.bmob.v3.BmobSMS;
 import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.LogInListener;
-import cn.bmob.v3.listener.SaveListener;
+import cn.bmob.v3.listener.QueryListener;
 
 /**
  * @Auther Sim
@@ -37,9 +42,10 @@ public class UserLogInActivity extends BaseActivity {
     private Context context;
 
     private TitleView titleView;
-    private EditText etUserName;
-    private EditText etPassword;
-    private Button btnLogIn;
+    private LinearLayout llLoginByAccount, llLoginBySMSCode;
+    private EditText etMobilePhoneNumber, etPassword, etMobilePhoneNumber2, etSMSCode;
+    private Button btnLogIn, btnSMSCode, btnLogIn2;
+    private TextView tvLoginBySMSCode, tvLoginByAccount;
 
     //更多弹窗
     private PopupWindow morePopupWindow;//弹窗
@@ -54,10 +60,19 @@ public class UserLogInActivity extends BaseActivity {
     @Override
     protected void bindViews(Bundle savedInstanceState) {
         titleView = findViewById(R.id.titleView);
-        etUserName = findViewById(R.id.et_user_name);
+        llLoginByAccount = findViewById(R.id.ll_login_by_account);
+        llLoginBySMSCode = findViewById(R.id.ll_login_by_SMS_code);
+        etMobilePhoneNumber = findViewById(R.id.et_mobile_phone_number);
         etPassword = findViewById(R.id.et_password);
         btnLogIn = findViewById(R.id.btn_log_in);
-        setViewClick(btnLogIn);
+        tvLoginBySMSCode = findViewById(R.id.tv_login_by_SMS_code);
+        etMobilePhoneNumber2 = findViewById(R.id.et_mobile_phone_number2);
+        btnSMSCode = findViewById(R.id.btn_SMS_code);
+        etSMSCode = findViewById(R.id.et_SMS_code);
+        btnLogIn2 = findViewById(R.id.btn_log_in2);
+        tvLoginByAccount = findViewById(R.id.tv_login_by_account);
+
+        setViewClick(btnLogIn, btnSMSCode, btnLogIn2, tvLoginBySMSCode, tvLoginByAccount);
         titleView.setClickListener(new TitleView.ClickListener() {
             @Override
             public void left(View leftView) {
@@ -88,14 +103,37 @@ public class UserLogInActivity extends BaseActivity {
 
     @Override
     public void onMultiClick(View view) {
-        if (view == btnLogIn) {
-            if (etUserName.getText().toString().length() > 0 && etPassword.getText().toString().length() > 0) {
+        if (view == tvLoginBySMSCode) {
+            llLoginBySMSCode.setVisibility(View.VISIBLE);
+            llLoginByAccount.setVisibility(View.GONE);
+        } else if (view == tvLoginByAccount) {
+            llLoginByAccount.setVisibility(View.VISIBLE);
+            llLoginBySMSCode.setVisibility(View.GONE);
+        } else if (view == btnLogIn) {
+            if (etMobilePhoneNumber.getText().toString().length() > 0 && etPassword.getText().toString().length() > 0) {
                 loginByAccount();
             } else {
-                if (etUserName.getText().toString().length() > 0) {
+                if (etMobilePhoneNumber.getText().toString().length() > 0) {
                     ToastUtil.T_Info(context, "请输入密码！");
                 } else {
-                    ToastUtil.T_Info(context, "请输入用户名！");
+                    ToastUtil.T_Info(context, "请输入账号！");
+                }
+            }
+        } else if (view == btnSMSCode) {
+            if (!RegexUtil.checkPhone(etMobilePhoneNumber2.getText().toString())) {
+                ToastUtil.T_Info(context, "请输入正确的手机号码！");
+                return;
+            }
+            requestSMSCode(etMobilePhoneNumber2.getText().toString());
+            new TimeCount(60000, 1000).start();
+        } else if (view == btnLogIn2) {
+            if (etMobilePhoneNumber2.getText().toString().length() > 0 && etSMSCode.getText().toString().length() > 0) {
+                loginBySMSCode(etMobilePhoneNumber2.getText().toString(), etSMSCode.getText().toString());
+            } else {
+                if (etMobilePhoneNumber2.getText().toString().length() > 0) {
+                    ToastUtil.T_Info(context, "请输入验证码！");
+                } else {
+                    ToastUtil.T_Info(context, "请输入手机号码！");
                 }
             }
         } else if (view == btnRegistered) {
@@ -108,15 +146,12 @@ public class UserLogInActivity extends BaseActivity {
     }
 
     /**
-     * 账号密码登录
+     * 手机号码+密码登录
      */
-    private void login() {
-        final User user = new User();
-        user.setUsername(etUserName.getText().toString());
-        user.setPassword(etPassword.getText().toString());
-        user.login(new SaveListener<User>() {
+    private void loginByAccount() {
+        BmobUser.loginByAccount(etMobilePhoneNumber.getText().toString(), etPassword.getText().toString(), new LogInListener<User>() {
             @Override
-            public void done(User bmobUser, BmobException e) {
+            public void done(User user, BmobException e) {
                 if (e == null) {
                     ToastUtil.T_Success(context, "登录成功！");
                     EventBus.getDefault().post(new EventMessage(AppHelper.USER_IsLogIn));
@@ -134,26 +169,55 @@ public class UserLogInActivity extends BaseActivity {
         });
     }
 
+    class TimeCount extends CountDownTimer {
+        public TimeCount(long millisInFuture, long countDownInterval) {
+            super(millisInFuture, countDownInterval);
+        }
+
+        @Override
+        public void onTick(long millisUntilFinished) {
+            btnSMSCode.setClickable(false);
+            btnSMSCode.setText(String.valueOf(millisUntilFinished / 1000));
+            btnSMSCode.setBackground(getResources().getDrawable(R.drawable.button_bg_black));
+        }
+
+        @Override
+        public void onFinish() {
+            btnSMSCode.setClickable(true);
+            btnSMSCode.setText("验证码");
+            btnSMSCode.setBackground(getResources().getDrawable(R.drawable.button_bg_blue));
+        }
+    }
+
     /**
-     * 账号/手机号码/邮箱+密码登录
+     * 发送验证码短信
      */
-    private void loginByAccount() {
-        //此处替换为你的用户名密码
-        BmobUser.loginByAccount(etUserName.getText().toString(), etPassword.getText().toString(), new LogInListener<User>() {
+    private void requestSMSCode(String phone) {
+        //template 替换控制台设置的自定义短信模板名称；如果没有，则使用默认短信模板，默认模板名称为空字符串""。
+        BmobSMS.requestSMSCode(phone, "", new QueryListener<Integer>() {
             @Override
-            public void done(User user, BmobException e) {
+            public void done(Integer smsId, BmobException e) {
+                if (e == null) {
+                    ToastUtil.T_Success(context, "发送验证码成功！");
+                } else {
+                    LogUtil.e(getClass(), "发送验证码失败---code:" + e.getErrorCode() + ";message:" + e.getMessage());
+                }
+            }
+        });
+    }
+
+    private void loginBySMSCode(String phone, String code) {
+        BmobUser.signOrLoginByMobilePhone(phone, code, new LogInListener<BmobUser>() {
+            @Override
+            public void done(BmobUser bmobUser, BmobException e) {
                 if (e == null) {
                     ToastUtil.T_Success(context, "登录成功！");
                     EventBus.getDefault().post(new EventMessage(AppHelper.USER_IsLogIn));
                     SPUtil.put(context, AppHelper.userSpName, AppHelper.userSpStateKey, true);
                     finish();
                 } else {
-                    if (e.getMessage().contains("username or password incorrect")) {
-                        ToastUtil.T_Error(context, "用户名或密码不正确！");
-                    } else {
-                        ToastUtil.T_Error(context, "登录出错！");
-                        LogUtil.e(getClass(), "登录出错---code:" + e.getErrorCode() + ";message:" + e.getMessage());
-                    }
+                    ToastUtil.T_Error(context, "登录出错！");
+                    LogUtil.e(getClass(), "登录出错---code:" + e.getErrorCode() + ";message:" + e.getMessage());
                 }
             }
         });

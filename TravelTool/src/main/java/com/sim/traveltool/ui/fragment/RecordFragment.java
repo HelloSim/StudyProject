@@ -20,7 +20,6 @@ import com.sim.baselibrary.bean.EventMessage;
 import com.sim.baselibrary.callback.SuccessOrFailListener;
 import com.sim.baselibrary.utils.LogUtil;
 import com.sim.baselibrary.utils.SPUtil;
-import com.sim.baselibrary.utils.StringUtil;
 import com.sim.baselibrary.utils.TimeUtil;
 import com.sim.baselibrary.utils.ToastUtil;
 import com.sim.traveltool.AppHelper;
@@ -476,22 +475,6 @@ public class RecordFragment extends BaseFragment implements CalendarView.OnMonth
     }
 
     /**
-     * 同步控制台数据到缓存中
-     */
-    private void fetchUserInfo() {
-        BmobUser.fetchUserInfo(new FetchUserInfoListener<BmobUser>() {
-            @Override
-            public void done(BmobUser user, BmobException e) {
-                if (e == null) {
-                    LogUtil.e(getClass(), "更新用户本地缓存信息成功");
-                } else {
-                    LogUtil.e(getClass(), "更新用户本地缓存信息失败---code:" + e.getErrorCode() + ";message:" + e.getMessage());
-                }
-            }
-        });
-    }
-
-    /**
      * 获取控制台最新JSON数据，不同步到缓存中
      */
     private void fetchUserJsonInfo() {
@@ -516,7 +499,7 @@ public class RecordFragment extends BaseFragment implements CalendarView.OnMonth
     public void onMessageEvent(EventMessage eventMessage) {
         if (eventMessage.type == AppHelper.USER_IsLogIn) {
             user = BmobUser.getCurrentUser(User.class);
-            fetchUserInfo();
+            User.fetchUserInfo();
             showInfo(calendarView.getSelectedCalendar());
         } else if (eventMessage.type == AppHelper.USER_noLogIn) {
             user = null;

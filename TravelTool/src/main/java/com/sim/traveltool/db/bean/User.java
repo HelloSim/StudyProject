@@ -1,6 +1,10 @@
 package com.sim.traveltool.db.bean;
 
+import com.sim.baselibrary.utils.LogUtil;
+
 import cn.bmob.v3.BmobUser;
+import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.FetchUserInfoListener;
 
 /**
  * @Auther Sim
@@ -18,6 +22,24 @@ public class User extends BmobUser {
     //mobilePhoneNumberVerified	用户手机号码认证状态
 
     public User() {
+    }
+
+
+
+    /**
+     * 同步控制台数据到缓存中
+     */
+    public static void fetchUserInfo() {
+        BmobUser.fetchUserInfo(new FetchUserInfoListener<BmobUser>() {
+            @Override
+            public void done(BmobUser user, BmobException e) {
+                if (e == null) {
+                    LogUtil.d(getClass(), "更新用户本地缓存信息成功");
+                } else {
+                    LogUtil.e(getClass(), "更新用户本地缓存信息失败---code:" + e.getErrorCode() + ";message:" + e.getMessage());
+                }
+            }
+        });
     }
 
 }

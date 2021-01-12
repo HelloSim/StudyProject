@@ -24,7 +24,6 @@ import com.sim.traveltool.ui.view.TitleView;
 import cn.bmob.v3.BmobSMS;
 import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.exception.BmobException;
-import cn.bmob.v3.listener.FetchUserInfoListener;
 import cn.bmob.v3.listener.QueryListener;
 import cn.bmob.v3.listener.UpdateListener;
 
@@ -40,7 +39,6 @@ public class UserUpdatePasswordActivity extends BaseActivity {
     private TitleView titleView;
     private LinearLayout parent;
     private RelativeLayout rlUpdatePasswordByOld;
-    private RelativeLayout rlResetPasswordByEmail;
     private RelativeLayout rlResetPasswordByPhone;
 
     //修改密码弹窗
@@ -70,9 +68,8 @@ public class UserUpdatePasswordActivity extends BaseActivity {
         titleView = findViewById(R.id.titleView);
         parent = findViewById(R.id.parent);
         rlUpdatePasswordByOld = findViewById(R.id.rl_update_password_by_old);
-        rlResetPasswordByEmail = findViewById(R.id.rl_reset_password_by_email);
         rlResetPasswordByPhone = findViewById(R.id.rl_reset_password_by_phone);
-        setViewClick(rlUpdatePasswordByOld, rlResetPasswordByEmail, rlResetPasswordByPhone);
+        setViewClick(rlUpdatePasswordByOld, rlResetPasswordByPhone);
         titleView.setLeftClickListener(new TitleView.LeftClickListener() {
             @Override
             public void onClick(View leftView) {
@@ -115,33 +112,6 @@ public class UserUpdatePasswordActivity extends BaseActivity {
             etNewPassword.setText("");
             etNewPasswordAgain.setText("");
             updatePasswordPopupWindow.showAtLocation(parent, Gravity.CENTER, 0, 0);
-        } else if (view == rlResetPasswordByEmail) {
-            showDialog("通过邮箱重置密码", "确定？", "确认", "取消",
-                    new DialogInterface() {
-                        @Override
-                        public void sureOnClick() {
-                            if (BmobUser.getCurrentUser(User.class).getEmailVerified()) {
-                                resetPasswordByEmail(new SuccessOrFailListener() {
-                                    @Override
-                                    public void success(Object... values) {
-                                        ToastUtil.T_Success(context, "重置密码请求成功，请到您的邮箱进行密码重置操作");
-                                    }
-
-                                    @Override
-                                    public void fail(Object... values) {
-                                        ToastUtil.T_Success(context, "重置密码请求失败！");
-                                    }
-                                });
-                            } else {
-                                ToastUtil.T_Info(context, "当前邮箱未验证");
-                            }
-                        }
-
-                        @Override
-                        public void cancelOnClick() {
-
-                        }
-                    });
         } else if (view == rlResetPasswordByPhone) {
             showDialog("通过短信验证码重置密码", "发送短信验证码", "确认", "取消",
                     new DialogInterface() {
@@ -180,7 +150,7 @@ public class UserUpdatePasswordActivity extends BaseActivity {
                         public void success(Object... values) {
                             updatePasswordPopupWindow.dismiss();
                             ToastUtil.T_Success(context, "修改成功！");
-                            fetchUserInfo();
+                            User.fetchUserInfo();
                         }
 
                         @Override
@@ -224,22 +194,6 @@ public class UserUpdatePasswordActivity extends BaseActivity {
     }
 
     /**
-     * 同步控制台数据到缓存中
-     */
-    private void fetchUserInfo() {
-        BmobUser.fetchUserInfo(new FetchUserInfoListener<BmobUser>() {
-            @Override
-            public void done(BmobUser user, BmobException e) {
-                if (e == null) {
-                    LogUtil.d(getClass(), "更新用户本地缓存信息成功");
-                } else {
-                    LogUtil.e(getClass(), "更新用户本地缓存信息失败---code:" + e.getErrorCode() + ";message:" + e.getMessage());
-                }
-            }
-        });
-    }
-
-    /**
      * 提供旧密码修改密码
      *
      * @param oldPassword
@@ -255,26 +209,6 @@ public class UserUpdatePasswordActivity extends BaseActivity {
                 } else {
                     successOrFailListener.fail(e);
                     LogUtil.e(getClass(), "修改用户信息失败---code:" + e.getErrorCode() + ";message:" + e.getMessage());
-                }
-            }
-        });
-    }
-
-    /**
-     * 邮箱重置密码
-     *
-     * @param successOrFailListener
-     */
-    private void resetPasswordByEmail(SuccessOrFailListener successOrFailListener) {
-        BmobUser.resetPasswordByEmail(BmobUser.getCurrentUser(User.class).getEmail(), new UpdateListener() {
-
-            @Override
-            public void done(BmobException e) {
-                if (e == null) {
-                    successOrFailListener.success();
-                } else {
-                    successOrFailListener.fail();
-                    LogUtil.e(getClass(), "邮箱重置密码请求失败---code:" + e.getErrorCode() + ";message:" + e.getMessage());
                 }
             }
         });

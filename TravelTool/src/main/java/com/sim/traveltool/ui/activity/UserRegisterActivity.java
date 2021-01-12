@@ -1,12 +1,15 @@
 package com.sim.traveltool.ui.activity;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
 import com.sim.baselibrary.base.BaseActivity;
+import com.sim.baselibrary.callback.SuccessOrFailListener;
 import com.sim.baselibrary.utils.LogUtil;
 import com.sim.baselibrary.utils.RegexUtil;
 import com.sim.baselibrary.utils.ToastUtil;
@@ -31,11 +34,8 @@ public class UserRegisterActivity extends BaseActivity {
     private Context context;
 
     private TitleView titleView;
-    private EditText etUserName;
-    private EditText etPassword;
-    private EditText etMobilePhoneNumber;
-    private EditText etEmail;
-    private Button btnRegistered;
+    private EditText etMobilePhoneNumber, etSMSCode, etPassword, etUserName;
+    private Button btnSMSCode, btnRegistered;
 
     private User user = new User();
 
@@ -47,12 +47,13 @@ public class UserRegisterActivity extends BaseActivity {
     @Override
     protected void bindViews(Bundle savedInstanceState) {
         titleView = findViewById(R.id.titleView);
-        etUserName = findViewById(R.id.et_user_name);
-        etPassword = findViewById(R.id.et_password);
         etMobilePhoneNumber = findViewById(R.id.et_mobile_phone_number);
-        etEmail = findViewById(R.id.et_email);
+        etPassword = findViewById(R.id.et_password);
+        etSMSCode = findViewById(R.id.et_SMS_code);
+        etUserName = findViewById(R.id.et_user_name);
+        btnSMSCode = findViewById(R.id.btn_SMS_code);
         btnRegistered = findViewById(R.id.btn_registered);
-        setViewClick(btnRegistered);
+        setViewClick(btnSMSCode, btnRegistered);
         titleView.setLeftClickListener(new TitleView.LeftClickListener() {
             @Override
             public void onClick(View leftView) {
@@ -61,6 +62,7 @@ public class UserRegisterActivity extends BaseActivity {
         });
     }
 
+    @SuppressLint("HandlerLeak")
     @Override
     protected void initData() {
         context = this;
@@ -71,9 +73,17 @@ public class UserRegisterActivity extends BaseActivity {
 
     }
 
+
     @Override
     public void onMultiClick(View view) {
-        if (view == btnRegistered) {
+        if (view == btnSMSCode) {
+            if (!RegexUtil.checkPhone(etMobilePhoneNumber.getText().toString())) {
+                ToastUtil.T_Info(context, "请输入正确的手机号码！");
+                return;
+            }
+            new TimeCount(60000, 1000).start();
+            requestSMSCode(etMobilePhoneNumber.getText().toString());
+        } else if (view == btnRegistered) {
             if (etUserName.getText().toString().length() <= 0) {
                 ToastUtil.T_Info(context, "用户名不能为空！");
                 return;
@@ -86,45 +96,74 @@ public class UserRegisterActivity extends BaseActivity {
                 ToastUtil.T_Info(context, "请输入正确的手机号码！");
                 return;
             }
-            if (!RegexUtil.email(etEmail.getText().toString())) {
-                ToastUtil.T_Info(context, "请输入正确的电子邮箱！");
-                return;
-            }
-            registerUser(etUserName.getText().toString(), etPassword.getText().toString(),
-                    etMobilePhoneNumber.getText().toString(), etEmail.getText().toString());
+            registerUser(etMobilePhoneNumber.getText().toString(), etSMSCode.getText().toString(),
+                    etPassword.getText().toString(), etUserName.getText().toString());
         } else {
             super.onMultiClick(view);
         }
     }
 
+    class TimeCount extends CountDownTimer {
+        public TimeCount(long millisInFuture, long countDownInterval) {
+            super(millisInFuture, countDownInterval);
+        }
+
+        @Override
+        public void onTick(long millisUntilFinished) {
+            btnSMSCode.setClickable(false);
+            btnSMSCode.setText(String.valueOf(millisUntilFinished / 1000));
+            btnSMSCode.setBackground(getResources().getDrawable(R.drawable.button_bg_black));
+        }
+
+        @Override
+        public void onFinish() {
+            btnSMSCode.setClickable(true);
+            btnSMSCode.setText("验证码");
+            btnSMSCode.setBackground(getResources().getDrawable(R.drawable.button_bg_blue));
+        }
+    }
+
     /**
-     * 账号密码注册
+     * 手机号密码注册
      *
      * @param username
      * @param password
      */
-    private void registerUser(String username, String password, String mobilePhoneNumber, String email) {
+    private void registerUser(String mobilePhoneNumber, String code, String password, String username) {
         if (username != null) user.setUsername(username);
         if (password != null) user.setPassword(password);
         if (mobilePhoneNumber != null) user.setMobilePhoneNumber(mobilePhoneNumber);
-        if (email != null) user.setEmail(email);
         user.signUp(new SaveListener<User>() {
             @Override
             public void done(User user, BmobException e) {
                 if (e == null) {
-                    ToastUtil.T_Success(context, "注册成功！");
-                    finish();
+                    phoneVerify(mobilePhoneNumber, code, new SuccessOrFailListener() {
+                        @Override
+                        public void success(Object... values) {
+                            ToastUtil.T_Success(context, "注册成功！");
+                            finish();
+                        }
+
+                        @Override
+                        public void fail(Object... values) {
+                            ToastUtil.T_Error(context, "验证码验证失败！");
+                            user.delete(new UpdateListener() {
+                                @Override
+                                public void done(BmobException e) {
+                                    if (e == null) {
+                                        LogUtil.e(getClass(), "删除用户成功！");
+                                    } else {
+                                        LogUtil.e(getClass(), "删除用户失败---coed:" + e.getErrorCode() + ";message:" + e.getMessage());
+                                    }
+                                }
+                            });
+                        }
+                    });
+                } else if (e.getMessage().contains("mobilePhoneNumber") && e.getMessage().contains("already taken")) {
+                    ToastUtil.T_Error(context, "手机号码已被注册！");
                 } else {
-                    if (e.getMessage().contains("username") && e.getMessage().contains("already taken")) {
-                        ToastUtil.T_Error(context, "账号已被注册！");
-                    } else if (e.getMessage().contains("mobilePhoneNumber") && e.getMessage().contains("already taken")) {
-                        ToastUtil.T_Error(context, "手机号码已被注册！");
-                    } else if (e.getMessage().contains("email") && e.getMessage().contains("already taken")) {
-                        ToastUtil.T_Error(context, "电子邮箱已被注册！");
-                    } else {
-                        ToastUtil.T_Error(context, "注册失败！");
-                        LogUtil.e(getClass(), "注册失败---coed:" + e.getErrorCode() + ";message:" + e.getMessage());
-                    }
+                    ToastUtil.T_Error(context, "注册失败！");
+                    LogUtil.e(getClass(), "注册失败---coed:" + e.getErrorCode() + ";message:" + e.getMessage());
                 }
             }
         });
@@ -133,9 +172,9 @@ public class UserRegisterActivity extends BaseActivity {
     /**
      * 发送验证码短信
      */
-    private void requestSMSCode() {
-        //template 如果是自定义短信模板，此处替换为你在控制台设置的自定义短信模板名称；如果没有对应的自定义短信模板，则使用默认短信模板，默认模板名称为空字符串""。
-        BmobSMS.requestSMSCode(BmobUser.getCurrentUser(User.class).getMobilePhoneNumber(), "", new QueryListener<Integer>() {
+    private void requestSMSCode(String phone) {
+        //template 替换控制台设置的自定义短信模板名称；如果没有，则使用默认短信模板，默认模板名称为空字符串""。
+        BmobSMS.requestSMSCode(phone, "", new QueryListener<Integer>() {
             @Override
             public void done(Integer smsId, BmobException e) {
                 if (e == null) {
@@ -152,8 +191,8 @@ public class UserRegisterActivity extends BaseActivity {
      *
      * @param code
      */
-    private void phoneVerify(String code) {
-        BmobSMS.verifySmsCode(BmobUser.getCurrentUser(User.class).getMobilePhoneNumber(), code, new UpdateListener() {
+    private void phoneVerify(String phone, String code, SuccessOrFailListener successOrFailListener) {
+        BmobSMS.verifySmsCode(phone, code, new UpdateListener() {
             @Override
             public void done(BmobException e) {
                 if (e == null) {
@@ -165,15 +204,16 @@ public class UserRegisterActivity extends BaseActivity {
                         @Override
                         public void done(BmobException e) {
                             if (e == null) {
-                                ToastUtil.T_Success(context, "绑定手机号码成功！");
+                                successOrFailListener.success();
                             } else {
-                                ToastUtil.T_Success(context, "绑定手机号码失败！");
-                                LogUtil.e(getClass(), "绑定/解绑手机号码失败---code:" + e.getErrorCode() + ";message:" + e.getMessage());
+                                successOrFailListener.fail();
+                                LogUtil.e(getClass(), "绑定手机号码失败---code:" + e.getErrorCode() + ";message:" + e.getMessage());
                             }
                         }
                     });
                 } else {
                     LogUtil.d(getClass(), "验证码验证失败！");
+                    successOrFailListener.fail();
                 }
             }
         });

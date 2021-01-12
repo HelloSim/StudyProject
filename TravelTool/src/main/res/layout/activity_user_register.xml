@@ -2,7 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@mipmap/login_bg">
 
     <com.sim.traveltool.ui.view.TitleView
         android:id="@+id/titleView"
@@ -19,9 +20,33 @@
         android:orientation="vertical">
 
         <EditText
-            android:id="@+id/et_user_name"
+            android:id="@+id/et_mobile_phone_number"
             style="@style/editViewStyle"
-            android:hint="账号" />
+            android:hint="手机号码" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/et_SMS_code"
+                style="@style/editViewStyle"
+                android:layout_width="0dp"
+                android:layout_marginRight="5dp"
+                android:layout_weight="3"
+                android:hint="验证码" />
+
+            <Button
+                android:id="@+id/btn_SMS_code"
+                style="@style/buttonStyle"
+                android:layout_width="0dp"
+                android:layout_weight="2"
+                android:gravity="center"
+                android:text="验证码" />
+
+        </LinearLayout>
 
         <EditText
             android:id="@+id/et_password"
@@ -30,16 +55,10 @@
             android:hint="密码" />
 
         <EditText
-            android:id="@+id/et_mobile_phone_number"
+            android:id="@+id/et_user_name"
             style="@style/editViewStyle"
             android:layout_marginTop="5dp"
-            android:hint="手机号码" />
-
-        <EditText
-            android:id="@+id/et_email"
-            style="@style/editViewStyle"
-            android:layout_marginTop="5dp"
-            android:hint="电子邮箱" />
+            android:hint="用户名" />
 
         <Button
             android:id="@+id/btn_registered"

@@ -223,22 +223,6 @@ public class MainActivity extends BaseActivity {
     }
 
     /**
-     * 同步控制台数据到缓存中
-     */
-    private void fetchUserInfo() {
-        BmobUser.fetchUserInfo(new FetchUserInfoListener<BmobUser>() {
-            @Override
-            public void done(BmobUser user, BmobException e) {
-                if (e == null) {
-                    LogUtil.e(getClass(), "更新用户本地缓存信息成功");
-                } else {
-                    LogUtil.e(getClass(), "更新用户本地缓存信息失败---code:" + e.getErrorCode() + ";message:" + e.getMessage());
-                }
-            }
-        });
-    }
-
-    /**
      * 获取控制台最新JSON数据，不同步到缓存中
      */
     private void fetchUserJsonInfo() {
@@ -263,7 +247,7 @@ public class MainActivity extends BaseActivity {
     public void onMessageEvent(EventMessage eventMessage) {
         if (eventMessage.type == AppHelper.USER_IsLogIn){
             user = BmobUser.getCurrentUser(User.class);
-            fetchUserInfo();
+            User.fetchUserInfo();
             tvUserName.setText(user.getUsername());
         } else if (eventMessage.type == AppHelper.USER_noLogIn) {
             user = null;

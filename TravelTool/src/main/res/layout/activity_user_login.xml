@@ -2,7 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@mipmap/login_bg">
 
     <com.sim.traveltool.ui.view.TitleView
         android:id="@+id/titleView"
@@ -15,13 +16,14 @@
         app:title="登录" />
 
     <LinearLayout
+        android:id="@+id/ll_login_by_account"
         android:layout_width="280dp"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:orientation="vertical">
 
         <EditText
-            android:id="@+id/et_user_name"
+            android:id="@+id/et_mobile_phone_number"
             style="@style/editViewStyle"
             android:hint="账号" />
 
@@ -37,6 +39,70 @@
             android:layout_width="match_parent"
             android:layout_marginTop="10dp"
             android:text="登录" />
+
+        <TextView
+            android:id="@+id/tv_login_by_SMS_code"
+            style="@style/textViewStyle"
+            android:layout_gravity="center"
+            android:padding="10dp"
+            android:text="验证码快捷登录"
+            android:textColor="@color/white"
+            android:textSize="16sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_login_by_SMS_code"
+        android:layout_width="280dp"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <EditText
+            android:id="@+id/et_mobile_phone_number2"
+            style="@style/editViewStyle"
+            android:hint="手机号码" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/et_SMS_code"
+                style="@style/editViewStyle"
+                android:layout_width="0dp"
+                android:layout_marginRight="5dp"
+                android:layout_weight="3"
+                android:hint="验证码" />
+
+            <Button
+                android:id="@+id/btn_SMS_code"
+                style="@style/buttonStyle"
+                android:layout_width="0dp"
+                android:layout_weight="2"
+                android:gravity="center"
+                android:text="验证码" />
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btn_log_in2"
+            style="@style/buttonStyle"
+            android:layout_width="match_parent"
+            android:layout_marginTop="10dp"
+            android:text="登录" />
+
+        <TextView
+            android:id="@+id/tv_login_by_account"
+            style="@style/textViewStyle"
+            android:layout_gravity="center"
+            android:padding="10dp"
+            android:text="账号密码登录"
+            android:textColor="@color/white"
+            android:textSize="16sp" />
 
     </LinearLayout>
 

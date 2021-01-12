@@ -5,6 +5,7 @@
     android:id="@+id/parent"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@mipmap/login_bg"
     android:orientation="vertical">
 
     <com.sim.traveltool.ui.view.TitleView
@@ -16,27 +17,28 @@
         app:title="用户信息" />
 
     <RelativeLayout
-        android:id="@+id/rl_user_name"
+        android:id="@+id/rl_mobile_phone_number"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="200dp"
         android:background="@drawable/card_shape_gray"
         android:padding="20dp">
 
         <TextView
             style="@style/textViewStyle"
             android:layout_centerVertical="true"
-            android:text="账号" />
+            android:text="手机号码" />
 
         <TextView
-            android:id="@+id/tv_user_name"
+            android:id="@+id/tv_mobile_phone_number"
             style="@style/textViewStyleGray"
             android:layout_centerVertical="true"
             android:layout_marginRight="10dp"
-            android:layout_toLeftOf="@+id/iv_user_name_go"
-            tools:text="Sim" />
+            android:layout_toLeftOf="@+id/iv_mobile_phone_number_go"
+            tools:text="13411094382" />
 
         <ImageView
-            android:id="@+id/iv_user_name_go"
+            android:id="@+id/iv_mobile_phone_number_go"
             android:layout_width="15dp"
             android:layout_height="15dp"
             android:layout_alignParentRight="true"
@@ -76,7 +78,7 @@
     </RelativeLayout>
 
     <RelativeLayout
-        android:id="@+id/rl_mobile_phone_number"
+        android:id="@+id/rl_user_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/card_shape_gray"
@@ -85,48 +87,18 @@
         <TextView
             style="@style/textViewStyle"
             android:layout_centerVertical="true"
-            android:text="手机号码" />
+            android:text="用户名" />
 
         <TextView
-            android:id="@+id/tv_mobile_phone_number"
+            android:id="@+id/tv_user_name"
             style="@style/textViewStyleGray"
             android:layout_centerVertical="true"
             android:layout_marginRight="10dp"
-            android:layout_toLeftOf="@+id/iv_mobile_phone_number_go"
-            tools:text="13411094382" />
+            android:layout_toLeftOf="@+id/iv_user_name_go"
+            tools:text="Sim" />
 
         <ImageView
-            android:id="@+id/iv_mobile_phone_number_go"
-            android:layout_width="15dp"
-            android:layout_height="15dp"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:src="@mipmap/ic_to_right" />
-
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/rl_email"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/card_shape_gray"
-        android:padding="20dp">
-
-        <TextView
-            style="@style/textViewStyle"
-            android:layout_centerVertical="true"
-            android:text="电子邮箱" />
-
-        <TextView
-            android:id="@+id/tv_email"
-            style="@style/textViewStyleGray"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="10dp"
-            android:layout_toLeftOf="@+id/iv_email_go"
-            tools:text="hellosim@aliyun.com" />
-
-        <ImageView
-            android:id="@+id/iv_email_go"
+            android:id="@+id/iv_user_name_go"
             android:layout_width="15dp"
             android:layout_height="15dp"
             android:layout_alignParentRight="true"
