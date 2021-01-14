@@ -113,12 +113,16 @@ public class BusRouteActivity extends BaseActivity {
                 }
                 if (origin != null && destination != null) {
                     getRoute(origin, destination);
+                } else {
+                    ToastUtil.toast(BusRouteActivity.this, "请求不到位置信息！");
+                    finish();
                 }
             }
 
             @Override
             public void onError(Throwable e) {
-                ToastUtil.T_Error(BusRouteActivity.this, "位置信息请求出错！");
+                ToastUtil.toast(BusRouteActivity.this, "位置信息请求出错！");
+                finish();
                 LogUtil.e(getClass(), "位置信息请求出错: " + e);
             }
 
@@ -148,7 +152,8 @@ public class BusRouteActivity extends BaseActivity {
 
             @Override
             public void onError(Throwable e) {
-                ToastUtil.T_Error(BusRouteActivity.this, "出行方案请求出错！");
+                ToastUtil.toast(BusRouteActivity.this, "出行方案请求出错！");
+                finish();
                 LogUtil.e(getClass(), "出行方案请求出错: " + e);
             }
 

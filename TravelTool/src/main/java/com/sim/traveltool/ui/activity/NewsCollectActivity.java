@@ -10,7 +10,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.sim.baselibrary.base.BaseActivity;
 import com.sim.baselibrary.callback.ItemClickSupport;
 import com.sim.baselibrary.callback.OnMultiClickListener;
-import com.sim.baselibrary.utils.ToastUtil;
 import com.sim.traveltool.R;
 import com.sim.traveltool.adapter.NewsAdapter;
 import com.sim.traveltool.bean.NewsWangYiBean;
@@ -37,7 +36,6 @@ public class NewsCollectActivity extends BaseActivity {
     private TitleView titleView;
     private RecyclerView newsRecyclerView;
 
-    private User user;
     private ArrayList<NewsWangYiBean.NewsBean> collectionNewsBeanArrayList = new ArrayList<>();
     private NewsAdapter newsAdapter;
 
@@ -61,9 +59,8 @@ public class NewsCollectActivity extends BaseActivity {
     @Override
     protected void initData() {
         if (BmobUser.isLogin()) {
-            user = BmobUser.getCurrentUser(User.class);
             BmobQuery<NewsWangYiBean.NewsBean> bmobQuery = new BmobQuery<>();
-            bmobQuery.addWhereEqualTo("user", user);
+            bmobQuery.addWhereEqualTo("user", BmobUser.getCurrentUser(User.class));
             bmobQuery.findObjects(new FindListener<NewsWangYiBean.NewsBean>() {
                 @Override
                 public void done(List<NewsWangYiBean.NewsBean> list, BmobException e) {
@@ -76,7 +73,6 @@ public class NewsCollectActivity extends BaseActivity {
                 }
             });
         } else {
-            ToastUtil.T_Error(this, "未登录");
             finish();
         }
     }

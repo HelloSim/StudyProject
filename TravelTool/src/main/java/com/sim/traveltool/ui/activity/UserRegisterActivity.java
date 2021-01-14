@@ -78,22 +78,22 @@ public class UserRegisterActivity extends BaseActivity {
     public void onMultiClick(View view) {
         if (view == btnSMSCode) {
             if (!RegexUtil.checkPhone(etMobilePhoneNumber.getText().toString())) {
-                ToastUtil.T_Info(context, "请输入正确的手机号码！");
+                ToastUtil.toast(context, "请输入正确的手机号码！");
                 return;
             }
             new TimeCount(60000, 1000).start();
             requestSMSCode(etMobilePhoneNumber.getText().toString());
         } else if (view == btnRegistered) {
             if (etUserName.getText().toString().length() <= 0) {
-                ToastUtil.T_Info(context, "用户名不能为空！");
+                ToastUtil.toast(context, "用户名不能为空！");
                 return;
             }
             if (etPassword.getText().toString().length() <= 0) {
-                ToastUtil.T_Info(context, "密码不能为空！");
+                ToastUtil.toast(context, "密码不能为空！");
                 return;
             }
             if (!RegexUtil.checkPhone(etMobilePhoneNumber.getText().toString())) {
-                ToastUtil.T_Info(context, "请输入正确的手机号码！");
+                ToastUtil.toast(context, "请输入正确的手机号码！");
                 return;
             }
             registerUser(etMobilePhoneNumber.getText().toString(), etSMSCode.getText().toString(),
@@ -140,13 +140,13 @@ public class UserRegisterActivity extends BaseActivity {
                     phoneVerify(mobilePhoneNumber, code, new SuccessOrFailListener() {
                         @Override
                         public void success(Object... values) {
-                            ToastUtil.T_Success(context, "注册成功！");
+                            ToastUtil.toast(context, "注册成功！");
                             finish();
                         }
 
                         @Override
                         public void fail(Object... values) {
-                            ToastUtil.T_Error(context, "验证码验证失败！");
+                            ToastUtil.toast(context, "验证码验证失败！");
                             user.delete(new UpdateListener() {
                                 @Override
                                 public void done(BmobException e) {
@@ -160,9 +160,9 @@ public class UserRegisterActivity extends BaseActivity {
                         }
                     });
                 } else if (e.getMessage().contains("mobilePhoneNumber") && e.getMessage().contains("already taken")) {
-                    ToastUtil.T_Error(context, "手机号码已被注册！");
+                    ToastUtil.toast(context, "手机号码已被注册！");
                 } else {
-                    ToastUtil.T_Error(context, "注册失败！");
+                    ToastUtil.toast(context, "注册失败！");
                     LogUtil.e(getClass(), "注册失败---coed:" + e.getErrorCode() + ";message:" + e.getMessage());
                 }
             }
@@ -178,7 +178,7 @@ public class UserRegisterActivity extends BaseActivity {
             @Override
             public void done(Integer smsId, BmobException e) {
                 if (e == null) {
-                    ToastUtil.T_Success(context, "发送验证码成功！");
+                    ToastUtil.toast(context, "发送验证码成功！");
                 } else {
                     LogUtil.e(getClass(), "发送验证码失败---code:" + e.getErrorCode() + ";message:" + e.getMessage());
                 }

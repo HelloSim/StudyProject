@@ -10,7 +10,6 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import com.sim.baselibrary.base.BaseActivity;
-import com.sim.baselibrary.utils.ToastUtil;
 import com.sim.traveltool.R;
 import com.sim.traveltool.bean.NewsWangYiBean;
 import com.sim.traveltool.db.bean.User;
@@ -37,7 +36,6 @@ public class NewsDetailActivity extends BaseActivity {
 
     private NewsWangYiBean.NewsBean news;//传进来的news
     private NewsWangYiBean.NewsBean collectionNewsBean;//收藏中的news
-    private User user;
 
     private boolean isCollect = false;//是否收藏
 
@@ -58,8 +56,8 @@ public class NewsDetailActivity extends BaseActivity {
 
             @Override
             public void right(View right) {
+                NewsWangYiBean.NewsBean bean = new NewsWangYiBean.NewsBean();
                 if (isCollect && collectionNewsBean != null) {
-                    NewsWangYiBean.NewsBean bean = new NewsWangYiBean.NewsBean();
                     bean.setObjectId(collectionNewsBean.getObjectId());
                     bean.delete(new UpdateListener() {
 
@@ -74,8 +72,7 @@ public class NewsDetailActivity extends BaseActivity {
 
                     });
                 } else {
-                    NewsWangYiBean.NewsBean bean = new NewsWangYiBean.NewsBean();
-                    bean.setUser(user);
+                    bean.setUser(BmobUser.getCurrentUser(User.class));
                     bean.setTitle(news.getTitle());
                     bean.setPath(news.getPath());
                     bean.setImage(news.getImage());
@@ -99,9 +96,8 @@ public class NewsDetailActivity extends BaseActivity {
     protected void initData() {
         news = (NewsWangYiBean.NewsBean) getIntent().getSerializableExtra("news");
         if (BmobUser.isLogin()) {
-            user = BmobUser.getCurrentUser(User.class);
             BmobQuery<NewsWangYiBean.NewsBean> bmobQuery = new BmobQuery<>();
-            bmobQuery.addWhereEqualTo("user", user);
+            bmobQuery.addWhereEqualTo("user", BmobUser.getCurrentUser(User.class));
             bmobQuery.addWhereEqualTo("title", news.getTitle());
             bmobQuery.findObjects(new FindListener<NewsWangYiBean.NewsBean>() {
                 @Override
@@ -126,7 +122,6 @@ public class NewsDetailActivity extends BaseActivity {
             titleView.setRightImage(R.mipmap.ic_collect_not);
             collectionNewsBean = null;
             isCollect = false;
-            ToastUtil.T_Error(this, "未登录");
             finish();
         }
     }

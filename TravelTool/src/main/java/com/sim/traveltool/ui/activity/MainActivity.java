@@ -134,7 +134,7 @@ public class MainActivity extends BaseActivity {
                 drawerLayout.close();
                 startActivity(new Intent(this, NewsCollectActivity.class));
             } else {
-                ToastUtil.T_Error(this, "未登录");
+                ToastUtil.toast(this, "未登录");
             }
         } else {
             super.onMultiClick(view);

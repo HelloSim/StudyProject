@@ -12,33 +12,24 @@ android {
 }
 
 dependencies {
-    api 'com.jakewharton:butterknife:10.0.0'//butterknife
-    annotationProcessor 'com.jakewharton:butterknife-compiler:10.0.0'
-
+    api 'com.android.support:multidex:1.0.3'// 多dex配置
+    api 'androidx.recyclerview:recyclerview:1.2.0-beta01'//recyclerview
+    api 'com.google.code.gson:gson:2.8.5'//Gson库
     api 'com.github.bumptech.glide:glide:4.9.0'//glide
     annotationProcessor 'com.github.bumptech.glide:compiler:4.4.0'
-
-    api 'androidx.recyclerview:recyclerview:1.2.0-beta01'//recyclerview
-
-    api 'com.google.android.material:material:1.2.1'//TabLayout
-
-    api 'com.google.code.gson:gson:2.8.5'//Gson库
-
     api 'org.greenrobot:eventbus:3.1.1'//eventbus
-
-    api 'com.sdsmdg.tastytoast:tastytoast:0.1.1'//Toast
-
+    api 'com.google.android.material:material:1.2.1'//TabLayout
     // 网络请求的封装
-    api 'com.squareup.retrofit2:retrofit:2.3.0'//retrofit
+    api 'com.squareup.retrofit2:retrofit:2.4.0'//retrofit
     api 'com.google.code.gson:gson:2.8.5'//Gson库
     //下面两个是RxJava 和RxAndroid 添加这两个依赖 可以直接使用rxbus
     api 'io.reactivex:rxjava:1.1.5'//RxJava
     api 'io.reactivex:rxandroid:1.1.0'//RxAndroid
-    api 'com.squareup.retrofit2:converter-gson:2.3.0'
+    api 'com.squareup.retrofit2:converter-gson:2.4.0'
     //转换器，请求结果转换成Model
     api 'com.squareup.retrofit2:adapter-rxjava:2.1.0'
     //配合Rxjava 使用
-    api 'com.squareup.okhttp3:logging-interceptor:3.4.1'
-    api 'com.squareup.okhttp3:okhttp:3.12.0'//okhttp
+    api 'com.squareup.okhttp3:logging-interceptor:3.10.0'
+    api 'com.squareup.okhttp3:okhttp:3.14.1'//okhttp
 
 }

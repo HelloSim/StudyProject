@@ -114,14 +114,14 @@ public class UserLogInActivity extends BaseActivity {
                 loginByAccount();
             } else {
                 if (etMobilePhoneNumber.getText().toString().length() > 0) {
-                    ToastUtil.T_Info(context, "请输入密码！");
+                    ToastUtil.toast(context, "请输入密码！");
                 } else {
-                    ToastUtil.T_Info(context, "请输入账号！");
+                    ToastUtil.toast(context, "请输入账号！");
                 }
             }
         } else if (view == btnSMSCode) {
             if (!RegexUtil.checkPhone(etMobilePhoneNumber2.getText().toString())) {
-                ToastUtil.T_Info(context, "请输入正确的手机号码！");
+                ToastUtil.toast(context, "请输入正确的手机号码！");
                 return;
             }
             requestSMSCode(etMobilePhoneNumber2.getText().toString());
@@ -131,9 +131,9 @@ public class UserLogInActivity extends BaseActivity {
                 loginBySMSCode(etMobilePhoneNumber2.getText().toString(), etSMSCode.getText().toString());
             } else {
                 if (etMobilePhoneNumber2.getText().toString().length() > 0) {
-                    ToastUtil.T_Info(context, "请输入验证码！");
+                    ToastUtil.toast(context, "请输入验证码！");
                 } else {
-                    ToastUtil.T_Info(context, "请输入手机号码！");
+                    ToastUtil.toast(context, "请输入手机号码！");
                 }
             }
         } else if (view == btnRegistered) {
@@ -153,15 +153,14 @@ public class UserLogInActivity extends BaseActivity {
             @Override
             public void done(User user, BmobException e) {
                 if (e == null) {
-                    ToastUtil.T_Success(context, "登录成功！");
                     EventBus.getDefault().post(new EventMessage(AppHelper.USER_IsLogIn));
                     SPUtil.put(context, AppHelper.userSpName, AppHelper.userSpStateKey, true);
                     finish();
                 } else {
                     if (e.getMessage().contains("username or password incorrect")) {
-                        ToastUtil.T_Error(context, "用户名或密码不正确！");
+                        ToastUtil.toast(context, "用户名或密码不正确！");
                     } else {
-                        ToastUtil.T_Error(context, "登录出错！");
+                        ToastUtil.toast(context, "登录出错！");
                         LogUtil.e(getClass(), "登录出错---code:" + e.getErrorCode() + ";message:" + e.getMessage());
                     }
                 }
@@ -198,7 +197,7 @@ public class UserLogInActivity extends BaseActivity {
             @Override
             public void done(Integer smsId, BmobException e) {
                 if (e == null) {
-                    ToastUtil.T_Success(context, "发送验证码成功！");
+                    ToastUtil.toast(context, "发送验证码成功！");
                 } else {
                     LogUtil.e(getClass(), "发送验证码失败---code:" + e.getErrorCode() + ";message:" + e.getMessage());
                 }
@@ -211,12 +210,11 @@ public class UserLogInActivity extends BaseActivity {
             @Override
             public void done(BmobUser bmobUser, BmobException e) {
                 if (e == null) {
-                    ToastUtil.T_Success(context, "登录成功！");
                     EventBus.getDefault().post(new EventMessage(AppHelper.USER_IsLogIn));
                     SPUtil.put(context, AppHelper.userSpName, AppHelper.userSpStateKey, true);
                     finish();
                 } else {
-                    ToastUtil.T_Error(context, "登录出错！");
+                    ToastUtil.toast(context, "登录出错！");
                     LogUtil.e(getClass(), "登录出错---code:" + e.getErrorCode() + ";message:" + e.getMessage());
                 }
             }

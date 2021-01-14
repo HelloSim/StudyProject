@@ -126,10 +126,10 @@ public class UserInfoActivity extends BaseActivity {
             etNewUserName.setText(BmobUser.getCurrentUser(User.class).getUsername());
             updateUserNamePopupWindow.dismiss();
         } else if (view == btnUserNameConfirm) {
+            User.fetchUserInfo();
             updateUserInfo(etNewUserName.getText().toString(), new SuccessOrFailListener() {
                 @Override
                 public void success(Object... values) {
-                    User.fetchUserInfo();
                     updateUserNamePopupWindow.dismiss();
                     tvUserName.setText(BmobUser.getCurrentUser(User.class).getUsername());
                     etNewUserName.setText(BmobUser.getCurrentUser(User.class).getUsername());
@@ -138,7 +138,7 @@ public class UserInfoActivity extends BaseActivity {
 
                 @Override
                 public void fail(Object... values) {
-                    ToastUtil.T_Error(context, "修改失败！");
+                    ToastUtil.toast(context, "修改失败！");
                 }
             });
         } else if (view == rlPassword) {

@@ -1,22 +1,20 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
-apply from: "config.gradle"
 buildscript {
+    ext.versions = [
+            compileSdkVersion: 29,
+            buildToolsVersion: "29.0.2",
+            minSdkVersion    : 16,
+            targetSdkVersion : 26
+    ]
+
     repositories {
         google()
         jcenter()
-//        mavenCentral() // add repository
         maven { url 'https://oss.sonatype.org/content/repositories/snapshots' }
     }
     dependencies {
         classpath "com.android.tools.build:gradle:3.4.0"
-        // 使用butterknife需要实现以下方法
-        classpath 'com.github.dcendents:android-maven-gradle-plugin:2.1'
-        classpath 'org.greenrobot:greendao-gradle-plugin:3.3.0'
-        //腾讯bugly
-        classpath "com.tencent.bugly:tinker-support:1.2.1"
-
-        // NOTE: Do not place your application dependencies here; they belong
-        // in the individual module build.gradle files
+        classpath "com.tencent.bugly:tinker-support:1.2.1"//腾讯bugly
     }
 }
 
@@ -25,7 +23,7 @@ allprojects {
         google()
         jcenter()
         maven { url 'https://www.jitpack.io' }
-        maven {url 'https://dl.bintray.com/chaozhouzhang/maven' }//Bmob的maven仓库地址--必填
+        maven { url 'https://dl.bintray.com/chaozhouzhang/maven' }//Bmob
     }
 }
 

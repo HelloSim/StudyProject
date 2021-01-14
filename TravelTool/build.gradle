@@ -1,13 +1,13 @@
 apply plugin: 'com.android.application'
-apply from: 'tinker-support.gradle'
+//apply from: 'tinker-support.gradle'
 
 android {
-    compileSdkVersion rootProject.ext.android["compileSdkVersion"]
-    buildToolsVersion rootProject.ext.android["buildToolsVersion"]
+    compileSdkVersion versions.compileSdkVersion
+    buildToolsVersion versions.buildToolsVersion
     defaultConfig {
         applicationId "com.sim.traveltool"
-        minSdkVersion rootProject.ext.android["minSdkVersion"]
-        targetSdkVersion rootProject.ext.android["targetSdkVersion"]
+        minSdkVersion versions.minSdkVersion
+        targetSdkVersion versions.targetSdkVersion
         versionCode 23
         versionName "4.2.3"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -103,34 +103,20 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     implementation 'androidx.appcompat:appcompat:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
-//    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-
     implementation project(":baselibrary")
-//    implementation project(":sqlitelibrary")
 
-    annotationProcessor 'com.jakewharton:butterknife-compiler:10.0.0'//butterknife
-
-    implementation 'com.android.support:multidex:1.0.3'// 多dex配置
-
-    //bugly
-    implementation 'com.tencent.bugly:crashreport_upgrade:1.4.5'
-    implementation 'com.tencent.tinker:tinker-android-lib:1.9.9'
-    // 指定tinker依赖版本（注：应用升级1.3.5版本起，不再内置tinker）
-    implementation 'com.tencent.bugly:nativecrashreport:3.7.500'
-
-    //bmob
-    implementation 'cn.bmob.android:bmob-sdk:3.7.8'
-    implementation "io.reactivex.rxjava2:rxjava:2.2.8"
-    implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
-    implementation 'com.squareup.okhttp3:okhttp:3.14.1'
-    implementation 'com.squareup.okio:okio:2.2.2'
-
-    implementation files('libs\\jcore-android-2.6.0.jar')
-    implementation files('libs\\jpush-android-3.9.0.jar')
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'//下拉刷新控件
     implementation 'androidx.drawerlayout:drawerlayout:1.1.1'//抽屉布局
     implementation 'com.haibin:calendarview:3.4.6' //日历
     implementation 'com.github.huangyanbin:SmartTable:2.2.0'//表格
     implementation 'com.github.bumptech.glide:glide:4.9.0'//一个第三方的图片选择库
     implementation 'com.google.android.material:material:1.2.0'//圆角图片
+    //bugly
+    implementation 'com.tencent.bugly:crashreport_upgrade:1.4.5'
+    implementation 'com.tencent.tinker:tinker-android-lib:1.9.9'
+    //bmob
+    implementation 'cn.bmob.android:bmob-sdk:3.7.8'
+    implementation "io.reactivex.rxjava2:rxjava:2.2.8"
+    implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
+    implementation 'com.squareup.okio:okio:2.2.2'
 }

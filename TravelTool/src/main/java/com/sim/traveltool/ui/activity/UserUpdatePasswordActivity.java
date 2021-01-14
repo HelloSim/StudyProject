@@ -121,17 +121,17 @@ public class UserUpdatePasswordActivity extends BaseActivity {
                                 requestSMSCode(new SuccessOrFailListener() {
                                     @Override
                                     public void success(Object... values) {
-                                        ToastUtil.T_Success(context, "发送验证码成功！");
+                                        ToastUtil.toast(context, "发送验证码成功！");
                                         resetPasswordPopupWindow.showAtLocation(parent, Gravity.CENTER, 0, 0);
                                     }
 
                                     @Override
                                     public void fail(Object... values) {
-                                        ToastUtil.T_Success(context, "发送验证码失败！");
+                                        ToastUtil.toast(context, "发送验证码失败！");
                                     }
                                 });
                             } else {
-                                ToastUtil.T_Info(context, "手机号码未验证");
+                                ToastUtil.toast(context, "手机号码未验证");
                             }
                         }
 
@@ -143,13 +143,12 @@ public class UserUpdatePasswordActivity extends BaseActivity {
         } else if (view == btnPasswordCancel) {
             updatePasswordPopupWindow.dismiss();
         } else if (view == btnPasswordConfirm) {
+            updatePasswordPopupWindow.dismiss();
             if (etOldPassword.getText().length() > 0 && etNewPassword.getText().length() > 0 && etNewPasswordAgain.getText().length() > 0) {
                 if (etNewPassword.getText().toString().equals(etNewPasswordAgain.getText().toString())) {
                     updatePassword(etOldPassword.getText().toString(), etNewPassword.getText().toString(), new SuccessOrFailListener() {
                         @Override
                         public void success(Object... values) {
-                            updatePasswordPopupWindow.dismiss();
-                            ToastUtil.T_Success(context, "修改成功！");
                             User.fetchUserInfo();
                         }
 
@@ -157,17 +156,17 @@ public class UserUpdatePasswordActivity extends BaseActivity {
                         public void fail(Object... values) {
                             BmobException e = (BmobException) values[0];
                             if (e.getMessage().contains("old password incorrect")) {
-                                ToastUtil.T_Error(context, "密码错误！");
+                                ToastUtil.toast(context, "密码错误！");
                             } else {
-                                ToastUtil.T_Error(context, "修改失败！");
+                                ToastUtil.toast(context, "修改失败！");
                             }
                         }
                     });
                 } else {
-                    ToastUtil.T_Info(context, "新密码输入不一致！");
+                    ToastUtil.toast(context, "新密码输入不一致！");
                 }
             } else {
-                ToastUtil.T_Info(context, "密码不能为空！");
+                ToastUtil.toast(context, "密码不能为空！");
             }
         } else if (view == btnPasswordPhoneCancel) {
             resetPasswordPopupWindow.dismiss();
@@ -177,16 +176,15 @@ public class UserUpdatePasswordActivity extends BaseActivity {
                     @Override
                     public void success(Object... values) {
                         resetPasswordPopupWindow.dismiss();
-                        ToastUtil.T_Success(context, "修改成功！");
-                    }
+                     }
 
                     @Override
                     public void fail(Object... values) {
-                        ToastUtil.T_Error(context, "修改失败！");
+                        ToastUtil.toast(context, "修改失败！");
                     }
                 });
             } else {
-                ToastUtil.T_Info(context, "密码不能为空！");
+                ToastUtil.toast(context, "密码不能为空！");
             }
         } else {
             super.onMultiClick(view);

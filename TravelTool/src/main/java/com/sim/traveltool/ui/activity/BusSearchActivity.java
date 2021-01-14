@@ -172,7 +172,7 @@ public class BusSearchActivity extends BaseActivity {
 
             @Override
             public void onError(Throwable e) {
-                ToastUtil.T_Error(BusSearchActivity.this, "搜索实时公交路线请求出错");
+                ToastUtil.toast(BusSearchActivity.this, "搜索实时公交路线请求出错");
                 LogUtil.d(getClass(), "搜索实时公交路线出错: " + e);
             }
 
@@ -205,7 +205,7 @@ public class BusSearchActivity extends BaseActivity {
 
             @Override
             public void onError(Throwable e) {
-                ToastUtil.T_Error(BusSearchActivity.this, "位置请求出错！");
+                ToastUtil.toast(BusSearchActivity.this, "位置请求出错！");
                 LogUtil.d(getClass(), "位置请求出错: " + e);
             }
 

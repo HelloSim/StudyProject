@@ -154,14 +154,14 @@ public class RecordFragment extends BaseFragment implements CalendarView.OnMonth
                 intent.putExtras(bundle);
                 startActivity(intent);
             } else {
-                ToastUtil.T_Info(getContext(), "未登录");
+                ToastUtil.toast(getContext(), "未登录");
             }
         } else if (view == btnOther) {
             morePopupWindow.dismiss();
             if (user != null) {
                 otherPopupWindow.showAtLocation(parent, Gravity.CENTER, 0, 0);
             } else {
-                ToastUtil.T_Info(getContext(), "未登录");
+                ToastUtil.toast(getContext(), "未登录");
             }
         } else if (view == btnCancel) {
             otherPopupWindow.dismiss();
@@ -178,9 +178,8 @@ public class RecordFragment extends BaseFragment implements CalendarView.OnMonth
                                 @Override
                                 public void done(BmobException e) {
                                     if (e == null) {
-                                        ToastUtil.T_Info(getContext(), "添加备忘成功！");
                                     } else {
-                                        ToastUtil.T_Info(getContext(), "添加备忘失败！");
+                                        ToastUtil.toast(getContext(), "添加备忘失败！");
                                         LogUtil.d(getClass(), "修改指定日期备忘出错：" + e.getMessage());
                                     }
                                 }
@@ -192,9 +191,8 @@ public class RecordFragment extends BaseFragment implements CalendarView.OnMonth
                                 public void done(String s, BmobException e) {
                                     if (e == null) {
                                         showInfo(calendarView.getSelectedCalendar());
-                                        ToastUtil.T_Info(getContext(), "添加备忘成功！");
                                     } else {
-                                        ToastUtil.T_Info(getContext(), "添加备忘失败！");
+                                        ToastUtil.toast(getContext(), "添加备忘失败！");
                                         LogUtil.d(getClass(), "添加指定日期备忘出错：" + e.getMessage());
                                     }
                                 }
@@ -208,7 +206,7 @@ public class RecordFragment extends BaseFragment implements CalendarView.OnMonth
                     }
                 });
             } else {
-                ToastUtil.T_Info(getContext(), "未登录");
+                ToastUtil.toast(getContext(), "未登录");
             }
         } else if (view == btnRecord) {
             if (user != null) {
@@ -248,10 +246,9 @@ public class RecordFragment extends BaseFragment implements CalendarView.OnMonth
                     }
                 } else {
                     calendarView.scrollToCurrent(true);
-                    ToastUtil.T_Info(getContext(), "只能操作当天打卡！");
                 }
             } else {
-                ToastUtil.T_Info(getContext(), "未登录");
+                ToastUtil.toast(getContext(), "未登录");
             }
         } else {
             super.onMultiClick(view);
@@ -371,9 +368,8 @@ public class RecordFragment extends BaseFragment implements CalendarView.OnMonth
                         public void done(BmobException e) {
                             if (e == null) {
                                 showInfo(calendarView.getSelectedCalendar());
-                                ToastUtil.T_Info(getContext(), "打卡成功！");
                             } else {
-                                ToastUtil.T_Info(getContext(), "打卡失败！");
+                                ToastUtil.toast(getContext(), "打卡失败！");
                                 LogUtil.d(getClass(), "修改上班打卡时间失败：" + e.getMessage());
                             }
                         }
@@ -386,9 +382,8 @@ public class RecordFragment extends BaseFragment implements CalendarView.OnMonth
                         public void done(BmobException e) {
                             if (e == null) {
                                 showInfo(calendarView.getSelectedCalendar());
-                                ToastUtil.T_Info(getContext(), "打卡成功！");
                             } else {
-                                ToastUtil.T_Info(getContext(), "打卡失败！");
+                                ToastUtil.toast(getContext(), "打卡失败！");
                                 LogUtil.d(getClass(), "修改下班打卡时间出错：" + e.getMessage());
                             }
                         }
@@ -403,9 +398,8 @@ public class RecordFragment extends BaseFragment implements CalendarView.OnMonth
                         public void done(String s, BmobException e) {
                             if (e == null) {
                                 showInfo(calendarView.getSelectedCalendar());
-                                ToastUtil.T_Info(getContext(), "打卡成功！");
                             } else {
-                                ToastUtil.T_Info(getContext(), "打卡失败！");
+                                ToastUtil.toast(getContext(), "打卡失败！");
                                 LogUtil.d(getClass(), "插入上班时间数据出错：" + e.getMessage());
                             }
                         }
@@ -418,9 +412,8 @@ public class RecordFragment extends BaseFragment implements CalendarView.OnMonth
                         public void done(String s, BmobException e) {
                             if (e == null) {
                                 showInfo(calendarView.getSelectedCalendar());
-                                ToastUtil.T_Info(getContext(), "打卡成功！");
                             } else {
-                                ToastUtil.T_Info(getContext(), "打卡失败！");
+                                ToastUtil.toast(getContext(), "打卡失败！");
                                 LogUtil.d(getClass(), "插入下班时间数据出错：" + e.getMessage());
                             }
                         }
@@ -428,7 +421,7 @@ public class RecordFragment extends BaseFragment implements CalendarView.OnMonth
                 }
             }
         } else {
-            ToastUtil.T_Info(getContext(), "未登录");
+            ToastUtil.toast(getContext(), "未登录");
         }
     }
 

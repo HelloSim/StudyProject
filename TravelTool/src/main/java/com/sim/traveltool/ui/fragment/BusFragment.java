@@ -120,19 +120,19 @@ public class BusFragment extends BaseFragment {
                 public void onClick(View v) {
                     switch (v.getId()) {
                         case R.id.pager_img1:
-                            ToastUtil.T_Info(getContext(), "1被点击！");
+                            ToastUtil.toast(getContext(), "1被点击！");
                             break;
                         case R.id.pager_img2:
-                            ToastUtil.T_Info(getContext(), "2被点击！");
+                            ToastUtil.toast(getContext(), "2被点击！");
                             break;
                         case R.id.pager_img3:
-                            ToastUtil.T_Info(getContext(), "3被点击！");
+                            ToastUtil.toast(getContext(), "3被点击！");
                             break;
                         case R.id.pager_img4:
-                            ToastUtil.T_Info(getContext(), "4被点击！");
+                            ToastUtil.toast(getContext(), "4被点击！");
                             break;
                         case R.id.pager_img5:
-                            ToastUtil.T_Info(getContext(), "5被点击！");
+                            ToastUtil.toast(getContext(), "5被点击！");
                             break;
                     }
                 }
