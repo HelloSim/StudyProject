@@ -106,11 +106,8 @@ dependencies {
     implementation project(":baselibrary")
 
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'//下拉刷新控件
-    implementation 'androidx.drawerlayout:drawerlayout:1.1.1'//抽屉布局
     implementation 'com.haibin:calendarview:3.4.6' //日历
     implementation 'com.github.huangyanbin:SmartTable:2.2.0'//表格
-    implementation 'com.github.bumptech.glide:glide:4.9.0'//一个第三方的图片选择库
-    implementation 'com.google.android.material:material:1.2.0'//圆角图片
     //bugly
     implementation 'com.tencent.bugly:crashreport_upgrade:1.4.5'
     implementation 'com.tencent.tinker:tinker-android-lib:1.9.9'
