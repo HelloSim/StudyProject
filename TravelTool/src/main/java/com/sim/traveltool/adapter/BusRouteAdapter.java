@@ -16,9 +16,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @Time: 2020/6/11 23:02
- * @Author: HelloSim
- * @Description :出行方案界面的RecyclerView适配器
+ * @Author： Sim
+ * @Time： 2020/6/11 23:02
+ * @Description： 出行方案界面的RecyclerView适配器
  */
 public class BusRouteAdapter extends BaseAdapter<BusRouteAdapter.ViewHolder, BusRouteDataBean.RouteBean.TransitsBean> {
 

@@ -38,6 +38,11 @@ import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.FetchUserInfoListener;
 
+/**
+ * @Author： Sim
+ * @Time： 2020/12/16 11:01
+ * @Description： MainActivity
+ */
 public class MainActivity extends BaseActivity {
 
     private DrawerLayout drawerLayout;

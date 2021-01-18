@@ -11,9 +11,9 @@ import java.util.GregorianCalendar;
 import java.util.Locale;
 
 /**
- * @Auther Sim
- * @Time 2020/10/20 14:54
- * @Description 系统时间获取工具
+ * @Author: Sim
+ * @Time： 2020/10/20 14:54
+ * @Description： 系统时间获取工具
  */
 
 @SuppressLint("NewApi")

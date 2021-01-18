@@ -13,9 +13,9 @@ import cn.bmob.v3.Bmob;
 import cn.jpush.android.api.JPushInterface;
 
 /**
- * @Auther Sim
- * @Time 2020/4/27 1:05
- * @Description Application
+ * @Author： Sim
+ * @Time： 2020/4/27 1:05
+ * @Description： Application
  */
 public class Application extends android.app.Application {
 

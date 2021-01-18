@@ -14,9 +14,9 @@ import android.widget.TextView;
 import com.sim.traveltool.R;
 
 /**
- * @Auther Sim
- * @Time 2021/1/5 17:42
- * @Description 自定义标题栏组件
+ * @Author： Sim
+ * @Time： 2021/1/5 17:42
+ * @Description： 自定义标题栏组件
  */
 public class TitleView extends RelativeLayout {
 

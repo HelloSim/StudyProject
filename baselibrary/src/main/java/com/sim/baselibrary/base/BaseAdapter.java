@@ -7,9 +7,9 @@ import java.util.Collection;
 import java.util.List;
 
 /**
- * @Auther Sim
- * @Time 2020/12/22 14:21
- * @Description BaseAdapter。项目模块BaseAdapter继承此类
+ * @Author: Sim
+ * @Time： 2020/12/22 14:21
+ * @Description： BaseAdapter。项目模块BaseAdapter继承此类
  */
 public abstract class BaseAdapter<VH extends BaseViewHolder, D> extends RecyclerView.Adapter<VH> {
 
@@ -56,10 +56,10 @@ public abstract class BaseAdapter<VH extends BaseViewHolder, D> extends Recycler
      * @param d
      * @return
      */
-    public int insertData(D d,boolean addIsFirst) {
+    public int insertData(D d, boolean addIsFirst) {
         if (d != null && !mData.contains(d)) {
             mData.add(d);
-            int position = mData.size() ;
+            int position = mData.size();
             notifyItemInserted(position);
             return position;
         }
@@ -67,9 +67,9 @@ public abstract class BaseAdapter<VH extends BaseViewHolder, D> extends Recycler
     }
 
     public boolean insertData(Collection<D> d) {
-        if (d != null && d.size() >0) {
+        if (d != null && d.size() > 0) {
             mData.addAll(d);
-            notifyItemRangeInserted(mData.size() - d.size(),mData.size());
+            notifyItemRangeInserted(mData.size() - d.size(), mData.size());
             return true;
         }
         return false;

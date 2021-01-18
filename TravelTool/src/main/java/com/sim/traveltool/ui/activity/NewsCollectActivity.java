@@ -27,9 +27,9 @@ import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.UpdateListener;
 
 /**
- * @Auther Sim
- * @Time 2020/4/30 1:05
- * @Description 网易新闻的收藏页面
+ * @Author： Sim
+ * @Time： 2020/4/30 1:05
+ * @Description： 网易新闻的收藏页面
  */
 public class NewsCollectActivity extends BaseActivity {
 
@@ -96,21 +96,19 @@ public class NewsCollectActivity extends BaseActivity {
                 showDialog(null, "取消收藏", "确认", "取消", new com.sim.baselibrary.callback.DialogInterface() {
                     @Override
                     public void sureOnClick() {
-                        if (OnMultiClickListener.isNoFastClick()) {
-                            NewsWangYiBean.NewsBean bean = new NewsWangYiBean.NewsBean();
-                            bean.setObjectId(collectionNewsBeanArrayList.get(position).getObjectId());
-                            bean.delete(new UpdateListener() {
+                        NewsWangYiBean.NewsBean bean = new NewsWangYiBean.NewsBean();
+                        bean.setObjectId(collectionNewsBeanArrayList.get(position).getObjectId());
+                        bean.delete(new UpdateListener() {
 
-                                @Override
-                                public void done(BmobException e) {
-                                    if (e == null) {
-                                        collectionNewsBeanArrayList.remove(position);
-                                        newsAdapter.notifyDataSetChanged();
-                                    }
+                            @Override
+                            public void done(BmobException e) {
+                                if (e == null) {
+                                    collectionNewsBeanArrayList.remove(position);
+                                    newsAdapter.notifyDataSetChanged();
                                 }
+                            }
 
-                            });
-                        }
+                        });
                     }
 
                     @Override

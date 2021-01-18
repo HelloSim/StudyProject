@@ -13,9 +13,9 @@ import rx.Observable;
 import rx.Subscriber;
 
 /**
- * @Auther Sim
- * @Time 2019/4/22 1:05
- * @Description 使用网络请求的单例
+ * @Author： Sim
+ * @Time： 2019/4/22 1:05
+ * @Description： 使用网络请求的单例
  */
 public class APIFactory extends RetrofitUtil {
 

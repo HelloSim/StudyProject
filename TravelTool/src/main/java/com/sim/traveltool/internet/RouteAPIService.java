@@ -9,9 +9,9 @@ import retrofit2.http.Query;
 import rx.Observable;
 
 /**
- * @Auther Sim
- * @Time 2020/11/25 17:40
- * @Description 位置、路线的网络请求
+ * @Author： Sim
+ * @Time： 2020/11/25 17:40
+ * @Description： 位置、路线的网络请求
  */
 public interface RouteAPIService {
 

@@ -7,9 +7,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.sim.baselibrary.R;
 
 /**
- * @Auther Sim
- * @Time 2020/12/28 11:35
- * @Description RecyclerView item 的点击、长按事件
+ * @Author: Sim
+ * @Time： 2020/12/28 11:35
+ * @Description： RecyclerView item 的点击、长按事件
  */
 public class ItemClickSupport {
     private final RecyclerView mRecyclerView;
@@ -76,7 +76,9 @@ public class ItemClickSupport {
     }
 
     public ItemClickSupport setOnItemClickListener(OnItemClickListener listener) {
-        mOnItemClickListener = listener;
+        if (OnMultiClickListener.isNoFastClick()) {
+            mOnItemClickListener = listener;
+        }
         return this;
     }
 

@@ -28,9 +28,9 @@ import cn.bmob.v3.listener.QueryListener;
 import cn.bmob.v3.listener.UpdateListener;
 
 /**
- * @Auther Sim
- * @Time 2021/1/8 15:06
- * @Description
+ * @Author： Sim
+ * @Time： 2021/1/8 15:06
+ * @Description：
  */
 public class UserUpdatePasswordActivity extends BaseActivity {
 

@@ -18,9 +18,9 @@ import java.net.URL;
 import java.util.Map;
 
 /**
- * @Auther Sim
- * @Time 2019/4/22 1:05
- * @Description 网络请求工具类
+ * @Author: Sim
+ * @Time： 2019/4/22 1:05
+ * @Description： 网络请求工具类
  */
 public class HttpUtil {
 

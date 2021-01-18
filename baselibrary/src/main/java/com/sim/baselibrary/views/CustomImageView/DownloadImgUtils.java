@@ -14,9 +14,9 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 /**
- * Auther Sim
- * Time 2020/12/15 11:55
- * Description
+ * @Author: Sim
+ * @Time： 2020/12/15 11:55
+ * @Description：
  */
 public class DownloadImgUtils {
 

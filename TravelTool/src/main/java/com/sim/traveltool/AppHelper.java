@@ -1,9 +1,9 @@
 package com.sim.traveltool;
 
 /**
- * @Auther Sim
- * @Time 2020/12/8 10:21
- * @Description 常量类
+ * @Author： Sim
+ * @Time： 2020/12/8 10:21
+ * @Description： 常量类
  */
 public class AppHelper {
 

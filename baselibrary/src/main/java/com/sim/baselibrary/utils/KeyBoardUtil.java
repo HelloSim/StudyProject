@@ -14,9 +14,9 @@ import com.sim.baselibrary.R;
 import java.lang.reflect.Method;
 
 /**
- * @Auther Sim
- * @Time 2020/9/21 23:31
- * @Description 打开或关闭软键盘
+ * @Author: Sim
+ * @Time： 2020/9/21 23:31
+ * @Description： 打开或关闭软键盘
  */
 public class KeyBoardUtil {
 

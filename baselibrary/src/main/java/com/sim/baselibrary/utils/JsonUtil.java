@@ -9,9 +9,9 @@ import com.google.gson.JsonSyntaxException;
 import java.util.ArrayList;
 
 /**
- * @Auther Sim
- * @Time 2019/4/22 1:05
- * @Description Json字符串与对象集合的转换工具类
+ * @Author: Sim
+ * @Time： 2019/4/22 1:05
+ * @Description： Json字符串与对象集合的转换工具类
  */
 public class JsonUtil {
 

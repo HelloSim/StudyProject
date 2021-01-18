@@ -15,9 +15,9 @@ import java.lang.reflect.Method;
 import java.util.List;
 
 /**
- * @Auther Sim
- * @Time 2019/4/22 1:05
- * @Description App常用工具类
+ * @Author: Sim
+ * @Time： 2019/4/22 1:05
+ * @Description： App常用工具类
  */
 public class AppUtil {
 

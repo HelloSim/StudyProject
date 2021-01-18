@@ -6,9 +6,9 @@ import androidx.annotation.IdRes;
 import androidx.recyclerview.widget.RecyclerView;
 
 /**
- * @Auther Sim
- * @Time 2020/12/29 16:12
- * @Description BaseViewHolder
+ * @Author: Sim
+ * @Time： 2020/12/29 16:12
+ * @Description： BaseViewHolder
  */
 public abstract class BaseViewHolder extends RecyclerView.ViewHolder {
 
@@ -17,7 +17,7 @@ public abstract class BaseViewHolder extends RecyclerView.ViewHolder {
         bindViews();
     }
 
-    protected abstract void bindViews() ;
+    protected abstract void bindViews();
 
     public final <T extends View> T findViewById(@IdRes int id) {
         if (id == View.NO_ID) {

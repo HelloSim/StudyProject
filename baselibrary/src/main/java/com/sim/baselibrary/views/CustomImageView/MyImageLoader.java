@@ -19,9 +19,9 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Semaphore;
 
 /**
- * Auther Sim
- * Time 2020/12/15 11:55
- * Description
+ * @Author: Sim
+ * @Time： 2020/12/15 11:55
+ * @Description：
  */
 public class MyImageLoader {
 
@@ -118,7 +118,7 @@ public class MyImageLoader {
     }
 
 
-    public interface ILoadingComplete{
+    public interface ILoadingComplete {
 
         void onLoadFinished();
     }
@@ -126,6 +126,7 @@ public class MyImageLoader {
 
     /**
      * 从网络加载图片
+     *
      * @param path
      * @param imageView
      * @param isFromNet
@@ -158,12 +159,13 @@ public class MyImageLoader {
 
     /**
      * 加载圆角图片
+     *
      * @param path
      * @param imageView
      * @param isFromNet
      */
     public void loadCircleImage(String path, final CustomImageView imageView,
-            boolean isFromNet, final ILoadingComplete iLoadingComplete) {
+                                boolean isFromNet, final ILoadingComplete iLoadingComplete) {
         imageView.setTag(path);
         mUIHandler = new Handler() {
             @Override
@@ -175,7 +177,7 @@ public class MyImageLoader {
                 if (iv.getTag().toString().equals(path)) {
                     iv.setImageBitmap(bm);
                 }
-                if(iLoadingComplete != null){
+                if (iLoadingComplete != null) {
                     iLoadingComplete.onLoadFinished();
                 }
             }
@@ -190,12 +192,11 @@ public class MyImageLoader {
     }
 
 
-
     /**
      * 加载圆角图片
      */
     public void loadRoundImage(String path, final CustomImageView imageView,
-            boolean isFromNet, final ILoadingComplete iLoadingComplete) {
+                               boolean isFromNet, final ILoadingComplete iLoadingComplete) {
         imageView.setTag(path);
         if (mUIHandler == null) {
             mUIHandler = new Handler() {
@@ -208,7 +209,7 @@ public class MyImageLoader {
                     if (iv.getTag().toString().equals(path)) {
                         iv.setImageBitmap(bm);
                     }
-                    if(iLoadingComplete != null){
+                    if (iLoadingComplete != null) {
                         iLoadingComplete.onLoadFinished();
                     }
                 }
@@ -222,7 +223,6 @@ public class MyImageLoader {
             addTask(buildTask(path, imageView, isFromNet));
         }
     }
-
 
 
     private void refreshBitmap(String path, final CustomImageView imageView, Bitmap bitmap) {
@@ -418,7 +418,7 @@ public class MyImageLoader {
         for (byte b : bytes) {
             // 将每个字节与0xFF进行与运算，然后转化为10进制，然后借助于Integer再转化为16进制
             tmp = Integer.toHexString(0xFF & b);
-            if (tmp.length() == 1){// 每个字节8为，转为16进制标志，2个16进制位
+            if (tmp.length() == 1) {// 每个字节8为，转为16进制标志，2个16进制位
                 tmp = "0" + tmp;
             }
             sb.append(tmp);

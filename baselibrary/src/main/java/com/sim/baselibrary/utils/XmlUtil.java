@@ -20,9 +20,9 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
 /**
- * @Auther Sim
- * @Time 2020/9/21 23:31
- * @Description xml转换工具
+ * @Author: Sim
+ * @Time： 2020/9/21 23:31
+ * @Description： xml转换工具
  */
 public class XmlUtil {
     /**

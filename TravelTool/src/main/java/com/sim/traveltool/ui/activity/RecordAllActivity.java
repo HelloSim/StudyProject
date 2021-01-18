@@ -26,9 +26,9 @@ import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.FindListener;
 
 /**
- * @Auther Sim
- * @Time 2020/10/22 14:21
- * @Description 月打卡列表页面
+ * @Author： Sim
+ * @Time： 2020/10/22 14:21
+ * @Description： 月打卡列表页面
  */
 public class RecordAllActivity extends BaseActivity {
 

@@ -19,9 +19,9 @@ import com.sim.traveltool.bean.BusRouteDataBean;
 import java.util.List;
 
 /**
- * @Auther Sim
- * @Time 2020/11/29 12:08
- * @Description 出行路线的详细方式页面的适配器
+ * @Author： Sim
+ * @Time： 2020/11/29 12:08
+ * @Description： 出行路线的详细方式页面的适配器
  */
 public class BusRouteDetailAdapter extends BaseAdapter<BusRouteDetailAdapter.ViewHolder,
         BusRouteDataBean.RouteBean.TransitsBean.SegmentsBean> {

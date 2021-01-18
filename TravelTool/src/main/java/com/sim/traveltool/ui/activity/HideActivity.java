@@ -12,9 +12,9 @@ import com.sim.traveltool.R;
 import com.sim.traveltool.ui.view.TitleView;
 
 /**
- * @Auther Sim
- * @Time 2020/12/11 15:05
- * @Description 隐藏界面
+ * @Author： Sim
+ * @Time： 2020/12/11 15:05
+ * @Description： 隐藏界面
  */
 public class HideActivity extends BaseActivity implements CalendarView.OnMonthChangeListener, CalendarView.OnCalendarSelectListener {
 

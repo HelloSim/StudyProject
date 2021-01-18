@@ -14,19 +14,19 @@ import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 
 /**
- * @Auther Sim
- * @Time 2019/4/22 1:05
- * @Description 证书相关
+ * @Author: Sim
+ * @Time： 2019/4/22 1:05
+ * @Description： 证书相关
  */
 public class RxUtils {
     @SuppressLint("TrulyRandom")
     public static SSLSocketFactory createSSLSocketFactory() {
         SSLSocketFactory sSLSocketFactory = null;
         try {
-            SSLContext sc = SSLContext.getInstance( "TLS" );
-            sc.init( null, new TrustManager[]{new TrustAllManager()}, new SecureRandom() );
+            SSLContext sc = SSLContext.getInstance("TLS");
+            sc.init(null, new TrustManager[]{new TrustAllManager()}, new SecureRandom());
             sSLSocketFactory = sc.getSocketFactory();
-        } catch ( Exception ignored ) {
+        } catch (Exception ignored) {
         }
         return sSLSocketFactory;
     }

@@ -24,9 +24,9 @@ import java.util.ArrayList;
 import rx.Subscriber;
 
 /**
- * @Time: 2020/6/9 22:08
- * @Author: HelloSim
- * @Description :显示实时公交位置的页面
+ * @Author： Sim
+ * @Time： 2020/6/9 22:08
+ * @Description： 显示实时公交位置的页面
  */
 public class BusRealTimeActivity extends BaseActivity {
 

@@ -6,9 +6,9 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * @Auther Sim
- * @Time 2020/9/21 23:31
- * @Description 正则表达式工具类
+ * @Author: Sim
+ * @Time： 2020/9/21 23:31
+ * @Description： 正则表达式工具类
  */
 public class RegexUtil {
 

@@ -14,9 +14,9 @@ import com.sim.traveltool.bean.BusRouteDataBean;
 import com.sim.traveltool.ui.view.TitleView;
 
 /**
- * @Auther Sim
- * @Time 2020/11/29 1:12
- * @Description 出行路线的详细方式
+ * @Author： Sim
+ * @Time： 2020/11/29 1:12
+ * @Description： 出行路线的详细方式
  */
 public class BusRouteDetailActivity extends BaseActivity {
 

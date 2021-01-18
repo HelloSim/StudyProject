@@ -15,9 +15,9 @@ import com.sim.baselibrary.R;
 import com.sim.baselibrary.callback.OnMultiClickListener;
 
 /**
- * @Auther Sim
- * @Time 2020/12/22 10:55
- * @Description 自定义dialog
+ * @Author: Sim
+ * @Time： 2020/12/22 10:55
+ * @Description： 自定义dialog
  */
 public class DialogBuilder {
     private Context context;

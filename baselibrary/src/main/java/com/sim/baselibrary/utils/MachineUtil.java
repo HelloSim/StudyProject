@@ -7,9 +7,9 @@ import java.io.IOException;
 import java.lang.reflect.Method;
 
 /**
- * @Auther Sim
- * @Time 2020/9/21 23:31
- * @Description 不常用的几个工具类
+ * @Author: Sim
+ * @Time： 2020/9/21 23:31
+ * @Description： 不常用的几个工具类
  */
 public class MachineUtil {
 

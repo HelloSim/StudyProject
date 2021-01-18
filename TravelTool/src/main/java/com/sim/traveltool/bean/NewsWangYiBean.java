@@ -8,9 +8,9 @@ import java.util.List;
 import cn.bmob.v3.BmobObject;
 
 /**
- * @Auther Sim
- * @Time 2020/4/27 1:05
- * @Description 网易新闻返回的数据bean类
+ * @Author： Sim
+ * @Time： 2020/4/27 1:05
+ * @Description： 网易新闻返回的数据bean类
  */
 public class NewsWangYiBean implements Serializable {
     /**

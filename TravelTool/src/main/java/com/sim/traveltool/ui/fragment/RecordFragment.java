@@ -46,9 +46,9 @@ import cn.bmob.v3.listener.SaveListener;
 import cn.bmob.v3.listener.UpdateListener;
 
 /**
- * @Auther Sim
- * @Time 2020/4/27 1:05
- * @Description “打卡”Fragment
+ * @Author： Sim
+ * @Time： 2020/4/27 1:05
+ * @Description： “打卡”Fragment
  */
 public class RecordFragment extends BaseFragment implements CalendarView.OnMonthChangeListener,
         CalendarView.OnCalendarSelectListener {

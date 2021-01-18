@@ -4,9 +4,9 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
- * @Time: 2020/6/10 23:24
- * @Author: HelloSim
- * @Description :出行路线搜索返回的数据bean类
+ * @Author： HelloSim
+ * @Time： 2020/6/10 23:24
+ * @Description： 出行路线搜索返回的数据bean类
  */
 public class BusRouteDataBean implements Serializable {
 

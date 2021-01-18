@@ -1,9 +1,9 @@
 package com.sim.baselibrary.internet;
 
 /**
- * @Auther Sim
- * @Time 2019/4/22 1:05
- * @Description 自定义异常处理
+ * @Author: Sim
+ * @Time： 2019/4/22 1:05
+ * @Description： 自定义异常处理
  */
 public class APIException extends RuntimeException {
 

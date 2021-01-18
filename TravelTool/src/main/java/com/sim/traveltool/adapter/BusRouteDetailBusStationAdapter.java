@@ -19,9 +19,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @Auther Sim
- * @Time 2020/11/29 15:19
- * @Description
+ * @Author： Sim
+ * @Time： 2020/11/29 15:19
+ * @Description：
  */
 public class BusRouteDetailBusStationAdapter extends BaseAdapter<BusRouteDetailBusStationAdapter.ViewHolder,
         BusRouteDataBean.RouteBean.TransitsBean.SegmentsBean.BusBean.BuslinesBean> {

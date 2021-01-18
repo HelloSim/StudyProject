@@ -4,9 +4,9 @@ import android.view.View;
 import android.widget.EditText;
 
 /**
- * @Auther Sim
- * @Time 2020/12/28 11:39
- * @Description 长按全选文字
+ * @Author: Sim
+ * @Time： 2020/12/28 11:39
+ * @Description： 长按全选文字
  */
 public class SelectAllOnLongClickListener implements View.OnLongClickListener {
 

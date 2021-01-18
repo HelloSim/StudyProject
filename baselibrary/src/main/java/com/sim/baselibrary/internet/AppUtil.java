@@ -6,9 +6,9 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
 /**
- * @Auther Sim
- * @Time 2019/4/22 1:05
- * @Description 联网，SD卡查询
+ * @Author: Sim
+ * @Time： 2019/4/22 1:05
+ * @Description： 联网，SD卡查询
  */
 public class AppUtil {
 
@@ -17,7 +17,7 @@ public class AppUtil {
      */
     public static boolean isNetworkConnected(Context context) {
         if (context != null) {
-            ConnectivityManager mConnectivityManager = (ConnectivityManager) context.getSystemService( Context.CONNECTIVITY_SERVICE );
+            ConnectivityManager mConnectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
             @SuppressLint("MissingPermission") NetworkInfo mNetworkInfo = mConnectivityManager.getActiveNetworkInfo();
             if (mNetworkInfo != null) {
                 return mNetworkInfo.isAvailable();
@@ -40,7 +40,7 @@ public class AppUtil {
     }
 
     public static boolean ExistSDCard() {
-        return android.os.Environment.getExternalStorageState().equals( android.os.Environment.MEDIA_MOUNTED );
+        return android.os.Environment.getExternalStorageState().equals(android.os.Environment.MEDIA_MOUNTED);
     }
 
 }

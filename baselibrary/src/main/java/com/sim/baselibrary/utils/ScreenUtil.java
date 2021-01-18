@@ -17,9 +17,9 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
 /**
- * @author : Times
- * @date : 2019/10/14 16:51
- * @description ：截屏工具类
+ * @Author: Times
+ * @Time： 2019/10/14 16:51
+ * @Description： 截屏工具类
  */
 public class ScreenUtil {
 
@@ -146,7 +146,6 @@ public class ScreenUtil {
 //            getBitmap(mediaProjection);
 //        }
 //    }
-
     public static Point getScreenSize(Context context) {
         WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
         Display display = wm.getDefaultDisplay();

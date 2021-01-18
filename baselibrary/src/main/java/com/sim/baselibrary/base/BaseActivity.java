@@ -30,9 +30,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @Auther Sim
- * @Time 2020/12/9 11:13
- * @Description 封装权限请求、dialog。项目模块BaseActivity继承此类
+ * @Author: Sim
+ * @Time： 2020/12/9 11:13
+ * @Description： 封装权限请求、dialog。项目模块BaseActivity继承此类
  */
 public abstract class BaseActivity extends AppCompatActivity implements View.OnClickListener {
 

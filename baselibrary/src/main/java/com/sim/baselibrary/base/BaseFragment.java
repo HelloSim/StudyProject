@@ -22,9 +22,9 @@ import com.sim.baselibrary.utils.ScreenUtil;
 import com.sim.baselibrary.views.DialogBuilder;
 
 /**
- * @Auther Sim
- * @Time 2020/12/22 11:46
- * @Description 封装dialog。项目模块BaseFragment继承此类
+ * @Author: Sim
+ * @Time： 2020/12/22 11:46
+ * @Description： 封装dialog。项目模块BaseFragment继承此类
  */
 public abstract class BaseFragment extends Fragment implements View.OnClickListener {
 
@@ -222,7 +222,7 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
     public PopupWindow showPopupWindow(View view, int pupDPWidth, int pupDPHeight) {
         PopupWindow popupWindow = new PopupWindow(getContext());
         popupWindow.setContentView(view);//设置主体布局
-        popupWindow.setWidth(ScreenUtil.dip2px(getContext(),  pupDPWidth));//宽度
+        popupWindow.setWidth(ScreenUtil.dip2px(getContext(), pupDPWidth));//宽度
         popupWindow.setHeight(ScreenUtil.dip2px(getContext(), pupDPHeight));//高度
         popupWindow.setFocusable(true);
         popupWindow.setBackgroundDrawable(new BitmapDrawable());//设置空白背景

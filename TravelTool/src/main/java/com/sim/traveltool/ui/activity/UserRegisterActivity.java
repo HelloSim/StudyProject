@@ -25,9 +25,9 @@ import cn.bmob.v3.listener.SaveListener;
 import cn.bmob.v3.listener.UpdateListener;
 
 /**
- * @Auther Sim
- * @Time 2020/4/29 1:05
- * @Description 用户注册页面
+ * @Author： Sim
+ * @Time： 2020/4/29 1:05
+ * @Description： 用户注册页面
  */
 public class UserRegisterActivity extends BaseActivity {
 
