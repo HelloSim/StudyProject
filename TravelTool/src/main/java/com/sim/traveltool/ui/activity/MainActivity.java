@@ -22,11 +22,13 @@ import com.sim.baselibrary.utils.LogUtil;
 import com.sim.baselibrary.utils.SPUtil;
 import com.sim.baselibrary.utils.ToastUtil;
 import com.sim.traveltool.AppHelper;
+import com.sim.traveltool.BuildConfig;
 import com.sim.traveltool.R;
 import com.sim.traveltool.db.bean.User;
 import com.sim.traveltool.ui.fragment.BusFragment;
 import com.sim.traveltool.ui.fragment.RecordFragment;
 import com.sim.traveltool.ui.fragment.WangyiFragment;
+import com.tencent.bugly.crashreport.CrashReport;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -40,7 +42,6 @@ public class MainActivity extends BaseActivity {
 
     private DrawerLayout drawerLayout;
 
-    private RadioGroup rgBottomBar;
     private RadioButton rbBottomBarBus;
     private RadioButton rbBottomBarWangyi;
     private RadioButton rbBottomBarRecord;
@@ -76,7 +77,6 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void bindViews(Bundle savedInstanceState) {
         drawerLayout = findViewById(R.id.dl_drawer);
-        rgBottomBar = findViewById(R.id.rg_bottom_bar);
         rbBottomBarBus = findViewById(R.id.rb_bottom_bar_bus);
         rbBottomBarWangyi = findViewById(R.id.rb_bottom_bar_wangyi);
         rbBottomBarRecord = findViewById(R.id.rb_bottom_bar_record);
@@ -84,11 +84,7 @@ public class MainActivity extends BaseActivity {
         rlUserCollect = findViewById(R.id.rl_user_collect);
         rlUserSetting = findViewById(R.id.rl_user_setting);
         tvUserName = findViewById(R.id.tv_user_name);
-        setViewClick(rlUser, rlUserCollect);
-        rbBottomBarBus.setOnClickListener(this);
-        rbBottomBarWangyi.setOnClickListener(this);
-        rbBottomBarRecord.setOnClickListener(this);
-        rlUserSetting.setOnClickListener(this);
+        setViewClick(rlUser, rlUserCollect, rlUserSetting, rbBottomBarBus, rbBottomBarWangyi, rbBottomBarRecord);
     }
 
     @Override
@@ -136,29 +132,16 @@ public class MainActivity extends BaseActivity {
             } else {
                 ToastUtil.toast(this, "未登录");
             }
+        } else if (view == rlUserSetting) {
+            clickMark();
+        } else if (view == rbBottomBarBus) {
+            showFragment(1);
+        } else if (view == rbBottomBarWangyi) {
+            showFragment(2);
+        } else if (view == rbBottomBarRecord) {
+            showFragment(3);
         } else {
             super.onMultiClick(view);
-        }
-    }
-
-    @Override
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.rb_bottom_bar_bus:
-                showFragment(1);
-                break;
-            case R.id.rb_bottom_bar_wangyi:
-                showFragment(2);
-                break;
-            case R.id.rb_bottom_bar_record:
-                showFragment(3);
-                break;
-            case R.id.rl_user_setting:
-                clickMark();
-                break;
-            default:
-                super.onClick(view);
-                break;
         }
     }
 
@@ -245,7 +228,7 @@ public class MainActivity extends BaseActivity {
      */
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onMessageEvent(EventMessage eventMessage) {
-        if (eventMessage.type == AppHelper.USER_IsLogIn){
+        if (eventMessage.type == AppHelper.USER_IsLogIn) {
             user = BmobUser.getCurrentUser(User.class);
             User.fetchUserInfo();
             tvUserName.setText(user.getUsername());
