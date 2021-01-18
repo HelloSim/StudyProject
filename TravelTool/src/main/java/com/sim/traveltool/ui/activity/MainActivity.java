@@ -123,7 +123,7 @@ public class MainActivity extends BaseActivity {
     @Override
     public void onMultiClick(View view) {
         if (view == rlUser) {
-            drawerLayout.close();
+            drawerLayout.closeDrawers();
             if (user != null) {
                 startActivity(new Intent(this, UserInfoActivity.class));
             } else {
@@ -131,7 +131,7 @@ public class MainActivity extends BaseActivity {
             }
         } else if (view == rlUserCollect) {
             if (user != null) {
-                drawerLayout.close();
+                drawerLayout.closeDrawers();
                 startActivity(new Intent(this, NewsCollectActivity.class));
             } else {
                 ToastUtil.toast(this, "未登录");

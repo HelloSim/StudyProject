@@ -15,13 +15,12 @@
         android:padding="20dp"
         android:visibility="visible">
 
-        <com.google.android.material.imageview.ShapeableImageView
+        <com.sim.baselibrary.views.CustomImageView.CustomImageView
             android:id="@+id/user_image_default"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:padding="1dp"
-            android:src="@mipmap/ic_launcher"
-            app:shapeAppearanceOverlay="@style/circleImageStyle" />
+            app:src="@mipmap/photo"
+            app:type="circle"/>
 
         <ImageView
             android:layout_width="20dp"

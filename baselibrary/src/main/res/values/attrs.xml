@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="CustomImageView">
+        <attr name="src" />
+        <attr name="type" />
+        <attr name="borderRadius" />
+        <attr name="url_src" />
+    </declare-styleable>
+    <attr name="src" format="reference" />
+    <attr name="type">
+        <enum name="circle" value="0" /><!--圆形-->
+        <enum name="round" value="1" /><!--圆角-->
+        <enum name="url" value="2" /><!--网络图片-->
+        <enum name="circle_url" value="3" /><!--圆形网络图片-->
+        <enum name="round_url" value="4" /><!--圆角网络图片-->
+    </attr>
+    <attr name="borderRadius" format="dimension" />
+    <attr name="url_src" format="string" />
+
+</resources>
