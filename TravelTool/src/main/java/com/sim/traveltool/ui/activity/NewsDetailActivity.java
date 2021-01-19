@@ -12,7 +12,7 @@ import android.webkit.WebViewClient;
 import com.sim.baselibrary.base.BaseActivity;
 import com.sim.traveltool.R;
 import com.sim.traveltool.bean.NewsWangYiBean;
-import com.sim.traveltool.db.bean.User;
+import com.sim.traveltool.bean.db.User;
 import com.sim.traveltool.ui.view.TitleView;
 
 import java.util.List;

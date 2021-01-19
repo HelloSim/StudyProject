@@ -1,4 +1,4 @@
-package com.sim.traveltool.db.bean;
+package com.sim.traveltool.bean.db;
 
 import com.bin.david.form.annotation.SmartColumn;
 import com.bin.david.form.annotation.SmartTable;

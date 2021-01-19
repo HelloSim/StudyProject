@@ -1,4 +1,4 @@
-package com.sim.traveltool.db.bean;
+package com.sim.traveltool.bean.db;
 
 import com.sim.baselibrary.utils.LogUtil;
 
@@ -23,8 +23,6 @@ public class User extends BmobUser {
 
     public User() {
     }
-
-
 
     /**
      * 同步控制台数据到缓存中

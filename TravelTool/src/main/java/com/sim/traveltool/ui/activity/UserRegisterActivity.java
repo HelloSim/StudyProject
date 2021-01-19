@@ -14,7 +14,7 @@ import com.sim.baselibrary.utils.LogUtil;
 import com.sim.baselibrary.utils.RegexUtil;
 import com.sim.baselibrary.utils.ToastUtil;
 import com.sim.traveltool.R;
-import com.sim.traveltool.db.bean.User;
+import com.sim.traveltool.bean.db.User;
 import com.sim.traveltool.ui.view.TitleView;
 
 import cn.bmob.v3.BmobSMS;

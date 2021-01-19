@@ -9,11 +9,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.sim.baselibrary.base.BaseActivity;
 import com.sim.baselibrary.callback.ItemClickSupport;
-import com.sim.baselibrary.callback.OnMultiClickListener;
 import com.sim.traveltool.R;
 import com.sim.traveltool.adapter.NewsAdapter;
 import com.sim.traveltool.bean.NewsWangYiBean;
-import com.sim.traveltool.db.bean.User;
+import com.sim.traveltool.bean.db.User;
 import com.sim.traveltool.ui.view.TitleView;
 
 import java.io.Serializable;

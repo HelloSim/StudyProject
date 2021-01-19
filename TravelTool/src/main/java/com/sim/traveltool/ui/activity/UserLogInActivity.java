@@ -21,7 +21,7 @@ import com.sim.baselibrary.utils.SPUtil;
 import com.sim.baselibrary.utils.ToastUtil;
 import com.sim.traveltool.AppHelper;
 import com.sim.traveltool.R;
-import com.sim.traveltool.db.bean.User;
+import com.sim.traveltool.bean.db.User;
 import com.sim.traveltool.ui.view.TitleView;
 
 import org.greenrobot.eventbus.EventBus;

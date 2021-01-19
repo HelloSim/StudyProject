@@ -1,6 +1,6 @@
 package com.sim.traveltool.bean;
 
-import com.sim.traveltool.db.bean.User;
+import com.sim.traveltool.bean.db.User;
 
 import java.io.Serializable;
 import java.util.List;

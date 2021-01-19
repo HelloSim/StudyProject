@@ -24,8 +24,8 @@ import com.sim.baselibrary.utils.TimeUtil;
 import com.sim.baselibrary.utils.ToastUtil;
 import com.sim.traveltool.AppHelper;
 import com.sim.traveltool.R;
-import com.sim.traveltool.db.bean.RecordBean;
-import com.sim.traveltool.db.bean.User;
+import com.sim.traveltool.bean.db.RecordBean;
+import com.sim.traveltool.bean.db.User;
 import com.sim.traveltool.ui.activity.RecordAllActivity;
 import com.sim.traveltool.ui.view.TitleView;
 
