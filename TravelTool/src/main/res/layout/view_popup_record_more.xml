@@ -6,7 +6,7 @@
     android:background="@drawable/popup_layout_bg_black"
     android:gravity="center"
     android:orientation="vertical"
-    android:padding="10dp">
+    android:padding="5dp">
 
     <Button
         android:id="@+id/all_record"
@@ -16,7 +16,7 @@
     <Button
         android:id="@+id/btn_updata_other"
         style="@style/buttonStyle"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:text="添加备忘" />
 
 </LinearLayout>

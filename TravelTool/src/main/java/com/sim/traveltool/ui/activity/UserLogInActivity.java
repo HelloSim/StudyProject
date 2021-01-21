@@ -81,7 +81,7 @@ public class UserLogInActivity extends BaseActivity {
 
             @Override
             public void right(View right) {
-                morePopupWindow.showAsDropDown(right, 0, 0);
+                morePopupWindow.showAsDropDown(titleView, titleView.getWidth(), 0);
             }
         });
     }
@@ -96,7 +96,7 @@ public class UserLogInActivity extends BaseActivity {
         LayoutInflater inflater = (LayoutInflater) getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
         moreLayout = inflater.inflate(R.layout.view_popup_login_more, null);
 
-        morePopupWindow = showPopupWindow(moreLayout, 150, 100);
+        morePopupWindow = showPopupWindow(moreLayout, 120, 70);
         btnRegistered = moreLayout.findViewById(R.id.btn_registered);
         setViewClick(btnRegistered);
     }

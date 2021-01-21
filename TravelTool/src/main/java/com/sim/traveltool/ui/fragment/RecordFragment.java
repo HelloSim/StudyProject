@@ -29,7 +29,6 @@ import com.sim.traveltool.bean.db.User;
 import com.sim.traveltool.ui.activity.RecordAllActivity;
 import com.sim.traveltool.ui.view.TitleView;
 
-import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
@@ -97,7 +96,7 @@ public class RecordFragment extends BaseFragment implements CalendarView.OnMonth
         titleView.setRightClickListener(new TitleView.RightClickListener() {
             @Override
             public void onClick(View leftView) {
-                morePopupWindow.showAsDropDown(leftView, 0, 0);
+                morePopupWindow.showAsDropDown(titleView, titleView.getWidth(), 0);
             }
         });
 
@@ -127,7 +126,7 @@ public class RecordFragment extends BaseFragment implements CalendarView.OnMonth
         LayoutInflater inflater = (LayoutInflater) getActivity().getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
         moreLayout = inflater.inflate(R.layout.view_popup_record_more, null);
         otherLayout = inflater.inflate(R.layout.view_popup_add_other, null);
-        morePopupWindow = showPopupWindow(moreLayout, 150, 150);
+        morePopupWindow = showPopupWindow(moreLayout, 130, 130);
         otherPopupWindow = showPopupWindow(otherLayout, 300, 180);
         btnAllRecord = moreLayout.findViewById(R.id.all_record);
         btnOther = moreLayout.findViewById(R.id.btn_updata_other);
@@ -139,7 +138,6 @@ public class RecordFragment extends BaseFragment implements CalendarView.OnMonth
 
     @Override
     protected void initData() {
-        EventBus.getDefault().register(this);
     }
 
     @Override

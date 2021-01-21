@@ -6,7 +6,7 @@
     android:background="@drawable/popup_layout_bg_black"
     android:gravity="center"
     android:orientation="vertical"
-    android:padding="10dp">
+    android:padding="5dp">
 
     <Button
         android:id="@+id/btn_registered"
