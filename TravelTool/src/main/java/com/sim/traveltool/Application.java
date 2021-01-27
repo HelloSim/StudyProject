@@ -2,6 +2,7 @@ package com.sim.traveltool;
 
 import android.content.Context;
 
+import androidx.multidex.BuildConfig;
 import androidx.multidex.MultiDex;
 
 import com.sim.baselibrary.utils.CrashHandler;

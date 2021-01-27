@@ -29,6 +29,7 @@ import com.sim.traveltool.bean.db.User;
 import com.sim.traveltool.ui.activity.RecordAllActivity;
 import com.sim.traveltool.ui.view.TitleView;
 
+import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
@@ -76,6 +77,11 @@ public class RecordFragment extends BaseFragment implements CalendarView.OnMonth
     private Button btnCancel;
     private Button btnConfirm;
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+    }
 
     @Override
     protected int getLayoutRes() {
@@ -111,8 +117,9 @@ public class RecordFragment extends BaseFragment implements CalendarView.OnMonth
     @Override
     protected void initView(View view) {
         tvNowMonth.setText(calendarView.getSelectedCalendar().getYear() + "-" + calendarView.getSelectedCalendar().getMonth());
-        if (SPUtil.contains(getContext(), AppHelper.userSpName, AppHelper.userSpStateKey) &&
-                ((boolean) SPUtil.get(getContext(), AppHelper.userSpName, AppHelper.userSpStateKey, false)) && BmobUser.isLogin()) {
+        if (SPUtil.contains(getContext(), AppHelper.userSpName, AppHelper.userSpStateKey)
+                && ((boolean) SPUtil.get(getContext(), AppHelper.userSpName, AppHelper.userSpStateKey, false))
+                && BmobUser.isLogin()) {
             user = BmobUser.getCurrentUser(User.class);
         }
         if (user == null) {
