@@ -21,11 +21,14 @@ import com.sim.baselibrary.utils.LogUtil;
 import com.sim.baselibrary.utils.SPUtil;
 import com.sim.baselibrary.utils.ToastUtil;
 import com.sim.traveltool.AppHelper;
+import com.sim.traveltool.Application;
 import com.sim.traveltool.R;
 import com.sim.traveltool.bean.db.User;
 import com.sim.traveltool.ui.fragment.BusFragment;
 import com.sim.traveltool.ui.fragment.RecordFragment;
 import com.sim.traveltool.ui.fragment.WangyiFragment;
+import com.tencent.bugly.beta.Beta;
+import com.tencent.bugly.beta.UpgradeInfo;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -50,6 +53,7 @@ public class MainActivity extends BaseActivity {
 
     private RelativeLayout rlUser;
     private RelativeLayout rlUserCollect;
+    private RelativeLayout rlUpdateVersion;
     private RelativeLayout rlUserSetting;
     private TextView tvUserName;
 
@@ -84,9 +88,10 @@ public class MainActivity extends BaseActivity {
         rbBottomBarRecord = findViewById(R.id.rb_bottom_bar_record);
         rlUser = findViewById(R.id.rl_user);
         rlUserCollect = findViewById(R.id.rl_user_collect);
+        rlUpdateVersion = findViewById(R.id.rl_update_version);
         rlUserSetting = findViewById(R.id.rl_user_setting);
         tvUserName = findViewById(R.id.tv_user_name);
-        setViewClick(rlUser, rlUserCollect, rlUserSetting, rbBottomBarBus, rbBottomBarWangyi, rbBottomBarRecord);
+        setViewClick(rlUser, rlUserCollect, rlUpdateVersion, rlUserSetting, rbBottomBarBus, rbBottomBarWangyi, rbBottomBarRecord);
     }
 
     @Override
@@ -134,6 +139,11 @@ public class MainActivity extends BaseActivity {
             } else {
                 ToastUtil.toast(this, "未登录");
             }
+        } else if (view == rlUpdateVersion) {
+            if (!Application.getIsDebug()) {
+                Beta.checkAppUpgrade();
+                loadUpgradeInfo();
+            }
         } else if (view == rlUserSetting) {
             clickMark();
         } else if (view == rbBottomBarBus) {
@@ -145,6 +155,14 @@ public class MainActivity extends BaseActivity {
         } else {
             super.onMultiClick(view);
         }
+    }
+
+    private void loadUpgradeInfo() {
+        UpgradeInfo upgradeInfo = Beta.getUpgradeInfo();
+        if (upgradeInfo == null) {
+            return;
+        }
+        LogUtil.d(getClass(), "最新版本: " + upgradeInfo.versionName);
     }
 
     /**

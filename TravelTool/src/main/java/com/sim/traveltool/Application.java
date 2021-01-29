@@ -1,8 +1,8 @@
 package com.sim.traveltool;
 
 import android.content.Context;
+import android.content.pm.ApplicationInfo;
 
-import androidx.multidex.BuildConfig;
 import androidx.multidex.MultiDex;
 
 import com.sim.baselibrary.utils.CrashHandler;
@@ -20,26 +20,32 @@ import cn.jpush.android.api.JPushInterface;
  */
 public class Application extends android.app.Application {
 
-    public static Context context;
+    private static Context context;
+    private static Boolean isDebug = null;
 
     @Override
     public void onCreate() {
         super.onCreate();
         context = getApplicationContext();
-
-        //自定义奔溃处理类初始化
-        CrashHandler.getInstance().init(getApplicationContext());
+        isDebug = context.getApplicationInfo() != null &&
+                (context.getApplicationInfo().flags & ApplicationInfo.FLAG_DEBUGGABLE) != 0;
 
         APIFactory.getInstance().init(this);
 
-        //Bugly初始化
-        if (!BuildConfig.DEBUG) {
-            Bugly.init(this, AppHelper.Bugly_APPID, false);
-            Beta.checkUpgrade(false,false);
-        }
+        if (!isDebug) {
+            CrashHandler.getInstance().init(getApplicationContext());//自定义奔溃处理类初始化
 
+            //Bugly初始化
+            Bugly.init(this, AppHelper.Bugly_APPID, false);
+            Beta.autoInit = true;//启动自动初始化升级模块
+            Beta.autoCheckUpgrade = true;//自动检查升级
+            Beta.upgradeCheckPeriod = 1000 * 60;//设置升级检查周期为60s
+            Beta.initDelay = 1000 * 5;//设置启动延迟为1s
+
+            //JPush设置DebugMode
+            JPushInterface.setDebugMode(false);
+        }
         //JPush初始化
-        JPushInterface.setDebugMode(BuildConfig.DEBUG);
         JPushInterface.init(this);
 
         //Bmob初始化
@@ -55,6 +61,10 @@ public class Application extends android.app.Application {
 
     public static Context getMyApplicationContext() {
         return context;
+    }
+
+    public static Boolean getIsDebug() {
+        return isDebug;
     }
 
 }
