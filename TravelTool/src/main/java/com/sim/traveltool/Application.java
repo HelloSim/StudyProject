@@ -6,6 +6,7 @@ import android.content.pm.ApplicationInfo;
 import androidx.multidex.MultiDex;
 
 import com.sim.baselibrary.utils.CrashHandler;
+import com.sim.baselibrary.utils.LogUtil;
 import com.sim.traveltool.internet.APIFactory;
 import com.tencent.bugly.Bugly;
 import com.tencent.bugly.beta.Beta;
@@ -29,27 +30,23 @@ public class Application extends android.app.Application {
         context = getApplicationContext();
         isDebug = context.getApplicationInfo() != null &&
                 (context.getApplicationInfo().flags & ApplicationInfo.FLAG_DEBUGGABLE) != 0;
+        LogUtil.d(getClass(), isDebug ? "DeBug模式" : "Release版本");
+
+
+        CrashHandler.getInstance().init(context);//自定义奔溃处理类初始化
+
+        Bugly.init(this, AppHelper.Bugly_APPID, isDebug);//Bugly初始化
+//        Beta.autoInit = true;//启动自动初始化升级模块
+//        Beta.autoCheckUpgrade = true;//自动检查升级
+//        Beta.upgradeCheckPeriod = 1000 * 60;//设置升级检查周期为60s
+//        Beta.initDelay = 1000 * 5;//设置启动延迟为5s
+
+        JPushInterface.setDebugMode(isDebug);//JPush设置DebugMode
+        JPushInterface.init(this);//JPush初始化
+
+        Bmob.initialize(this, AppHelper.Bmob_ApplicationID);//Bmob初始化
 
         APIFactory.getInstance().init(this);
-
-        if (!isDebug) {
-            CrashHandler.getInstance().init(getApplicationContext());//自定义奔溃处理类初始化
-
-            //Bugly初始化
-            Bugly.init(this, AppHelper.Bugly_APPID, false);
-            Beta.autoInit = true;//启动自动初始化升级模块
-            Beta.autoCheckUpgrade = true;//自动检查升级
-            Beta.upgradeCheckPeriod = 1000 * 60;//设置升级检查周期为60s
-            Beta.initDelay = 1000 * 5;//设置启动延迟为1s
-
-            //JPush设置DebugMode
-            JPushInterface.setDebugMode(false);
-        }
-        //JPush初始化
-        JPushInterface.init(this);
-
-        //Bmob初始化
-        Bmob.initialize(this, AppHelper.Bmob_ApplicationID);
     }
 
     @Override

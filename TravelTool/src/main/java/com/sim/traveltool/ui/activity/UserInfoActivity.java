@@ -44,19 +44,15 @@ public class UserInfoActivity extends BaseActivity {
     private TitleView titleView;
     private LinearLayout parent;
 
-    private RelativeLayout rlUserName;
-    private RelativeLayout rlPassword;
-    private RelativeLayout rlMobilePhoneNumber;
+    private RelativeLayout rlUserName,rlPassword,rlMobilePhoneNumber;
 
-    private TextView tvUserName;
-    private TextView tvMobilePhoneNumber;
+    private TextView tvUserName,tvMobilePhoneNumber;
     private Button btnLogOut;
 
     private PopupWindow updateUserNamePopupWindow;//弹窗
     private View updateUserNameLayout;//布局
     private EditText etNewUserName;
-    private Button btnUserNameCancel;
-    private Button btnUserNameConfirm;
+    private Button btnUserNameCancel,btnUserNameConfirm;
 
     @Override
     protected int getLayoutRes() {

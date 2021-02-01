@@ -17,31 +17,31 @@ public class LogUtil {
      */
     public static void v(Class className, String msg) {
         if (BuildConfig.DEBUG) {
-            Log.v("Sim_" + className.getSimpleName(), msg);
+            Log.v("【【【Sim_" + className.getSimpleName() + "】】】", msg);
         }
     }
 
     public static void d(Class className, String msg) {
         if (BuildConfig.DEBUG) {
-            Log.d("Sim_" + className.getSimpleName(), msg);
+            Log.d("【【【Sim_" + className.getSimpleName() + "】】】", msg);
         }
     }
 
     public static void i(Class className, String msg) {
         if (BuildConfig.DEBUG) {
-            Log.i("Sim_" + className.getSimpleName(), msg);
+            Log.i("【【【Sim_" + className.getSimpleName() + "】】】", msg);
         }
     }
 
     public static void w(Class className, String msg) {
         if (BuildConfig.DEBUG) {
-            Log.w("Sim_" + className.getSimpleName(), msg);
+            Log.w("【【【Sim_" + className.getSimpleName() + "】】】", msg);
         }
     }
 
     public static void e(Class className, String msg) {
         if (BuildConfig.DEBUG) {
-            Log.e("Sim_" + className.getSimpleName(), msg);
+            Log.e("【【【Sim_" + className.getSimpleName() + "】】】", msg);
         }
     }
 

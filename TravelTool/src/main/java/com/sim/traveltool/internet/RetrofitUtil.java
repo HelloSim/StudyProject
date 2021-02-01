@@ -1,10 +1,12 @@
 package com.sim.traveltool.internet;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 
 import com.sim.baselibrary.bean.HttpResult;
 import com.sim.baselibrary.internet.APIException;
-import com.sim.baselibrary.internet.AppUtil;
 import com.sim.baselibrary.internet.RxUtils;
 import com.sim.baselibrary.utils.LogUtil;
 import com.sim.traveltool.AppHelper;
@@ -35,7 +37,7 @@ import rx.schedulers.Schedulers;
  */
 public class RetrofitUtil {
 
-    private NewsAPIService userAPIService;
+    private NewsAPIService wangyiAPIService;
     private BusAPIService busAPIService;
     private RouteAPIService routeAPIService;
 
@@ -58,11 +60,11 @@ public class RetrofitUtil {
         this.isUseCache = useCache;
     }
 
-    public NewsAPIService getUserApiService() {
-        if (userAPIService == null && userRetrofit != null) {
-            userAPIService = userRetrofit.create(NewsAPIService.class);
+    public NewsAPIService getWangyiApiService() {
+        if (wangyiAPIService == null && userRetrofit != null) {
+            wangyiAPIService = userRetrofit.create(NewsAPIService.class);
         }
-        return userAPIService;
+        return wangyiAPIService;
     }
 
     public BusAPIService getBusAPIService() {
@@ -83,7 +85,7 @@ public class RetrofitUtil {
         this.mContext = context;
         initOKHttp();
         initRetrofit();
-        getUserApiService();
+        getWangyiApiService();
         getBusAPIService();
         getRouteAPIService();
     }
@@ -94,22 +96,20 @@ public class RetrofitUtil {
     private void initOKHttp() {
         // 缓存 http://www.jianshu.com/p/93153b34310e
         OkHttpClient.Builder builder = new OkHttpClient.Builder();
-        File cacheFile = new File(AppUtil.getCacheDir(mContext), "httpCache");
+        File cacheFile = new File(getCacheDir(mContext), "httpCache");
         Cache cache = new Cache(cacheFile, 1024 * 1024 * 50);
         Interceptor cacheInterceptor = new Interceptor() {
             @Override
             public Response intercept(Chain chain) throws IOException {
                 Request request = chain.request();
-                if (!AppUtil.isNetworkConnected(mContext) || isUseCache) {//如果网络不可用或者设置只用网络
+                if (!isNetworkConnected(mContext) || isUseCache) {//如果网络不可用或者设置只用网络
                     request = request.newBuilder().cacheControl(CacheControl.FORCE_CACHE).build();
                     LogUtil.d(getClass(), "网络不可用请求拦截");
-                } else if (AppUtil.isNetworkConnected(mContext) && !isUseCache) {//网络可用
+                } else if (isNetworkConnected(mContext) && !isUseCache) {//网络可用
                     request = request.newBuilder().cacheControl(CacheControl.FORCE_NETWORK).build();
-                    LogUtil.d(getClass(), "网络可用请求拦截");
                 }
                 Response response = chain.proceed(request);
-                if (AppUtil.isNetworkConnected(mContext)) {//如果网络可用
-                    LogUtil.d(getClass(), "网络可用响应拦截");
+                if (isNetworkConnected(mContext)) {//如果网络可用
                     response = response.newBuilder()
 //                            //移除旧的
 //                            .removeHeader("User-Agent")
@@ -133,6 +133,7 @@ public class RetrofitUtil {
         builder.connectTimeout(15, TimeUnit.SECONDS);
         //忽略证书
         builder.sslSocketFactory(RxUtils.createSSLSocketFactory());
+        //
         builder.readTimeout(20, TimeUnit.SECONDS);
         builder.writeTimeout(20, TimeUnit.SECONDS);
         //错误重连
@@ -150,11 +151,42 @@ public class RetrofitUtil {
     }
 
     /**
+     * 只关注是否联网
+     */
+    public static boolean isNetworkConnected(Context context) {
+        if (context != null) {
+            ConnectivityManager mConnectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+            @SuppressLint("MissingPermission") NetworkInfo mNetworkInfo = mConnectivityManager.getActiveNetworkInfo();
+            if (mNetworkInfo != null) {
+                return mNetworkInfo.isAvailable();
+            }
+        }
+        return false;
+    }
+
+    /**
+     * 如果存在SD卡则将缓存写入SD卡,否则写入手机内存
+     */
+    public static String getCacheDir(Context context) {
+        String cacheDir;
+        if (context.getExternalCacheDir() != null && ExistSDCard()) {
+            cacheDir = context.getExternalCacheDir().toString();
+        } else {
+            cacheDir = context.getCacheDir().toString();
+        }
+        return cacheDir;
+    }
+
+    public static boolean ExistSDCard() {
+        return android.os.Environment.getExternalStorageState().equals(android.os.Environment.MEDIA_MOUNTED);
+    }
+
+    /**
      * 初始化Retrofit
      */
     private void initRetrofit() {
         userRetrofit = new Retrofit.Builder()
-                .baseUrl(AppHelper.USER_BASE_URL)
+                .baseUrl(AppHelper.WANGYI_BASE_URL)
                 .client(okHttpClient)
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())

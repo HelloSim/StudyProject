@@ -34,11 +34,10 @@ public class BusRouteActivity extends BaseActivity {
     private TextView tvFromAndToLocation;
     private RecyclerView rlLocationList;
 
-    private String tvStartLocation;//要显示的起始位置
-    private String tvEndLocation;//要显示的终点位置
-    private String origin;//用作请求的起始位置
-    private String destination;//用作请求的终点位置
-
+    private String tvStartLocation,//要显示的起始位置
+            tvEndLocation,//要显示的终点位置
+            origin,//用作请求的起始位置
+            destination;//用作请求的终点位置
 
     private BusLocationDesignatedDataBean busLocationDesignatedDataBean;
     private ArrayList<BusRouteDataBean.RouteBean.TransitsBean> routeDataList = new ArrayList<>();

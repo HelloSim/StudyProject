@@ -21,7 +21,6 @@ import com.sim.baselibrary.utils.LogUtil;
 import com.sim.baselibrary.utils.SPUtil;
 import com.sim.baselibrary.utils.ToastUtil;
 import com.sim.traveltool.AppHelper;
-import com.sim.traveltool.Application;
 import com.sim.traveltool.R;
 import com.sim.traveltool.bean.db.User;
 import com.sim.traveltool.ui.fragment.BusFragment;
@@ -47,14 +46,9 @@ public class MainActivity extends BaseActivity {
 
     private DrawerLayout drawerLayout;
 
-    private RadioButton rbBottomBarBus;
-    private RadioButton rbBottomBarWangyi;
-    private RadioButton rbBottomBarRecord;
+    private RadioButton rbBottomBarBus, rbBottomBarWangyi, rbBottomBarRecord;
 
-    private RelativeLayout rlUser;
-    private RelativeLayout rlUserCollect;
-    private RelativeLayout rlUpdateVersion;
-    private RelativeLayout rlUserSetting;
+    private RelativeLayout rlUser, rlUserCollect, rlUpdateVersion, rlUserSetting;
     private TextView tvUserName;
 
     private BusFragment busFragment;
@@ -115,7 +109,7 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-        rbBottomBarBus.performClick();
+        rbBottomBarWangyi.performClick();
         if (user != null) {
             tvUserName.setText(user.getUsername());
         } else {
@@ -140,10 +134,8 @@ public class MainActivity extends BaseActivity {
                 ToastUtil.toast(this, "未登录");
             }
         } else if (view == rlUpdateVersion) {
-            if (!Application.getIsDebug()) {
-                Beta.checkAppUpgrade();
-                loadUpgradeInfo();
-            }
+//            Beta.checkAppUpgrade();
+//            loadUpgradeInfo();
         } else if (view == rlUserSetting) {
             clickMark();
         } else if (view == rbBottomBarBus) {

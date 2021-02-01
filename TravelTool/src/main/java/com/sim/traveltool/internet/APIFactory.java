@@ -31,6 +31,15 @@ public class APIFactory extends RetrofitUtil {
     }
 
     /**
+     * NewsData的网络请求
+     */
+    public void getWangYiNew(Subscriber<NewsWangYiBean> subscriber, String page, String count) {
+        Observable observable = getWangyiApiService().getWangYiNews(page, count);
+        toSubscribe(observable, subscriber);
+    }
+
+
+    /**
      * 搜索位置的网络请求
      */
     public void getStartOrEndLocation(Subscriber<BusLocationDataBean> subscriber, String keywords) {
@@ -84,15 +93,6 @@ public class APIFactory extends RetrofitUtil {
      */
     public void getBusListOnRoad(Subscriber<BusRealTimeDataBean> subscriber, String handlerName, String lineName, String fromStation, String time) {
         Observable observable = getBusAPIService().getBusListOnRoad(handlerName, lineName, fromStation, time);
-        toSubscribe(observable, subscriber);
-    }
-
-
-    /**
-     * NewsData的网络请求
-     */
-    public void getWangYiNew(Subscriber<NewsWangYiBean> subscriber, String page, String count) {
-        Observable observable = getUserApiService().getWangYiNews(page, count);
         toSubscribe(observable, subscriber);
     }
 

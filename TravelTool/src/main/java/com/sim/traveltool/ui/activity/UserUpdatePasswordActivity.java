@@ -38,25 +38,13 @@ public class UserUpdatePasswordActivity extends BaseActivity {
 
     private TitleView titleView;
     private LinearLayout parent;
-    private RelativeLayout rlUpdatePasswordByOld;
-    private RelativeLayout rlResetPasswordByPhone;
+    private RelativeLayout rlUpdatePasswordByOld, rlResetPasswordByPhone;
 
-    //修改密码弹窗
-    private PopupWindow updatePasswordPopupWindow;//弹窗
-    private View updatePasswordLayout;//布局
-    private EditText etOldPassword;
-    private EditText etNewPassword;
-    private EditText etNewPasswordAgain;
-    private Button btnPasswordCancel;
-    private Button btnPasswordConfirm;
-
-    //验证码重置密码弹窗
-    private PopupWindow resetPasswordPopupWindow;//弹窗
-    private View resetPasswordLayout;//布局
-    private EditText etSMSCode;
-    private EditText etNewPasswordPhone;
-    private Button btnPasswordPhoneCancel;
-    private Button btnPasswordPhoneConfirm;
+    //修改密码弹窗、验证码重置密码弹窗
+    private PopupWindow updatePasswordPopupWindow, resetPasswordPopupWindow;//弹窗
+    private View updatePasswordLayout, resetPasswordLayout;//布局
+    private EditText etOldPassword, etNewPassword, etNewPasswordAgain, etSMSCode, etNewPasswordPhone;
+    private Button btnPasswordCancel, btnPasswordConfirm, btnPasswordPhoneCancel, btnPasswordPhoneConfirm;
 
     @Override
     protected int getLayoutRes() {
@@ -176,7 +164,7 @@ public class UserUpdatePasswordActivity extends BaseActivity {
                     @Override
                     public void success(Object... values) {
                         resetPasswordPopupWindow.dismiss();
-                     }
+                    }
 
                     @Override
                     public void fail(Object... values) {

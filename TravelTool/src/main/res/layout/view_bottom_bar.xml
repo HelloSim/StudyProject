@@ -12,16 +12,16 @@
         android:orientation="horizontal">
 
         <RadioButton
-            android:id="@+id/rb_bottom_bar_bus"
-            style="@style/MainActivityBottomNavigationRadioButtonStyle"
-            android:drawableTop="@drawable/main_bottom_bar_bus_img"
-            android:text="出行" />
-
-        <RadioButton
             android:id="@+id/rb_bottom_bar_wangyi"
             style="@style/MainActivityBottomNavigationRadioButtonStyle"
             android:drawableTop="@drawable/main_bottom_bar_wangyi_img"
             android:text="网易" />
+
+        <RadioButton
+            android:id="@+id/rb_bottom_bar_bus"
+            style="@style/MainActivityBottomNavigationRadioButtonStyle"
+            android:drawableTop="@drawable/main_bottom_bar_bus_img"
+            android:text="出行" />
 
         <RadioButton
             android:id="@+id/rb_bottom_bar_record"

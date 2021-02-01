@@ -25,8 +25,8 @@ public class BusRouteDetailActivity extends BaseActivity {
     private TextView tvTimeDistance;
     private RecyclerView rlRouteDetail;
 
-    private String tvStartLocation;//起点位置
-    private String tvEndLocation;//终点位置
+    private String tvStartLocation,//起点位置
+            tvEndLocation;//终点位置
     private BusRouteDataBean.RouteBean.TransitsBean data;//出行方式详细数据
     private StringBuffer busRoute = new StringBuffer();
     private BusRouteDetailAdapter busRouteDetailAdapter;

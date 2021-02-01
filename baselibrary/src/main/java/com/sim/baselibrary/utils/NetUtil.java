@@ -35,17 +35,17 @@ public class NetUtil {
         @SuppressLint("MissingPermission") NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
         if (activeNetworkInfo != null && activeNetworkInfo.isConnected()) {
             if (activeNetworkInfo.getType() == (ConnectivityManager.TYPE_WIFI)) {
-                LogUtil.d(NetUtil.class, "getNetWorkState: WIFI");
+                LogUtil.d(NetUtil.class, "网络状态: WIFI");
                 return NETWORK_WIFI;
             } else if (activeNetworkInfo.getType() == (ConnectivityManager.TYPE_ETHERNET)) {
-                LogUtil.d(NetUtil.class, "getNetWorkState: MOBILE");
+                LogUtil.d(NetUtil.class, "网络状态: MOBILE");
                 return NETWORK_MOBILE;
             }
         } else {
-            LogUtil.d(NetUtil.class, "getNetWorkState: NONETWORK");
+            LogUtil.d(NetUtil.class, "网络状态: NONETWORK");
             return NETWORK_NONE;
         }
-        LogUtil.d(NetUtil.class, "getNetWorkState: NONETWORK");
+        LogUtil.d(NetUtil.class, "网络状态: NONETWORK");
         return NETWORK_NONE;
     }
 

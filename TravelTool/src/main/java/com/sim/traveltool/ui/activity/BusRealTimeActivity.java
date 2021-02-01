@@ -31,21 +31,21 @@ import rx.Subscriber;
 public class BusRealTimeActivity extends BaseActivity {
 
     private TitleView titleView;
-    private TextView tvFromStation;
-    private TextView tvToStation;
-    private TextView tvBeginTime;
-    private TextView tvEndTime;
-    private TextView tvPrice;
-    private TextView tvReverse;
+    private TextView tvFromStation,
+            tvToStation,
+            tvBeginTime,
+            tvEndTime,
+            tvPrice,
+            tvReverse;
     private RecyclerView rlstationList;
 
-    private String busName;//公交名
-    private String lineId;//公交id
-    private String fromStation;//公交起始站
-    private String toStation;//公交终点站
-    private String beginTime;//开始运营时间
-    private String endTime;//结束运营时间
-    private String price;//公交乘坐价格
+    private String busName,//公交名
+            lineId,//公交id
+            fromStation,//公交起始站
+            toStation,//公交终点站
+            beginTime,//开始运营时间
+            endTime,//结束运营时间
+            price;//公交乘坐价格
 
     private ArrayList<BusRealTimeBusStopDataBean.DataBean> stationList = new ArrayList<>();
     private ArrayList<BusRealTimeDataBean.DataBean> busListOnRoadListList = new ArrayList<>();

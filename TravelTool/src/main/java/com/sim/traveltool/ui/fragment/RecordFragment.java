@@ -58,24 +58,17 @@ public class RecordFragment extends BaseFragment implements CalendarView.OnMonth
 
     private LinearLayout parent;
     private TitleView titleView;
-    private TextView tvRecordTimeStart;
-    private TextView tvRecordTimeEnd;
+    private TextView tvRecordTimeStart, tvRecordTimeEnd;
     private Button btnRecord;
 
     private User user;//已登录的用户信息
     private RecordBean recordBean;//当天的打卡数据
 
-    //更多弹窗
-    private PopupWindow morePopupWindow;//弹窗
-    private View moreLayout;//布局
-    private Button btnAllRecord;
-    private Button btnOther;
-    //添加备忘弹窗
-    private PopupWindow otherPopupWindow;//弹窗
-    private View otherLayout;//布局
+    //更多弹窗、添加备忘弹窗
+    private PopupWindow morePopupWindow, otherPopupWindow;//弹窗
+    private View moreLayout, otherLayout;//布局
     private EditText etOther;
-    private Button btnCancel;
-    private Button btnConfirm;
+    private Button btnAllRecord, btnOther, btnCancel, btnConfirm;
 
     @Override
     public void onDestroy() {

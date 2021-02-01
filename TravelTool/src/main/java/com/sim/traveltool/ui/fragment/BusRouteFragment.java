@@ -20,8 +20,7 @@ import com.sim.traveltool.ui.activity.BusSearchActivity;
  */
 public class BusRouteFragment extends BaseFragment {
 
-    private EditText etStartStation;
-    private EditText etEndStation;
+    private EditText etStartStation, etEndStation;
     private Button btnRoute;
 
     @Override

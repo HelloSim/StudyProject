@@ -40,12 +40,6 @@ android {
             keyPassword "yclyml0719"
             storePassword "yclyml0719"
         }
-//        debug {
-//            storeFile file("HelloSim.jks")
-//            keyAlias "HelloSim"
-//            keyPassword "yclyml0719"
-//            storePassword "yclyml0719"
-//        }
     }
     //指定apk名称
     applicationVariants.all { variant ->
@@ -59,27 +53,24 @@ android {
             buildConfigField("boolean", "LOG_DEBUG", "true")
             minifyEnabled false //是否可以移出无用的java代码，默认为false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            //指定插件使用的混淆文件
-//            signingConfig signingConfigs.debug //签名配置文件
         }
         release {
             buildConfigField("boolean", "LOG_DEBUG", "false")
             minifyEnabled false //是否可以移出无用的java代码，默认为false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            //指定插件使用的混淆文件
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'//指定插件使用的混淆文件
             signingConfig signingConfigs.release //签名配置文件
         }
+    }
+    //设置JDK1.8
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 //    //程序在编译的时候会检查lint，有任何错误提示会停止build，我们可以关闭这个开关
 //    lintOptions {
 //        abortOnError false//即使报错也不会停止打包
 //        checkReleaseBuilds false//打包release版本的时候进行检测
 //    }
-    //设置JDK1.8
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
-    }
 //    // 如果提示多个重复文件，加这属性
 //    packagingOptions {
 //        exclude 'META-INF/proguard/androidx-annotations.pro'
