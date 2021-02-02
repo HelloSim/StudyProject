@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -62,9 +63,26 @@ public class NewsAdapter extends BaseAdapter<NewsAdapter.ViewHolder, NewsWangYiB
                 .into(holder.newsImage);
         holder.newsTitle.setText(resultBean.getTitle());
         holder.newsTime.setText(resultBean.getPasstime());
+        holder.parent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (getOnItemClickListener() != null)
+                    getOnItemClickListener().onItemClicked(holder, position);
+            }
+        });
+        holder.parent.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                if (getOnItemLongClickListener() != null)
+                    getOnItemLongClickListener().onItemLongClicked(holder, position);
+                return false;
+            }
+        });
     }
 
     public class ViewHolder extends BaseViewHolder {
+
+        LinearLayout parent;
         ShapeableImageView newsImage;
         TextView newsTitle;
         TextView newsTime;
@@ -75,6 +93,7 @@ public class NewsAdapter extends BaseAdapter<NewsAdapter.ViewHolder, NewsWangYiB
 
         @Override
         protected void bindViews() {
+            parent = findViewById(R.id.item_parent);
             newsImage = findViewById(R.id.news_image);
             newsTitle = findViewById(R.id.news_title);
             newsTime = findViewById(R.id.news_time);

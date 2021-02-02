@@ -152,4 +152,40 @@ public abstract class BaseAdapter<VH extends BaseViewHolder, D> extends Recycler
         notifyDataSetChanged();
     }
 
+    /**
+     * recyclerView的item事件
+     */
+    private OnItemClickListener onItemClickListener;
+    private OnItemLongClickListener onItemLongClickListener;
+
+    /**
+     * item点击事件
+     */
+    public interface OnItemClickListener {
+        void onItemClicked(BaseViewHolder holder, int position);
+    }
+
+    /**
+     * item长按事件
+     */
+    public interface OnItemLongClickListener{
+        void onItemLongClicked(BaseViewHolder holder, int position);
+    }
+
+    public OnItemClickListener getOnItemClickListener() {
+        return onItemClickListener;
+    }
+
+    public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
+        this.onItemClickListener = onItemClickListener;
+    }
+
+    public OnItemLongClickListener getOnItemLongClickListener() {
+        return onItemLongClickListener;
+    }
+
+    public void setOnItemLongClickListener(OnItemLongClickListener onItemLongClickListener) {
+        this.onItemLongClickListener = onItemLongClickListener;
+    }
+
 }

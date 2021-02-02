@@ -8,7 +8,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.sim.baselibrary.base.BaseActivity;
-import com.sim.baselibrary.callback.ItemClickSupport;
+import com.sim.baselibrary.base.BaseAdapter;
+import com.sim.baselibrary.base.BaseViewHolder;
+import com.sim.baselibrary.callback.DialogInterface;
 import com.sim.traveltool.R;
 import com.sim.traveltool.adapter.NewsAdapter;
 import com.sim.traveltool.bean.NewsWangYiBean;
@@ -78,27 +80,25 @@ public class NewsCollectActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-        newsAdapter = new NewsAdapter(this, collectionNewsBeanArrayList);
         newsRecyclerView.setLayoutManager(new LinearLayoutManager(NewsCollectActivity.this));
-        newsRecyclerView.setAdapter(newsAdapter);
-        ItemClickSupport.addTo(newsRecyclerView).setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
+        newsAdapter = new NewsAdapter(this, collectionNewsBeanArrayList);
+        newsAdapter.setOnItemClickListener(new BaseAdapter.OnItemClickListener() {
             @Override
-            public void onItemClicked(RecyclerView recyclerView, int position, View v) {
+            public void onItemClicked(BaseViewHolder holder, int position) {
                 Intent intent = new Intent(NewsCollectActivity.this, NewsDetailActivity.class);
                 intent.putExtra("news", (Serializable) newsAdapter.getData().get(position));
                 startActivity(intent);
             }
         });
-        ItemClickSupport.addTo(newsRecyclerView).setOnItemLongClickListener(new ItemClickSupport.OnItemLongClickListener() {
+        newsAdapter.setOnItemLongClickListener(new BaseAdapter.OnItemLongClickListener() {
             @Override
-            public boolean onItemLongClicked(RecyclerView recyclerView, int position, View v) {
-                showDialog(null, "取消收藏", "确认", "取消", new com.sim.baselibrary.callback.DialogInterface() {
+            public void onItemLongClicked(BaseViewHolder holder, int position) {
+                showDialog(null, "取消收藏", "确认", "取消", new DialogInterface() {
                     @Override
                     public void sureOnClick() {
                         NewsWangYiBean.NewsBean bean = new NewsWangYiBean.NewsBean();
                         bean.setObjectId(collectionNewsBeanArrayList.get(position).getObjectId());
                         bean.delete(new UpdateListener() {
-
                             @Override
                             public void done(BmobException e) {
                                 if (e == null) {
@@ -114,8 +114,8 @@ public class NewsCollectActivity extends BaseActivity {
                     public void cancelOnClick() {
                     }
                 });
-                return false;
             }
         });
+        newsRecyclerView.setAdapter(newsAdapter);
     }
 }

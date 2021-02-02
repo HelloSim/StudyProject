@@ -3,6 +3,7 @@ package com.sim.traveltool.adapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -39,6 +40,21 @@ public class BusLineNameAdapter extends BaseAdapter<BusLineNameAdapter.ViewHolde
             holder.tvBusName.setText(dataBean.getName());
             holder.tvBusLineName.setText(dataBean.getFromStation() + "->" + dataBean.getToStation());
         }
+        holder.parent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (getOnItemClickListener() != null)
+                    getOnItemClickListener().onItemClicked(holder, position);
+            }
+        });
+        holder.parent.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                if (getOnItemLongClickListener() != null)
+                    getOnItemLongClickListener().onItemLongClicked(holder, position);
+                return false;
+            }
+        });
     }
 
     @Override
@@ -48,6 +64,7 @@ public class BusLineNameAdapter extends BaseAdapter<BusLineNameAdapter.ViewHolde
 
     public class ViewHolder extends BaseViewHolder {
 
+        private LinearLayout parent;
         private TextView tvBusName;
         private TextView tvBusLineName;
 
@@ -57,6 +74,7 @@ public class BusLineNameAdapter extends BaseAdapter<BusLineNameAdapter.ViewHolde
 
         @Override
         protected void bindViews() {
+            parent = findViewById(R.id.item_parent);
             tvBusName = findViewById(R.id.tv_bus_name);
             tvBusLineName = findViewById(R.id.tv_bus_line_name);
         }

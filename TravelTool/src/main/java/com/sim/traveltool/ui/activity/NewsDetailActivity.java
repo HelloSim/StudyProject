@@ -10,6 +10,8 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import com.sim.baselibrary.base.BaseActivity;
+import com.sim.baselibrary.utils.LogUtil;
+import com.sim.baselibrary.utils.ToastUtil;
 import com.sim.traveltool.R;
 import com.sim.traveltool.bean.NewsWangYiBean;
 import com.sim.traveltool.bean.db.User;
@@ -57,36 +59,43 @@ public class NewsDetailActivity extends BaseActivity {
             @Override
             public void right(View right) {
                 NewsWangYiBean.NewsBean bean = new NewsWangYiBean.NewsBean();
-                if (isCollect && collectionNewsBean != null) {
-                    bean.setObjectId(collectionNewsBean.getObjectId());
-                    bean.delete(new UpdateListener() {
+                if (BmobUser.isLogin()) {
+                    if (isCollect && collectionNewsBean != null) {
+                        bean.setObjectId(collectionNewsBean.getObjectId());
+                        bean.delete(new UpdateListener() {
 
-                        @Override
-                        public void done(BmobException e) {
-                            if (e == null) {
-                                collectionNewsBean = null;
-                                titleView.setRightImage(R.mipmap.ic_collect_not);
-                                isCollect = false;
+                            @Override
+                            public void done(BmobException e) {
+                                if (e == null) {
+                                    collectionNewsBean = null;
+                                    titleView.setRightImage(R.mipmap.ic_collect_not);
+                                    isCollect = false;
+                                }
                             }
-                        }
 
-                    });
+                        });
+                    } else {
+                        bean.setUser(BmobUser.getCurrentUser(User.class));
+                        bean.setTitle(news.getTitle());
+                        bean.setPath(news.getPath());
+                        bean.setImage(news.getImage());
+                        bean.setPasstime(news.getPasstime());
+                        bean.save(new SaveListener<String>() {
+                            @Override
+                            public void done(String s, BmobException e) {
+                                if (e == null) {
+                                    collectionNewsBean = bean;
+                                    titleView.setRightImage(R.mipmap.ic_collect_yes);
+                                    isCollect = true;
+                                }
+                            }
+                        });
+                    }
                 } else {
-                    bean.setUser(BmobUser.getCurrentUser(User.class));
-                    bean.setTitle(news.getTitle());
-                    bean.setPath(news.getPath());
-                    bean.setImage(news.getImage());
-                    bean.setPasstime(news.getPasstime());
-                    bean.save(new SaveListener<String>() {
-                        @Override
-                        public void done(String s, BmobException e) {
-                            if (e == null) {
-                                collectionNewsBean = bean;
-                                titleView.setRightImage(R.mipmap.ic_collect_yes);
-                                isCollect = true;
-                            }
-                        }
-                    });
+                    titleView.setRightImage(R.mipmap.ic_collect_not);
+                    collectionNewsBean = null;
+                    isCollect = false;
+                    ToastUtil.toast(NewsDetailActivity.this, "未登录！");
                 }
             }
         });
@@ -122,7 +131,6 @@ public class NewsDetailActivity extends BaseActivity {
             titleView.setRightImage(R.mipmap.ic_collect_not);
             collectionNewsBean = null;
             isCollect = false;
-            finish();
         }
     }
 

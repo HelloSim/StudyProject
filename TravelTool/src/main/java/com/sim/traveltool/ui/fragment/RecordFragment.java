@@ -138,6 +138,7 @@ public class RecordFragment extends BaseFragment implements CalendarView.OnMonth
 
     @Override
     protected void initData() {
+        EventBus.getDefault().register(this);
     }
 
     @Override

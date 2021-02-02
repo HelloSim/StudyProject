@@ -12,7 +12,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.sim.baselibrary.base.BaseActivity;
-import com.sim.baselibrary.callback.ItemClickSupport;
+import com.sim.baselibrary.base.BaseAdapter;
+import com.sim.baselibrary.base.BaseViewHolder;
 import com.sim.baselibrary.utils.LogUtil;
 import com.sim.baselibrary.utils.ToastUtil;
 import com.sim.traveltool.AppHelper;
@@ -79,12 +80,11 @@ public class BusSearchActivity extends BaseActivity {
             initData();
         }
         if (searchType == AppHelper.RESULT_BUS) {
-            busLineNameAdapter = new BusLineNameAdapter(lineListByLineNameBeanList);
             rlData.setLayoutManager(new LinearLayoutManager(this));
-            rlData.setAdapter(busLineNameAdapter);
-            ItemClickSupport.addTo(rlData).setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
+            busLineNameAdapter = new BusLineNameAdapter(lineListByLineNameBeanList);
+            busLineNameAdapter.setOnItemClickListener(new BaseAdapter.OnItemClickListener() {
                 @Override
-                public void onItemClicked(RecyclerView recyclerView, int position, View v) {
+                public void onItemClicked(BaseViewHolder holder, int position) {
                     Intent intent = new Intent(BusSearchActivity.this, BusRealTimeActivity.class);
                     intent.putExtra("busName", lineListByLineNameBeanList.get(position).getName());
                     intent.putExtra("lineId", lineListByLineNameBeanList.get(position).getId());
@@ -96,19 +96,20 @@ public class BusSearchActivity extends BaseActivity {
                     startActivity(intent);
                 }
             });
+            rlData.setAdapter(busLineNameAdapter);
         } else {
-            stationNameAdapter = new BusStationNameAdapter(startLocationDataBeanList);
             rlData.setLayoutManager(new LinearLayoutManager(this));
-            rlData.setAdapter(stationNameAdapter);
-            ItemClickSupport.addTo(rlData).setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
+            stationNameAdapter = new BusStationNameAdapter(startLocationDataBeanList);
+            stationNameAdapter.setOnItemClickListener(new BaseAdapter.OnItemClickListener() {
                 @Override
-                public void onItemClicked(RecyclerView recyclerView, int position, View v) {
+                public void onItemClicked(BaseViewHolder holder, int position) {
                     Intent intent = new Intent();
                     intent.putExtra("name", String.valueOf(startLocationDataBeanList.get(position).getName()));
                     setResult(searchType, intent);
                     finish();
                 }
             });
+            rlData.setAdapter(stationNameAdapter);
         }
         //editext的内容变化监听
         tvSearch.addTextChangedListener(new TextWatcher() {

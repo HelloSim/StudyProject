@@ -9,7 +9,7 @@ import com.sim.baselibrary.R;
 /**
  * @Author: Sim
  * @Time： 2020/12/28 11:35
- * @Description： RecyclerView item 的点击、长按事件
+ * @Description： RecyclerView item 的点击、长按事件。会出现点击事件失效的bug，未找到原因，先不使用这个
  */
 public class ItemClickSupport {
     private final RecyclerView mRecyclerView;
@@ -76,9 +76,7 @@ public class ItemClickSupport {
     }
 
     public ItemClickSupport setOnItemClickListener(OnItemClickListener listener) {
-        if (OnMultiClickListener.isNoFastClick()) {
-            mOnItemClickListener = listener;
-        }
+        mOnItemClickListener = listener;
         return this;
     }
 

@@ -8,8 +8,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.sim.baselibrary.base.BaseAdapter;
 import com.sim.baselibrary.base.BaseFragment;
-import com.sim.baselibrary.callback.ItemClickSupport;
+import com.sim.baselibrary.base.BaseViewHolder;
 import com.sim.baselibrary.utils.LogUtil;
 import com.sim.traveltool.R;
 import com.sim.traveltool.adapter.NewsAdapter;
@@ -60,17 +61,18 @@ public class WangyiFragment extends BaseFragment {
     //初始化RecyclerView
     private void initRecyclerView(View root) {
         newsRecyclerView = root.findViewById(R.id.recycle_view);
-        newsAdapter = new NewsAdapter(getActivity(), newsList);
         newsRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        newsRecyclerView.setAdapter(newsAdapter);
-        ItemClickSupport.addTo(newsRecyclerView).setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
+        newsAdapter = new NewsAdapter(getActivity(), newsList);
+        newsRecyclerView.setFocusable(true);
+        newsAdapter.setOnItemClickListener(new BaseAdapter.OnItemClickListener() {
             @Override
-            public void onItemClicked(RecyclerView recyclerView, int position, View v) {
+            public void onItemClicked(BaseViewHolder holder, int position) {
                 Intent intent = new Intent(getActivity(), NewsDetailActivity.class);
                 intent.putExtra("news", (Serializable) newsAdapter.getData().get(position));
                 startActivity(intent);
             }
         });
+        newsRecyclerView.setAdapter(newsAdapter);
 
         //freshLayout控件下拉刷新
         refreshLayout = root.findViewById(R.id.refresh);

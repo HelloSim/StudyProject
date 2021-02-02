@@ -3,6 +3,7 @@ package com.sim.traveltool.adapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -57,11 +58,28 @@ public class BusRouteAdapter extends BaseAdapter<BusRouteAdapter.ViewHolder, Bus
             }
             holder.tvBusName.setText(busName);
             holder.tvRouteRoughly.setText(Integer.parseInt(transitsBean.getDuration()) / 60 + "分钟 | " + "步行" + transitsBean.getWalking_distance() + "米");
+
+            holder.parent.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (getOnItemClickListener() != null)
+                        getOnItemClickListener().onItemClicked(holder, position);
+                }
+            });
+            holder.parent.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    if (getOnItemLongClickListener() != null)
+                        getOnItemLongClickListener().onItemLongClicked(holder, position);
+                    return false;
+                }
+            });
         }
     }
 
     public class ViewHolder extends BaseViewHolder {
 
+        private LinearLayout parent;
         private TextView tvBusName;
         private TextView tvRouteRoughly;
 
@@ -71,6 +89,7 @@ public class BusRouteAdapter extends BaseAdapter<BusRouteAdapter.ViewHolder, Bus
 
         @Override
         protected void bindViews() {
+            parent = findViewById(R.id.item_parent);
             tvBusName = findViewById(R.id.tv_bus_name);
             tvRouteRoughly = findViewById(R.id.tv_route_roughly);
         }

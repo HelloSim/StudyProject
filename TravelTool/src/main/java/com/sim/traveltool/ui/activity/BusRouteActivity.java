@@ -9,7 +9,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.sim.baselibrary.base.BaseActivity;
-import com.sim.baselibrary.callback.ItemClickSupport;
+import com.sim.baselibrary.base.BaseAdapter;
+import com.sim.baselibrary.base.BaseViewHolder;
 import com.sim.baselibrary.utils.LogUtil;
 import com.sim.baselibrary.utils.ToastUtil;
 import com.sim.traveltool.R;
@@ -76,12 +77,11 @@ public class BusRouteActivity extends BaseActivity {
     protected void initView() {
         tvFromAndToLocation.setText(tvStartLocation + " -> " + tvEndLocation);
 
-        routeAdapter = new BusRouteAdapter(routeDataList);
         rlLocationList.setLayoutManager(new LinearLayoutManager(this));
-        rlLocationList.setAdapter(routeAdapter);
-        ItemClickSupport.addTo(rlLocationList).setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
+        routeAdapter = new BusRouteAdapter(routeDataList);
+        routeAdapter.setOnItemClickListener(new BaseAdapter.OnItemClickListener() {
             @Override
-            public void onItemClicked(RecyclerView recyclerView, int position, View v) {
+            public void onItemClicked(BaseViewHolder holder, int position) {
                 Intent intent = new Intent(BusRouteActivity.this, BusRouteDetailActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("data", routeDataList.get(position));
@@ -91,6 +91,7 @@ public class BusRouteActivity extends BaseActivity {
                 startActivity(intent);
             }
         });
+        rlLocationList.setAdapter(routeAdapter);
     }
 
     /**
