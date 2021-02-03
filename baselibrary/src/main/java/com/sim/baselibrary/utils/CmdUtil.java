@@ -6,16 +6,16 @@ import java.io.PrintWriter;
 
 /**
  * @Author: Sim
- * @Time£º 2021/1/28 11:07
- * @Description£º cmdÃüÁîĞĞ¹¤¾ß
+ * @Timeï¼š 2021/1/28 11:07
+ * @Descriptionï¼š cmdå‘½ä»¤è¡Œå·¥å…·
  */
 public class CmdUtil {
 
-    private PrintWriter stdin;    //cmd²Ù×÷¶ÔÏó
+    private PrintWriter stdin;    //cmdæ“ä½œå¯¹è±¡
 
 
     /**
-     * ´´½¨cmd¹«¹²·½·¨
+     * åˆ›å»ºcmdå…¬å…±æ–¹æ³•
      */
     public CmdUtil cmd(RanListener rl) {
         String[] command = {"cmd"};
@@ -25,24 +25,24 @@ public class CmdUtil {
             new Thread(new SyncPipe(p.getErrorStream(), System.err, null)).start();
             new Thread(new SyncPipe(p.getInputStream(), System.out, rl)).start();
             stdin = new PrintWriter(p.getOutputStream());
-            /**ÒÔÏÂ¿ÉÒÔÊäÈë×Ô¼ºÏëÊäÈëµÄcmdÃüÁî*/
+            /**ä»¥ä¸‹å¯ä»¥è¾“å…¥è‡ªå·±æƒ³è¾“å…¥çš„cmdå‘½ä»¤*/
 
         } catch (Exception e) {
-            throw new RuntimeException("±àÒë³öÏÖ´íÎó£º" + e.getMessage());
+            throw new RuntimeException("ç¼–è¯‘å‡ºç°é”™è¯¯ï¼š" + e.getMessage());
         }
         return this;
     }
 
     /**
-     * cdµ½Ö¸¶¨µÄÅÌÏÂµÄÄ¿Â¼Â·¾¶
+     * cdåˆ°æŒ‡å®šçš„ç›˜ä¸‹çš„ç›®å½•è·¯å¾„
      *
      * @param pan
      * @param path
      * @return
      */
     public CmdUtil pack(String pan, String path) {
-        stdin.println(pan);//¶¨Î»µ½DÅÌ¸ùÄ¿Â¼
-        stdin.println("cd " + path);//cdµ½Â·¾¶
+        stdin.println(pan);//å®šä½åˆ°Dç›˜æ ¹ç›®å½•
+        stdin.println("cd " + path);//cdåˆ°è·¯å¾„
         return this;
     }
 
@@ -52,7 +52,7 @@ public class CmdUtil {
     }
 
     /**
-     * °²×°apkÎÄ¼ş
+     * å®‰è£…apkæ–‡ä»¶
      *
      * @param FilePath
      * @return
@@ -63,7 +63,7 @@ public class CmdUtil {
     }
 
     /**
-     * »ñÈ¡ipµØÖ·ĞÅÏ¢
+     * è·å–ipåœ°å€ä¿¡æ¯
      *
      * @return
      */
@@ -73,9 +73,9 @@ public class CmdUtil {
     }
 
     /**
-     * ·´±àÒë£¨×¢ÒâÄ¿Â¼ÏÂ´æÔÚĞèÒªapktool²Ù×÷¹¤¾ß£©
+     * åç¼–è¯‘ï¼ˆæ³¨æ„ç›®å½•ä¸‹å­˜åœ¨éœ€è¦apktoolæ“ä½œå·¥å…·ï¼‰
      *
-     * @param path apkÎÄ¼şµÄÍêÕûÂ·¾¶µØÖ·
+     * @param path apkæ–‡ä»¶çš„å®Œæ•´è·¯å¾„åœ°å€
      * @return
      */
     public CmdUtil deCompiling(String path) {
@@ -84,10 +84,10 @@ public class CmdUtil {
     }
 
     /**
-     * »Ø±àÒë£¨×¢ÒâÄ¿Â¼ÏÂ´æÔÚĞèÒªapktool²Ù×÷¹¤¾ß£©
+     * å›ç¼–è¯‘ï¼ˆæ³¨æ„ç›®å½•ä¸‹å­˜åœ¨éœ€è¦apktoolæ“ä½œå·¥å…·ï¼‰
      *
-     * @param path    apkÎÄ¼şµÄÍêÕûÂ·¾¶µØÖ·
-     * @param newPath »Ø±àÒëµÄapkÎÄ¼şµÄÍêÕûÂ·¾¶µØÖ·
+     * @param path    apkæ–‡ä»¶çš„å®Œæ•´è·¯å¾„åœ°å€
+     * @param newPath å›ç¼–è¯‘çš„apkæ–‡ä»¶çš„å®Œæ•´è·¯å¾„åœ°å€
      * @return
      */
     public CmdUtil BackCompile(String path, String newPath) {
@@ -96,7 +96,7 @@ public class CmdUtil {
     }
 
     /**
-     * ×ÊÔ´»ØÊÕ£¨×¢Òâ¼ÇµÃ»ØÊÕ£©
+     * èµ„æºå›æ”¶ï¼ˆæ³¨æ„è®°å¾—å›æ”¶ï¼‰
      *
      * @return
      */
@@ -106,7 +106,7 @@ public class CmdUtil {
     }
 
     /**
-     * »Øµ÷¼àÌı
+     * å›è°ƒç›‘å¬
      */
     public class SyncPipe implements Runnable {
         private final OutputStream ostrm;
@@ -126,9 +126,9 @@ public class CmdUtil {
                     ostrm.write(buffer, 0, length);
                 }
             } catch (Exception e) {
-                throw new RuntimeException("´¦ÀíÃüÁî³öÏÖ´íÎó£º" + e.getMessage());
+                throw new RuntimeException("å¤„ç†å‘½ä»¤å‡ºç°é”™è¯¯ï¼š" + e.getMessage());
             }
-            System.out.print("½áÊø");
+            System.out.print("ç»“æŸ");
             if (rl != null) {
                 rl.end();
             }
@@ -136,7 +136,7 @@ public class CmdUtil {
     }
 
     /**
-     * »Øµ÷¼àÌıµÄ½Ó¿Ú
+     * å›è°ƒç›‘å¬çš„æ¥å£
      */
     public interface RanListener {
         void end();
