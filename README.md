@@ -23,5 +23,3 @@ https://www.bmob.cn/login
 git地址：https://github.com/huangyanbin/smartTable
 jitpack仓库：https://jitpack.io/#huangyanbin/smartTable
 功能介绍：https://juejin.im/post/5a55ae6c5188257350511a8c
-
-
