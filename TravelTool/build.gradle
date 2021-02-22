@@ -8,8 +8,8 @@ android {
         applicationId "com.sim.traveltool"
         minSdkVersion versions.minSdkVersion
         targetSdkVersion versions.targetSdkVersion
-        versionCode 27
-        versionName "4.2.7"
+        versionCode 28
+        versionName "4.2.8"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         ndk {
             // 设置支持的SO库架构
