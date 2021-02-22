@@ -20,9 +20,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * @Author: Sim
- * @Time： 2020/12/8 10:30
- * @Description： 保存程序奔溃的log信息成log文件保存
+ * @author Sim --- 保存程序奔溃的log信息成log文件保存
  */
 public class CrashHandler implements Thread.UncaughtExceptionHandler {
 

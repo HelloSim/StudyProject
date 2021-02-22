@@ -1,9 +1,7 @@
 package com.sim.baselibrary.bean;
 
 /**
- * @Author: Sim
- * @Time： 2020/4/28 1:05
- * @Description： EventBus用到的bean类
+ * @author Sim --- EventBus用到的bean类
  */
 public class EventMessage {
 

@@ -7,9 +7,7 @@ import java.util.Random;
 
 
 /**
- * @Author： Sim
- * @Time： 2020/9/21 23:31
- * @Description： 防止取值为空的工具类
+ * @author Sim --- 防止取值为空的工具类
  */
 public class StringUtil {
 

@@ -22,9 +22,7 @@ import com.sim.baselibrary.utils.ScreenUtil;
 import com.sim.baselibrary.views.DialogBuilder;
 
 /**
- * @Author: Sim
- * @Time： 2020/12/22 11:46
- * @Description： 封装dialog。项目模块BaseFragment继承此类
+ * @author Sim --- 封装dialog。项目模块BaseFragment继承此类
  */
 public abstract class BaseFragment extends Fragment implements View.OnClickListener {
 

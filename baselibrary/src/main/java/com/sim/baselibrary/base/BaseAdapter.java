@@ -7,9 +7,7 @@ import java.util.Collection;
 import java.util.List;
 
 /**
- * @Author: Sim
- * @Time： 2020/12/22 14:21
- * @Description： BaseAdapter。项目模块BaseAdapter继承此类
+ * @author Sim --- BaseAdapter。项目模块BaseAdapter继承此类
  */
 public abstract class BaseAdapter<VH extends BaseViewHolder, D> extends RecyclerView.Adapter<VH> {
 

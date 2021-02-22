@@ -12,9 +12,7 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 /**
- * @Author: Sim
- * @Time： 2019/4/22 1:05
- * @Description： 下载工具类
+ * @author Sim --- 下载工具类
  */
 public class DownloadUtil {
     private static DownloadUtil downloadUtil;

@@ -8,9 +8,7 @@ import com.google.android.material.tabs.TabLayout;
 import java.lang.reflect.Field;
 
 /**
- * @Author: Sim
- * @Time： 2020/12/15 11:55
- * @Description： 自定义TableLayout
+ * @author Sim --- 自定义TableLayout
  */
 public class CustomizeTabLayout extends TabLayout {
 

@@ -16,9 +16,7 @@ import java.net.SocketException;
 import java.util.Enumeration;
 
 /**
- * @Author: Sim
- * @Time： 2019/4/22 1:05
- * @Description： Net工具类
+ * @author Sim --- Net工具类
  */
 public class NetUtil {
 

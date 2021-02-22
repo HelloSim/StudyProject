@@ -17,9 +17,7 @@ import java.util.Iterator;
 import cn.jpush.android.api.JPushInterface;
 
 /**
- * @Author： Sim
- * @Time： 2020/12/24 11:38
- * @Description： JPush 自定义接收器
+ * @author Sim --- JPush 自定义接收器
  * 如果不定义这个 Receiver，则：
  * 1) 默认用户会打开主界面
  * 2) 接收不到自定义消息

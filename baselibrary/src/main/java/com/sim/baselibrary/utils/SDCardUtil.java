@@ -6,9 +6,7 @@ import android.os.StatFs;
 import java.io.File;
 
 /**
- * @Author: Sim
- * @Time： 2020/9/21 23:31
- * @Description： SD卡相关的辅助类
+ * @author Sim --- SD卡相关的辅助类
  */
 public class SDCardUtil {
 

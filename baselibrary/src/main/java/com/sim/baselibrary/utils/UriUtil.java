@@ -15,7 +15,7 @@ import androidx.core.content.FileProvider;
 import java.io.File;
 
 /**
- * @Author: Sim
+ * @author Sim ---
  * @Time： 2019/4/22 1:05
  * @Description： Uri相关工具类
  */

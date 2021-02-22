@@ -25,9 +25,7 @@ import java.util.ArrayList;
 import rx.Subscriber;
 
 /**
- * @Author： HelloSim
- * @Time： 2020/6/10 22:57
- * @Description： 显示出行方案的页面
+ * @author Sim --- 显示出行方案的页面
  */
 public class BusRouteActivity extends BaseActivity {
 

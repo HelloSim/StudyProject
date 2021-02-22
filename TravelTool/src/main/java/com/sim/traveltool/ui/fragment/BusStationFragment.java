@@ -8,9 +8,7 @@ import com.sim.baselibrary.base.BaseFragment;
 import com.sim.traveltool.R;
 
 /**
- * @Author： Sim
- * @Time： 2020/12/16 11:09
- * @Description： 站点查询fragment
+ * @author Sim --- 站点查询fragment
  */
 public class BusStationFragment extends BaseFragment {
 

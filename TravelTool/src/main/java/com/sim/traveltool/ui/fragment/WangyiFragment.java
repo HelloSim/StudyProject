@@ -24,9 +24,7 @@ import java.util.ArrayList;
 import rx.Subscriber;
 
 /**
- * @Author： Sim
- * @Time： 2020/4/27 1:05
- * @Description： “网易”Fragment
+ * @author Sim --- “网易”Fragment
  */
 public class WangyiFragment extends BaseFragment {
 

@@ -6,9 +6,7 @@ import androidx.annotation.IdRes;
 import androidx.recyclerview.widget.RecyclerView;
 
 /**
- * @Author: Sim
- * @Time： 2020/12/29 16:12
- * @Description： BaseViewHolder
+ * @author Sim --- BaseViewHolder
  */
 public abstract class BaseViewHolder extends RecyclerView.ViewHolder {
 

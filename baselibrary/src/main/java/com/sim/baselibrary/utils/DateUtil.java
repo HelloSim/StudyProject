@@ -14,9 +14,7 @@ import java.util.Date;
 import java.util.Locale;
 
 /**
- * @Author: Sim
- * @Time： 2020/9/21 23:31
- * @Description： 日期工具类
+ * @author Sim --- 日期工具类
  */
 public class DateUtil {
 

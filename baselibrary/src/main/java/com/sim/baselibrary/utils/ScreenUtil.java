@@ -17,9 +17,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
 /**
- * @Author: Times
- * @Time： 2019/10/14 16:51
- * @Description： 截屏工具类
+ * @author Times --- 截屏工具类
  */
 public class ScreenUtil {
 

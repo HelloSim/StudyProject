@@ -30,9 +30,7 @@ import java.util.ArrayList;
 import rx.Subscriber;
 
 /**
- * @Author： Sim
- * @Time： 2020/12/10 11:00
- * @Description： 实时公交、出行线路站点的搜索页面
+ * @author Sim --- 实时公交、出行线路站点的搜索页面
  */
 public class BusSearchActivity extends BaseActivity {
 

@@ -33,9 +33,7 @@ import cn.bmob.v3.listener.LogInListener;
 import cn.bmob.v3.listener.QueryListener;
 
 /**
- * @Author： Sim
- * @Time： 2020/4/29 1:05
- * @Description： 登陆页面
+ * @author Sim --- 登陆页面
  */
 public class UserLogInActivity extends BaseActivity {
 

@@ -19,9 +19,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Semaphore;
 
 /**
- * @Author: Sim
- * @Time： 2020/12/15 11:55
- * @Description：
+ * @author Sim ---
  */
 public class MyImageLoader {
 

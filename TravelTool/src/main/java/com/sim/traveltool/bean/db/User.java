@@ -7,9 +7,7 @@ import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.FetchUserInfoListener;
 
 /**
- * @Author： Sim
- * @Time： 2021/1/2 19:54
- * @Description： 存取数据库的用户实体类
+ * @author Sim --- 存取数据库的用户实体类
  */
 public class User extends BmobUser {
 

@@ -6,9 +6,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 /**
- * @Author: Sim
- * @Time： 2020/12/15 11:55
- * @Description：
+ * @author Sim ---
  */
 public class ImageSizeUtil {
 

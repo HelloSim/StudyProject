@@ -21,9 +21,7 @@ import android.widget.ImageView;
 import com.sim.baselibrary.R;
 
 /**
- * @Author: Sim
- * @Time： 2020/12/15 11:55
- * @Description： 自定义ImageView：https://github.com/xuningjack/CustomImageView
+ * @author Sim --- 自定义ImageView：https://github.com/xuningjack/CustomImageView
  */
 @SuppressLint("AppCompatCustomView")
 public class CustomImageView extends ImageView {

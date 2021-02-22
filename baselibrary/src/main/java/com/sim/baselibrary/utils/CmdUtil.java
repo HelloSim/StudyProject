@@ -5,9 +5,7 @@ import java.io.OutputStream;
 import java.io.PrintWriter;
 
 /**
- * @Author: Sim
- * @Time： 2021/1/28 11:07
- * @Description： cmd命令行工具
+ * @author Sim --- cmd命令行工具
  */
 public class CmdUtil {
 

@@ -33,9 +33,7 @@ import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.UpdateListener;
 
 /**
- * @Author： Sim
- * @Time： 2020/4/29 1:05
- * @Description： 显示用户信息的页面
+ * @author Sim --- 显示用户信息的页面
  */
 public class UserInfoActivity extends BaseActivity {
 

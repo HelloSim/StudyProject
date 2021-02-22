@@ -9,9 +9,7 @@ import java.io.ObjectOutputStream;
 import java.util.Comparator;
 
 /**
- * @Author: Sim
- * @Time： 2019/4/22 1:05
- * @Description： File工具类
+ * @author Sim --- File工具类
  */
 public class FileUtil {
 

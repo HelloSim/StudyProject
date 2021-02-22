@@ -38,9 +38,7 @@ import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.FetchUserInfoListener;
 
 /**
- * @Author： Sim
- * @Time： 2020/12/16 11:01
- * @Description： MainActivity
+ * @author Sim --- MainActivity
  */
 public class MainActivity extends BaseActivity {
 

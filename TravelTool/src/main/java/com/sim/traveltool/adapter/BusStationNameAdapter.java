@@ -16,9 +16,7 @@ import com.sim.traveltool.bean.BusLocationDataBean;
 import java.util.ArrayList;
 
 /**
- * @Author： Sim
- * @Time： 2020/6/9 19:49
- * @Description： 终点位置搜索界面的RecyclerView适配器
+ * @author Sim --- 终点位置搜索界面的RecyclerView适配器
  */
 public class BusStationNameAdapter extends BaseAdapter<BusStationNameAdapter.ViewHolder, BusLocationDataBean.TipsBean> {
 

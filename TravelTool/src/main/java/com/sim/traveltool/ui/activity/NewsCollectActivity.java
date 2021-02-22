@@ -28,9 +28,7 @@ import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.UpdateListener;
 
 /**
- * @Author： Sim
- * @Time： 2020/4/30 1:05
- * @Description： 网易新闻的收藏页面
+ * @author Sim --- 网易新闻的收藏页面
  */
 public class NewsCollectActivity extends BaseActivity {
 

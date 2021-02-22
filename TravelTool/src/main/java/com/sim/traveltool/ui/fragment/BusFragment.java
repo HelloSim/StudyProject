@@ -20,9 +20,7 @@ import java.util.List;
 import java.util.Objects;
 
 /**
- * @Author： Sim
- * @Time： 2020/4/25 1:05
- * @Description： “首页”Fragment
+ * @author Sim --- “首页”Fragment
  */
 public class BusFragment extends BaseFragment {
 

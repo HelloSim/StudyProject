@@ -15,9 +15,7 @@ import cn.jpush.android.api.NotificationMessage;
 import cn.jpush.android.service.JPushMessageReceiver;
 
 /**
- * @Author： Sim
- * @Time： 2020/12/23 23:18
- * @Description： JPush 的自定义广播，所有事件将通过该类回调.需要继承 JPush 提供的 JPushMessageReceiver 类
+ * @author Sim --- JPush 的自定义广播，所有事件将通过该类回调.需要继承 JPush 提供的 JPushMessageReceiver 类
  */
 public class MyJPushMessageReceiver extends JPushMessageReceiver {
 

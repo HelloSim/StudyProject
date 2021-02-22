@@ -27,9 +27,7 @@ import cn.bmob.v3.listener.SaveListener;
 import cn.bmob.v3.listener.UpdateListener;
 
 /**
- * @Author： Sim
- * @Time： 2020/4/28 1:05
- * @Description： 显示网易新闻的页面
+ * @author Sim --- 显示网易新闻的页面
  */
 public class NewsDetailActivity extends BaseActivity {
 

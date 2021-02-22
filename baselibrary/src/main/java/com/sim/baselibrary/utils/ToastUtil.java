@@ -4,9 +4,7 @@ import android.content.Context;
 import android.widget.Toast;
 
 /**
- * @Author: Sim
- * @Time： 2019/4/22 1:05
- * @Description： Toast工具类
+ * @author Sim ---  Toast工具类
  */
 public class ToastUtil {
 

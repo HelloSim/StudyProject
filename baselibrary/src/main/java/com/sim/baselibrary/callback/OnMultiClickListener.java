@@ -5,9 +5,7 @@ import android.view.View;
 import java.util.concurrent.atomic.AtomicLong;
 
 /**
- * @Author: Sim
- * @Time： 2020/12/28 11:35
- * @Description： 防止多次点击
+ * @author Sim --- 防止多次点击
  */
 public abstract class OnMultiClickListener implements View.OnClickListener {
 

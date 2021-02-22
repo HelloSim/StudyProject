@@ -14,9 +14,7 @@ import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 
 /**
- * @Author: Sim
- * @Time： 2019/4/22 1:05
- * @Description： 证书相关
+ * @author Sim --- 证书相关
  */
 public class RxUtils {
     @SuppressLint("TrulyRandom")

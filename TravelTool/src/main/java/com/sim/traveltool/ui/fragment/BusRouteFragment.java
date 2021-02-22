@@ -14,9 +14,7 @@ import com.sim.traveltool.ui.activity.BusRouteActivity;
 import com.sim.traveltool.ui.activity.BusSearchActivity;
 
 /**
- * @Author： Sim
- * @Time： 2020/12/16 11:09
- * @Description： 出行路线fragment
+ * @author Sim --- 出行路线fragment
  */
 public class BusRouteFragment extends BaseFragment {
 

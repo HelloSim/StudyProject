@@ -10,9 +10,7 @@ import androidx.viewpager.widget.PagerAdapter;
 import java.util.ArrayList;
 
 /**
- * @Author： Sim
- * @Time： 2020/4/28 1:05
- * @Description： 首页轮播图控件的适配器
+ * @author Sim --- 首页轮播图控件的适配器
  */
 public class LoopViewAdapter extends PagerAdapter {
 

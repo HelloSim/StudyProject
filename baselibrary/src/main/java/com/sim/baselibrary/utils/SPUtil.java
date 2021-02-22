@@ -9,9 +9,7 @@ import java.lang.reflect.Method;
 import java.util.Map;
 
 /**
- * @Author: Sim
- * @Time： 2019/4/22 1:05
- * @Description： SP工具类
+ * @author Sim --- SP工具类
  */
 public class SPUtil {
 

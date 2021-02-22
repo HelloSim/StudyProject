@@ -9,9 +9,7 @@ import retrofit2.http.Query;
 import rx.Observable;
 
 /**
- * @Author： Sim
- * @Time： 2019/4/22 1:05
- * @Description： Bus 接口API类
+ * @author Sim --- Bus 接口API类
  */
 public interface BusAPIService {
 

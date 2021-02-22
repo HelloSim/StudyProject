@@ -13,6 +13,7 @@ import com.sim.baselibrary.callback.SuccessOrFailListener;
 import com.sim.baselibrary.utils.LogUtil;
 import com.sim.baselibrary.utils.RegexUtil;
 import com.sim.baselibrary.utils.ToastUtil;
+import com.sim.baselibrary.views.SplitEditText;
 import com.sim.traveltool.R;
 import com.sim.traveltool.bean.db.User;
 import com.sim.traveltool.ui.view.TitleView;
@@ -25,16 +26,15 @@ import cn.bmob.v3.listener.SaveListener;
 import cn.bmob.v3.listener.UpdateListener;
 
 /**
- * @Author： Sim
- * @Time： 2020/4/29 1:05
- * @Description： 用户注册页面
+ * @author Sim --- 用户注册页面
  */
 public class UserRegisterActivity extends BaseActivity {
 
     private Context context;
 
     private TitleView titleView;
-    private EditText etMobilePhoneNumber, etSMSCode, etPassword, etUserName;
+    private EditText etMobilePhoneNumber, etPassword, etUserName;
+    private SplitEditText etSMSCode;
     private Button btnSMSCode, btnRegistered;
 
     private User user = new User();

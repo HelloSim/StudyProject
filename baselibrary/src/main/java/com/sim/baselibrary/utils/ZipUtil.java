@@ -12,9 +12,7 @@ import java.util.zip.ZipInputStream;
 import java.util.zip.ZipOutputStream;
 
 /**
- * @Author: Sim
- * @Time： 2020/9/21 23:31
- * @Description： 压缩和解压缩
+ * @author Sim --- 压缩和解压缩
  */
 public class ZipUtil {
 

@@ -3,9 +3,7 @@ package com.sim.traveltool.bean;
 import java.util.List;
 
 /**
- * @Author： Sim
- * @Time： 2020/6/9 19:20
- * @Description： 实时公交路线搜索返回的数据bean类
+ * @author Sim --- 实时公交路线搜索返回的数据bean类
  */
 public class BusRealTimeLineDataBean {
 

@@ -16,9 +16,7 @@ import com.sim.traveltool.bean.BusRealTimeDataBean;
 import java.util.ArrayList;
 
 /**
- * @Author： Sim
- * @Time： 2020/6/9 22:24
- * @Description： 起始位置搜索界面的RecyclerView适配器
+ * @author Sim --- 起始位置搜索界面的RecyclerView适配器
  */
 public class BusStationListAdapter extends BaseAdapter<BusStationListAdapter.ViewHolder,BusRealTimeBusStopDataBean.DataBean> {
 

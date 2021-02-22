@@ -10,9 +10,7 @@ import java.io.PrintWriter;
 import java.text.DecimalFormat;
 
 /**
- * @Author: Sim
- * @Time： 2021/1/12 10:24
- * @Description： 生成不同分辨率下的dimens.xml文件
+ * @author Sim --- 生成不同分辨率下的dimens.xml文件
  */
 public class DimenTool {
 
