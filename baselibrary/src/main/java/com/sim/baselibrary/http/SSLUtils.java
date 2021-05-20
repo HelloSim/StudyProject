@@ -1,4 +1,4 @@
-package com.sim.baselibrary.internet;
+package com.sim.baselibrary.http;
 
 import android.annotation.SuppressLint;
 
@@ -16,7 +16,7 @@ import javax.net.ssl.X509TrustManager;
 /**
  * @author Sim --- 证书相关
  */
-public class RxUtils {
+public class SSLUtils {
     @SuppressLint("TrulyRandom")
     public static SSLSocketFactory createSSLSocketFactory() {
         SSLSocketFactory sSLSocketFactory = null;
@@ -53,4 +53,5 @@ public class RxUtils {
             return true;
         }
     }
+
 }

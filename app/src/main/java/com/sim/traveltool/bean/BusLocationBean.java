@@ -5,7 +5,7 @@ import java.util.List;
 /**
  * @author Sim --- 位置搜索返回的数据bean类
  */
-public class BusLocationDataBean {
+public class BusLocationBean {
 
     /**
      * status : 1

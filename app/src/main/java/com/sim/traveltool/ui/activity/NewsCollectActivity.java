@@ -13,7 +13,7 @@ import com.sim.baselibrary.base.BaseViewHolder;
 import com.sim.baselibrary.callback.DialogInterface;
 import com.sim.traveltool.R;
 import com.sim.traveltool.adapter.NewsAdapter;
-import com.sim.traveltool.bean.NewsWangYiBean;
+import com.sim.traveltool.bean.WangyiBean;
 import com.sim.traveltool.bean.db.User;
 import com.sim.traveltool.ui.view.TitleView;
 
@@ -35,7 +35,7 @@ public class NewsCollectActivity extends BaseActivity {
     private TitleView titleView;
     private RecyclerView newsRecyclerView;
 
-    private ArrayList<NewsWangYiBean.NewsBean> collectionNewsBeanArrayList = new ArrayList<>();
+    private ArrayList<WangyiBean.NewsBean> collectionNewsBeanArrayList = new ArrayList<>();
     private NewsAdapter newsAdapter;
 
     @Override
@@ -58,13 +58,13 @@ public class NewsCollectActivity extends BaseActivity {
     @Override
     protected void initData() {
         if (BmobUser.isLogin()) {
-            BmobQuery<NewsWangYiBean.NewsBean> bmobQuery = new BmobQuery<>();
+            BmobQuery<WangyiBean.NewsBean> bmobQuery = new BmobQuery<>();
             bmobQuery.addWhereEqualTo("user", BmobUser.getCurrentUser(User.class));
-            bmobQuery.findObjects(new FindListener<NewsWangYiBean.NewsBean>() {
+            bmobQuery.findObjects(new FindListener<WangyiBean.NewsBean>() {
                 @Override
-                public void done(List<NewsWangYiBean.NewsBean> list, BmobException e) {
+                public void done(List<WangyiBean.NewsBean> list, BmobException e) {
                     if (e == null && list != null && list.size() > 0) {
-                        for (NewsWangYiBean.NewsBean bean : list) {
+                        for (WangyiBean.NewsBean bean : list) {
                             collectionNewsBeanArrayList.add(bean);
                             newsAdapter.notifyDataSetChanged();
                         }
@@ -94,7 +94,7 @@ public class NewsCollectActivity extends BaseActivity {
                 showDialog(null, "取消收藏", "确认", "取消", new DialogInterface() {
                     @Override
                     public void sureOnClick() {
-                        NewsWangYiBean.NewsBean bean = new NewsWangYiBean.NewsBean();
+                        WangyiBean.NewsBean bean = new WangyiBean.NewsBean();
                         bean.setObjectId(collectionNewsBeanArrayList.get(position).getObjectId());
                         bean.delete(new UpdateListener() {
                             @Override

@@ -14,9 +14,9 @@ import com.sim.baselibrary.utils.LogUtil;
 import com.sim.baselibrary.utils.ToastUtil;
 import com.sim.traveltool.R;
 import com.sim.traveltool.adapter.BusStationListAdapter;
-import com.sim.traveltool.bean.BusRealTimeBusStopDataBean;
-import com.sim.traveltool.bean.BusRealTimeDataBean;
-import com.sim.traveltool.internet.APIFactory;
+import com.sim.traveltool.bean.BusRealTimeBusStopBean;
+import com.sim.traveltool.bean.BusRealTimeBean;
+import com.sim.traveltool.http.APIFactory;
 import com.sim.traveltool.ui.view.TitleView;
 
 import java.util.ArrayList;
@@ -45,8 +45,8 @@ public class BusRealTimeActivity extends BaseActivity {
             endTime,//结束运营时间
             price;//公交乘坐价格
 
-    private ArrayList<BusRealTimeBusStopDataBean.DataBean> stationList = new ArrayList<>();
-    private ArrayList<BusRealTimeDataBean.DataBean> busListOnRoadListList = new ArrayList<>();
+    private ArrayList<BusRealTimeBusStopBean.DataBean> stationList = new ArrayList<>();
+    private ArrayList<BusRealTimeBean.DataBean> busListOnRoadListList = new ArrayList<>();
 
     private BusStationListAdapter stationListAdapter;
 
@@ -133,7 +133,7 @@ public class BusRealTimeActivity extends BaseActivity {
      */
     private void getStationList(String lineId) {
         stationList.clear();
-        APIFactory.getInstance().getStationList(new Subscriber<BusRealTimeBusStopDataBean>() {
+        APIFactory.getInstance().getStationList(new Subscriber<BusRealTimeBusStopBean>() {
             @Override
             public void onCompleted() {
                 if (stationList == null) {
@@ -150,12 +150,12 @@ public class BusRealTimeActivity extends BaseActivity {
             }
 
             @Override
-            public void onNext(BusRealTimeBusStopDataBean data) {
+            public void onNext(BusRealTimeBusStopBean data) {
                 if (data.getFlag() == 1002) {
                     stationList.addAll(data.getData());
                 }
             }
-        }, "GetStationList", lineId, String.valueOf(System.currentTimeMillis()));
+        }, "GetStationList", lineId);
     }
 
     /**
@@ -166,7 +166,7 @@ public class BusRealTimeActivity extends BaseActivity {
      */
     private void getBusListOnRoad(String lineName, String fromStation) {
         busListOnRoadListList.clear();
-        APIFactory.getInstance().getBusListOnRoad(new Subscriber<BusRealTimeDataBean>() {
+        APIFactory.getInstance().getBusListOnRoad(new Subscriber<BusRealTimeBean>() {
             @Override
             public void onCompleted() {
                 //30s做一次更新查询
@@ -188,12 +188,12 @@ public class BusRealTimeActivity extends BaseActivity {
             }
 
             @Override
-            public void onNext(BusRealTimeDataBean data) {
+            public void onNext(BusRealTimeBean data) {
                 if (data.getFlag() == 1002) {
                     busListOnRoadListList.addAll(data.getData());
                 }
             }
-        }, "GetBusListOnRoad", lineName, fromStation, String.valueOf(System.currentTimeMillis()));
+        }, "GetBusListOnRoad", lineName, fromStation);
     }
 
 }

@@ -14,18 +14,18 @@ import com.google.android.material.imageview.ShapeableImageView;
 import com.sim.baselibrary.base.BaseAdapter;
 import com.sim.baselibrary.base.BaseViewHolder;
 import com.sim.traveltool.R;
-import com.sim.traveltool.bean.NewsWangYiBean;
+import com.sim.traveltool.bean.WangyiBean;
 
 import java.util.ArrayList;
 
 /**
  * @author Sim --- 新闻列表界面的RecyclerView适配器
  */
-public class NewsAdapter extends BaseAdapter<NewsAdapter.ViewHolder, NewsWangYiBean.NewsBean> {
+public class NewsAdapter extends BaseAdapter<NewsAdapter.ViewHolder, WangyiBean.NewsBean> {
 
     private Context mContext;
 
-    public NewsAdapter(Context context, ArrayList<NewsWangYiBean.NewsBean> news) {
+    public NewsAdapter(Context context, ArrayList<WangyiBean.NewsBean> news) {
         super(news);
         this.mContext = context;
     }
@@ -55,7 +55,7 @@ public class NewsAdapter extends BaseAdapter<NewsAdapter.ViewHolder, NewsWangYiB
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        NewsWangYiBean.NewsBean resultBean = getItem(position);
+        WangyiBean.NewsBean resultBean = getItem(position);
         Glide.with(mContext)
                 .load(resultBean.getImage())
                 .into(holder.newsImage);

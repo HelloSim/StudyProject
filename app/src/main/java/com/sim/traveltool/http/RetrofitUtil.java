@@ -1,15 +1,13 @@
-package com.sim.traveltool.internet;
+package com.sim.traveltool.http;
 
 import android.content.Context;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Environment;
 
-import com.sim.baselibrary.bean.HttpResult;
-import com.sim.baselibrary.internet.APIException;
-import com.sim.baselibrary.internet.RxUtils;
-import com.sim.traveltool.internet.interceptor.BaseUrlInterceptor;
-import com.sim.traveltool.internet.interceptor.MyCacheInterceptor;
+import com.sim.baselibrary.http.SSLUtils;
+import com.sim.baselibrary.http.interceptor.BaseUrlInterceptor;
+import com.sim.baselibrary.http.interceptor.HeaderInterceptor;
+import com.sim.baselibrary.http.interceptor.MyCacheInterceptor;
+import com.sim.baselibrary.http.interceptor.QueryParameterInterceptor;
 
 import java.io.File;
 import java.util.concurrent.TimeUnit;
@@ -23,7 +21,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import rx.Observable;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
 /**
@@ -56,17 +53,30 @@ public class RetrofitUtil {
         File cacheFile = new File(getCacheDir(mContext), "httpCache");
         Cache cache = new Cache(cacheFile, 1024 * 1024 * 50);
 
+        // addInterceptor() 添加应用拦截器
+        // ● 不需要担心中间过程的响应,如重定向和重试.
+        // ● 总是只调用一次,即使HTTP响应是从缓存中获取.
+        // ● 观察应用程序的初衷. 不关心OkHttp注入的头信息如: If-None-Match.
+        // ● 允许短路而不调用 Chain.proceed(),即中止调用.
+        // ● 允许重试,使 Chain.proceed()调用多次.
+        // addNetworkInterceptor() 添加网络拦截器
+        // ● 能够操作中间过程的响应,如重定向和重试.
+        // ● 当网络短路而返回缓存响应时不被调用.
+        // ● 只观察在网络上传输的数据.
+        // ● 携带请求来访问连接.
         OkHttpClient.Builder builder = new OkHttpClient.Builder()
                 .connectTimeout(15, TimeUnit.SECONDS)//设置连接超时
                 .readTimeout(20, TimeUnit.SECONDS)//读取超时
                 .writeTimeout(20, TimeUnit.SECONDS)//写入超时
                 .retryOnConnectionFailure(true)//错误重连
-                .sslSocketFactory(RxUtils.createSSLSocketFactory())//绕过证书验证
+                .sslSocketFactory(SSLUtils.createSSLSocketFactory())//绕过证书验证
                 .cache(cache)//缓存
-                .addInterceptor(new MyCacheInterceptor(mContext))//缓存拦截器
+                //缓存拦截器
+                .addInterceptor(new MyCacheInterceptor(mContext))//无网络时
+                .addNetworkInterceptor(new MyCacheInterceptor(mContext))//有网络时
                 .addInterceptor(new BaseUrlInterceptor())//baseUrl拦截器
-//                .addInterceptor(new HeaderInterceptor())//头部拦截器
-//                .addInterceptor(new QueryParameterInterceptor())//公共参数拦截器
+                .addInterceptor(new HeaderInterceptor())//头部拦截器
+                .addInterceptor(new QueryParameterInterceptor())//公共参数拦截器
                 .addInterceptor(loggingInterceptor);//设置 Debug Log 模式
         okHttpClient = builder.build();
     }
@@ -76,7 +86,7 @@ public class RetrofitUtil {
      */
     private void initRetrofit() {
         retrofit = new Retrofit.Builder()
-                .baseUrl(API.wangyi_base_url)
+                .baseUrl("https://api.apiopen.top")
                 .client(okHttpClient)
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
@@ -88,20 +98,6 @@ public class RetrofitUtil {
             apiService = retrofit.create(ApiService.class);
         }
         return apiService;
-    }
-
-    /**
-     * 只关注是否联网
-     */
-    public static boolean isNetworkConnected(Context context) {
-        if (context != null) {
-            ConnectivityManager mConnectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-            NetworkInfo mNetworkInfo = mConnectivityManager.getActiveNetworkInfo();
-            if (mNetworkInfo != null) {
-                return mNetworkInfo.isAvailable();
-            }
-        }
-        return false;
     }
 
     /**
@@ -132,7 +128,7 @@ public class RetrofitUtil {
      *
      * @param <T> Subscriber真正需要的数据类型，也就是Data部分的数据类型
      */
-    public class HttpResultFunc<T> implements Func1<HttpResult<T>, T> {
+    /*public class HttpResultFunc<T> implements Func1<HttpResult<T>, T> {
         @Override
         public T call(HttpResult<T> httpResult) {
             if (!httpResult.isSuccess()) {
@@ -140,6 +136,6 @@ public class RetrofitUtil {
             }
             return httpResult.content;
         }
-    }
+    }*/
 
 }

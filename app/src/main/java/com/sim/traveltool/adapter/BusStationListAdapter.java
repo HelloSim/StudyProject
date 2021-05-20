@@ -10,19 +10,19 @@ import androidx.annotation.NonNull;
 import com.sim.baselibrary.base.BaseAdapter;
 import com.sim.baselibrary.base.BaseViewHolder;
 import com.sim.traveltool.R;
-import com.sim.traveltool.bean.BusRealTimeBusStopDataBean;
-import com.sim.traveltool.bean.BusRealTimeDataBean;
+import com.sim.traveltool.bean.BusRealTimeBusStopBean;
+import com.sim.traveltool.bean.BusRealTimeBean;
 
 import java.util.ArrayList;
 
 /**
  * @author Sim --- 起始位置搜索界面的RecyclerView适配器
  */
-public class BusStationListAdapter extends BaseAdapter<BusStationListAdapter.ViewHolder,BusRealTimeBusStopDataBean.DataBean> {
+public class BusStationListAdapter extends BaseAdapter<BusStationListAdapter.ViewHolder, BusRealTimeBusStopBean.DataBean> {
 
-    private ArrayList<BusRealTimeDataBean.DataBean> busListOnRoadListList = new ArrayList<>();
+    private ArrayList<BusRealTimeBean.DataBean> busListOnRoadListList = new ArrayList<>();
 
-    public BusStationListAdapter(ArrayList<BusRealTimeBusStopDataBean.DataBean> stationList, ArrayList<BusRealTimeDataBean.DataBean> busListOnRoadListList) {
+    public BusStationListAdapter(ArrayList<BusRealTimeBusStopBean.DataBean> stationList, ArrayList<BusRealTimeBean.DataBean> busListOnRoadListList) {
         super(stationList);
         this.busListOnRoadListList = busListOnRoadListList;
     }
@@ -40,7 +40,7 @@ public class BusStationListAdapter extends BaseAdapter<BusStationListAdapter.Vie
         holder.tvStationName.setText(getItem(position).getName());
         if (busListOnRoadListList != null) {
             StringBuffer busNumber = new StringBuffer();
-            for (BusRealTimeDataBean.DataBean dataBean : busListOnRoadListList) {
+            for (BusRealTimeBean.DataBean dataBean : busListOnRoadListList) {
                 if (holder.tvStationName.getText().toString().equals(dataBean.getCurrentStation())) {
                     busNumber.append("\n" + dataBean.getBusNumber());
                 }

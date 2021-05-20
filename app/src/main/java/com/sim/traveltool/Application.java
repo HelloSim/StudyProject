@@ -7,7 +7,7 @@ import androidx.multidex.MultiDex;
 
 import com.sim.baselibrary.utils.CrashHandler;
 import com.sim.baselibrary.utils.LogUtil;
-import com.sim.traveltool.internet.APIFactory;
+import com.sim.traveltool.http.APIFactory;
 import com.tencent.bugly.Bugly;
 import com.tencent.bugly.beta.Beta;
 

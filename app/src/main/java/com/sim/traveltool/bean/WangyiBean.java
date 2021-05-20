@@ -10,7 +10,7 @@ import cn.bmob.v3.BmobObject;
 /**
  * @author Sim --- 网易新闻返回的数据bean类
  */
-public class NewsWangYiBean implements Serializable {
+public class WangyiBean implements Serializable {
     /**
      * code : 200
      * message : 成功!

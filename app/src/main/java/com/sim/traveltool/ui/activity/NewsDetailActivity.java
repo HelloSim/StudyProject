@@ -10,10 +10,9 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import com.sim.baselibrary.base.BaseActivity;
-import com.sim.baselibrary.utils.LogUtil;
 import com.sim.baselibrary.utils.ToastUtil;
 import com.sim.traveltool.R;
-import com.sim.traveltool.bean.NewsWangYiBean;
+import com.sim.traveltool.bean.WangyiBean;
 import com.sim.traveltool.bean.db.User;
 import com.sim.traveltool.ui.view.TitleView;
 
@@ -34,8 +33,8 @@ public class NewsDetailActivity extends BaseActivity {
     private TitleView titleView;
     private WebView webView;
 
-    private NewsWangYiBean.NewsBean news;//传进来的news
-    private NewsWangYiBean.NewsBean collectionNewsBean;//收藏中的news
+    private WangyiBean.NewsBean news;//传进来的news
+    private WangyiBean.NewsBean collectionNewsBean;//收藏中的news
 
     private boolean isCollect = false;//是否收藏
 
@@ -56,7 +55,7 @@ public class NewsDetailActivity extends BaseActivity {
 
             @Override
             public void right(View right) {
-                NewsWangYiBean.NewsBean bean = new NewsWangYiBean.NewsBean();
+                WangyiBean.NewsBean bean = new WangyiBean.NewsBean();
                 if (BmobUser.isLogin()) {
                     if (isCollect && collectionNewsBean != null) {
                         bean.setObjectId(collectionNewsBean.getObjectId());
@@ -101,17 +100,17 @@ public class NewsDetailActivity extends BaseActivity {
 
     @Override
     protected void initData() {
-        news = (NewsWangYiBean.NewsBean) getIntent().getSerializableExtra("news");
+        news = (WangyiBean.NewsBean) getIntent().getSerializableExtra("news");
         if (BmobUser.isLogin()) {
-            BmobQuery<NewsWangYiBean.NewsBean> bmobQuery = new BmobQuery<>();
+            BmobQuery<WangyiBean.NewsBean> bmobQuery = new BmobQuery<>();
             bmobQuery.addWhereEqualTo("user", BmobUser.getCurrentUser(User.class));
             bmobQuery.addWhereEqualTo("title", news.getTitle());
-            bmobQuery.findObjects(new FindListener<NewsWangYiBean.NewsBean>() {
+            bmobQuery.findObjects(new FindListener<WangyiBean.NewsBean>() {
                 @Override
-                public void done(List<NewsWangYiBean.NewsBean> list, BmobException e) {
+                public void done(List<WangyiBean.NewsBean> list, BmobException e) {
                     if (e == null && list != null && list.size() == 1) {
                         isCollect = false;
-                        for (NewsWangYiBean.NewsBean bean : list) {
+                        for (WangyiBean.NewsBean bean : list) {
                             if (bean.getTitle().equals(news.getTitle())) {
                                 titleView.setRightImage(R.mipmap.ic_collect_yes);
                                 collectionNewsBean = list.get(0);

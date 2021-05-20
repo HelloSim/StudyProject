@@ -1,4 +1,4 @@
-package com.sim.baselibrary.internet;
+package com.sim.baselibrary.http;
 
 /**
  * @author Sim --- 自定义异常处理

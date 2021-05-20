@@ -11,16 +11,16 @@ import androidx.annotation.NonNull;
 import com.sim.baselibrary.base.BaseAdapter;
 import com.sim.baselibrary.base.BaseViewHolder;
 import com.sim.traveltool.R;
-import com.sim.traveltool.bean.BusLocationDataBean;
+import com.sim.traveltool.bean.BusLocationBean;
 
 import java.util.ArrayList;
 
 /**
  * @author Sim --- 终点位置搜索界面的RecyclerView适配器
  */
-public class BusStationNameAdapter extends BaseAdapter<BusStationNameAdapter.ViewHolder, BusLocationDataBean.TipsBean> {
+public class BusStationNameAdapter extends BaseAdapter<BusStationNameAdapter.ViewHolder, BusLocationBean.TipsBean> {
 
-    public BusStationNameAdapter(ArrayList<BusLocationDataBean.TipsBean> startStationDataList) {
+    public BusStationNameAdapter(ArrayList<BusLocationBean.TipsBean> startStationDataList) {
         super(startStationDataList);
     }
 
@@ -33,7 +33,7 @@ public class BusStationNameAdapter extends BaseAdapter<BusStationNameAdapter.Vie
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        BusLocationDataBean.TipsBean tipsBean = getItem(position);
+        BusLocationBean.TipsBean tipsBean = getItem(position);
         if (tipsBean != null)
             holder.tvLocationName.setText(String.valueOf(tipsBean.getName()));
         holder.parent.setOnClickListener(new View.OnClickListener() {

@@ -5,7 +5,7 @@ import java.util.List;
 /**
  * @author Sim --- 搜索指定公交的路线站点返回的数据bean类
  */
-public class BusRealTimeBusStopDataBean {
+public class BusRealTimeBusStopBean {
 
     /**
      * flag : 1002

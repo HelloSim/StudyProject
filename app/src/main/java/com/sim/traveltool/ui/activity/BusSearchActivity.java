@@ -20,9 +20,9 @@ import com.sim.traveltool.AppHelper;
 import com.sim.traveltool.R;
 import com.sim.traveltool.adapter.BusLineNameAdapter;
 import com.sim.traveltool.adapter.BusStationNameAdapter;
-import com.sim.traveltool.bean.BusLocationDataBean;
-import com.sim.traveltool.bean.BusRealTimeLineDataBean;
-import com.sim.traveltool.internet.APIFactory;
+import com.sim.traveltool.bean.BusLocationBean;
+import com.sim.traveltool.bean.BusRealTimeLineBean;
+import com.sim.traveltool.http.APIFactory;
 import com.sim.traveltool.ui.view.TitleView;
 
 import java.util.ArrayList;
@@ -42,9 +42,9 @@ public class BusSearchActivity extends BaseActivity {
     private int searchType;
 
     private BusStationNameAdapter stationNameAdapter;
-    private ArrayList<BusLocationDataBean.TipsBean> startLocationDataBeanList = new ArrayList<>();
+    private ArrayList<BusLocationBean.TipsBean> startLocationDataBeanList = new ArrayList<>();
 
-    private ArrayList<BusRealTimeLineDataBean.DataBean> lineListByLineNameBeanList = new ArrayList<>();
+    private ArrayList<BusRealTimeLineBean.DataBean> lineListByLineNameBeanList = new ArrayList<>();
     private BusLineNameAdapter busLineNameAdapter;
     private boolean hasResult = false;
 
@@ -152,7 +152,7 @@ public class BusSearchActivity extends BaseActivity {
      */
     private void getLineListByLineName(String key) {
         //这里做请求
-        APIFactory.getInstance().getLineListByLineName(new Subscriber<BusRealTimeLineDataBean>() {
+        APIFactory.getInstance().getLineListByLineName(new Subscriber<BusRealTimeLineBean>() {
             @Override
             public void onCompleted() {
                 if (!hasResult) {
@@ -176,7 +176,7 @@ public class BusSearchActivity extends BaseActivity {
             }
 
             @Override
-            public void onNext(BusRealTimeLineDataBean data) {
+            public void onNext(BusRealTimeLineBean data) {
                 if (data.getFlag() == 1002) {
                     hasResult = true;
                     lineListByLineNameBeanList.addAll(data.getData());
@@ -185,7 +185,7 @@ public class BusSearchActivity extends BaseActivity {
                     hasResult = false;
                 }
             }
-        }, "GetLineListByLineName", key, String.valueOf(System.currentTimeMillis()));
+        }, "GetLineListByLineName", key);
     }
 
     /**
@@ -195,7 +195,7 @@ public class BusSearchActivity extends BaseActivity {
      */
     public void getStartLocation(String keywords) {
         startLocationDataBeanList.clear();
-        APIFactory.getInstance().getStartOrEndLocation(new Subscriber<BusLocationDataBean>() {
+        APIFactory.getInstance().getStartOrEndLocation(new Subscriber<BusLocationBean>() {
             @Override
             public void onCompleted() {
                 stationNameAdapter.notifyDataSetChanged();
@@ -209,7 +209,7 @@ public class BusSearchActivity extends BaseActivity {
             }
 
             @Override
-            public void onNext(BusLocationDataBean busLocationDataBean) {
+            public void onNext(BusLocationBean busLocationDataBean) {
                 startLocationDataBeanList.addAll(busLocationDataBean.getTips());
             }
         }, keywords);

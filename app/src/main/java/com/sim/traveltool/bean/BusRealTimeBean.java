@@ -5,7 +5,7 @@ import java.util.List;
 /**
  * @author Sim --- 实时公交数据bean类
  */
-public class BusRealTimeDataBean {
+public class BusRealTimeBean {
 
     /**
      * flag : 1002

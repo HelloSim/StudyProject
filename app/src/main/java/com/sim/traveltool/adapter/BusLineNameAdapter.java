@@ -11,16 +11,16 @@ import androidx.annotation.NonNull;
 import com.sim.baselibrary.base.BaseAdapter;
 import com.sim.baselibrary.base.BaseViewHolder;
 import com.sim.traveltool.R;
-import com.sim.traveltool.bean.BusRealTimeLineDataBean;
+import com.sim.traveltool.bean.BusRealTimeLineBean;
 
 import java.util.List;
 
 /**
  * @author Sim --- 实时公交搜索界面的RecyclerView适配器
  */
-public class BusLineNameAdapter extends BaseAdapter<BusLineNameAdapter.ViewHolder, BusRealTimeLineDataBean.DataBean> {
+public class BusLineNameAdapter extends BaseAdapter<BusLineNameAdapter.ViewHolder, BusRealTimeLineBean.DataBean> {
 
-    public BusLineNameAdapter(List<BusRealTimeLineDataBean.DataBean> busLineNameBeanList) {
+    public BusLineNameAdapter(List<BusRealTimeLineBean.DataBean> busLineNameBeanList) {
         super(busLineNameBeanList);
     }
 
@@ -33,7 +33,7 @@ public class BusLineNameAdapter extends BaseAdapter<BusLineNameAdapter.ViewHolde
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        BusRealTimeLineDataBean.DataBean dataBean = getItem(position);
+        BusRealTimeLineBean.DataBean dataBean = getItem(position);
         if (dataBean != null) {
             holder.tvBusName.setText(dataBean.getName());
             holder.tvBusLineName.setText(dataBean.getFromStation() + "->" + dataBean.getToStation());

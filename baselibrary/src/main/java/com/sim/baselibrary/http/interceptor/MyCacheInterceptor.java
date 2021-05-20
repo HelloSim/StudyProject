@@ -1,5 +1,6 @@
-package com.sim.traveltool.internet.interceptor;
+package com.sim.baselibrary.http.interceptor;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -59,27 +60,12 @@ public class MyCacheInterceptor implements Interceptor {
     public static boolean isNetworkConnected(Context context) {
         if (context != null) {
             ConnectivityManager mConnectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-            NetworkInfo mNetworkInfo = mConnectivityManager.getActiveNetworkInfo();
+            @SuppressLint("MissingPermission") NetworkInfo mNetworkInfo = mConnectivityManager.getActiveNetworkInfo();
             if (mNetworkInfo != null) {
                 return mNetworkInfo.isAvailable();
             }
         }
         return false;
     }
-
-    /**
-     * 如果存在SD卡则将缓存写入SD卡,否则写入手机内存
-     */
-    public static String getCacheDir(Context context) {
-        String cacheDir;
-        if (context.getExternalCacheDir() != null
-                && Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
-            cacheDir = context.getExternalCacheDir().toString();
-        } else {
-            cacheDir = context.getCacheDir().toString();
-        }
-        return cacheDir;
-    }
-
 
 }

@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * @author Sim ---- 出行路线搜索返回的数据bean类
  */
-public class BusRouteDataBean implements Serializable {
+public class BusRouteBean implements Serializable {
 
     /**
      * status : 1

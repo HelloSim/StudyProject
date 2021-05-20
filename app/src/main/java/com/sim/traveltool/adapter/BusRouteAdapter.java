@@ -11,7 +11,7 @@ import androidx.annotation.NonNull;
 import com.sim.baselibrary.base.BaseAdapter;
 import com.sim.baselibrary.base.BaseViewHolder;
 import com.sim.traveltool.R;
-import com.sim.traveltool.bean.BusRouteDataBean;
+import com.sim.traveltool.bean.BusRouteBean;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,9 +19,9 @@ import java.util.List;
 /**
  * @author Sim --- 出行方案界面的RecyclerView适配器
  */
-public class BusRouteAdapter extends BaseAdapter<BusRouteAdapter.ViewHolder, BusRouteDataBean.RouteBean.TransitsBean> {
+public class BusRouteAdapter extends BaseAdapter<BusRouteAdapter.ViewHolder, BusRouteBean.RouteBean.TransitsBean> {
 
-    public BusRouteAdapter(List<BusRouteDataBean.RouteBean.TransitsBean> routeDataList) {
+    public BusRouteAdapter(List<BusRouteBean.RouteBean.TransitsBean> routeDataList) {
         super(routeDataList);
     }
 
@@ -34,11 +34,11 @@ public class BusRouteAdapter extends BaseAdapter<BusRouteAdapter.ViewHolder, Bus
 
     @Override
     public void onBindViewHolder(@NonNull BusRouteAdapter.ViewHolder holder, int position) {
-        BusRouteDataBean.RouteBean.TransitsBean transitsBean = getItem(position);
+        BusRouteBean.RouteBean.TransitsBean transitsBean = getItem(position);
         if (transitsBean != null) {
-            ArrayList<BusRouteDataBean.RouteBean.TransitsBean.SegmentsBean> segmentsBeanArrayList = new ArrayList<>();
+            ArrayList<BusRouteBean.RouteBean.TransitsBean.SegmentsBean> segmentsBeanArrayList = new ArrayList<>();
             segmentsBeanArrayList.addAll(transitsBean.getSegments());
-            ArrayList<BusRouteDataBean.RouteBean.TransitsBean.SegmentsBean.BusBean.BuslinesBean> buslinesBeanArrayList = new ArrayList<>();
+            ArrayList<BusRouteBean.RouteBean.TransitsBean.SegmentsBean.BusBean.BuslinesBean> buslinesBeanArrayList = new ArrayList<>();
             for (int i = 0; i < segmentsBeanArrayList.size(); i++) {
                 buslinesBeanArrayList.addAll(segmentsBeanArrayList.get(i).getBus().getBuslines());
             }

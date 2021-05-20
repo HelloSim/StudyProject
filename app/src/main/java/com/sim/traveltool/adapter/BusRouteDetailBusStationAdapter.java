@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.sim.baselibrary.base.BaseAdapter;
 import com.sim.baselibrary.base.BaseViewHolder;
 import com.sim.traveltool.R;
-import com.sim.traveltool.bean.BusRouteDataBean;
+import com.sim.traveltool.bean.BusRouteBean;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,11 +22,11 @@ import java.util.List;
  * @author Sim ---
  */
 public class BusRouteDetailBusStationAdapter extends BaseAdapter<BusRouteDetailBusStationAdapter.ViewHolder,
-        BusRouteDataBean.RouteBean.TransitsBean.SegmentsBean.BusBean.BuslinesBean> {
+        BusRouteBean.RouteBean.TransitsBean.SegmentsBean.BusBean.BuslinesBean> {
 
-    private List<BusRouteDataBean.RouteBean.TransitsBean.SegmentsBean.BusBean.BuslinesBean> buslinesBeanList = new ArrayList<>();
+    private List<BusRouteBean.RouteBean.TransitsBean.SegmentsBean.BusBean.BuslinesBean> buslinesBeanList = new ArrayList<>();
 
-    public BusRouteDetailBusStationAdapter(List<BusRouteDataBean.RouteBean.TransitsBean.SegmentsBean.BusBean.BuslinesBean> buslinesBeanList) {
+    public BusRouteDetailBusStationAdapter(List<BusRouteBean.RouteBean.TransitsBean.SegmentsBean.BusBean.BuslinesBean> buslinesBeanList) {
         super(buslinesBeanList);
         this.buslinesBeanList = buslinesBeanList;
     }

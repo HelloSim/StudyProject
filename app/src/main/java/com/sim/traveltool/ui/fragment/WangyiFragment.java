@@ -14,8 +14,8 @@ import com.sim.baselibrary.base.BaseViewHolder;
 import com.sim.baselibrary.utils.LogUtil;
 import com.sim.traveltool.R;
 import com.sim.traveltool.adapter.NewsAdapter;
-import com.sim.traveltool.bean.NewsWangYiBean;
-import com.sim.traveltool.internet.APIFactory;
+import com.sim.traveltool.bean.WangyiBean;
+import com.sim.traveltool.http.APIFactory;
 import com.sim.traveltool.ui.activity.NewsDetailActivity;
 
 import java.io.Serializable;
@@ -29,7 +29,7 @@ import rx.Subscriber;
 public class WangyiFragment extends BaseFragment {
 
     private RecyclerView newsRecyclerView;
-    private ArrayList<NewsWangYiBean.NewsBean> newsList = new ArrayList<>();
+    private ArrayList<WangyiBean.NewsBean> newsList = new ArrayList<>();
     private NewsAdapter newsAdapter;
 
     private SwipeRefreshLayout refreshLayout;
@@ -79,6 +79,7 @@ public class WangyiFragment extends BaseFragment {
             @Override
             public void onRefresh() {
                 newsList.clear();
+                page = 0;
                 newsAdapter.notifyDataSetChanged();
                 getWangYiNew();
             }
@@ -112,7 +113,7 @@ public class WangyiFragment extends BaseFragment {
      * 获取网易新闻的网络请求
      */
     private void getWangYiNew() {
-        APIFactory.getInstance().getWangYiNew(new Subscriber<NewsWangYiBean>() {
+        APIFactory.getInstance().getWangYiNew(new Subscriber<WangyiBean>() {
             @Override
             public void onCompleted() {
                 refreshLayout.setRefreshing(false);
@@ -124,11 +125,11 @@ public class WangyiFragment extends BaseFragment {
             }
 
             @Override
-            public void onNext(NewsWangYiBean wangYiNewsBean) {
+            public void onNext(WangyiBean wangYiNewsBean) {
                 newsList.addAll(wangYiNewsBean.getResult());
                 newsAdapter.notifyDataSetChanged();
             }
-        }, String.valueOf(page++), "20");
+        }, String.valueOf(page++));
     }
 
 }

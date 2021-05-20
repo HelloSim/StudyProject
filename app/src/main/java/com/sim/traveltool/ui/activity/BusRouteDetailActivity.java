@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.sim.baselibrary.base.BaseActivity;
 import com.sim.traveltool.R;
 import com.sim.traveltool.adapter.BusRouteDetailAdapter;
-import com.sim.traveltool.bean.BusRouteDataBean;
+import com.sim.traveltool.bean.BusRouteBean;
 import com.sim.traveltool.ui.view.TitleView;
 
 /**
@@ -25,7 +25,7 @@ public class BusRouteDetailActivity extends BaseActivity {
 
     private String tvStartLocation,//起点位置
             tvEndLocation;//终点位置
-    private BusRouteDataBean.RouteBean.TransitsBean data;//出行方式详细数据
+    private BusRouteBean.RouteBean.TransitsBean data;//出行方式详细数据
     private StringBuffer busRoute = new StringBuffer();
     private BusRouteDetailAdapter busRouteDetailAdapter;
 
@@ -52,8 +52,8 @@ public class BusRouteDetailActivity extends BaseActivity {
     protected void initData() {
         tvStartLocation = getIntent().getStringExtra("tvStartLocation");
         tvEndLocation = getIntent().getStringExtra("tvEndLocation");
-        data = (BusRouteDataBean.RouteBean.TransitsBean) getIntent().getSerializableExtra("data");
-        for (BusRouteDataBean.RouteBean.TransitsBean.SegmentsBean segmentsBean : data.getSegments()) {
+        data = (BusRouteBean.RouteBean.TransitsBean) getIntent().getSerializableExtra("data");
+        for (BusRouteBean.RouteBean.TransitsBean.SegmentsBean segmentsBean : data.getSegments()) {
             if (segmentsBean.getBus().getBuslines() != null && segmentsBean.getBus().getBuslines().size() > 0) {
                 if (busRoute.length() > 0) {
                     busRoute.append(" > ");
