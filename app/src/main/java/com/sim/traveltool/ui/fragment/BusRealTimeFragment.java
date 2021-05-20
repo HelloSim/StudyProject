@@ -1,10 +1,13 @@
 package com.sim.traveltool.ui.fragment;
 
+import android.content.Intent;
 import android.view.View;
 import android.widget.EditText;
 
 import com.sim.baselibrary.base.BaseFragment;
+import com.sim.traveltool.AppHelper;
 import com.sim.traveltool.R;
+import com.sim.traveltool.ui.activity.BusSearchActivity;
 
 /**
  * @author Sim --- 实时公交fragment
@@ -36,7 +39,7 @@ public class BusRealTimeFragment extends BaseFragment {
     @Override
     public void onMultiClick(View view) {
         if (view == etSearch) {
-//            startActivity(new Intent(getActivity(), BusSearchActivity.class).putExtra("searchType", AppHelper.RESULT_BUS));
+            startActivity(new Intent(getActivity(), BusSearchActivity.class).putExtra("searchType", AppHelper.RESULT_BUS));
         } else {
             super.onMultiClick(view);
         }

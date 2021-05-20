@@ -202,8 +202,7 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
     private List<String> getDeniedPermissions(String[] permissions) {
         List<String> needRequestPermissionList = new ArrayList<>();
         for (String permission : permissions) {
-            if (ContextCompat.checkSelfPermission(this, permission) !=
-                    PackageManager.PERMISSION_GRANTED ||
+            if (ContextCompat.checkSelfPermission(this, permission) != PackageManager.PERMISSION_GRANTED ||
                     ActivityCompat.shouldShowRequestPermissionRationale(this, permission)) {
                 needRequestPermissionList.add(permission);
             }

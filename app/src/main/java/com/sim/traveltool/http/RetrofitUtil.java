@@ -4,10 +4,10 @@ import android.content.Context;
 import android.os.Environment;
 
 import com.sim.baselibrary.http.SSLUtils;
-import com.sim.baselibrary.http.interceptor.BaseUrlInterceptor;
-import com.sim.baselibrary.http.interceptor.HeaderInterceptor;
-import com.sim.baselibrary.http.interceptor.MyCacheInterceptor;
-import com.sim.baselibrary.http.interceptor.QueryParameterInterceptor;
+import com.sim.traveltool.http.interceptor.BaseUrlInterceptor;
+import com.sim.traveltool.http.interceptor.HeaderInterceptor;
+import com.sim.traveltool.http.interceptor.MyCacheInterceptor;
+import com.sim.traveltool.http.interceptor.QueryParameterInterceptor;
 
 import java.io.File;
 import java.util.concurrent.TimeUnit;
