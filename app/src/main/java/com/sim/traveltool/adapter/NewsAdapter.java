@@ -11,8 +11,8 @@ import androidx.annotation.NonNull;
 
 import com.bumptech.glide.Glide;
 import com.google.android.material.imageview.ShapeableImageView;
-import com.sim.baselibrary.base.BaseAdapter;
-import com.sim.baselibrary.base.BaseViewHolder;
+import com.sim.common.base.BaseAdapter;
+import com.sim.common.base.BaseViewHolder;
 import com.sim.traveltool.R;
 import com.sim.traveltool.bean.WangyiBean;
 

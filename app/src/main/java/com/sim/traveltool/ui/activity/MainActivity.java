@@ -15,11 +15,11 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.sim.baselibrary.base.BaseActivity;
-import com.sim.baselibrary.bean.EventMessage;
-import com.sim.baselibrary.utils.LogUtil;
-import com.sim.baselibrary.utils.SPUtil;
-import com.sim.baselibrary.utils.ToastUtil;
+import com.sim.common.base.BaseActivity;
+import com.sim.common.bean.EventMessage;
+import com.sim.common.utils.LogUtil;
+import com.sim.common.utils.SPUtil;
+import com.sim.common.utils.ToastUtil;
 import com.sim.traveltool.AppHelper;
 import com.sim.traveltool.R;
 import com.sim.traveltool.bean.db.User;

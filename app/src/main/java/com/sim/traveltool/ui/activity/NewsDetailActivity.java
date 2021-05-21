@@ -9,8 +9,8 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
-import com.sim.baselibrary.base.BaseActivity;
-import com.sim.baselibrary.utils.ToastUtil;
+import com.sim.common.base.BaseActivity;
+import com.sim.common.utils.ToastUtil;
 import com.sim.traveltool.R;
 import com.sim.traveltool.bean.WangyiBean;
 import com.sim.traveltool.bean.db.User;

@@ -10,8 +10,8 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.tabs.TabLayout;
-import com.sim.baselibrary.base.BaseFragment;
-import com.sim.baselibrary.utils.ToastUtil;
+import com.sim.common.base.BaseFragment;
+import com.sim.common.utils.ToastUtil;
 import com.sim.traveltool.R;
 import com.sim.traveltool.adapter.LoopViewAdapter;
 

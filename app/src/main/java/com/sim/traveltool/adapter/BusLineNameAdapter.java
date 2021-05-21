@@ -8,8 +8,8 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 
-import com.sim.baselibrary.base.BaseAdapter;
-import com.sim.baselibrary.base.BaseViewHolder;
+import com.sim.common.base.BaseAdapter;
+import com.sim.common.base.BaseViewHolder;
 import com.sim.traveltool.R;
 import com.sim.traveltool.bean.BusRealTimeLineBean;
 

@@ -7,10 +7,10 @@ import android.view.View;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.sim.baselibrary.base.BaseActivity;
-import com.sim.baselibrary.base.BaseAdapter;
-import com.sim.baselibrary.base.BaseViewHolder;
-import com.sim.baselibrary.callback.DialogInterface;
+import com.sim.common.base.BaseActivity;
+import com.sim.common.base.BaseAdapter;
+import com.sim.common.base.BaseViewHolder;
+import com.sim.common.callback.DialogInterface;
 import com.sim.traveltool.R;
 import com.sim.traveltool.adapter.NewsAdapter;
 import com.sim.traveltool.bean.WangyiBean;

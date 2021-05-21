@@ -21,18 +21,9 @@ android {
                 includeCompileClasspath = true
             }
         }
-        multiDexEnabled true
+        multiDexEnabled true//分包
     }
-    sourceSets {
-        main {
-            jniLibs.srcDirs = ['libs']
-        }
-    }
-    repositories {
-        flatDir {
-            dirs 'libs'
-        }
-    }
+    resourcePrefix "app_"
     signingConfigs {
         release {
             storeFile file('HelloSim.jks')
@@ -90,12 +81,13 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.2'
-    implementation 'androidx.appcompat:appcompat:1.2.0'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+    testImplementation deps.junit.junit
+    androidTestImplementation deps.junit.test
+    implementation deps.androidx.appcompat
+    androidTestImplementation deps.androidx.espresso
 
-    implementation project(":baselibrary")
+    implementation project(":common")
+//    annotationProcessor deps.arouter.compiler
 
     //bugly
     implementation 'com.tencent.bugly:crashreport_upgrade:1.4.5'

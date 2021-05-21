@@ -4,9 +4,8 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.os.Environment;
 
-import com.sim.baselibrary.utils.LogUtil;
+import com.sim.common.utils.LogUtil;
 
 import java.io.IOException;
 

@@ -4,7 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.sim.baselibrary.utils.LogUtil;
+import com.sim.common.utils.LogUtil;
 import com.sim.traveltool.ui.activity.MainActivity;
 
 import cn.jpush.android.api.CmdMessage;

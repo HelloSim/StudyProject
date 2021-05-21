@@ -7,7 +7,7 @@ import android.widget.EditText;
 
 import androidx.annotation.Nullable;
 
-import com.sim.baselibrary.base.BaseFragment;
+import com.sim.common.base.BaseFragment;
 import com.sim.traveltool.AppHelper;
 import com.sim.traveltool.R;
 import com.sim.traveltool.ui.activity.BusRouteActivity;

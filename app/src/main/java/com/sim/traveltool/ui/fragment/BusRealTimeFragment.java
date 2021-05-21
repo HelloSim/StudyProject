@@ -4,7 +4,7 @@ import android.content.Intent;
 import android.view.View;
 import android.widget.EditText;
 
-import com.sim.baselibrary.base.BaseFragment;
+import com.sim.common.base.BaseFragment;
 import com.sim.traveltool.AppHelper;
 import com.sim.traveltool.R;
 import com.sim.traveltool.ui.activity.BusSearchActivity;

@@ -2,7 +2,7 @@ package com.sim.traveltool.bean.db;
 
 import com.bin.david.form.annotation.SmartColumn;
 import com.bin.david.form.annotation.SmartTable;
-import com.sim.baselibrary.utils.TimeUtil;
+import com.sim.common.utils.TimeUtil;
 
 import cn.bmob.v3.BmobObject;
 

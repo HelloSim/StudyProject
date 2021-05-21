@@ -6,7 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 
-import com.sim.baselibrary.utils.LogUtil;
+import com.sim.common.utils.LogUtil;
 import com.sim.traveltool.ui.activity.MainActivity;
 
 import org.json.JSONException;

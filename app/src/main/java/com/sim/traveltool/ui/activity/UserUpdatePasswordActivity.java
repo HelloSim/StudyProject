@@ -12,11 +12,11 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 
-import com.sim.baselibrary.base.BaseActivity;
-import com.sim.baselibrary.callback.DialogInterface;
-import com.sim.baselibrary.callback.SuccessOrFailListener;
-import com.sim.baselibrary.utils.LogUtil;
-import com.sim.baselibrary.utils.ToastUtil;
+import com.sim.common.base.BaseActivity;
+import com.sim.common.callback.DialogInterface;
+import com.sim.common.callback.SuccessOrFailListener;
+import com.sim.common.utils.LogUtil;
+import com.sim.common.utils.ToastUtil;
 import com.sim.traveltool.R;
 import com.sim.traveltool.bean.db.User;
 import com.sim.traveltool.ui.view.TitleView;

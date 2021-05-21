@@ -1,6 +1,6 @@
 package com.sim.traveltool.bean.db;
 
-import com.sim.baselibrary.utils.LogUtil;
+import com.sim.common.utils.LogUtil;
 
 import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.exception.BmobException;

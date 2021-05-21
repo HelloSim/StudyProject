@@ -15,13 +15,13 @@ import android.widget.TextView;
 
 import com.haibin.calendarview.Calendar;
 import com.haibin.calendarview.CalendarView;
-import com.sim.baselibrary.base.BaseFragment;
-import com.sim.baselibrary.bean.EventMessage;
-import com.sim.baselibrary.callback.SuccessOrFailListener;
-import com.sim.baselibrary.utils.LogUtil;
-import com.sim.baselibrary.utils.SPUtil;
-import com.sim.baselibrary.utils.TimeUtil;
-import com.sim.baselibrary.utils.ToastUtil;
+import com.sim.common.base.BaseFragment;
+import com.sim.common.bean.EventMessage;
+import com.sim.common.callback.SuccessOrFailListener;
+import com.sim.common.utils.LogUtil;
+import com.sim.common.utils.SPUtil;
+import com.sim.common.utils.TimeUtil;
+import com.sim.common.utils.ToastUtil;
 import com.sim.traveltool.AppHelper;
 import com.sim.traveltool.R;
 import com.sim.traveltool.bean.db.RecordBean;
@@ -212,7 +212,7 @@ public class RecordFragment extends BaseFragment implements CalendarView.OnMonth
                         if (tvRecordTimeStart.getText().equals("未打卡")) {//未打上班卡
                             record(1);
                         } else {//已打上班卡
-                            showDialog(null, "更新打卡记录！", "确认", "取消", new com.sim.baselibrary.callback.DialogInterface() {
+                            showDialog(null, "更新打卡记录！", "确认", "取消", new com.sim.common.callback.DialogInterface() {
                                 @Override
                                 public void sureOnClick() {
                                     record(1);
@@ -228,7 +228,7 @@ public class RecordFragment extends BaseFragment implements CalendarView.OnMonth
                         if (tvRecordTimeEnd.getText().equals("未打卡")) {//未打下班卡
                             record(2);
                         } else {//已打下班卡
-                            showDialog(null, "更新打卡记录！", "确认", "取消", new com.sim.baselibrary.callback.DialogInterface() {
+                            showDialog(null, "更新打卡记录！", "确认", "取消", new com.sim.common.callback.DialogInterface() {
                                 @Override
                                 public void sureOnClick() {
                                     record(2);

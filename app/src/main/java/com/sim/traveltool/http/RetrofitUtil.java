@@ -3,7 +3,7 @@ package com.sim.traveltool.http;
 import android.content.Context;
 import android.os.Environment;
 
-import com.sim.baselibrary.http.SSLUtils;
+import com.sim.common.http.SSLUtils;
 import com.sim.traveltool.http.interceptor.BaseUrlInterceptor;
 import com.sim.traveltool.http.interceptor.HeaderInterceptor;
 import com.sim.traveltool.http.interceptor.MyCacheInterceptor;

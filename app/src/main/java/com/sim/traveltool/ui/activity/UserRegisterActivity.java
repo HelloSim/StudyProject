@@ -8,12 +8,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.sim.baselibrary.base.BaseActivity;
-import com.sim.baselibrary.callback.SuccessOrFailListener;
-import com.sim.baselibrary.utils.LogUtil;
-import com.sim.baselibrary.utils.RegexUtil;
-import com.sim.baselibrary.utils.ToastUtil;
-import com.sim.baselibrary.views.SplitEditText;
+import com.sim.common.base.BaseActivity;
+import com.sim.common.callback.SuccessOrFailListener;
+import com.sim.common.utils.LogUtil;
+import com.sim.common.utils.RegexUtil;
+import com.sim.common.utils.ToastUtil;
+import com.sim.common.views.SplitEditText;
 import com.sim.traveltool.R;
 import com.sim.traveltool.bean.db.User;
 import com.sim.traveltool.ui.view.TitleView;

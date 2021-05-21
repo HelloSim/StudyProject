@@ -7,7 +7,7 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.sim.baselibrary.base.BaseActivity;
+import com.sim.common.base.BaseActivity;
 import com.sim.traveltool.R;
 import com.sim.traveltool.adapter.BusRouteDetailAdapter;
 import com.sim.traveltool.bean.BusRouteBean;

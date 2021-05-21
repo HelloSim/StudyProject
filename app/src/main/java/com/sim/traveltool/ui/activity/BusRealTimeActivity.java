@@ -9,9 +9,9 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.sim.baselibrary.base.BaseActivity;
-import com.sim.baselibrary.utils.LogUtil;
-import com.sim.baselibrary.utils.ToastUtil;
+import com.sim.common.base.BaseActivity;
+import com.sim.common.utils.LogUtil;
+import com.sim.common.utils.ToastUtil;
 import com.sim.traveltool.R;
 import com.sim.traveltool.adapter.BusStationListAdapter;
 import com.sim.traveltool.bean.BusRealTimeBusStopBean;
