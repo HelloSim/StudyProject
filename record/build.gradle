@@ -1,0 +1,64 @@
+if (isRunAlone) {
+    apply plugin: 'com.android.application'
+} else {
+    apply plugin: 'com.android.library'
+}
+
+android {
+    useLibrary 'org.apache.http.legacy'
+    resourcePrefix "record_"
+    compileSdkVersion versions.compileSdkVersion
+    buildToolsVersion versions.buildToolsVersion
+
+    defaultConfig {
+        minSdkVersion versions.minSdkVersion
+        targetSdkVersion versions.targetSdkVersion
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"//aar混淆文件名
+        multiDexEnabled true
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [moduleName: project.getName()]
+            }
+        }
+    }
+    sourceSets {
+        main {
+            if (isRunAlone) {
+                manifest.srcFile 'src/main/runAlone/AndroidManifest.xml'
+            } else {
+                manifest.srcFile 'src/main/AndroidManifest.xml'
+                java {
+                    exclude '**/runAlone/**' // release 时 runAlone 目录下文件不需要合并到主工程
+                }
+            }
+        }
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    testImplementation deps.junit.junit
+    androidTestImplementation deps.junit.test
+    implementation deps.androidx.appcompat
+    androidTestImplementation deps.androidx.espresso
+
+    implementation project(":common")
+    implementation project(":routerservice")
+    annotationProcessor deps.arouter.compiler
+
+    implementation 'com.haibin:calendarview:3.4.6' //日历
+    implementation 'com.github.huangyanbin:SmartTable:2.2.0'//表格
+}

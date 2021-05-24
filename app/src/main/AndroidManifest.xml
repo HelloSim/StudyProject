@@ -48,7 +48,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".ui.activity.NewsDetailActivity" />
+        <activity android:name="com.sim.wangyi.ui.activity.NewsDetailActivity" />
         <activity android:name=".ui.activity.NewsCollectActivity" />
 
         <activity android:name=".ui.activity.UserLogInActivity" />
@@ -61,9 +61,7 @@
         <activity android:name=".ui.activity.BusRouteActivity" />
         <activity android:name=".ui.activity.BusRouteDetailActivity" />
 
-        <activity android:name=".ui.activity.RecordAllActivity" />
-
-        <activity android:name=".ui.activity.HideActivity" />
+        <activity android:name="com.sim.record.ui.activity.RecordAllActivity" />
 
         <!--bugly-->
         <activity

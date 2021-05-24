@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
-        android:background="@drawable/card_shape_gray"
+        android:background="@drawable/common_card_shape_gray"
         android:padding="20dp"
         android:visibility="visible">
 
@@ -44,7 +44,7 @@
         android:id="@+id/rl_user_collect"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/card_shape_gray"
+        android:background="@drawable/common_card_shape_gray"
         android:padding="20dp">
 
         <ImageView
@@ -52,7 +52,7 @@
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_centerVertical="true"
-            android:src="@mipmap/ic_collect" />
+            android:src="@mipmap/common_ic_collect" />
 
         <ImageView
             android:layout_width="15dp"
@@ -74,7 +74,7 @@
         android:id="@+id/rl_update_version"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/card_shape_gray"
+        android:background="@drawable/common_card_shape_gray"
         android:padding="20dp">
 
         <ImageView
@@ -104,7 +104,7 @@
         android:id="@+id/rl_user_setting"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/card_shape_gray"
+        android:background="@drawable/common_card_shape_gray"
         android:padding="20dp">
 
         <ImageView

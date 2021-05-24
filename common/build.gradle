@@ -19,6 +19,7 @@ android {
 
 dependencies {
     api project(':baselib')
+    api project(':net')
     api project(':routerservice')
     annotationProcessor deps.arouter.compiler
 }

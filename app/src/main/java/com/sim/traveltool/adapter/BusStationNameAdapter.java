@@ -8,10 +8,10 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 
+import com.sim.bean.BusLocationBean;
 import com.sim.common.base.BaseAdapter;
 import com.sim.common.base.BaseViewHolder;
 import com.sim.traveltool.R;
-import com.sim.traveltool.bean.BusLocationBean;
 
 import java.util.ArrayList;
 

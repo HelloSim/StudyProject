@@ -1,5 +1,5 @@
-include ':routerservice'
-include ':baselib'
-include ':common'
-include ':app'
+include ':net'
+include ':wangyi'
+include ':baselib',':common',':routerservice'
+include ':app',':record'
 rootProject.name = "TravelTool"

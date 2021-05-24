@@ -9,15 +9,15 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.sim.bean.BusRealTimeBean;
+import com.sim.bean.BusRealTimeBusStopBean;
 import com.sim.common.base.BaseActivity;
 import com.sim.common.utils.LogUtil;
 import com.sim.common.utils.ToastUtil;
+import com.sim.common.views.TitleView;
+import com.sim.http.APIFactory;
 import com.sim.traveltool.R;
 import com.sim.traveltool.adapter.BusStationListAdapter;
-import com.sim.traveltool.bean.BusRealTimeBusStopBean;
-import com.sim.traveltool.bean.BusRealTimeBean;
-import com.sim.traveltool.http.APIFactory;
-import com.sim.common.views.TitleView;
 
 import java.util.ArrayList;
 

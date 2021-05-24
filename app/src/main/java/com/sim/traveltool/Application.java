@@ -4,8 +4,9 @@ import android.content.Context;
 
 import androidx.multidex.MultiDex;
 
+import com.sim.common.AppHelper;
 import com.sim.common.base.BaseApplication;
-import com.sim.traveltool.http.APIFactory;
+import com.sim.http.APIFactory;
 import com.tencent.bugly.Bugly;
 import com.tencent.bugly.beta.Beta;
 

@@ -15,17 +15,15 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.sim.bean.User;
+import com.sim.common.AppHelper;
 import com.sim.common.base.BaseActivity;
 import com.sim.common.bean.EventMessage;
 import com.sim.common.utils.LogUtil;
 import com.sim.common.utils.SPUtil;
 import com.sim.common.utils.ToastUtil;
-import com.sim.traveltool.AppHelper;
 import com.sim.traveltool.R;
-import com.sim.traveltool.bean.db.User;
 import com.sim.traveltool.ui.fragment.BusFragment;
-import com.sim.traveltool.ui.fragment.RecordFragment;
-import com.sim.traveltool.ui.fragment.WangyiFragment;
 import com.tencent.bugly.beta.Beta;
 import com.tencent.bugly.beta.UpgradeInfo;
 

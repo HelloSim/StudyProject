@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_centerVertical="true"
+    android:background="@drawable/record_popup_layout_bg_black"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="5dp">
+
+    <Button
+        android:id="@+id/all_record"
+        style="@style/common_buttonStyle"
+        android:text="打卡记录" />
+
+    <Button
+        android:id="@+id/btn_updata_other"
+        style="@style/common_buttonStyle"
+        android:layout_marginTop="10dp"
+        android:text="添加备忘" />
+
+</LinearLayout>

@@ -15,7 +15,10 @@
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/baselib" />
             <option value="$PROJECT_DIR$/common" />
+            <option value="$PROJECT_DIR$/net" />
+            <option value="$PROJECT_DIR$/record" />
             <option value="$PROJECT_DIR$/routerservice" />
+            <option value="$PROJECT_DIR$/wangyi" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

@@ -14,7 +14,7 @@ import com.sim.common.callback.DialogInterface;
 import com.sim.traveltool.R;
 import com.sim.traveltool.adapter.NewsAdapter;
 import com.sim.traveltool.bean.WangyiBean;
-import com.sim.traveltool.bean.db.User;
+import com.sim.record.bean.User;
 import com.sim.common.views.TitleView;
 
 import java.io.Serializable;
