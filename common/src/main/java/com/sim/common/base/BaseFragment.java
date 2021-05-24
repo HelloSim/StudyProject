@@ -224,7 +224,7 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
         popupWindow.setHeight(ScreenUtil.dip2px(getContext(), pupDPHeight));//高度
         popupWindow.setFocusable(true);
         popupWindow.setBackgroundDrawable(new BitmapDrawable());//设置空白背景
-        popupWindow.setAnimationStyle(R.style.popwindow_anim_style);//动画
+        popupWindow.setAnimationStyle(R.style.common_popwindow_anim_style);//动画
         return popupWindow;
     }
 

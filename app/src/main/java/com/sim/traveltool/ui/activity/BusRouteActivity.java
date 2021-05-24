@@ -18,7 +18,7 @@ import com.sim.traveltool.adapter.BusRouteAdapter;
 import com.sim.traveltool.bean.BusLocationDesignatedBean;
 import com.sim.traveltool.bean.BusRouteBean;
 import com.sim.traveltool.http.APIFactory;
-import com.sim.traveltool.ui.view.TitleView;
+import com.sim.common.views.TitleView;
 
 import java.util.ArrayList;
 

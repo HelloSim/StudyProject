@@ -9,7 +9,7 @@ import com.haibin.calendarview.Calendar;
 import com.haibin.calendarview.CalendarView;
 import com.sim.common.base.BaseActivity;
 import com.sim.traveltool.R;
-import com.sim.traveltool.ui.view.TitleView;
+import com.sim.common.views.TitleView;
 
 /**
  * @author Sim --- 隐藏界面

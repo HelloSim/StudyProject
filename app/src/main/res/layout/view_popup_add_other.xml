@@ -7,13 +7,13 @@
     android:orientation="vertical">
 
     <TextView
-        style="@style/textViewStyle"
+        style="@style/common_textViewStyle"
         android:gravity="center"
         android:text="添加备忘" />
 
     <EditText
         android:id="@+id/et_other"
-        style="@style/editViewStyle"
+        style="@style/common_editViewStyle"
         android:layout_marginLeft="50dp"
         android:layout_marginTop="20dp"
         android:layout_marginRight="50dp" />
@@ -26,12 +26,12 @@
 
         <Button
             android:id="@+id/btn_cancel"
-            style="@style/buttonStyle"
+            style="@style/common_buttonStyle"
             android:text="取消" />
 
         <Button
             android:id="@+id/btn_confirm"
-            style="@style/buttonStyle"
+            style="@style/common_buttonStyle"
             android:layout_marginLeft="20dp"
             android:text="确认" />
 

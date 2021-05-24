@@ -23,7 +23,7 @@ import com.sim.traveltool.adapter.BusStationNameAdapter;
 import com.sim.traveltool.bean.BusLocationBean;
 import com.sim.traveltool.bean.BusRealTimeLineBean;
 import com.sim.traveltool.http.APIFactory;
-import com.sim.traveltool.ui.view.TitleView;
+import com.sim.common.views.TitleView;
 
 import java.util.ArrayList;
 

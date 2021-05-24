@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="5dp"
-    android:background="@drawable/button_bg_blue"
+    android:background="@drawable/common_button_bg_blue"
     android:gravity="center_vertical"
     android:orientation="horizontal"
     android:padding="5dp">
@@ -24,13 +24,13 @@
 
         <TextView
             android:id="@+id/tv_bus_name"
-            style="@style/textViewStyle"
-            android:textColor="@color/white"
+            style="@style/common_textViewStyle"
+            android:textColor="@color/common_white"
             tools:text="1路" />
 
         <TextView
             android:id="@+id/tv_bus_line_name"
-            style="@style/textViewStyleGray"
+            style="@style/common_textViewStyleGray"
             tools:text="城轨珠海站->香洲" />
 
     </LinearLayout>

@@ -26,12 +26,12 @@ public class DialogBuilder {
     private View.OnClickListener sureClickListener, cancelClickListener;
 
     public DialogBuilder(Context context) {
-        this(context, R.style.CustomDialog);
+        this(context, R.style.common_customDialog);
     }
 
     public DialogBuilder(Context context, int themeResId) {
         this(context, themeResId, ((LayoutInflater) context
-                .getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.custom_dialog_layout, null));
+                .getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.common_custom_dialog_layout, null));
     }
 
     //自定义layout用这个

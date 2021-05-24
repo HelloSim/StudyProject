@@ -2,18 +2,18 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/transparent"
+    android:background="@color/common_transparent"
     android:orientation="vertical">
 
     <EditText
         android:id="@+id/et_search"
-        style="@style/editViewStyle"
+        style="@style/common_editViewStyle"
         android:layout_margin="10dp"
         android:focusable="false"
         android:hint="请输入路线名称如：8" />
 
     <TextView
-        style="@style/textViewStyleGray"
+        style="@style/common_textViewStyleGray"
         android:layout_gravity="center_horizontal"
         android:text="接口已废弃，后续更换实现。。。" />
 

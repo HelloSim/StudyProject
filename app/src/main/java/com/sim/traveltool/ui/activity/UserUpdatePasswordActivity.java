@@ -19,7 +19,7 @@ import com.sim.common.utils.LogUtil;
 import com.sim.common.utils.ToastUtil;
 import com.sim.traveltool.R;
 import com.sim.traveltool.bean.db.User;
-import com.sim.traveltool.ui.view.TitleView;
+import com.sim.common.views.TitleView;
 
 import cn.bmob.v3.BmobSMS;
 import cn.bmob.v3.BmobUser;

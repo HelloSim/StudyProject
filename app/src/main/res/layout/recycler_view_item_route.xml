@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="5dp"
-    android:background="@drawable/button_bg_blue"
+    android:background="@drawable/common_button_bg_blue"
     android:gravity="center_vertical"
     android:orientation="vertical"
     android:padding="5dp">
@@ -23,16 +23,16 @@
 
         <TextView
             android:id="@+id/tv_bus_name"
-            style="@style/textViewStyle"
+            style="@style/common_textViewStyle"
             android:layout_marginLeft="5dp"
-            android:textColor="@color/white"
+            android:textColor="@color/common_white"
             tools:text="K8路(珠海港--拱北口岸总站)" />
 
     </LinearLayout>
 
     <TextView
         android:id="@+id/tv_route_roughly"
-        style="@style/textViewStyleGray"
+        style="@style/common_textViewStyleGray"
         tools:text="56分钟 | 步行100米" />
 
 </LinearLayout>

@@ -6,10 +6,10 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <com.sim.traveltool.ui.view.TitleView
+    <com.sim.common.views.TitleView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:title="出行" />
+        app:common_title="出行" />
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -30,7 +30,7 @@
             <!-- 标题-->
             <TextView
                 android:id="@+id/loop_dec"
-                style="@style/textViewStyleGray"
+                style="@style/common_textViewStyleGray"
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="10dp"
                 android:textColor="@android:color/white"
@@ -66,7 +66,7 @@
             app:tabPaddingStart="4dp"
             app:tabSelectedTextColor="#0091EA"
             app:tabTextAppearance="?android:textAppearanceMedium"
-            app:tabTextColor="@color/black" />
+            app:tabTextColor="@color/common_black" />
 
         <androidx.viewpager.widget.ViewPager
             android:id="@+id/view_pager"

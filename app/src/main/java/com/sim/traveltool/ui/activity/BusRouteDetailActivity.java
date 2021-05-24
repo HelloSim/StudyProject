@@ -11,7 +11,7 @@ import com.sim.common.base.BaseActivity;
 import com.sim.traveltool.R;
 import com.sim.traveltool.adapter.BusRouteDetailAdapter;
 import com.sim.traveltool.bean.BusRouteBean;
-import com.sim.traveltool.ui.view.TitleView;
+import com.sim.common.views.TitleView;
 
 /**
  * @author Sim --- 出行路线的详细方式

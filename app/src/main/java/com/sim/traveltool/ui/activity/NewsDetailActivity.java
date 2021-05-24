@@ -14,7 +14,7 @@ import com.sim.common.utils.ToastUtil;
 import com.sim.traveltool.R;
 import com.sim.traveltool.bean.WangyiBean;
 import com.sim.traveltool.bean.db.User;
-import com.sim.traveltool.ui.view.TitleView;
+import com.sim.common.views.TitleView;
 
 import java.util.List;
 

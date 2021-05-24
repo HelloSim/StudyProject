@@ -6,17 +6,17 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <com.sim.traveltool.ui.view.TitleView
+    <com.sim.common.views.TitleView
         android:id="@+id/titleView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:rightImageSrc="@mipmap/ic_more"
-        app:showRight="true"
-        app:title="打卡" />
+        app:common_rightImageSrc="@mipmap/ic_more"
+        app:common_showRight="true"
+        app:common_title="打卡" />
 
     <TextView
         android:id="@+id/tv_now_year_and_month"
-        style="@style/textViewStyle"
+        style="@style/common_textViewStyle"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="10dp"
         tools:text="2020-1" />
@@ -43,19 +43,19 @@
 
         <TextView
             android:id="@+id/tv_record_time_start"
-            style="@style/textViewStyle"
+            style="@style/common_textViewStyle"
             android:text="未打卡" />
 
         <TextView
             android:id="@+id/tv_symbol"
-            style="@style/textViewStyle"
+            style="@style/common_textViewStyle"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:text="-" />
 
         <TextView
             android:id="@+id/tv_record_time_end"
-            style="@style/textViewStyle"
+            style="@style/common_textViewStyle"
             android:text="未打卡" />
 
     </LinearLayout>
@@ -68,7 +68,7 @@
         android:background="@drawable/round_blue"
         android:text="上班打卡"
         android:textAllCaps="false"
-        android:textColor="@color/white"
+        android:textColor="@color/common_white"
         android:textSize="22sp" />
 
 </LinearLayout>

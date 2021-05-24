@@ -6,17 +6,17 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <com.sim.traveltool.ui.view.TitleView
+    <com.sim.common.views.TitleView
         android:id="@+id/titleView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:leftImageSrc="@mipmap/ic_to_left"
-        app:showLeft="true"
-        app:title="换乘方案" />
+        app:common_leftImageSrc="@mipmap/ic_to_left"
+        app:common_showLeft="true"
+        app:common_title="换乘方案" />
 
     <TextView
         android:id="@+id/tv_from_and_to_location"
-        style="@style/textViewStyle"
+        style="@style/common_textViewStyle"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="10dp"
         tools:text="起点站 -> 站点站" />

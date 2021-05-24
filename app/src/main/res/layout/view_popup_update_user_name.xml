@@ -7,7 +7,7 @@
     android:orientation="vertical">
 
     <TextView
-        style="@style/textViewStyle"
+        style="@style/common_textViewStyle"
         android:text="修改用户名" />
 
     <LinearLayout
@@ -18,7 +18,7 @@
 
         <EditText
             android:id="@+id/et_new_user_name"
-            style="@style/editViewStyle"
+            style="@style/common_editViewStyle"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:hint="用户名" />
@@ -32,12 +32,12 @@
 
         <Button
             android:id="@+id/btn_user_name_cancel"
-            style="@style/buttonStyle"
+            style="@style/common_buttonStyle"
             android:text="取消" />
 
         <Button
             android:id="@+id/btn_user_name_confirm"
-            style="@style/buttonStyle"
+            style="@style/common_buttonStyle"
             android:layout_marginLeft="50dp"
             android:text="确认" />
 

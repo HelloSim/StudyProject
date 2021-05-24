@@ -165,33 +165,33 @@ public class SplitEditText extends AppCompatEditText {
         mBorderSpacing = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 8f, displayMetrics);
         setPadding(0, 0, 0, 0);
 
-        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.SplitEditText);
+        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.common_splitEditText);
         final int count = a.getIndexCount();
         for (int i = 0; i < count; i++) {
             int attr = a.getIndex(i);
-            if (attr == R.styleable.SplitEditText_setStrokeWidth) {
+            if (attr == R.styleable.common_splitEditText_common_setStrokeWidth) {
                 mStrokeWidth = a.getDimension(attr, mStrokeWidth);
-            } else if (attr == R.styleable.SplitEditText_setBorderColor) {
+            } else if (attr == R.styleable.common_splitEditText_common_setBorderColor) {
                 mBorderColor = a.getColor(attr, mBorderColor);
-            } else if (attr == R.styleable.SplitEditText_setInputBorderColor) {
+            } else if (attr == R.styleable.common_splitEditText_common_setInputBorderColor) {
                 mInputBorderColor = a.getColor(attr, mInputBorderColor);
-            } else if (attr == R.styleable.SplitEditText_setFocusBorderColor) {
+            } else if (attr == R.styleable.common_splitEditText_common_setFocusBorderColor) {
                 mFocusBorderColor = a.getColor(attr, mFocusBorderColor);
-            } else if (attr == R.styleable.SplitEditText_setBoxBackgroundColor) {
+            } else if (attr == R.styleable.common_splitEditText_common_setBoxBackgroundColor) {
                 mBoxBackgroundColor = a.getColor(attr, mBoxBackgroundColor);
-            } else if (attr == R.styleable.SplitEditText_setBorderCornerRadius) {
+            } else if (attr == R.styleable.common_splitEditText_common_setBorderCornerRadius) {
                 mBorderCornerRadius = a.getDimension(attr, mBorderCornerRadius);
-            } else if (attr == R.styleable.SplitEditText_setBorderSpacing) {
+            } else if (attr == R.styleable.common_splitEditText_common_setBorderSpacing) {
                 mBorderSpacing = a.getDimension(attr, mBorderSpacing);
-            } else if (attr == R.styleable.SplitEditText_setMaxLength) {
+            } else if (attr == R.styleable.common_splitEditText_common_setMaxLength) {
                 mMaxLength = a.getInt(attr, mMaxLength);
-            } else if (attr == R.styleable.SplitEditText_setBorderStyle) {
+            } else if (attr == R.styleable.common_splitEditText_common_setBorderStyle) {
                 mBorderStyle = a.getInt(attr, mBorderStyle);
-            } else if (attr == R.styleable.SplitEditText_setTextStyle) {
+            } else if (attr == R.styleable.common_splitEditText_common_setTextStyle) {
                 mTextStyle = a.getInt(attr, mTextStyle);
-            } else if (attr == R.styleable.SplitEditText_setCipherMask) {
+            } else if (attr == R.styleable.common_splitEditText_common_setCipherMask) {
                 mCipherMask = a.getString(attr);
-            } else if (attr == R.styleable.SplitEditText_setFakeBoldText) {
+            } else if (attr == R.styleable.common_splitEditText_common_setFakeBoldText) {
                 isFakeBoldText = a.getBoolean(attr, false);
             }
         }

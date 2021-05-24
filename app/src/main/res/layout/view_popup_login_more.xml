@@ -10,7 +10,7 @@
 
     <Button
         android:id="@+id/btn_registered"
-        style="@style/buttonStyle"
+        style="@style/common_buttonStyle"
         android:text="注册" />
 
 </LinearLayout>

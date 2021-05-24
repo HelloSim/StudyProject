@@ -2,6 +2,7 @@ apply plugin: 'com.android.application'
 //apply from: 'tinker-support.gradle'
 
 android {
+//    resourcePrefix "app_"
     compileSdkVersion versions.compileSdkVersion
     buildToolsVersion versions.buildToolsVersion
     defaultConfig {
@@ -19,11 +20,11 @@ android {
         javaCompileOptions {
             annotationProcessorOptions {
                 includeCompileClasspath = true
+                arguments = [moduleName: project.getName()]
             }
         }
         multiDexEnabled true//分包
     }
-    resourcePrefix "app_"
     signingConfigs {
         release {
             storeFile file('HelloSim.jks')
@@ -87,7 +88,7 @@ dependencies {
     androidTestImplementation deps.androidx.espresso
 
     implementation project(":common")
-//    annotationProcessor deps.arouter.compiler
+    annotationProcessor deps.arouter.compiler
 
     //bugly
     implementation 'com.tencent.bugly:crashreport_upgrade:1.4.5'

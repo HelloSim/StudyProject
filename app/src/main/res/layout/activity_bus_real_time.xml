@@ -6,15 +6,15 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <com.sim.traveltool.ui.view.TitleView
+    <com.sim.common.views.TitleView
         android:id="@+id/titleView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:leftImageSrc="@mipmap/ic_to_left"
-        app:rightImageSrc="@drawable/refresh_bg"
-        app:showLeft="true"
-        app:showRight="true"
-        app:title="实时公交搜索" />
+        app:common_leftImageSrc="@mipmap/ic_to_left"
+        app:common_rightImageSrc="@drawable/refresh_bg"
+        app:common_showLeft="true"
+        app:common_showRight="true"
+        app:common_title="实时公交搜索" />
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -26,19 +26,19 @@
 
         <TextView
             android:id="@+id/tv_from_station"
-            style="@style/textViewStyle"
+            style="@style/common_textViewStyle"
             tools:text="起点站" />
 
         <TextView
             android:id="@+id/tv_reverse"
-            style="@style/textViewStyle"
+            style="@style/common_textViewStyle"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:text=" > > " />
 
         <TextView
             android:id="@+id/tv_to_station"
-            style="@style/textViewStyle"
+            style="@style/common_textViewStyle"
             tools:text="终点站" />
 
     </LinearLayout>
@@ -52,32 +52,32 @@
         android:orientation="horizontal">
 
         <TextView
-            style="@style/textViewStyleGray"
+            style="@style/common_textViewStyleGray"
             android:text="首班:" />
 
         <TextView
             android:id="@+id/tv_begin_time"
-            style="@style/textViewStyleGray"
+            style="@style/common_textViewStyleGray"
             tools:text="06:00" />
 
         <TextView
-            style="@style/textViewStyleGray"
+            style="@style/common_textViewStyleGray"
             android:layout_marginLeft="10dp"
             android:text="末班:" />
 
         <TextView
             android:id="@+id/tv_end_time"
-            style="@style/textViewStyleGray"
+            style="@style/common_textViewStyleGray"
             tools:text="23:00" />
 
         <TextView
-            style="@style/textViewStyleGray"
+            style="@style/common_textViewStyleGray"
             android:layout_marginLeft="10dp"
             android:text="票价:" />
 
         <TextView
             android:id="@+id/tv_price"
-            style="@style/textViewStyleGray"
+            style="@style/common_textViewStyleGray"
             tools:text="1元" />
 
     </LinearLayout>

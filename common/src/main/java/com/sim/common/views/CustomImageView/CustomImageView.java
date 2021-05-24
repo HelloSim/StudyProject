@@ -71,19 +71,19 @@ public class CustomImageView extends ImageView {
      */
     public CustomImageView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
-        TypedArray a = context.getTheme().obtainStyledAttributes(attrs, R.styleable.CustomImageView, defStyle, 0);
+        TypedArray a = context.getTheme().obtainStyledAttributes(attrs, R.styleable.common_customImageView, defStyle, 0);
         int n = a.getIndexCount();
         for (int i = 0; i < n; i++) {
             int attr = a.getIndex(i);
-            if (attr == R.styleable.CustomImageView_src) {
+            if (attr == R.styleable.common_customImageView_common_src) {
                 mSrc = BitmapFactory.decodeResource(getResources(), a.getResourceId(attr, 0));
-            } else if (attr == R.styleable.CustomImageView_type) {
+            } else if (attr == R.styleable.common_customImageView_common_type) {
                 mType = a.getInt(attr, 0);// 默认为Circle
-            } else if (attr == R.styleable.CustomImageView_borderRadius) {
+            } else if (attr == R.styleable.common_customImageView_common_borderRadius) {
                 mRadius = a.getDimensionPixelSize(attr, (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 10f, getResources().getDisplayMetrics()));// 默认为10DP
-            } else if (attr == R.styleable.CustomImageView_url_src) {
-                mType = Integer.parseInt(a.getString(R.styleable.CustomImageView_type));
-                mUrlSrc = a.getString(R.styleable.CustomImageView_url_src);
+            } else if (attr == R.styleable.common_customImageView_common_url_src) {
+                mType = Integer.parseInt(a.getString(R.styleable.common_customImageView_common_type));
+                mUrlSrc = a.getString(R.styleable.common_customImageView_common_url_src);
             }
         }
         a.recycle();

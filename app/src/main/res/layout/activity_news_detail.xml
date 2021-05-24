@@ -5,15 +5,15 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <com.sim.traveltool.ui.view.TitleView
+    <com.sim.common.views.TitleView
         android:id="@+id/titleView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:leftImageSrc="@mipmap/ic_to_left"
-        app:rightImageSrc="@mipmap/ic_collect_not"
-        app:showLeft="true"
-        app:showRight="true"
-        app:title="详情" />
+        app:common_leftImageSrc="@mipmap/ic_to_left"
+        app:common_rightImageSrc="@mipmap/ic_collect_not"
+        app:common_showLeft="true"
+        app:common_showRight="true"
+        app:common_title="详情" />
 
     <WebView
         android:id="@+id/web_view"

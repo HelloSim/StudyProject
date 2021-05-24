@@ -1,7 +1,145 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="CustomDialog" parent="android:style/Theme.Dialog">
+    <!-- Base application theme. -->
+    <style name="common_APPTheme" parent="@style/Theme.AppCompat.NoActionBar">
+        <item name="android:windowBackground">@color/common_white</item>
+        <item name="android:textColor">@color/common_black</item>
+        <item name="android:windowFullscreen">false</item>
+        <item name="android:windowNoTitle">true</item>
+    </style>
+
+    <!--    正常textView样式-->
+    <style name="common_textViewStyle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">@color/common_black</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <!--    textView灰色小字体样式-->
+    <style name="common_textViewStyleGray">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/common_gray</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <!--    统一button样式 -->
+    <style name="common_buttonStyle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingLeft">15dp</item>
+        <item name="android:paddingRight">15dp</item>
+        <item name="android:background">@drawable/common_button_bg</item>
+        <item name="android:textColor">@color/common_white</item>
+        <item name="android:textSize">18sp</item>
+        <item name="textAllCaps">false</item>
+    </style>
+
+    <!--    统一editView样式-->
+    <style name="common_editViewStyle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">40dp</item>
+        <item name="android:background">@drawable/common_edit_bg</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:paddingLeft">10dp</item>
+        <item name="android:textColor">@color/common_black</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColorHint">@color/common_gray</item>
+        <item name="android:maxLength">20</item>
+    </style>
+
+    <!--    editView 数字密码框样式-->
+    <style name="common_editViewStyleNumberPassword">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">40dp</item>
+        <item name="android:background">@drawable/common_edit_bg</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:paddingLeft">10dp</item>
+        <item name="android:textColor">@color/common_black</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColorHint">@color/common_gray</item>
+        <item name="android:inputType">numberPassword</item>
+        <item name="android:maxLength">20</item>
+    </style>
+
+    <style name="common_mypopwindow_anim_style">
+        <item name="android:windowEnterAnimation">@anim/common_popshow_anim_bottom</item>
+        <!-- 指定显示的动画xml -->
+        <item name="android:windowExitAnimation">@anim/common_pophide_anim_bottom</item>
+        <!-- 指定消失的动画xml -->
+    </style>
+
+
+    <!--    ShapeableImageView的shapeAppearanceOverlay属性样式-->
+    <style name="common_circleImageStyle"><!-- 圆形图片 -->
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item>
+    </style>
+
+    <style name="common_roundedCornerImageStyle"><!-- 圆角图片 -->
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">15dp</item>
+    </style>
+
+    <style name="common_cutImageStyle"><!-- 切角图片 -->
+        <item name="cornerFamily">cut</item>
+        <item name="cornerSize">15dp</item>
+    </style>
+
+    <style name="common_diamondImageStyle"><!-- 菱形图片 -->
+        <item name="cornerFamily">cut</item>
+        <item name="cornerSize">50%</item>
+    </style>
+
+    <style name="common_topLeftRoundImageStyle"><!-- 左上角90度扇形图片 -->
+        <item name="cornerFamilyTopLeft">rounded</item>
+        <item name="cornerSizeTopLeft">100%</item>
+    </style>
+
+    <style name="common_rocketImageStyle"><!-- 火箭头图片 -->
+        <item name="cornerFamilyTopLeft">rounded</item>
+        <item name="cornerFamilyTopRight">rounded</item>
+        <item name="cornerSizeTopLeft">70%</item>
+        <item name="cornerSizeTopRight">70%</item>
+    </style>
+
+    <style name="common_waterImageStyle"><!-- 水滴 -->
+        <item name="cornerFamilyBottomLeft">rounded</item>
+        <item name="cornerFamilyBottomRight">rounded</item>
+        <item name="cornerFamilyTopLeft">rounded</item>
+        <item name="cornerFamilyTopRight">rounded</item>
+        <item name="cornerSizeBottomLeft">25dp</item>
+        <item name="cornerSizeBottomRight">25dp</item>
+        <item name="cornerSizeTopLeft">70%</item>
+        <item name="cornerSizeTopRight">70%</item>
+    </style>
+
+    <style name="common_leafImageStyle"><!-- 叶子图片 -->
+        <item name="cornerFamilyTopLeft">rounded</item>
+        <item name="cornerFamilyBottomRight">rounded</item>
+        <item name="cornerSizeTopLeft">50%</item>
+        <item name="cornerSizeBottomRight">50%</item>
+    </style>
+
+    <style name="common_tipImageStyle"><!-- tip图片 -->
+        <item name="cornerFamilyTopLeft">rounded</item>
+        <item name="cornerSizeTopLeft">50%</item>
+
+        <item name="cornerFamilyBottomLeft">rounded</item>
+        <item name="cornerSizeBottomLeft">50%</item>
+
+        <item name="cornerFamilyTopRight">cut</item>
+        <item name="cornerSizeTopRight">50%</item>
+
+        <item name="cornerFamilyBottomRight">cut</item>
+        <item name="cornerSizeBottomRight">50%</item>
+    </style>
+
+    <style name="common_customDialog" parent="android:style/Theme.Dialog">
         <item name="android:windowBackground">@android:color/transparent</item><!--你的layout背景颜色及和透明程度-->
         <item name="android:windowNoTitle">true</item><!--是否去除标题 -->
         <item name="android:windowFrame">@null</item><!--是否去除边框-->
@@ -9,9 +147,9 @@
         <item name="android:backgroundDimEnabled">true</item><!--屏幕其他地方是否模糊变黑-->
     </style>
 
-    <style name="popwindow_anim_style">
-        <item name="android:windowEnterAnimation">@anim/popshow_anim_bottom</item><!-- 指定显示的动画xml -->
-        <item name="android:windowExitAnimation">@anim/pophide_anim_bottom</item><!-- 指定消失的动画xml -->
+    <style name="common_popwindow_anim_style">
+        <item name="android:windowEnterAnimation">@anim/common_popshow_anim_bottom</item><!-- 指定显示的动画xml -->
+        <item name="android:windowExitAnimation">@anim/common_pophide_anim_bottom</item><!-- 指定消失的动画xml -->
     </style>
 
 </resources>

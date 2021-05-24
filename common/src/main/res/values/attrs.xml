@@ -1,42 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <declare-styleable name="CustomImageView">
-        <attr name="src" />
-        <attr name="type" />
-        <attr name="borderRadius" />
-        <attr name="url_src" />
-    </declare-styleable>
-    <attr name="src" format="reference" />
-    <attr name="type">
+    <attr name="common_src" format="reference" />
+    <attr name="common_type">
         <enum name="circle" value="0" /><!--圆形-->
         <enum name="round" value="1" /><!--圆角-->
         <enum name="url" value="2" /><!--网络图片-->
         <enum name="circle_url" value="3" /><!--圆形网络图片-->
         <enum name="round_url" value="4" /><!--圆角网络图片-->
     </attr>
-    <attr name="borderRadius" format="dimension" />
-    <attr name="url_src" format="string" />
+    <attr name="common_borderRadius" format="dimension" />
+    <attr name="common_url_src" format="string" />
+
+    <declare-styleable name="common_customImageView">
+        <attr name="common_src" />
+        <attr name="common_type" />
+        <attr name="common_borderRadius" />
+        <attr name="common_url_src" />
+    </declare-styleable>
 
 
-    <declare-styleable name="SplitEditText">
-        <attr name="setStrokeWidth" format="dimension" />
-        <attr name="setBorderColor" format="color" />
-        <attr name="setInputBorderColor" format="color" />
-        <attr name="setFocusBorderColor" format="color" />
-        <attr name="setBoxBackgroundColor" format="color" />
-        <attr name="setBorderCornerRadius" format="dimension" />
-        <attr name="setBorderSpacing" format="dimension" />
-        <attr name="setMaxLength" format="integer" />
-        <attr name="setBorderStyle" format="enum">
+    <declare-styleable name="common_splitEditText">
+        <attr name="common_setStrokeWidth" format="dimension" />
+        <attr name="common_setBorderColor" format="color" />
+        <attr name="common_setInputBorderColor" format="color" />
+        <attr name="common_setFocusBorderColor" format="color" />
+        <attr name="common_setBoxBackgroundColor" format="color" />
+        <attr name="common_setBorderCornerRadius" format="dimension" />
+        <attr name="common_setBorderSpacing" format="dimension" />
+        <attr name="common_setMaxLength" format="integer" />
+        <attr name="common_setBorderStyle" format="enum">
             <enum name="box" value="0" />
             <enum name="line" value="1" />
         </attr>
-        <attr name="setTextStyle" format="enum">
+        <attr name="common_setTextStyle" format="enum">
             <enum name="plain_text" value="0" /> <!--明文-->
             <enum name="cipher_text" value="1" /> <!--密文-->
         </attr>
-        <attr name="setCipherMask" format="string" />
-        <attr name="setFakeBoldText" format="boolean" />
+        <attr name="common_setCipherMask" format="string" />
+        <attr name="common_setFakeBoldText" format="boolean" />
+    </declare-styleable>
+
+
+    <declare-styleable name="common_titleBar">
+        <attr name="common_showLeft" format="boolean" />
+        <attr name="common_showRight" format="boolean" />
+        <attr name="common_title" format="string" />
+        <attr name="common_leftImageSrc" format="reference|color" />
+        <attr name="common_rightImageSrc" format="reference|color" />
     </declare-styleable>
 
 </resources>

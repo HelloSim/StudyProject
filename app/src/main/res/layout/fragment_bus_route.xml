@@ -22,7 +22,7 @@
 
         <EditText
             android:id="@+id/et_start_station"
-            style="@style/editViewStyle"
+            style="@style/common_editViewStyle"
             android:focusable="false"
             android:hint="请输入起始站如：省科干学院"
             tools:text="省科干学院（公交站）" />
@@ -45,7 +45,7 @@
 
         <EditText
             android:id="@+id/et_end_station"
-            style="@style/editViewStyle"
+            style="@style/common_editViewStyle"
             android:focusable="false"
             android:hint="请输入终点站如：华发商都"
             tools:text="华发商都" />
@@ -54,7 +54,7 @@
 
     <Button
         android:id="@+id/btn_route"
-        style="@style/buttonStyle"
+        style="@style/common_buttonStyle"
         android:layout_width="match_parent"
         android:layout_margin="10dp"
         android:text="换乘方案" />

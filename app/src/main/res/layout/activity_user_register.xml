@@ -5,13 +5,13 @@
     android:layout_height="match_parent"
     android:background="@mipmap/login_bg">
 
-    <com.sim.traveltool.ui.view.TitleView
+    <com.sim.common.views.TitleView
         android:id="@+id/titleView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:leftImageSrc="@mipmap/ic_to_left"
-        app:showLeft="true"
-        app:title="注册" />
+        app:common_leftImageSrc="@mipmap/ic_to_left"
+        app:common_showLeft="true"
+        app:common_title="注册" />
 
     <LinearLayout
         android:layout_width="280dp"
@@ -27,7 +27,7 @@
 
             <EditText
                 android:id="@+id/et_mobile_phone_number"
-                style="@style/editViewStyle"
+                style="@style/common_editViewStyle"
                 android:layout_width="0dp"
                 android:layout_marginRight="5dp"
                 android:layout_weight="3"
@@ -35,7 +35,7 @@
 
             <Button
                 android:id="@+id/btn_SMS_code"
-                style="@style/buttonStyle"
+                style="@style/common_buttonStyle"
                 android:layout_width="0dp"
                 android:layout_weight="2"
                 android:gravity="center"
@@ -49,28 +49,28 @@
             android:layout_height="40dp"
             android:layout_marginTop="5dp"
             android:hint="验证码"
-            app:setMaxLength="6"
-            app:setFakeBoldText="true"
-            app:setBorderStyle="box"
-            app:setTextStyle="plain_text"
-            app:setBoxBackgroundColor="#bbbbbb"
-            app:setBorderCornerRadius="10dp" />
+            app:common_setMaxLength="6"
+            app:common_setFakeBoldText="true"
+            app:common_setBorderStyle="box"
+            app:common_setTextStyle="plain_text"
+            app:common_setBoxBackgroundColor="#bbbbbb"
+            app:common_setBorderCornerRadius="10dp" />
 
         <EditText
             android:id="@+id/et_password"
-            style="@style/editViewStyleNumberPassword"
+            style="@style/common_editViewStyleNumberPassword"
             android:layout_marginTop="5dp"
             android:hint="密码" />
 
         <EditText
             android:id="@+id/et_user_name"
-            style="@style/editViewStyle"
+            style="@style/common_editViewStyle"
             android:layout_marginTop="5dp"
             android:hint="用户名" />
 
         <Button
             android:id="@+id/btn_registered"
-            style="@style/buttonStyle"
+            style="@style/common_buttonStyle"
             android:layout_width="match_parent"
             android:layout_marginTop="10dp"
             android:text="注册" />

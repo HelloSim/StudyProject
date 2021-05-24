@@ -16,7 +16,7 @@ import com.sim.common.utils.ToastUtil;
 import com.sim.common.views.SplitEditText;
 import com.sim.traveltool.R;
 import com.sim.traveltool.bean.db.User;
-import com.sim.traveltool.ui.view.TitleView;
+import com.sim.common.views.TitleView;
 
 import cn.bmob.v3.BmobSMS;
 import cn.bmob.v3.BmobUser;
@@ -112,14 +112,14 @@ public class UserRegisterActivity extends BaseActivity {
         public void onTick(long millisUntilFinished) {
             btnSMSCode.setClickable(false);
             btnSMSCode.setText(String.valueOf(millisUntilFinished / 1000));
-            btnSMSCode.setBackground(getResources().getDrawable(R.drawable.button_bg_black));
+            btnSMSCode.setBackground(getResources().getDrawable(R.drawable.common_button_bg_black));
         }
 
         @Override
         public void onFinish() {
             btnSMSCode.setClickable(true);
             btnSMSCode.setText("验证码");
-            btnSMSCode.setBackground(getResources().getDrawable(R.drawable.button_bg_blue));
+            btnSMSCode.setBackground(getResources().getDrawable(R.drawable.common_button_bg_blue));
         }
     }
 

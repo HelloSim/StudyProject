@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="common_colorPrimary">#008577</color>
+    <color name="common_colorPrimaryDark">#00574B</color>
+    <color name="common_colorAccent">#D81B60</color>
+    <color name="common_transparent">#00000000</color><!-- 黑色透明-->
+    <color name="common_translucent">#80000000</color><!-- 黑色半透明-->
+    <color name="common_white">#FFFFFF</color>
+    <color name="common_black">#000000</color>
+    <color name="common_gray">#777777</color>
+    <color name="common_lightGrey">#C6C6C6</color>
+
+</resources>

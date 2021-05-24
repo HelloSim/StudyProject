@@ -6,13 +6,13 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <com.sim.traveltool.ui.view.TitleView
+    <com.sim.common.views.TitleView
         android:id="@+id/titleView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:leftImageSrc="@mipmap/ic_to_left"
-        app:showLeft="true"
-        app:title="隐藏界面" />
+        app:common_leftImageSrc="@mipmap/ic_to_left"
+        app:common_showLeft="true"
+        app:common_title="隐藏界面" />
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -22,7 +22,7 @@
 
         <TextView
             android:id="@+id/tv_now_year_and_month"
-            style="@style/textViewStyle"
+            style="@style/common_textViewStyle"
             android:layout_centerInParent="true"
             tools:text="2020年1月" />
 

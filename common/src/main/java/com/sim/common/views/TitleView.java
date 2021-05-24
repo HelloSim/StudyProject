@@ -1,4 +1,4 @@
-package com.sim.traveltool.ui.view;
+package com.sim.common.views;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -11,7 +11,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.sim.traveltool.R;
+import com.sim.common.R;
 
 /**
  * @author Sim --- 自定义标题栏组件
@@ -48,12 +48,12 @@ public class TitleView extends RelativeLayout {
      */
     private void initVariable(Context context, AttributeSet attrs) {
         // 将attrs中的值存储到TypedArray中
-        TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.TitleBar);
-        showLeft = ta.getBoolean(R.styleable.TitleBar_showLeft, false);
-        showRight = ta.getBoolean(R.styleable.TitleBar_showRight, false);
-        titleText = ta.getString(R.styleable.TitleBar_title);
-        leftImageSrc = ta.getResourceId(R.styleable.TitleBar_leftImageSrc, Color.TRANSPARENT);
-        rightImageSrc = ta.getResourceId(R.styleable.TitleBar_rightImageSrc, Color.TRANSPARENT);
+        TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.common_titleBar);
+        showLeft = ta.getBoolean(R.styleable.common_titleBar_common_showLeft, false);
+        showRight = ta.getBoolean(R.styleable.common_titleBar_common_showRight, false);
+        titleText = ta.getString(R.styleable.common_titleBar_common_title);
+        leftImageSrc = ta.getResourceId(R.styleable.common_titleBar_common_leftImageSrc, Color.TRANSPARENT);
+        rightImageSrc = ta.getResourceId(R.styleable.common_titleBar_common_rightImageSrc, Color.TRANSPARENT);
         ta.recycle();// 注意！此处获取完属性值后要添加recycle()方法，避免重新创建时发生错误
     }
 

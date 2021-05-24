@@ -7,20 +7,20 @@
 
     <EditText
         android:id="@+id/tv_station"
-        style="@style/editViewStyle"
+        style="@style/common_editViewStyle"
         android:layout_margin="10dp"
         android:focusable="false"
         android:hint="请输入站点名称如：拱北口岸" />
 
     <Button
         android:id="@+id/btn_station"
-        style="@style/buttonStyle"
+        style="@style/common_buttonStyle"
         android:layout_width="match_parent"
         android:layout_margin="10dp"
         android:text="站点查询" />
 
     <TextView
-        style="@style/textViewStyleGray"
+        style="@style/common_textViewStyleGray"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="20dp"
         android:text="站点公交查询功能，后续实现。。。" />

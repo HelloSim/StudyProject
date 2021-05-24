@@ -1,3 +1,4 @@
+include ':routerservice'
 include ':baselib'
 include ':common'
 include ':app'

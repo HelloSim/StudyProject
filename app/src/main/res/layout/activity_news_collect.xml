@@ -5,13 +5,13 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <com.sim.traveltool.ui.view.TitleView
+    <com.sim.common.views.TitleView
         android:id="@+id/titleView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:leftImageSrc="@mipmap/ic_to_left"
-        app:showLeft="true"
-        app:title="收藏" />
+        app:common_leftImageSrc="@mipmap/ic_to_left"
+        app:common_showLeft="true"
+        app:common_title="收藏" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycle_view"

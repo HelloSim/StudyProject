@@ -5,15 +5,15 @@
     android:layout_height="match_parent"
     android:background="@mipmap/login_bg">
 
-    <com.sim.traveltool.ui.view.TitleView
+    <com.sim.common.views.TitleView
         android:id="@+id/titleView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:leftImageSrc="@mipmap/ic_to_left"
-        app:rightImageSrc="@mipmap/ic_more"
-        app:showLeft="true"
-        app:showRight="true"
-        app:title="登录" />
+        app:common_leftImageSrc="@mipmap/ic_to_left"
+        app:common_rightImageSrc="@mipmap/ic_more"
+        app:common_showLeft="true"
+        app:common_showRight="true"
+        app:common_title="登录" />
 
     <LinearLayout
         android:id="@+id/ll_login_by_account"
@@ -24,29 +24,29 @@
 
         <EditText
             android:id="@+id/et_mobile_phone_number"
-            style="@style/editViewStyle"
+            style="@style/common_editViewStyle"
             android:hint="账号" />
 
         <EditText
             android:id="@+id/et_password"
-            style="@style/editViewStyleNumberPassword"
+            style="@style/common_editViewStyleNumberPassword"
             android:layout_marginTop="5dp"
             android:hint="密码" />
 
         <Button
             android:id="@+id/btn_log_in"
-            style="@style/buttonStyle"
+            style="@style/common_buttonStyle"
             android:layout_width="match_parent"
             android:layout_marginTop="10dp"
             android:text="登录" />
 
         <TextView
             android:id="@+id/tv_login_by_SMS_code"
-            style="@style/textViewStyle"
+            style="@style/common_textViewStyle"
             android:layout_gravity="center"
             android:padding="10dp"
             android:text="验证码快捷登录"
-            android:textColor="@color/white"
+            android:textColor="@color/common_white"
             android:textSize="16sp" />
 
     </LinearLayout>
@@ -61,7 +61,7 @@
 
         <EditText
             android:id="@+id/et_mobile_phone_number2"
-            style="@style/editViewStyle"
+            style="@style/common_editViewStyle"
             android:hint="手机号码" />
 
         <LinearLayout
@@ -72,7 +72,7 @@
 
             <EditText
                 android:id="@+id/et_SMS_code"
-                style="@style/editViewStyle"
+                style="@style/common_editViewStyle"
                 android:layout_width="0dp"
                 android:layout_marginRight="5dp"
                 android:layout_weight="3"
@@ -80,7 +80,7 @@
 
             <Button
                 android:id="@+id/btn_SMS_code"
-                style="@style/buttonStyle"
+                style="@style/common_buttonStyle"
                 android:layout_width="0dp"
                 android:layout_weight="2"
                 android:gravity="center"
@@ -90,18 +90,18 @@
 
         <Button
             android:id="@+id/btn_log_in2"
-            style="@style/buttonStyle"
+            style="@style/common_buttonStyle"
             android:layout_width="match_parent"
             android:layout_marginTop="10dp"
             android:text="登录" />
 
         <TextView
             android:id="@+id/tv_login_by_account"
-            style="@style/textViewStyle"
+            style="@style/common_textViewStyle"
             android:layout_gravity="center"
             android:padding="10dp"
             android:text="账号密码登录"
-            android:textColor="@color/white"
+            android:textColor="@color/common_white"
             android:textSize="16sp" />
 
     </LinearLayout>

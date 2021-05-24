@@ -9,7 +9,7 @@
 
     <TextView
         android:id="@+id/tv_item_bus_station_name"
-        style="@style/textViewStyleGray"
+        style="@style/common_textViewStyleGray"
         tools:text="省科干学院" />
 
 </LinearLayout>

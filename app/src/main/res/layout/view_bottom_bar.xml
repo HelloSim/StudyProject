@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/black"
+    android:background="@color/common_black"
     android:orientation="horizontal">
 
     <RadioGroup
@@ -13,19 +13,19 @@
 
         <RadioButton
             android:id="@+id/rb_bottom_bar_wangyi"
-            style="@style/MainActivityBottomNavigationRadioButtonStyle"
+            style="@style/common_MainActivityBottomNavigationRadioButtonStyle"
             android:drawableTop="@drawable/main_bottom_bar_wangyi_img"
             android:text="网易" />
 
         <RadioButton
             android:id="@+id/rb_bottom_bar_bus"
-            style="@style/MainActivityBottomNavigationRadioButtonStyle"
+            style="@style/common_MainActivityBottomNavigationRadioButtonStyle"
             android:drawableTop="@drawable/main_bottom_bar_bus_img"
             android:text="出行" />
 
         <RadioButton
             android:id="@+id/rb_bottom_bar_record"
-            style="@style/MainActivityBottomNavigationRadioButtonStyle"
+            style="@style/common_MainActivityBottomNavigationRadioButtonStyle"
             android:drawableTop="@drawable/main_bottom_bar_record_img"
             android:text="打卡" />
 
