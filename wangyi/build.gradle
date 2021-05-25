@@ -1,8 +1,4 @@
-if (isRunAlone) {
-    apply plugin: 'com.android.application'
-} else {
-    apply plugin: 'com.android.library'
-}
+apply plugin: 'com.dd.comgradle'
 
 android {
     useLibrary 'org.apache.http.legacy'
@@ -20,7 +16,7 @@ android {
         multiDexEnabled true
         javaCompileOptions {
             annotationProcessorOptions {
-                arguments = [moduleName: project.getName()]
+                arguments = [host: "wangyi"]
             }
         }
     }
@@ -57,4 +53,9 @@ dependencies {
     implementation project(":common")
     implementation project(":routerservice")
     annotationProcessor deps.arouter.compiler
+    annotationProcessor deps.jimu.router_anno_compiler
+}
+combuild {
+    applicationName = 'com/sim/wangyi/runalone/Application'
+    isRegisterCompoAuto = true
 }

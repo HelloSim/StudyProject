@@ -9,6 +9,19 @@
         <item name="android:windowNoTitle">true</item>
     </style>
 
+    <!--MainActivity底部Navigation的RadioButton样式-->
+    <style name="common_MainActivityBottomNavigationRadioButtonStyle">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:button">@null</item>
+        <item name="android:textColor">@drawable/common_main_bottom_bar_text_style</item>
+        <item name="android:textSize">10sp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_marginTop">5dp</item>
+        <item name="android:layout_marginBottom">5dp</item>
+    </style>
+
     <!--    正常textView样式-->
     <style name="common_textViewStyle">
         <item name="android:layout_width">wrap_content</item>

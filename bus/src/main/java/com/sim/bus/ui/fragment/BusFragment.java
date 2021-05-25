@@ -116,22 +116,17 @@ public class BusFragment extends BaseFragment {
             imageView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    switch (v.getId()) {
-                        case R.id.bus_pager_img1:
-                            ToastUtil.toast(getContext(), "1被点击！");
-                            break;
-                        case R.id.bus_pager_img2:
-                            ToastUtil.toast(getContext(), "2被点击！");
-                            break;
-                        case R.id.bus_pager_img3:
-                            ToastUtil.toast(getContext(), "3被点击！");
-                            break;
-                        case R.id.bus_pager_img4:
-                            ToastUtil.toast(getContext(), "4被点击！");
-                            break;
-                        case R.id.bus_pager_img5:
-                            ToastUtil.toast(getContext(), "5被点击！");
-                            break;
+                    int id = v.getId();
+                    if (id == R.id.bus_pager_img1) {
+                        ToastUtil.toast(getContext(), "1被点击！");
+                    } else if (id == R.id.bus_pager_img2) {
+                        ToastUtil.toast(getContext(), "2被点击！");
+                    } else if (id == R.id.bus_pager_img3) {
+                        ToastUtil.toast(getContext(), "3被点击！");
+                    } else if (id == R.id.bus_pager_img4) {
+                        ToastUtil.toast(getContext(), "4被点击！");
+                    } else if (id == R.id.bus_pager_img5) {
+                        ToastUtil.toast(getContext(), "5被点击！");
                     }
                 }
             });

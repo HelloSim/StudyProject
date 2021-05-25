@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/item_parent"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/common_card_shape_gray"
+    android:gravity="center_vertical"
+    android:orientation="horizontal">
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/news_image"
+        android:layout_width="110dp"
+        android:layout_height="88dp"
+        android:padding="1dp"
+        android:scaleType="fitXY"
+        android:src="@mipmap/common_ic_launcher"
+        app:shapeAppearanceOverlay="@style/common_roundedCornerImageStyle" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="88dp"
+        android:layout_marginLeft="10dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/news_title"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:textStyle="bold"
+            tools:text="科恩起诉特朗普集团：拖欠我190万美元法律费用" />
+
+        <TextView
+            android:id="@+id/news_time"
+            style="@style/common_textViewStyleGray"
+            android:layout_marginBottom="10dp"
+            tools:text="2019-03-08 10:00:35" />
+
+    </LinearLayout>
+
+</LinearLayout>

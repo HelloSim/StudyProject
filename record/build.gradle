@@ -1,8 +1,4 @@
-if (isRunAlone) {
-    apply plugin: 'com.android.application'
-} else {
-    apply plugin: 'com.android.library'
-}
+apply plugin: 'com.dd.comgradle'
 
 android {
     useLibrary 'org.apache.http.legacy'
@@ -20,7 +16,7 @@ android {
         multiDexEnabled true
         javaCompileOptions {
             annotationProcessorOptions {
-                arguments = [moduleName: project.getName()]
+                arguments = [host: "record"]
             }
         }
     }
@@ -60,4 +56,9 @@ dependencies {
 
     implementation 'com.haibin:calendarview:3.4.6' //日历
     implementation 'com.github.huangyanbin:SmartTable:2.2.0'//表格
+    annotationProcessor deps.jimu.router_anno_compiler
+}
+combuild {
+    applicationName = 'com/sim/record/runalone/Application'
+    isRegisterCompoAuto = true
 }

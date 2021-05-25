@@ -32,18 +32,24 @@ dependencies {
     api deps.net.rxandroid//RxAndroid
     api deps.net.rxadapter//配合Rxjava 使用
     api deps.net.converter//转换器，请求结果转换成Model
-    api deps.net.logging
+    api deps.net.logging//log日志
 
     api 'androidx.legacy:legacy-support-v4:1.0.0'//下拉刷新控件
     api 'com.haibin:calendarview:3.4.6' //日历
     api 'com.github.huangyanbin:SmartTable:2.2.0'//表格
+
+    api deps.arouter.arouter
+    annotationProcessor deps.arouter.compiler
+    api deps.jimu.componentLib
+    annotationProcessor deps.jimu.router_anno_compiler
+    annotationProcessor deps.jimu.router_anno_compiler
 
     //bmob
     api 'cn.bmob.android:bmob-sdk:3.7.8'
     api "io.reactivex.rxjava2:rxjava:2.2.8"
     api 'io.reactivex.rxjava2:rxandroid:2.1.1'
     api 'com.squareup.okio:okio:2.2.2'
-
-    api deps.arouter.arouter
-    annotationProcessor deps.arouter.compiler
+    //bugly
+    api 'com.tencent.bugly:crashreport_upgrade:1.4.5'
+    api 'com.tencent.tinker:tinker-android-lib:1.9.9'
 }

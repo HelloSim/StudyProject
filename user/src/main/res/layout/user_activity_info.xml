@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/parent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@mipmap/common_login_bg"
+    android:orientation="vertical">
+
+    <com.sim.common.views.TitleView
+        android:id="@+id/titleView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:common_leftImageSrc="@mipmap/common_ic_to_left"
+        app:common_showLeft="true"
+        app:common_title="用户信息" />
+
+    <RelativeLayout
+        android:id="@+id/rl_mobile_phone_number"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="200dp"
+        android:background="@drawable/common_card_shape_gray"
+        android:padding="20dp">
+
+        <TextView
+            style="@style/common_textViewStyle"
+            android:layout_centerVertical="true"
+            android:text="手机号码" />
+
+        <TextView
+            android:id="@+id/tv_mobile_phone_number"
+            style="@style/common_textViewStyleGray"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:layout_toLeftOf="@+id/iv_mobile_phone_number_go"
+            tools:text="13411094382" />
+
+        <ImageView
+            android:id="@+id/iv_mobile_phone_number_go"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/common_ic_to_right" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/common_card_shape_gray"
+        android:padding="20dp">
+
+        <TextView
+            style="@style/common_textViewStyle"
+            android:layout_centerVertical="true"
+            android:text="密码" />
+
+        <TextView
+            android:id="@+id/tv_password"
+            style="@style/common_textViewStyleGray"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:layout_toLeftOf="@+id/iv_password_go"
+            android:text="******" />
+
+        <ImageView
+            android:id="@+id/iv_password_go"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/common_ic_to_right" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_user_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/common_card_shape_gray"
+        android:padding="20dp">
+
+        <TextView
+            style="@style/common_textViewStyle"
+            android:layout_centerVertical="true"
+            android:text="用户名" />
+
+        <TextView
+            android:id="@+id/tv_user_name"
+            style="@style/common_textViewStyleGray"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:layout_toLeftOf="@+id/iv_user_name_go"
+            tools:text="Sim" />
+
+        <ImageView
+            android:id="@+id/iv_user_name_go"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/common_ic_to_right" />
+
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/btn_log_out"
+        style="@style/common_buttonStyle"
+        android:layout_width="match_parent"
+        android:layout_margin="10dp"
+        android:text="退出登录" />
+
+</LinearLayout>

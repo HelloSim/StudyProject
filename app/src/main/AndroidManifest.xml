@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     package="com.sim.traveltool">
 
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
@@ -31,15 +30,14 @@
     <uses-permission android:name="android.permission.VIBRATE" />
 
     <application
-        android:name="com.sim.traveltool.Application"
+        android:name="com.sim.common.base.BaseApplication"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_app_icon"
-        android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:icon="@mipmap/common_ic_app_icon"
+        android:label="Traveltool"
+        android:roundIcon="@mipmap/common_ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/common_APPTheme"
-        android:usesCleartextTraffic="true"
-        tools:ignore="GoogleAppIndexingWarning">
+        android:usesCleartextTraffic="true">
         <activity android:name=".ui.activity.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -47,21 +45,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity android:name="com.sim.wangyi.ui.activity.NewsDetailActivity" />
-        <activity android:name=".ui.activity.NewsCollectActivity" />
-
-        <activity android:name=".ui.activity.UserLogInActivity" />
-        <activity android:name=".ui.activity.UserRegisterActivity" />
-        <activity android:name=".ui.activity.UserInfoActivity" />
-        <activity android:name=".ui.activity.UserUpdatePasswordActivity" />
-
-        <activity android:name="com.sim.bus.ui.activity.BusRealTimeActivity" />
-        <activity android:name="com.sim.bus.ui.activity.BusSearchActivity" />
-        <activity android:name="com.sim.bus.ui.activity.BusRouteActivity" />
-        <activity android:name="com.sim.bus.ui.activity.BusRouteDetailActivity" />
-
-        <activity android:name="com.sim.record.ui.activity.RecordAllActivity" />
 
         <!--bugly-->
         <activity
@@ -72,12 +55,10 @@
             android:name="com.tencent.bugly.beta.utils.BuglyFileProvider"
             android:authorities="${applicationId}.fileProvider"
             android:exported="false"
-            android:grantUriPermissions="true"
-            tools:replace="name,authorities,exported,grantUriPermissions">
+            android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/provider_paths"
-                tools:replace="name,resource" />
+                android:resource="@xml/provider_paths" />
         </provider>
 
 

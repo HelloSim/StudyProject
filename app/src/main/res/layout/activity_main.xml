@@ -28,7 +28,7 @@
         android:layout_gravity="start"
         android:orientation="vertical">
 
-        <include layout="@layout/view_left_bar" />
+<!--        <include layout="@layout/view_left_bar" />-->
 
     </LinearLayout>
 

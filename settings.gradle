@@ -1,3 +1,4 @@
+include ':user'
 include ':bus'
 rootProject.name = "TravelTool"
 include ':baselib', ':net', ':common', ':routerservice',

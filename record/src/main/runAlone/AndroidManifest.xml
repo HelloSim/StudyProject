@@ -33,7 +33,7 @@
     <uses-permission android:name="android.permission.VIBRATE" />
 
     <application
-        android:name="com.sim.record.Application"
+        android:name="com.sim.record.runalone.Application"
         android:allowBackup="true"
         android:icon="@mipmap/common_ic_app_icon"
         android:label="@string/app_name"

@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@mipmap/common_login_bg">
+
+    <com.sim.common.views.TitleView
+        android:id="@+id/titleView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:common_leftImageSrc="@mipmap/common_ic_to_left"
+        app:common_rightImageSrc="@mipmap/common_ic_more"
+        app:common_showLeft="true"
+        app:common_showRight="true"
+        app:common_title="登录" />
+
+    <LinearLayout
+        android:id="@+id/ll_login_by_account"
+        android:layout_width="280dp"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/et_mobile_phone_number"
+            style="@style/common_editViewStyle"
+            android:hint="账号" />
+
+        <EditText
+            android:id="@+id/et_password"
+            style="@style/common_editViewStyleNumberPassword"
+            android:layout_marginTop="5dp"
+            android:hint="密码" />
+
+        <Button
+            android:id="@+id/btn_log_in"
+            style="@style/common_buttonStyle"
+            android:layout_width="match_parent"
+            android:layout_marginTop="10dp"
+            android:text="登录" />
+
+        <TextView
+            android:id="@+id/tv_login_by_SMS_code"
+            style="@style/common_textViewStyle"
+            android:layout_gravity="center"
+            android:padding="10dp"
+            android:text="验证码快捷登录"
+            android:textColor="@color/common_white"
+            android:textSize="16sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_login_by_SMS_code"
+        android:layout_width="280dp"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <EditText
+            android:id="@+id/et_mobile_phone_number2"
+            style="@style/common_editViewStyle"
+            android:hint="手机号码" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/et_SMS_code"
+                style="@style/common_editViewStyle"
+                android:layout_width="0dp"
+                android:layout_marginRight="5dp"
+                android:layout_weight="3"
+                android:hint="验证码" />
+
+            <Button
+                android:id="@+id/btn_SMS_code"
+                style="@style/common_buttonStyle"
+                android:layout_width="0dp"
+                android:layout_weight="2"
+                android:gravity="center"
+                android:text="验证码" />
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btn_log_in2"
+            style="@style/common_buttonStyle"
+            android:layout_width="match_parent"
+            android:layout_marginTop="10dp"
+            android:text="登录" />
+
+        <TextView
+            android:id="@+id/tv_login_by_account"
+            style="@style/common_textViewStyle"
+            android:layout_gravity="center"
+            android:padding="10dp"
+            android:text="账号密码登录"
+            android:textColor="@color/common_white"
+            android:textSize="16sp" />
+
+    </LinearLayout>
+
+</RelativeLayout>

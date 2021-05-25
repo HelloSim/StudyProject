@@ -1,35 +1,29 @@
 package com.sim.traveltool.ui.activity;
 
 import android.Manifest;
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.View;
 import android.widget.RadioButton;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.luojilab.component.componentlib.router.Router;
 import com.sim.bean.User;
 import com.sim.common.AppHelper;
 import com.sim.common.base.BaseActivity;
-import com.sim.common.bean.EventMessage;
 import com.sim.common.utils.LogUtil;
 import com.sim.common.utils.SPUtil;
-import com.sim.common.utils.ToastUtil;
+import com.sim.router.inteface.BusFragmentService;
+import com.sim.router.inteface.RecordFragmentService;
+import com.sim.router.inteface.WangyiFragmentService;
 import com.sim.traveltool.R;
-import com.sim.traveltool.ui.fragment.BusFragment;
-import com.tencent.bugly.beta.Beta;
-import com.tencent.bugly.beta.UpgradeInfo;
-
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
 
 import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.exception.BmobException;
@@ -44,26 +38,17 @@ public class MainActivity extends BaseActivity {
 
     private RadioButton rbBottomBarBus, rbBottomBarWangyi, rbBottomBarRecord;
 
-    private RelativeLayout rlUser, rlUserCollect, rlUpdateVersion, rlUserSetting;
-    private TextView tvUserName;
+    private Fragment busFragment;
+    private Fragment wangyiFragment;
+    private Fragment recordFragment;
 
-    private BusFragment busFragment;
-    private WangyiFragment wangyiFragment;
-    private RecordFragment recordFragment;
-
-    private FragmentManager mFragmentManager;
+    private FragmentManager fragmentManager;
     private FragmentTransaction mFragmentTransaction;
 
     private Handler handler;
     private int count = 0;
 
     private User user;
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        EventBus.getDefault().unregister(this);
-    }
 
     @Override
     protected int getLayoutRes() {
@@ -76,21 +61,16 @@ public class MainActivity extends BaseActivity {
         rbBottomBarBus = findViewById(R.id.rb_bottom_bar_bus);
         rbBottomBarWangyi = findViewById(R.id.rb_bottom_bar_wangyi);
         rbBottomBarRecord = findViewById(R.id.rb_bottom_bar_record);
-        rlUser = findViewById(R.id.rl_user);
-        rlUserCollect = findViewById(R.id.rl_user_collect);
-        rlUpdateVersion = findViewById(R.id.rl_update_version);
-        rlUserSetting = findViewById(R.id.rl_user_setting);
-        tvUserName = findViewById(R.id.tv_user_name);
-        setViewClick(rlUser, rlUserCollect, rlUpdateVersion, rlUserSetting, rbBottomBarBus, rbBottomBarWangyi, rbBottomBarRecord);
+        setViewClick(rbBottomBarBus, rbBottomBarWangyi, rbBottomBarRecord);
     }
 
     @Override
     protected void initData() {
         requestPermission(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 0x001);
-        EventBus.getDefault().register(this);
 
         if (SPUtil.contains(this, AppHelper.userSpName, AppHelper.userSpStateKey) &&
-                ((boolean) SPUtil.get(this, AppHelper.userSpName, AppHelper.userSpStateKey, false)) && BmobUser.isLogin()) {
+                ((boolean) SPUtil.get(this, AppHelper.userSpName, AppHelper.userSpStateKey, false)) &&
+                BmobUser.isLogin()) {
             user = BmobUser.getCurrentUser(User.class);
         }
 
@@ -101,42 +81,40 @@ public class MainActivity extends BaseActivity {
                 count = 0;
             }
         };
+
+        fragmentManager = getSupportFragmentManager();
+        mFragmentTransaction = fragmentManager.beginTransaction();
+
+        Router router = Router.getInstance();
+        if (router.getService(WangyiFragmentService.class.getSimpleName()) != null) {
+            WangyiFragmentService service = (WangyiFragmentService) router.getService(WangyiFragmentService.class.getSimpleName());
+            wangyiFragment = service.getWangyiFragment();
+            mFragmentTransaction.add(R.id.frameLayout, wangyiFragment);
+            Log.d("Sim", "initData: "+wangyiFragment);
+        }
+        if (router.getService(BusFragmentService.class.getSimpleName()) != null) {
+            BusFragmentService service = (BusFragmentService) router.getService(BusFragmentService.class.getSimpleName());
+            busFragment = service.getBusFragment();
+            mFragmentTransaction.add(R.id.frameLayout, busFragment);
+        }
+        if (router.getService(RecordFragmentService.class.getSimpleName()) != null) {
+            RecordFragmentService service = (RecordFragmentService) router.getService(RecordFragmentService.class.getSimpleName());
+            recordFragment = service.getRecordFragment();
+            mFragmentTransaction.add(R.id.frameLayout, recordFragment);
+        }
+        mFragmentTransaction.commit();
     }
 
     @Override
     protected void initView() {
         rbBottomBarWangyi.performClick();
-        if (user != null) {
-            tvUserName.setText(user.getUsername());
-        } else {
-            tvUserName.setText("用户登录");
-        }
     }
 
     @Override
     public void onMultiClick(View view) {
-        if (view == rlUser) {
-            drawerLayout.closeDrawers();
-            if (user != null) {
-                startActivity(new Intent(this, UserInfoActivity.class));
-            } else {
-                startActivity(new Intent(this, UserLogInActivity.class));
-            }
-        } else if (view == rlUserCollect) {
-            if (user != null) {
-                drawerLayout.closeDrawers();
-                startActivity(new Intent(this, NewsCollectActivity.class));
-            } else {
-                ToastUtil.toast(this, "未登录");
-            }
-        } else if (view == rlUpdateVersion) {
-//            Beta.checkAppUpgrade();
-//            loadUpgradeInfo();
-        } else if (view == rlUserSetting) {
-            clickMark();
-        } else if (view == rbBottomBarBus) {
+        if (view == rbBottomBarWangyi) {
             showFragment(1);
-        } else if (view == rbBottomBarWangyi) {
+        } else if (view == rbBottomBarBus) {
             showFragment(2);
         } else if (view == rbBottomBarRecord) {
             showFragment(3);
@@ -145,22 +123,13 @@ public class MainActivity extends BaseActivity {
         }
     }
 
-    private void loadUpgradeInfo() {
-        UpgradeInfo upgradeInfo = Beta.getUpgradeInfo();
-        if (upgradeInfo == null) {
-            return;
-        }
-        LogUtil.d(getClass(), "最新版本: " + upgradeInfo.versionName);
-    }
-
     /**
      * 隐藏所有的fragment再显示需要的fragment
      *
      * @param type 1:公交fragment     2：网易fragment    3：打卡fragment
      */
     private void showFragment(int type) {
-        mFragmentManager = getSupportFragmentManager();
-        mFragmentTransaction = mFragmentManager.beginTransaction();
+        mFragmentTransaction = fragmentManager.beginTransaction();
         if (busFragment != null) {
             mFragmentTransaction.hide(busFragment);
         }
@@ -172,28 +141,13 @@ public class MainActivity extends BaseActivity {
         }
         switch (type) {
             case 1:
-                if (busFragment == null) {
-                    busFragment = new BusFragment();
-                    mFragmentTransaction.add(R.id.frameLayout, busFragment);
-                } else {
-                    mFragmentTransaction.show(busFragment);
-                }
+                mFragmentTransaction.show(wangyiFragment);
                 break;
             case 2:
-                if (wangyiFragment == null) {
-                    wangyiFragment = new WangyiFragment();
-                    mFragmentTransaction.add(R.id.frameLayout, wangyiFragment);
-                } else {
-                    mFragmentTransaction.show(wangyiFragment);
-                }
+                mFragmentTransaction.show(busFragment);
                 break;
             case 3:
-                if (recordFragment == null) {
-                    recordFragment = new RecordFragment();
-                    mFragmentTransaction.add(R.id.frameLayout, recordFragment);
-                } else {
-                    mFragmentTransaction.show(recordFragment);
-                }
+                mFragmentTransaction.show(recordFragment);
                 break;
         }
         mFragmentTransaction.commit();
@@ -208,7 +162,7 @@ public class MainActivity extends BaseActivity {
             count++;
             handler.sendEmptyMessageDelayed(1001, 1000);
         } else {
-            startActivity(new Intent(this, HideActivity.class));
+//            startActivity(new Intent(this, HideActivity.class));
             count = 0;
         }
     }
@@ -227,23 +181,6 @@ public class MainActivity extends BaseActivity {
                 }
             }
         });
-    }
-
-    /**
-     * 接收消息事件
-     *
-     * @param eventMessage
-     */
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onMessageEvent(EventMessage eventMessage) {
-        if (eventMessage.type == AppHelper.USER_IsLogIn) {
-            user = BmobUser.getCurrentUser(User.class);
-            User.fetchUserInfo();
-            tvUserName.setText(user.getUsername());
-        } else if (eventMessage.type == AppHelper.USER_noLogIn) {
-            user = null;
-            tvUserName.setText("用户登录");
-        }
     }
 
     /**
