@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.sim.common.views.TitleView
+        android:id="@+id/titleView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:common_leftImageSrc="@mipmap/common_ic_to_left"
+        app:common_showLeft="true"
+        app:common_title="换乘方案" />
+
+    <TextView
+        android:id="@+id/tv_bus_route"
+        style="@style/common_textViewStyle"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="10dp"
+        tools:text="K8路 > 806路" />
+
+    <TextView
+        android:id="@+id/tv_time_distance"
+        style="@style/common_textViewStyleGray"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="10dp"
+        tools:text="1小时16分钟 | 步行826米" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rl_route_detail"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="10dp" />
+
+</LinearLayout>

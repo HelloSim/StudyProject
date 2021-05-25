@@ -19,7 +19,7 @@
             android:id="@+id/user_image_default"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            app:common_src="@mipmap/photo"
+            app:common_src="@mipmap/common_photo"
             app:common_type="circle"/>
 
         <ImageView
@@ -27,7 +27,7 @@
             android:layout_height="20dp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:src="@mipmap/ic_to_right" />
+            android:src="@mipmap/common_ic_to_right" />
 
         <TextView
             android:id="@+id/tv_user_name"
@@ -59,7 +59,7 @@
             android:layout_height="15dp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:src="@mipmap/ic_to_right" />
+            android:src="@mipmap/common_ic_to_right" />
 
         <TextView
             style="@style/common_textViewStyle"
@@ -82,14 +82,14 @@
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_centerVertical="true"
-            android:src="@mipmap/ic_setting" />
+            android:src="@mipmap/common_ic_setting" />
 
         <ImageView
             android:layout_width="15dp"
             android:layout_height="15dp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:src="@mipmap/ic_to_right" />
+            android:src="@mipmap/common_ic_to_right" />
 
         <TextView
             style="@style/common_textViewStyle"
@@ -112,14 +112,14 @@
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_centerVertical="true"
-            android:src="@mipmap/ic_setting" />
+            android:src="@mipmap/common_ic_setting" />
 
         <ImageView
             android:layout_width="15dp"
             android:layout_height="15dp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:src="@mipmap/ic_to_right" />
+            android:src="@mipmap/common_ic_to_right" />
 
         <TextView
             style="@style/common_textViewStyle"
