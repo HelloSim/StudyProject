@@ -17,6 +17,7 @@ android {
 }
 
 dependencies {
+    api fileTree(dir: 'libs', include: ['*.jar'])
     api deps.multidex// 多dex配置
     api deps.recyclerview//recyclerview
     api deps.gson//Gson库

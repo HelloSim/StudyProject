@@ -9,12 +9,12 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
+import com.sim.bean.User;
+import com.sim.bean.WangyiBean;
 import com.sim.common.base.BaseActivity;
 import com.sim.common.utils.ToastUtil;
 import com.sim.common.views.TitleView;
 import com.sim.traveltool.R;
-import com.sim.wangyi.bean.User;
-import com.sim.wangyi.bean.WangyiBean;
 
 import java.util.List;
 

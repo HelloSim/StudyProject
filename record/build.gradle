@@ -49,7 +49,6 @@ android {
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
     testImplementation deps.junit.junit
     androidTestImplementation deps.junit.test
     implementation deps.androidx.appcompat

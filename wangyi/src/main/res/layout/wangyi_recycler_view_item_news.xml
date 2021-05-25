@@ -15,7 +15,7 @@
         android:layout_height="88dp"
         android:padding="1dp"
         android:scaleType="fitXY"
-        android:src="@mipmap/ic_launcher"
+        android:src="@mipmap/common_ic_launcher"
         app:shapeAppearanceOverlay="@style/common_roundedCornerImageStyle" />
 
     <LinearLayout
