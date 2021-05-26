@@ -1,4 +1,4 @@
-apply plugin: 'com.dd.comgradle'
+apply plugin: 'com.android.application'
 
 android {
     useLibrary 'org.apache.http.legacy'
@@ -14,23 +14,6 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"//aar混淆文件名
         multiDexEnabled true
-        javaCompileOptions {
-            annotationProcessorOptions {
-                arguments = [host: "bus"]
-            }
-        }
-    }
-    sourceSets {
-        main {
-            if (isRunAlone) {
-                manifest.srcFile 'src/main/runAlone/AndroidManifest.xml'
-            } else {
-                manifest.srcFile 'src/main/AndroidManifest.xml'
-                java {
-                    exclude '**/runAlone/**' // release 时 runAlone 目录下文件不需要合并到主工程
-                }
-            }
-        }
     }
     buildTypes {
         release {
@@ -51,11 +34,4 @@ dependencies {
     androidTestImplementation deps.androidx.espresso
 
     implementation project(":common")
-    implementation project(":routerservice")
-    annotationProcessor deps.arouter.compiler
-    annotationProcessor deps.jimu.router_anno_compiler
-}
-combuild {
-    applicationName = 'com/sim/bus/runalone/Application'
-    isRegisterCompoAuto = true
 }

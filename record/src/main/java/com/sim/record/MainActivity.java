@@ -13,7 +13,6 @@ import com.sim.common.base.BaseActivity;
 import com.sim.common.bean.EventMessage;
 import com.sim.common.utils.SPUtil;
 import com.sim.record.ui.fragment.RecordFragment;
-import com.sim.traveltool.R;
 
 import org.greenrobot.eventbus.EventBus;
 

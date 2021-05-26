@@ -8,11 +8,6 @@ android {
         targetSdkVersion versions.targetSdkVersion
         versionCode 1
         versionName "1.0"
-        javaCompileOptions {
-            annotationProcessorOptions {
-                arguments = [moduleName: project.getName()]
-            }
-        }
     }
 }
 
@@ -22,7 +17,6 @@ dependencies {
     api deps.recyclerview//recyclerview
     api deps.gson//Gson库
     api deps.glide.glide//glide
-    annotationProcessor deps.glide.compiler
     api deps.eventbus//eventbus
     api deps.material//TabLayout
     // 网络请求的封装
@@ -37,12 +31,6 @@ dependencies {
     api 'androidx.legacy:legacy-support-v4:1.0.0'//下拉刷新控件
     api 'com.haibin:calendarview:3.4.6' //日历
     api 'com.github.huangyanbin:SmartTable:2.2.0'//表格
-
-    api deps.arouter.arouter
-    annotationProcessor deps.arouter.compiler
-    api deps.jimu.componentLib
-    annotationProcessor deps.jimu.router_anno_compiler
-    annotationProcessor deps.jimu.router_anno_compiler
 
     //bmob
     api 'cn.bmob.android:bmob-sdk:3.7.8'

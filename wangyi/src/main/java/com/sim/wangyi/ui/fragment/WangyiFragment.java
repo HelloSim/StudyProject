@@ -14,7 +14,7 @@ import com.sim.common.base.BaseFragment;
 import com.sim.common.base.BaseViewHolder;
 import com.sim.common.utils.LogUtil;
 import com.sim.http.APIFactory;
-import com.sim.traveltool.R;
+import com.sim.wangyi.R;
 import com.sim.wangyi.adapter.NewsAdapter;
 import com.sim.wangyi.ui.activity.NewsDetailActivity;
 

@@ -16,7 +16,7 @@ import com.sim.common.utils.LogUtil;
 import com.sim.common.utils.TimeUtil;
 import com.sim.common.views.TitleView;
 import com.sim.bean.RecordBean;
-import com.sim.traveltool.R;
+import com.sim.record.R;
 
 import java.util.ArrayList;
 import java.util.List;

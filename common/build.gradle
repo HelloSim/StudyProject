@@ -1,7 +1,6 @@
 apply plugin: 'com.android.library'
 
 android {
-    resourcePrefix "common_"
     compileSdkVersion versions.compileSdkVersion
     buildToolsVersion versions.buildToolsVersion
     defaultConfig {
@@ -9,17 +8,10 @@ android {
         targetSdkVersion versions.targetSdkVersion
         versionCode 1
         versionName "1.0"
-        javaCompileOptions {
-            annotationProcessorOptions {
-                arguments = [moduleName: project.getName()]
-            }
-        }
     }
 }
 
 dependencies {
     api project(':baselib')
     api project(':net')
-    api project(':routerservice')
-    annotationProcessor deps.arouter.compiler
 }

@@ -27,7 +27,7 @@ import com.sim.common.utils.ToastUtil;
 import com.sim.common.views.TitleView;
 import com.sim.bean.RecordBean;
 import com.sim.record.ui.activity.RecordAllActivity;
-import com.sim.traveltool.R;
+import com.sim.record.R;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;

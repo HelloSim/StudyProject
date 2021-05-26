@@ -1,30 +1,21 @@
-apply plugin: 'com.dd.comgradle'
+apply plugin: 'com.android.application'
 //apply from: 'tinker-support.gradle'
 
 android {
-//    resourcePrefix "app_"
     compileSdkVersion versions.compileSdkVersion
     buildToolsVersion versions.buildToolsVersion
     defaultConfig {
-        applicationId "com.sim.traveltool"
         minSdkVersion versions.minSdkVersion
         targetSdkVersion versions.targetSdkVersion
         versionCode 28
         versionName "4.2.8"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         ndk {
-            // 设置支持的SO库架构
             abiFilters 'armeabi', 'arm64-v8a'//, 'x86', 'armeabi-v7a', 'x86_64'
         }
-        //添加javaCompileOptions
-        javaCompileOptions {
-            annotationProcessorOptions {
-                includeCompileClasspath = true
-                arguments = [host: "app"]
-            }
-        }
-        multiDexEnabled true//分包
+        multiDexEnabled true
     }
+    resourcePrefix "app_"
     signingConfigs {
         release {
             storeFile file('HelloSim.jks')
@@ -33,52 +24,28 @@ android {
             storePassword "yclyml0719"
         }
     }
-    //指定apk名称
-    applicationVariants.all { variant ->
-        variant.outputs.all {
-            outputFileName = "TravelTool${defaultConfig.versionName}.apk"
-        }
-    }
-    //封装构建类型配置
+//    applicationVariants.all { variant ->
+//        variant.outputs.all {
+//            outputFileName = "TravelTool${defaultConfig.versionName}.apk"
+//        }
+//    }
     buildTypes {
         debug {
             buildConfigField("boolean", "LOG_DEBUG", "true")
-            minifyEnabled false //是否可以移出无用的java代码，默认为false
+            minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
         release {
             buildConfigField("boolean", "LOG_DEBUG", "false")
-            minifyEnabled false //是否可以移出无用的java代码，默认为false
+            minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            //指定插件使用的混淆文件
-            signingConfig signingConfigs.release //签名配置文件
+            signingConfig signingConfigs.release
         }
     }
-    //设置JDK1.8
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
-//    //程序在编译的时候会检查lint，有任何错误提示会停止build，我们可以关闭这个开关
-//    lintOptions {
-//        abortOnError false//即使报错也不会停止打包
-//        checkReleaseBuilds false//打包release版本的时候进行检测
-//    }
-//    // 如果提示多个重复文件，加这属性
-//    packagingOptions {
-//        exclude 'META-INF/proguard/androidx-annotations.pro'
-//    }
-//    // 用于指定所有aar引用同样版本的support包
-//    configurations.all {
-//        resolutionStrategy.eachDependency { DependencyResolveDetails details ->
-//            def requested = details.requested
-//            if (requested.group == 'com.android.support') {
-//                if (!requested.name.startsWith("multidex")) {
-//                    details.useVersion '28.0.0'
-//                }
-//            }
-//        }
-//    }
 }
 
 dependencies {
@@ -88,14 +55,4 @@ dependencies {
     androidTestImplementation deps.androidx.espresso
 
     implementation project(":common")
-    implementation project(":routerservice")
-    annotationProcessor deps.arouter.compiler
-    annotationProcessor deps.jimu.router_anno_compiler
-//    if (isRunAlone) {
-//        implementation project(":record")
-//    }
-}
-combuild {
-    applicationName = 'com/sim/traveltool/Application'
-    isRegisterCompoAuto = true
 }

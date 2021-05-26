@@ -86,11 +86,14 @@ public class MainActivity extends BaseActivity {
         mFragmentTransaction = fragmentManager.beginTransaction();
 
         Router router = Router.getInstance();
+        Log.d("Sim", "initData: " + router);
         if (router.getService(WangyiFragmentService.class.getSimpleName()) != null) {
             WangyiFragmentService service = (WangyiFragmentService) router.getService(WangyiFragmentService.class.getSimpleName());
             wangyiFragment = service.getWangyiFragment();
             mFragmentTransaction.add(R.id.frameLayout, wangyiFragment);
             Log.d("Sim", "initData: "+wangyiFragment);
+        }else{
+            Log.d("Sim", "initData: null");
         }
         if (router.getService(BusFragmentService.class.getSimpleName()) != null) {
             BusFragmentService service = (BusFragmentService) router.getService(BusFragmentService.class.getSimpleName());
@@ -139,17 +142,17 @@ public class MainActivity extends BaseActivity {
         if (recordFragment != null) {
             mFragmentTransaction.hide(recordFragment);
         }
-        switch (type) {
-            case 1:
-                mFragmentTransaction.show(wangyiFragment);
-                break;
-            case 2:
-                mFragmentTransaction.show(busFragment);
-                break;
-            case 3:
-                mFragmentTransaction.show(recordFragment);
-                break;
-        }
+//        switch (type) {
+//            case 1:
+//                mFragmentTransaction.show(wangyiFragment);
+//                break;
+//            case 2:
+//                mFragmentTransaction.show(busFragment);
+//                break;
+//            case 3:
+//                mFragmentTransaction.show(recordFragment);
+//                break;
+//        }
         mFragmentTransaction.commit();
     }
 

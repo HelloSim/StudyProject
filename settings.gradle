@@ -1,5 +1,5 @@
 include ':user'
 include ':bus'
 rootProject.name = "TravelTool"
-include ':baselib', ':net', ':common', ':routerservice',
+include ':baselib', ':net', ':common',
         ':app', ':wangyi', ':record'

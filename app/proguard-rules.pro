@@ -99,3 +99,11 @@
 -keep class com.android.internal.http.multipart.**{*;}
 -keep class org.apache.commons.**{*;}
 -keep class org.apache.http.**{*;}
+
+-keep interface * {
+  <methods>;
+}
+-keep class com.luojilab.component.componentlib.** {*;}
+-keep class com.luojilab.gen.router.** {*;}
+-keep class * implements com.luojilab.component.componentlib.router.ISyringe {*;}
+-keep class * implements com.luojilab.component.componentlib.applicationlike.IApplicationLike {*;}

@@ -12,7 +12,6 @@ import com.sim.common.AppHelper;
 import com.sim.common.base.BaseActivity;
 import com.sim.common.bean.EventMessage;
 import com.sim.common.utils.SPUtil;
-import com.sim.traveltool.R;
 import com.sim.wangyi.ui.fragment.WangyiFragment;
 
 import org.greenrobot.eventbus.EventBus;
