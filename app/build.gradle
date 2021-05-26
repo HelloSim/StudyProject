@@ -55,4 +55,11 @@ dependencies {
     androidTestImplementation deps.androidx.espresso
 
     implementation project(":common")
+    implementation project(':sharedlibrary')
+//    if (!isRunAlone.toBoolean()) {
+        implementation project(':wangyi')
+        implementation project(':bus')
+        implementation project(':record')
+        implementation project(':user')
+//    }
 }

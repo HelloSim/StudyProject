@@ -18,18 +18,15 @@
             android:layout_height="0dp"
             android:layout_weight="1" />
 
-        <include layout="@layout/view_bottom_bar" />
+        <include layout="@layout/common_bottom_bar" />
 
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/left_bar"
         android:layout_width="250dp"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        android:orientation="vertical">
-
-<!--        <include layout="@layout/view_left_bar" />-->
-
-    </LinearLayout>
+        android:orientation="vertical" />
 
 </androidx.drawerlayout.widget.DrawerLayout>

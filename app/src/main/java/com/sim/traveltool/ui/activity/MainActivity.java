@@ -4,25 +4,21 @@ import android.Manifest;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.Toast;
 
-import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.luojilab.component.componentlib.router.Router;
 import com.sim.bean.User;
 import com.sim.common.AppHelper;
 import com.sim.common.base.BaseActivity;
 import com.sim.common.utils.LogUtil;
 import com.sim.common.utils.SPUtil;
-import com.sim.router.inteface.BusFragmentService;
-import com.sim.router.inteface.RecordFragmentService;
-import com.sim.router.inteface.WangyiFragmentService;
+import com.sim.sharedlibrary.base.ServiceFactory;
 import com.sim.traveltool.R;
 
 import cn.bmob.v3.BmobUser;
@@ -34,13 +30,12 @@ import cn.bmob.v3.listener.FetchUserInfoListener;
  */
 public class MainActivity extends BaseActivity {
 
-    private DrawerLayout drawerLayout;
+    private LinearLayout left_bar;
 
     private RadioButton rbBottomBarBus, rbBottomBarWangyi, rbBottomBarRecord;
 
-    private Fragment busFragment;
-    private Fragment wangyiFragment;
-    private Fragment recordFragment;
+    private Fragment busFragment, wangyiFragment, recordFragment;
+    private View leftView;
 
     private FragmentManager fragmentManager;
     private FragmentTransaction mFragmentTransaction;
@@ -52,12 +47,12 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected int getLayoutRes() {
-        return R.layout.activity_main;
+        return R.layout.app_activity_main;
     }
 
     @Override
     protected void bindViews(Bundle savedInstanceState) {
-        drawerLayout = findViewById(R.id.dl_drawer);
+        left_bar = findViewById(R.id.left_bar);
         rbBottomBarBus = findViewById(R.id.rb_bottom_bar_bus);
         rbBottomBarWangyi = findViewById(R.id.rb_bottom_bar_wangyi);
         rbBottomBarRecord = findViewById(R.id.rb_bottom_bar_record);
@@ -84,32 +79,19 @@ public class MainActivity extends BaseActivity {
 
         fragmentManager = getSupportFragmentManager();
         mFragmentTransaction = fragmentManager.beginTransaction();
-
-        Router router = Router.getInstance();
-        Log.d("Sim", "initData: " + router);
-        if (router.getService(WangyiFragmentService.class.getSimpleName()) != null) {
-            WangyiFragmentService service = (WangyiFragmentService) router.getService(WangyiFragmentService.class.getSimpleName());
-            wangyiFragment = service.getWangyiFragment();
-            mFragmentTransaction.add(R.id.frameLayout, wangyiFragment);
-            Log.d("Sim", "initData: "+wangyiFragment);
-        }else{
-            Log.d("Sim", "initData: null");
-        }
-        if (router.getService(BusFragmentService.class.getSimpleName()) != null) {
-            BusFragmentService service = (BusFragmentService) router.getService(BusFragmentService.class.getSimpleName());
-            busFragment = service.getBusFragment();
-            mFragmentTransaction.add(R.id.frameLayout, busFragment);
-        }
-        if (router.getService(RecordFragmentService.class.getSimpleName()) != null) {
-            RecordFragmentService service = (RecordFragmentService) router.getService(RecordFragmentService.class.getSimpleName());
-            recordFragment = service.getRecordFragment();
-            mFragmentTransaction.add(R.id.frameLayout, recordFragment);
-        }
+        wangyiFragment = ServiceFactory.getInstance().getWangyiService().getWangyiFragment();
+        busFragment = ServiceFactory.getInstance().getBusService().getBusFragment();
+        recordFragment = ServiceFactory.getInstance().getRecordService().getRecordFragment();
+        mFragmentTransaction.add(R.id.frameLayout, wangyiFragment);
+        mFragmentTransaction.add(R.id.frameLayout, busFragment);
+        mFragmentTransaction.add(R.id.frameLayout, recordFragment);
         mFragmentTransaction.commit();
     }
 
     @Override
     protected void initView() {
+        leftView = ServiceFactory.getInstance().getUserService().getUserView(this);
+        left_bar.addView(leftView);
         rbBottomBarWangyi.performClick();
     }
 
@@ -142,17 +124,17 @@ public class MainActivity extends BaseActivity {
         if (recordFragment != null) {
             mFragmentTransaction.hide(recordFragment);
         }
-//        switch (type) {
-//            case 1:
-//                mFragmentTransaction.show(wangyiFragment);
-//                break;
-//            case 2:
-//                mFragmentTransaction.show(busFragment);
-//                break;
-//            case 3:
-//                mFragmentTransaction.show(recordFragment);
-//                break;
-//        }
+        switch (type) {
+            case 1:
+                mFragmentTransaction.show(wangyiFragment);
+                break;
+            case 2:
+                mFragmentTransaction.show(busFragment);
+                break;
+            case 3:
+                mFragmentTransaction.show(recordFragment);
+                break;
+        }
         mFragmentTransaction.commit();
     }
 

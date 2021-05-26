@@ -22,7 +22,7 @@ import com.sim.common.utils.RegexUtil;
 import com.sim.common.utils.SPUtil;
 import com.sim.common.utils.ToastUtil;
 import com.sim.common.views.TitleView;
-import com.sim.traveltool.R;
+import com.sim.user.R;
 
 import org.greenrobot.eventbus.EventBus;
 

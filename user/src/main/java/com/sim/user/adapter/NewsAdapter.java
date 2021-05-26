@@ -14,7 +14,7 @@ import com.google.android.material.imageview.ShapeableImageView;
 import com.sim.bean.WangyiBean;
 import com.sim.common.base.BaseAdapter;
 import com.sim.common.base.BaseViewHolder;
-import com.sim.traveltool.R;
+import com.sim.user.R;
 
 import java.util.ArrayList;
 

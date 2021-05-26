@@ -1,4 +1,4 @@
-package com.sim.wangyi;
+package com.sim.record.ui.activity;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -12,7 +12,8 @@ import com.sim.common.AppHelper;
 import com.sim.common.base.BaseActivity;
 import com.sim.common.bean.EventMessage;
 import com.sim.common.utils.SPUtil;
-import com.sim.wangyi.ui.fragment.WangyiFragment;
+import com.sim.record.R;
+import com.sim.record.ui.fragment.RecordFragment;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -20,19 +21,23 @@ import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.LogInListener;
 
-
+/**
+ * @ author: Sim
+ * @ time： 2021/5/24 16:12
+ * @ description：
+ */
 public class MainActivity extends BaseActivity {
 
     private FragmentManager mFragmentManager;
     private FragmentTransaction mFragmentTransaction;
 
-    private WangyiFragment wangyiFragment;
+    private RecordFragment recordFragment;
 
     private boolean isLogig = false;
 
     @Override
     protected int getLayoutRes() {
-        return R.layout.wangyi_activity_main;
+        return R.layout.record_activity_main;
     }
 
     @Override
@@ -67,11 +72,11 @@ public class MainActivity extends BaseActivity {
         mFragmentManager = getSupportFragmentManager();
         mFragmentTransaction = mFragmentManager.beginTransaction();
         SPUtil.put(MainActivity.this, AppHelper.userSpName, AppHelper.userSpStateKey, true);
-        if (wangyiFragment == null) {
-            wangyiFragment = new WangyiFragment();
-            mFragmentTransaction.add(R.id.frameLayout, wangyiFragment);
+        if (recordFragment == null) {
+            recordFragment = new RecordFragment();
+            mFragmentTransaction.add(R.id.frameLayout, recordFragment);
         } else {
-            mFragmentTransaction.show(wangyiFragment);
+            mFragmentTransaction.show(recordFragment);
         }
         mFragmentTransaction.commit();
     }

@@ -1,11 +1,14 @@
-apply plugin: 'com.android.application'
+if (isRunAlone.toBoolean()) {
+    apply plugin: 'com.android.application'
+} else {
+    apply plugin: 'com.android.library'
+}
 
 android {
     useLibrary 'org.apache.http.legacy'
     resourcePrefix "bus_"
     compileSdkVersion versions.compileSdkVersion
     buildToolsVersion versions.buildToolsVersion
-
     defaultConfig {
         minSdkVersion versions.minSdkVersion
         targetSdkVersion versions.targetSdkVersion
@@ -14,6 +17,15 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"//aar混淆文件名
         multiDexEnabled true
+    }
+    sourceSets{
+        main{
+            if (isRunAlone.toBoolean()){
+                manifest.srcFile 'src/main/runAlone/AndroidManifest.xml'
+            }else {
+                manifest.srcFile 'src/main/AndroidManifest.xml'
+            }
+        }
     }
     buildTypes {
         release {
@@ -34,4 +46,5 @@ dependencies {
     androidTestImplementation deps.androidx.espresso
 
     implementation project(":common")
+    implementation project(":sharedlibrary")
 }

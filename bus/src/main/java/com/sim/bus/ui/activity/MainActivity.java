@@ -1,10 +1,11 @@
-package com.sim.bus;
+package com.sim.bus.ui.activity;
 
 import android.os.Bundle;
 
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.sim.bus.R;
 import com.sim.bus.ui.fragment.BusFragment;
 import com.sim.common.AppHelper;
 import com.sim.common.base.BaseActivity;

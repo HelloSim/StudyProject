@@ -1,11 +1,11 @@
-package com.sim.user;
+package com.sim.user.ui.activity;
 
 import android.os.Bundle;
 import android.widget.LinearLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.sim.traveltool.R;
+import com.sim.user.R;
 import com.sim.user.ui.view.UserView;
 
 public class MainActivity extends AppCompatActivity {

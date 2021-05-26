@@ -14,7 +14,7 @@ import com.sim.common.base.BaseAdapter;
 import com.sim.common.base.BaseViewHolder;
 import com.sim.common.callback.DialogInterface;
 import com.sim.common.views.TitleView;
-import com.sim.traveltool.R;
+import com.sim.user.R;
 import com.sim.user.adapter.NewsAdapter;
 
 import java.io.Serializable;

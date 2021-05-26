@@ -1,3 +1,4 @@
+include ':sharedlibrary'
 include ':user'
 include ':bus'
 rootProject.name = "TravelTool"

@@ -2,4 +2,13 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.sim.user">
 
+    <application>
+        <activity android:name=".ui.activity.UserLogInActivity"/>
+        <activity android:name=".ui.activity.UserInfoActivity"/>
+        <activity android:name=".ui.activity.UserRegisterActivity"/>
+        <activity android:name=".ui.activity.UserUpdatePasswordActivity"/>
+        <activity android:name=".ui.activity.NewsCollectActivity"/>
+        <activity android:name=".ui.activity.NewsDetailActivity"/>
+    </application>
+
 </manifest>
