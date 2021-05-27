@@ -13,14 +13,14 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
-            <option value="$PROJECT_DIR$/basiclib" />
             <option value="$PROJECT_DIR$/basicres" />
+            <option value="$PROJECT_DIR$/library-basiclib" />
+            <option value="$PROJECT_DIR$/library-net" />
+            <option value="$PROJECT_DIR$/library-sharedlibrary" />
             <option value="$PROJECT_DIR$/module-bus" />
             <option value="$PROJECT_DIR$/module-record" />
             <option value="$PROJECT_DIR$/module-user" />
             <option value="$PROJECT_DIR$/module-wangyi" />
-            <option value="$PROJECT_DIR$/net" />
-            <option value="$PROJECT_DIR$/sharedlibrary" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

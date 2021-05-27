@@ -12,6 +12,6 @@ android {
 }
 
 dependencies {
-    api project(':basiclib')
-    api project(':net')
+    api project(':library-basiclib')
+    api project(':library-net')
 }

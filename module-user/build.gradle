@@ -45,5 +45,5 @@ dependencies {
     androidTestImplementation deps.androidx.espresso
 
     implementation project(':basicres')
-    implementation project(":sharedlibrary")
+    implementation project(':library-sharedlibrary')
 }

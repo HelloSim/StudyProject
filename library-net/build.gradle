@@ -12,7 +12,7 @@ android {
 }
 
 dependencies {
-    implementation project(':basiclib')
+    implementation project(':library-basiclib')
     api deps.net.retrofit//retrofit
     api deps.net.okhttp//okhttp
     api deps.net.rxjava//RxJava
