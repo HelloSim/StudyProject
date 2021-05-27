@@ -3,7 +3,7 @@ package com.sim.traveltool.receiver;
 import android.content.Context;
 import android.content.Intent;
 
-import com.sim.common.utils.LogUtil;
+import com.sim.basicres.utils.LogUtil;
 
 import cn.jpush.android.api.CmdMessage;
 import cn.jpush.android.api.CustomMessage;

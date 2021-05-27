@@ -11,9 +11,9 @@ import android.webkit.WebViewClient;
 
 import com.sim.bean.User;
 import com.sim.bean.WangyiBean;
-import com.sim.common.base.BaseActivity;
-import com.sim.common.utils.ToastUtil;
-import com.sim.common.views.TitleView;
+import com.sim.basicres.base.BaseActivity;
+import com.sim.basicres.utils.ToastUtil;
+import com.sim.basicres.views.TitleView;
 import com.sim.user.R;
 
 import java.util.List;

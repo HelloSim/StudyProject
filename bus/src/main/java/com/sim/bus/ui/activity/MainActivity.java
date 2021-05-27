@@ -7,9 +7,9 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.sim.bus.R;
 import com.sim.bus.ui.fragment.BusFragment;
-import com.sim.common.AppHelper;
-import com.sim.common.base.BaseActivity;
-import com.sim.common.utils.SPUtil;
+import com.sim.basicres.AppHelper;
+import com.sim.basicres.base.BaseActivity;
+import com.sim.basicres.utils.SPUtil;
 
 public class MainActivity extends BaseActivity {
 

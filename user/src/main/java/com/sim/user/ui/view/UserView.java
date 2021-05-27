@@ -7,9 +7,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.sim.bean.User;
-import com.sim.common.AppHelper;
-import com.sim.common.bean.EventMessage;
-import com.sim.common.utils.ToastUtil;
+import com.sim.basicres.AppHelper;
+import com.sim.basicres.bean.EventMessage;
+import com.sim.basicres.utils.ToastUtil;
 import com.sim.user.R;
 import com.sim.user.ui.activity.NewsCollectActivity;
 import com.sim.user.ui.activity.UserInfoActivity;

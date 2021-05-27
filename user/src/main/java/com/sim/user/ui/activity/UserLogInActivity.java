@@ -14,14 +14,14 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.sim.bean.User;
-import com.sim.common.AppHelper;
-import com.sim.common.base.BaseActivity;
-import com.sim.common.bean.EventMessage;
-import com.sim.common.utils.LogUtil;
-import com.sim.common.utils.RegexUtil;
-import com.sim.common.utils.SPUtil;
-import com.sim.common.utils.ToastUtil;
-import com.sim.common.views.TitleView;
+import com.sim.basicres.AppHelper;
+import com.sim.basicres.base.BaseActivity;
+import com.sim.basicres.bean.EventMessage;
+import com.sim.basicres.utils.LogUtil;
+import com.sim.basicres.utils.RegexUtil;
+import com.sim.basicres.utils.SPUtil;
+import com.sim.basicres.utils.ToastUtil;
+import com.sim.basicres.views.TitleView;
 import com.sim.user.R;
 
 import org.greenrobot.eventbus.EventBus;

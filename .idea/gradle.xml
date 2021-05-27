@@ -13,9 +13,9 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
-            <option value="$PROJECT_DIR$/baselib" />
+            <option value="$PROJECT_DIR$/basiclib" />
+            <option value="$PROJECT_DIR$/basicres" />
             <option value="$PROJECT_DIR$/bus" />
-            <option value="$PROJECT_DIR$/common" />
             <option value="$PROJECT_DIR$/net" />
             <option value="$PROJECT_DIR$/record" />
             <option value="$PROJECT_DIR$/sharedlibrary" />

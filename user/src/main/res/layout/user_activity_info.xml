@@ -8,7 +8,7 @@
     android:background="@mipmap/common_login_bg"
     android:orientation="vertical">
 
-    <com.sim.common.views.TitleView
+    <com.sim.basicres.views.TitleView
         android:id="@+id/titleView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

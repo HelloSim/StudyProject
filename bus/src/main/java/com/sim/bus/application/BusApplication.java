@@ -4,7 +4,7 @@ import android.app.Application;
 import android.util.Log;
 
 import com.sim.bus.impservice.BusService;
-import com.sim.common.base.BaseApplication;
+import com.sim.basicres.base.BaseApplication;
 import com.sim.http.APIFactory;
 import com.sim.sharedlibrary.base.IComponentApplication;
 import com.sim.sharedlibrary.base.ServiceFactory;

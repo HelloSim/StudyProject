@@ -3,7 +3,7 @@ package com.sim.record.application;
 import android.app.Application;
 import android.util.Log;
 
-import com.sim.common.base.BaseApplication;
+import com.sim.basicres.base.BaseApplication;
 import com.sim.http.APIFactory;
 import com.sim.record.impservice.RecordService;
 import com.sim.sharedlibrary.base.IComponentApplication;

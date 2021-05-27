@@ -4,7 +4,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.sim.common.base.BaseFragment;
+import com.sim.basicres.base.BaseFragment;
 import com.sim.bus.R;
 
 /**

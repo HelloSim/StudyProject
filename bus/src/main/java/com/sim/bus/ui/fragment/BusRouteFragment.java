@@ -10,7 +10,7 @@ import androidx.annotation.Nullable;
 import com.sim.bus.R;
 import com.sim.bus.ui.activity.BusRouteActivity;
 import com.sim.bus.ui.activity.BusSearchActivity;
-import com.sim.common.base.BaseFragment;
+import com.sim.basicres.base.BaseFragment;
 
 /**
  * @author Sim --- 出行路线fragment

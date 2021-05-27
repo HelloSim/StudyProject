@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <com.sim.common.views.TitleView
+    <com.sim.basicres.views.TitleView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:common_title="网易" />

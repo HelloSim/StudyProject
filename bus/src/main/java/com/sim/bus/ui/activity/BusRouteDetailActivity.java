@@ -8,8 +8,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.sim.bean.BusRouteBean;
-import com.sim.common.base.BaseActivity;
-import com.sim.common.views.TitleView;
+import com.sim.basicres.base.BaseActivity;
+import com.sim.basicres.views.TitleView;
 import com.sim.bus.R;
 import com.sim.bus.adapter.BusRouteDetailAdapter;
 

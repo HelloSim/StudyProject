@@ -11,10 +11,10 @@ import com.bin.david.form.data.style.FontStyle;
 import com.bin.david.form.utils.DensityUtils;
 import com.haibin.calendarview.Calendar;
 import com.sim.bean.User;
-import com.sim.common.base.BaseActivity;
-import com.sim.common.utils.LogUtil;
-import com.sim.common.utils.TimeUtil;
-import com.sim.common.views.TitleView;
+import com.sim.basicres.base.BaseActivity;
+import com.sim.basicres.utils.LogUtil;
+import com.sim.basicres.utils.TimeUtil;
+import com.sim.basicres.views.TitleView;
 import com.sim.bean.RecordBean;
 import com.sim.record.R;
 

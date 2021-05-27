@@ -10,8 +10,8 @@ import androidx.annotation.NonNull;
 
 import com.sim.bean.BusRealTimeLineBean;
 import com.sim.bus.R;
-import com.sim.common.base.BaseAdapter;
-import com.sim.common.base.BaseViewHolder;
+import com.sim.basicres.base.BaseAdapter;
+import com.sim.basicres.base.BaseViewHolder;
 
 import java.util.List;
 

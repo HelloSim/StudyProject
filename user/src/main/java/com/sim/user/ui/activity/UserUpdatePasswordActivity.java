@@ -13,12 +13,12 @@ import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 
 import com.sim.bean.User;
-import com.sim.common.base.BaseActivity;
-import com.sim.common.callback.DialogInterface;
-import com.sim.common.callback.SuccessOrFailListener;
-import com.sim.common.utils.LogUtil;
-import com.sim.common.utils.ToastUtil;
-import com.sim.common.views.TitleView;
+import com.sim.basicres.base.BaseActivity;
+import com.sim.basicres.callback.DialogInterface;
+import com.sim.basicres.callback.SuccessOrFailListener;
+import com.sim.basicres.utils.LogUtil;
+import com.sim.basicres.utils.ToastUtil;
+import com.sim.basicres.views.TitleView;
 import com.sim.user.R;
 
 import cn.bmob.v3.BmobSMS;

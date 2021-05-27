@@ -16,15 +16,15 @@ import android.widget.TextView;
 import com.haibin.calendarview.Calendar;
 import com.haibin.calendarview.CalendarView;
 import com.sim.bean.User;
-import com.sim.common.AppHelper;
-import com.sim.common.base.BaseFragment;
-import com.sim.common.bean.EventMessage;
-import com.sim.common.callback.SuccessOrFailListener;
-import com.sim.common.utils.LogUtil;
-import com.sim.common.utils.SPUtil;
-import com.sim.common.utils.TimeUtil;
-import com.sim.common.utils.ToastUtil;
-import com.sim.common.views.TitleView;
+import com.sim.basicres.AppHelper;
+import com.sim.basicres.base.BaseFragment;
+import com.sim.basicres.bean.EventMessage;
+import com.sim.basicres.callback.SuccessOrFailListener;
+import com.sim.basicres.utils.LogUtil;
+import com.sim.basicres.utils.SPUtil;
+import com.sim.basicres.utils.TimeUtil;
+import com.sim.basicres.utils.ToastUtil;
+import com.sim.basicres.views.TitleView;
 import com.sim.bean.RecordBean;
 import com.sim.record.ui.activity.RecordAllActivity;
 import com.sim.record.R;
@@ -212,7 +212,7 @@ public class RecordFragment extends BaseFragment implements CalendarView.OnMonth
                         if (tvRecordTimeStart.getText().equals("未打卡")) {//未打上班卡
                             record(1);
                         } else {//已打上班卡
-                            showDialog(null, "更新打卡记录！", "确认", "取消", new com.sim.common.callback.DialogInterface() {
+                            showDialog(null, "更新打卡记录！", "确认", "取消", new com.sim.basicres.callback.DialogInterface() {
                                 @Override
                                 public void sureOnClick() {
                                     record(1);
@@ -228,7 +228,7 @@ public class RecordFragment extends BaseFragment implements CalendarView.OnMonth
                         if (tvRecordTimeEnd.getText().equals("未打卡")) {//未打下班卡
                             record(2);
                         } else {//已打下班卡
-                            showDialog(null, "更新打卡记录！", "确认", "取消", new com.sim.common.callback.DialogInterface() {
+                            showDialog(null, "更新打卡记录！", "确认", "取消", new com.sim.basicres.callback.DialogInterface() {
                                 @Override
                                 public void sureOnClick() {
                                     record(2);

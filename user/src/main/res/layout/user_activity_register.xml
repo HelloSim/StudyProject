@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:background="@mipmap/common_login_bg">
 
-    <com.sim.common.views.TitleView
+    <com.sim.basicres.views.TitleView
         android:id="@+id/titleView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -43,7 +43,7 @@
 
         </LinearLayout>
 
-        <com.sim.common.views.SplitEditText
+        <com.sim.basicres.views.SplitEditText
             android:id="@+id/et_SMS_code"
             android:layout_width="match_parent"
             android:layout_height="40dp"

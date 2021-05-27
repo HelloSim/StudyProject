@@ -1,4 +1,4 @@
 rootProject.name = "TravelTool"
 include  ':app', ':wangyi',':bus', ':record', ':user',
-        ':baselib', ':net', ':common',':sharedlibrary'
+        ':basiclib', ':net', ':basicres',':sharedlibrary'
 

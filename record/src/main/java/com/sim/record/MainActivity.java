@@ -8,10 +8,10 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.sim.bean.User;
-import com.sim.common.AppHelper;
-import com.sim.common.base.BaseActivity;
-import com.sim.common.bean.EventMessage;
-import com.sim.common.utils.SPUtil;
+import com.sim.basicres.AppHelper;
+import com.sim.basicres.base.BaseActivity;
+import com.sim.basicres.bean.EventMessage;
+import com.sim.basicres.utils.SPUtil;
 import com.sim.record.ui.fragment.RecordFragment;
 
 import org.greenrobot.eventbus.EventBus;

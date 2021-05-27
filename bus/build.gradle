@@ -44,6 +44,6 @@ dependencies {
     androidTestImplementation deps.junit.test
     androidTestImplementation deps.androidx.espresso
 
-    implementation project(":common")
+    implementation project(':basicres')
     implementation project(":sharedlibrary")
 }

@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <com.sim.common.views.TitleView
+    <com.sim.basicres.views.TitleView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:common_title="出行" />
@@ -54,7 +54,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <com.sim.common.views.CustomizeTabLayout
+        <com.sim.basicres.views.CustomizeTabLayout
             android:id="@+id/tab_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

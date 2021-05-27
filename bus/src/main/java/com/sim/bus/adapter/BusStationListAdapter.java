@@ -9,8 +9,8 @@ import androidx.annotation.NonNull;
 
 import com.sim.bean.BusRealTimeBean;
 import com.sim.bean.BusRealTimeBusStopBean;
-import com.sim.common.base.BaseAdapter;
-import com.sim.common.base.BaseViewHolder;
+import com.sim.basicres.base.BaseAdapter;
+import com.sim.basicres.base.BaseViewHolder;
 import com.sim.bus.R;
 
 import java.util.ArrayList;

@@ -9,11 +9,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.sim.bean.User;
 import com.sim.bean.WangyiBean;
-import com.sim.common.base.BaseActivity;
-import com.sim.common.base.BaseAdapter;
-import com.sim.common.base.BaseViewHolder;
-import com.sim.common.callback.DialogInterface;
-import com.sim.common.views.TitleView;
+import com.sim.basicres.base.BaseActivity;
+import com.sim.basicres.base.BaseAdapter;
+import com.sim.basicres.base.BaseViewHolder;
+import com.sim.basicres.callback.DialogInterface;
+import com.sim.basicres.views.TitleView;
 import com.sim.user.R;
 import com.sim.user.adapter.NewsAdapter;
 

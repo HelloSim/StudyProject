@@ -6,7 +6,7 @@ import android.widget.EditText;
 
 import com.sim.bus.R;
 import com.sim.bus.ui.activity.BusSearchActivity;
-import com.sim.common.base.BaseFragment;
+import com.sim.basicres.base.BaseFragment;
 
 /**
  * @author Sim --- 实时公交fragment

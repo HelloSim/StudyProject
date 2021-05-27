@@ -14,6 +14,11 @@ android {
             abiFilters 'armeabi', 'arm64-v8a'//, 'x86', 'armeabi-v7a', 'x86_64'
         }
         multiDexEnabled true
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [ moduleName : project.getName() ]
+            }
+        }
     }
     resourcePrefix "app_"
     signingConfigs {
@@ -53,8 +58,11 @@ dependencies {
     androidTestImplementation deps.junit.test
     androidTestImplementation deps.androidx.espresso
 
-    implementation project(":common")
+    implementation project(':basicres')
     implementation project(':sharedlibrary')
+
+    annotationProcessor 'com.alibaba:arouter-compiler:1.1.4'
+
 //    if (!isRunAlone.toBoolean()) {
         implementation project(':wangyi')
         implementation project(':bus')

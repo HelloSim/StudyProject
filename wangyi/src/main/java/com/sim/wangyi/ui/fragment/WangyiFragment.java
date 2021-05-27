@@ -9,10 +9,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.sim.bean.WangyiBean;
-import com.sim.common.base.BaseAdapter;
-import com.sim.common.base.BaseFragment;
-import com.sim.common.base.BaseViewHolder;
-import com.sim.common.utils.LogUtil;
+import com.sim.basicres.base.BaseAdapter;
+import com.sim.basicres.base.BaseFragment;
+import com.sim.basicres.base.BaseViewHolder;
+import com.sim.basicres.utils.LogUtil;
 import com.sim.http.APIFactory;
 import com.sim.wangyi.R;
 import com.sim.wangyi.adapter.NewsAdapter;

@@ -60,7 +60,7 @@ buildscript {
     dependencies {
         classpath "com.android.tools.build:gradle:3.4.0"
         classpath "com.tencent.bugly:tinker-support:1.2.1"//腾讯bugly
-//        classpath deps.jimu.gradle_plugin
+//            classpath "com.alibaba:arouter-register:1.1.0"
     }
 }
 

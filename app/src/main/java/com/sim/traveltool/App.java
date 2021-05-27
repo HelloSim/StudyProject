@@ -5,9 +5,9 @@ import android.content.Context;
 
 import androidx.multidex.MultiDex;
 
-import com.sim.common.base.BaseApplication;
-import com.sim.common.utils.CrashHandler;
-import com.sim.common.utils.LogUtil;
+import com.sim.basicres.base.BaseApplication;
+import com.sim.basicres.utils.CrashHandler;
+import com.sim.basicres.utils.LogUtil;
 import com.sim.http.APIFactory;
 import com.sim.sharedlibrary.base.AppConfig;
 import com.sim.sharedlibrary.base.IComponentApplication;

@@ -10,12 +10,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.sim.bean.BusLocationDesignatedBean;
 import com.sim.bean.BusRouteBean;
-import com.sim.common.base.BaseActivity;
-import com.sim.common.base.BaseAdapter;
-import com.sim.common.base.BaseViewHolder;
-import com.sim.common.utils.LogUtil;
-import com.sim.common.utils.ToastUtil;
-import com.sim.common.views.TitleView;
+import com.sim.basicres.base.BaseActivity;
+import com.sim.basicres.base.BaseAdapter;
+import com.sim.basicres.base.BaseViewHolder;
+import com.sim.basicres.utils.LogUtil;
+import com.sim.basicres.utils.ToastUtil;
+import com.sim.basicres.views.TitleView;
 import com.sim.http.APIFactory;
 import com.sim.bus.R;
 import com.sim.bus.adapter.BusRouteAdapter;
