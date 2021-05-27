@@ -1,4 +1,4 @@
-package com.sim.traveltool.ui.activity;
+package com.sim.traveltool;
 
 import android.Manifest;
 import android.os.Bundle;
@@ -19,7 +19,6 @@ import com.sim.common.base.BaseActivity;
 import com.sim.common.utils.LogUtil;
 import com.sim.common.utils.SPUtil;
 import com.sim.sharedlibrary.base.ServiceFactory;
-import com.sim.traveltool.R;
 
 import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.exception.BmobException;

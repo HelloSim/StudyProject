@@ -13,7 +13,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.sim.bean.BusLocationBean;
 import com.sim.bean.BusRealTimeLineBean;
-import com.sim.common.AppHelper;
+import com.sim.bus.R;
+import com.sim.bus.adapter.BusLineNameAdapter;
+import com.sim.bus.adapter.BusStationNameAdapter;
 import com.sim.common.base.BaseActivity;
 import com.sim.common.base.BaseAdapter;
 import com.sim.common.base.BaseViewHolder;
@@ -21,9 +23,6 @@ import com.sim.common.utils.LogUtil;
 import com.sim.common.utils.ToastUtil;
 import com.sim.common.views.TitleView;
 import com.sim.http.APIFactory;
-import com.sim.bus.R;
-import com.sim.bus.adapter.BusLineNameAdapter;
-import com.sim.bus.adapter.BusStationNameAdapter;
 
 import java.util.ArrayList;
 
@@ -48,6 +47,8 @@ public class BusSearchActivity extends BaseActivity {
     private BusLineNameAdapter busLineNameAdapter;
     private boolean hasResult = false;
 
+    public static final int RESULT_BUS = 1000;//跳转实时公交路线搜索
+
     @Override
     protected int getLayoutRes() {
         return R.layout.bus_activity_search;
@@ -69,7 +70,7 @@ public class BusSearchActivity extends BaseActivity {
 
     @Override
     protected void initData() {
-        searchType = getIntent().getIntExtra("searchType", AppHelper.RESULT_BUS);
+        searchType = getIntent().getIntExtra("searchType", RESULT_BUS);
     }
 
     @Override
@@ -77,7 +78,7 @@ public class BusSearchActivity extends BaseActivity {
         if (searchType == 0) {
             initData();
         }
-        if (searchType == AppHelper.RESULT_BUS) {
+        if (searchType == RESULT_BUS) {
             rlData.setLayoutManager(new LinearLayoutManager(this));
             busLineNameAdapter = new BusLineNameAdapter(lineListByLineNameBeanList);
             busLineNameAdapter.setOnItemClickListener(new BaseAdapter.OnItemClickListener() {
@@ -123,7 +124,7 @@ public class BusSearchActivity extends BaseActivity {
 
             @Override
             public void afterTextChanged(Editable editable) {
-                if (searchType == AppHelper.RESULT_BUS) {
+                if (searchType == RESULT_BUS) {
                     if (editable == null || editable.toString().equals("")) {
                         tvNotFound.setVisibility(View.GONE);
                         rlData.setVisibility(View.GONE);

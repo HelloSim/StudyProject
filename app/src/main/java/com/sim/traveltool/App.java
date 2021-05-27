@@ -5,7 +5,6 @@ import android.content.Context;
 
 import androidx.multidex.MultiDex;
 
-import com.sim.common.AppHelper;
 import com.sim.common.base.BaseApplication;
 import com.sim.common.utils.CrashHandler;
 import com.sim.common.utils.LogUtil;
@@ -31,7 +30,7 @@ public class App extends BaseApplication implements IComponentApplication {
 
         if (!getIsDebug()) CrashHandler.getInstance().init(getMyApplicationContext());//自定义奔溃处理类初始化
 
-        Bugly.init(getMyApplicationContext(), AppHelper.Bugly_APPID, getIsDebug());//Bugly初始化
+        Bugly.init(getMyApplicationContext(), "c7dbd02c92", getIsDebug());//Bugly初始化
 //        Beta.autoInit = true;//启动自动初始化升级模块
 //        Beta.autoCheckUpgrade = true;//自动检查升级
 //        Beta.upgradeCheckPeriod = 1000 * 60;//设置升级检查周期为60s
@@ -39,7 +38,7 @@ public class App extends BaseApplication implements IComponentApplication {
 
         initialize(this);
 
-        Bmob.initialize(getMyApplicationContext(), AppHelper.Bmob_ApplicationID);//Bmob初始化
+        Bmob.initialize(getMyApplicationContext(), "62550b32bf5600010781ceeebc0e92ac");//Bmob初始化
 
         JPushInterface.setDebugMode(getIsDebug());//JPush设置DebugMode
         JPushInterface.init(getMyApplicationContext());//JPush初始化

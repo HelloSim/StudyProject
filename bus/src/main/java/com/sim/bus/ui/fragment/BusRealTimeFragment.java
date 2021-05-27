@@ -4,10 +4,9 @@ import android.content.Intent;
 import android.view.View;
 import android.widget.EditText;
 
-import com.sim.common.base.BaseFragment;
-import com.sim.common.AppHelper;
 import com.sim.bus.R;
 import com.sim.bus.ui.activity.BusSearchActivity;
+import com.sim.common.base.BaseFragment;
 
 /**
  * @author Sim --- 实时公交fragment
@@ -39,7 +38,7 @@ public class BusRealTimeFragment extends BaseFragment {
     @Override
     public void onMultiClick(View view) {
         if (view == etSearch) {
-            startActivity(new Intent(getActivity(), BusSearchActivity.class).putExtra("searchType", AppHelper.RESULT_BUS));
+            startActivity(new Intent(getActivity(), BusSearchActivity.class).putExtra("searchType", 1000));
         } else {
             super.onMultiClick(view);
         }

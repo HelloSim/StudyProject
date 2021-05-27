@@ -1,6 +1,4 @@
-include ':sharedlibrary'
-include ':user'
-include ':bus'
 rootProject.name = "TravelTool"
-include ':baselib', ':net', ':common',
-        ':app', ':wangyi', ':record'
+include  ':app', ':wangyi',':bus', ':record', ':user',
+        ':baselib', ':net', ':common',':sharedlibrary'
+

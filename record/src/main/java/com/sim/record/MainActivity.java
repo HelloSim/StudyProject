@@ -1,4 +1,4 @@
-package com.sim.record.ui.activity;
+package com.sim.record;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -12,7 +12,6 @@ import com.sim.common.AppHelper;
 import com.sim.common.base.BaseActivity;
 import com.sim.common.bean.EventMessage;
 import com.sim.common.utils.SPUtil;
-import com.sim.record.R;
 import com.sim.record.ui.fragment.RecordFragment;
 
 import org.greenrobot.eventbus.EventBus;
@@ -52,7 +51,7 @@ public class MainActivity extends BaseActivity {
                             if (e == null) {
                                 Log.d("Sim", "done: " + "登录成功");
                                 isLogig = true;
-                                EventBus.getDefault().post(new EventMessage(AppHelper.USER_IsLogIn));
+                                EventBus.getDefault().post(new EventMessage(2001));
                             } else {
                                 Log.e("Sim", "登录出错---code:" + e.getErrorCode() + ";message:" + e.getMessage());
                             }
@@ -61,7 +60,7 @@ public class MainActivity extends BaseActivity {
                 } else {
                     BmobUser.logOut();
                     isLogig = false;
-                    EventBus.getDefault().post(new EventMessage(AppHelper.USER_noLogIn));
+                    EventBus.getDefault().post(new EventMessage(2002));
                 }
             }
         });

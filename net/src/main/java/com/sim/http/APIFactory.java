@@ -1,6 +1,5 @@
 package com.sim.http;
 
-
 import com.sim.bean.BusLocationBean;
 import com.sim.bean.BusLocationDesignatedBean;
 import com.sim.bean.BusRealTimeBusStopBean;

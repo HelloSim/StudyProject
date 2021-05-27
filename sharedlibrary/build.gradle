@@ -18,5 +18,5 @@ android {
 }
 
 dependencies {
-    implementation project(':baselib')
+    api deps.androidx.appcompat
 }

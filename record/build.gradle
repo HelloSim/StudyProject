@@ -42,12 +42,8 @@ android {
 dependencies {
     testImplementation deps.junit.junit
     androidTestImplementation deps.junit.test
-    implementation deps.androidx.appcompat
     androidTestImplementation deps.androidx.espresso
 
     implementation project(":common")
     implementation project(":sharedlibrary")
-
-    implementation 'com.haibin:calendarview:3.4.6' //日历
-    implementation 'com.github.huangyanbin:SmartTable:2.2.0'//表格
 }

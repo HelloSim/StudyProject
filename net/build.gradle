@@ -13,4 +13,11 @@ android {
 
 dependencies {
     implementation project(':baselib')
+    api deps.net.retrofit//retrofit
+    api deps.net.okhttp//okhttp
+    api deps.net.rxjava//RxJava
+    api deps.net.rxandroid//RxAndroid
+    api deps.net.rxadapter//配合Rxjava 使用
+    api deps.net.converter//转换器，请求结果转换成Model
+    api deps.net.logging//log日志
 }

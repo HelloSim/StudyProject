@@ -1,11 +1,10 @@
-package com.sim.user.ui.activity;
+package com.sim.user;
 
 import android.os.Bundle;
 import android.widget.LinearLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.sim.user.R;
 import com.sim.user.ui.view.UserView;
 
 public class MainActivity extends AppCompatActivity {

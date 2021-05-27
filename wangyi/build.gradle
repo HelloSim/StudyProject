@@ -42,7 +42,6 @@ android {
 dependencies {
     testImplementation deps.junit.junit
     androidTestImplementation deps.junit.test
-    implementation deps.androidx.appcompat
     androidTestImplementation deps.androidx.espresso
 
     implementation project(":common")
