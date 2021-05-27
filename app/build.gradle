@@ -64,9 +64,9 @@ dependencies {
     annotationProcessor 'com.alibaba:arouter-compiler:1.1.4'
 
 //    if (!isRunAlone.toBoolean()) {
-        implementation project(':wangyi')
-        implementation project(':bus')
-        implementation project(':record')
-        implementation project(':user')
+        implementation project(':module-wangyi')
+        implementation project(':module-bus')
+        implementation project(':module-record')
+        implementation project(':module-user')
 //    }
 }
