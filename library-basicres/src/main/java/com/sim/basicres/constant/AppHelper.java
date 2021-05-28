@@ -1,4 +1,4 @@
-package com.sim.basicres;
+package com.sim.basicres.constant;
 
 /**
  * @author Sim --- 常量类

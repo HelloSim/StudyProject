@@ -9,8 +9,11 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
+import com.alibaba.android.arouter.facade.annotation.Route;
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.google.android.material.tabs.TabLayout;
 import com.sim.basicres.base.BaseFragment;
+import com.sim.basicres.constant.ArouterUrl;
 import com.sim.basicres.utils.ToastUtil;
 import com.sim.bus.R;
 import com.sim.bus.adapter.LoopViewAdapter;
@@ -22,6 +25,7 @@ import java.util.Objects;
 /**
  * @author Sim --- “首页”Fragment
  */
+@Route(path = ArouterUrl.bus_fragment)
 public class BusFragment extends BaseFragment {
 
     //轮播图模块
@@ -40,10 +44,7 @@ public class BusFragment extends BaseFragment {
     private ViewPager viewPager;
     private List<String> titleDatas;
 
-    //fragment
-    private BusRealTimeFragment busRealTimeFragment;
-    private BusRouteFragment busRouteFragment;
-    private BusStationFragment busStationFragment;
+    private Fragment busRealTimeFragment, busRouteFragment, busStationFragment;
 
     @Override
     protected int getLayoutRes() {
@@ -201,17 +202,20 @@ public class BusFragment extends BaseFragment {
         switch (type) {
             default:
                 if (busRealTimeFragment == null) {
-                    busRealTimeFragment = new BusRealTimeFragment();
+//                    busRealTimeFragment = new BusRealTimeFragment();
+                    busRealTimeFragment = (Fragment) ARouter.getInstance().build(ArouterUrl.bus_fragment_realtime).navigation();
                 }
                 return busRealTimeFragment;
             case 1:
                 if (busRouteFragment == null) {
-                    busRouteFragment = new BusRouteFragment();
+//                    busRouteFragment = new BusRouteFragment();
+                    busRouteFragment = (Fragment) ARouter.getInstance().build(ArouterUrl.bus_fragment_route).navigation();
                 }
                 return busRouteFragment;
             case 2:
                 if (busStationFragment == null) {
-                    busStationFragment = new BusStationFragment();
+//                    busStationFragment = new BusStationFragment();
+                    busStationFragment = (Fragment) ARouter.getInstance().build(ArouterUrl.bus_fragment_station).navigation();
                 }
                 return busStationFragment;
         }

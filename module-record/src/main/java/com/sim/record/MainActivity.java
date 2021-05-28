@@ -8,7 +8,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.sim.bean.User;
-import com.sim.basicres.AppHelper;
+import com.sim.basicres.constant.AppHelper;
 import com.sim.basicres.base.BaseActivity;
 import com.sim.basicres.bean.EventMessage;
 import com.sim.basicres.utils.SPUtil;

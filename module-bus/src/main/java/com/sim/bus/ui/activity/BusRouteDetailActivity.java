@@ -7,15 +7,18 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.sim.bean.BusRouteBean;
+import com.alibaba.android.arouter.facade.annotation.Route;
 import com.sim.basicres.base.BaseActivity;
+import com.sim.basicres.constant.ArouterUrl;
 import com.sim.basicres.views.TitleView;
+import com.sim.bean.BusRouteBean;
 import com.sim.bus.R;
 import com.sim.bus.adapter.BusRouteDetailAdapter;
 
 /**
  * @author Sim --- 出行路线的详细方式
  */
+@Route(path = ArouterUrl.bus_activity_route_detail)
 public class BusRouteDetailActivity extends BaseActivity {
 
     private TitleView titleView;

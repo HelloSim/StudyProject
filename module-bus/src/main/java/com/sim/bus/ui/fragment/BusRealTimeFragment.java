@@ -1,16 +1,18 @@
 package com.sim.bus.ui.fragment;
 
-import android.content.Intent;
 import android.view.View;
 import android.widget.EditText;
 
-import com.sim.bus.R;
-import com.sim.bus.ui.activity.BusSearchActivity;
+import com.alibaba.android.arouter.facade.annotation.Route;
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.sim.basicres.base.BaseFragment;
+import com.sim.basicres.constant.ArouterUrl;
+import com.sim.bus.R;
 
 /**
  * @author Sim --- 实时公交fragment
  */
+@Route(path = ArouterUrl.bus_fragment_realtime)
 public class BusRealTimeFragment extends BaseFragment {
 
     private EditText etSearch;
@@ -38,7 +40,7 @@ public class BusRealTimeFragment extends BaseFragment {
     @Override
     public void onMultiClick(View view) {
         if (view == etSearch) {
-            startActivity(new Intent(getActivity(), BusSearchActivity.class).putExtra("searchType", 1000));
+            ARouter.getInstance().build(ArouterUrl.bus_activity_search).withInt("searchType", 1000).navigation();
         } else {
             super.onMultiClick(view);
         }

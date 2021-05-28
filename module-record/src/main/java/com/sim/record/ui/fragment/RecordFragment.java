@@ -1,9 +1,7 @@
 package com.sim.record.ui.fragment;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.graphics.Color;
-import android.os.Bundle;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,20 +11,22 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
+import com.alibaba.android.arouter.facade.annotation.Route;
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.haibin.calendarview.Calendar;
 import com.haibin.calendarview.CalendarView;
-import com.sim.bean.User;
-import com.sim.basicres.AppHelper;
 import com.sim.basicres.base.BaseFragment;
 import com.sim.basicres.bean.EventMessage;
 import com.sim.basicres.callback.SuccessOrFailListener;
+import com.sim.basicres.constant.AppHelper;
+import com.sim.basicres.constant.ArouterUrl;
 import com.sim.basicres.utils.LogUtil;
 import com.sim.basicres.utils.SPUtil;
 import com.sim.basicres.utils.TimeUtil;
 import com.sim.basicres.utils.ToastUtil;
 import com.sim.basicres.views.TitleView;
 import com.sim.bean.RecordBean;
-import com.sim.record.ui.activity.RecordAllActivity;
+import com.sim.bean.User;
 import com.sim.record.R;
 
 import org.greenrobot.eventbus.EventBus;
@@ -48,6 +48,7 @@ import cn.bmob.v3.listener.UpdateListener;
 /**
  * @author Sim --- “打卡”Fragment
  */
+@Route(path = ArouterUrl.record_fragment)
 public class RecordFragment extends BaseFragment implements CalendarView.OnMonthChangeListener,
         CalendarView.OnCalendarSelectListener {
 
@@ -144,12 +145,10 @@ public class RecordFragment extends BaseFragment implements CalendarView.OnMonth
         if (view == btnAllRecord) {
             morePopupWindow.dismiss();
             if (user != null) {
-                Intent intent = new Intent(getContext(), RecordAllActivity.class);
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("user", user);
-                bundle.putSerializable("calendar", calendarView.getSelectedCalendar());
-                intent.putExtras(bundle);
-                startActivity(intent);
+                ARouter.getInstance().build(ArouterUrl.record_activity_all)
+                        .withSerializable("user", user)
+                        .withSerializable("calendar", calendarView.getSelectedCalendar())
+                        .navigation();
             } else {
                 ToastUtil.toast(getContext(), "未登录");
             }

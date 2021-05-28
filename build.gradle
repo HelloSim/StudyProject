@@ -41,10 +41,11 @@ buildscript {
                     'converter': "com.squareup.retrofit2:converter-gson:2.4.0",
                     'logging'  : "com.squareup.okhttp3:logging-interceptor:3.10.0",
             ],
-//            'arouter'     : [
-//                    'arouter' : "com.alibaba:arouter-api:1.3.1",
-//                    'compiler': "com.alibaba:arouter-compiler:1.1.4"
-//            ],
+            'arouter'     : [
+                    'arouter' : "com.alibaba:arouter-api:1.3.1",
+                    'compiler': "com.alibaba:arouter-compiler:1.1.4",
+                    'register': "com.alibaba:arouter-register:1.1.0"
+            ],
 //            'jimu'     : [
 //                    'componentLib'        : 'com.github.jimu:componentlib:1.3.3',
 //                    'router_anno'         : 'com.github.jimu:router-annotation:1.0.1',
@@ -60,7 +61,7 @@ buildscript {
     dependencies {
         classpath "com.android.tools.build:gradle:3.4.0"
         classpath "com.tencent.bugly:tinker-support:1.2.1"//腾讯bugly
-//            classpath "com.alibaba:arouter-register:1.1.0"
+//        classpath deps.arouter.register
     }
 }
 

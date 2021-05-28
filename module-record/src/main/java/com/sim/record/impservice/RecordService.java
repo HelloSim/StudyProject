@@ -9,7 +9,7 @@ import com.sim.record.ui.fragment.RecordFragment;
  * @ time： 2021/5/26 16:23
  * @ description：
  */
-public class RecordService implements com.sim.sharedlibrary.RecordService {
+public class RecordService implements com.sim.sharedlibrary.moduleservice.RecordService {
 
     @Override
     public Fragment getRecordFragment() {

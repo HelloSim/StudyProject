@@ -8,6 +8,11 @@ android {
         targetSdkVersion versions.targetSdkVersion
         versionCode 1
         versionName "1.0"
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [moduleName: project.getName()]
+            }
+        }
     }
     buildTypes {
         release {
@@ -22,12 +27,7 @@ android {
 }
 
 dependencies {
-    implementation project(':library-basiclib')
-    api deps.net.retrofit
-    api deps.net.okhttp
-    api deps.net.rxjava
-    api deps.net.rxandroid
-    api deps.net.rxadapter
-    api deps.net.converter
-    api deps.net.logging
+    api project(':library-basiclib')
+    api project(':library-net')
+    annotationProcessor deps.arouter.compiler
 }

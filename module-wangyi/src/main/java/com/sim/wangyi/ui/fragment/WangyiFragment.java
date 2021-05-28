@@ -1,6 +1,5 @@
 package com.sim.wangyi.ui.fragment;
 
-import android.content.Intent;
 import android.graphics.Color;
 import android.view.View;
 
@@ -8,17 +7,18 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import com.sim.bean.WangyiBean;
+import com.alibaba.android.arouter.facade.annotation.Route;
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.sim.basicres.base.BaseAdapter;
 import com.sim.basicres.base.BaseFragment;
 import com.sim.basicres.base.BaseViewHolder;
+import com.sim.basicres.constant.ArouterUrl;
 import com.sim.basicres.utils.LogUtil;
+import com.sim.bean.WangyiBean;
 import com.sim.http.APIFactory;
 import com.sim.wangyi.R;
 import com.sim.wangyi.adapter.NewsAdapter;
-import com.sim.wangyi.ui.activity.NewsDetailActivity;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 
 import rx.Subscriber;
@@ -26,6 +26,7 @@ import rx.Subscriber;
 /**
  * @author Sim --- “网易”Fragment
  */
+@Route(path = ArouterUrl.wangyi_fragment)
 public class WangyiFragment extends BaseFragment {
 
     private RecyclerView newsRecyclerView;
@@ -43,7 +44,6 @@ public class WangyiFragment extends BaseFragment {
 
     @Override
     protected void bindViews(View view) {
-
     }
 
     @Override
@@ -65,9 +65,13 @@ public class WangyiFragment extends BaseFragment {
         newsAdapter.setOnItemClickListener(new BaseAdapter.OnItemClickListener() {
             @Override
             public void onItemClicked(BaseViewHolder holder, int position) {
-                Intent intent = new Intent(getActivity(), NewsDetailActivity.class);
-                intent.putExtra("news", (Serializable) newsAdapter.getData().get(position));
-                startActivity(intent);
+//                Intent intent = new Intent(getActivity(), NewsDetailActivity.class);
+//                intent.putExtra("news", (Serializable) newsAdapter.getData().get(position));
+//                startActivity(intent);
+                ARouter.getInstance()
+                        .build(ArouterUrl.wangyi_activity_detail)
+                        .withSerializable("news", newsAdapter.getData().get(position))
+                        .navigation();
             }
         });
         newsRecyclerView.setAdapter(newsAdapter);

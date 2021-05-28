@@ -9,7 +9,7 @@ import com.sim.wangyi.ui.fragment.WangyiFragment;
  * @ time： 2021/5/26 16:23
  * @ description：
  */
-public class WangyiService implements com.sim.sharedlibrary.WangyiService {
+public class WangyiService implements com.sim.sharedlibrary.moduleservice.WangyiService {
 
     @Override
     public Fragment getWangyiFragment() {

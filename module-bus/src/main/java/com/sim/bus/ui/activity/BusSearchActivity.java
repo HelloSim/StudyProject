@@ -11,17 +11,20 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.alibaba.android.arouter.facade.annotation.Route;
+import com.alibaba.android.arouter.launcher.ARouter;
+import com.sim.basicres.base.BaseActivity;
+import com.sim.basicres.base.BaseAdapter;
+import com.sim.basicres.base.BaseViewHolder;
+import com.sim.basicres.constant.ArouterUrl;
+import com.sim.basicres.utils.LogUtil;
+import com.sim.basicres.utils.ToastUtil;
+import com.sim.basicres.views.TitleView;
 import com.sim.bean.BusLocationBean;
 import com.sim.bean.BusRealTimeLineBean;
 import com.sim.bus.R;
 import com.sim.bus.adapter.BusLineNameAdapter;
 import com.sim.bus.adapter.BusStationNameAdapter;
-import com.sim.basicres.base.BaseActivity;
-import com.sim.basicres.base.BaseAdapter;
-import com.sim.basicres.base.BaseViewHolder;
-import com.sim.basicres.utils.LogUtil;
-import com.sim.basicres.utils.ToastUtil;
-import com.sim.basicres.views.TitleView;
 import com.sim.http.APIFactory;
 
 import java.util.ArrayList;
@@ -31,6 +34,7 @@ import rx.Subscriber;
 /**
  * @author Sim --- 实时公交、出行线路站点的搜索页面
  */
+@Route(path = ArouterUrl.bus_activity_search)
 public class BusSearchActivity extends BaseActivity {
 
     private TitleView titleView;
@@ -84,15 +88,15 @@ public class BusSearchActivity extends BaseActivity {
             busLineNameAdapter.setOnItemClickListener(new BaseAdapter.OnItemClickListener() {
                 @Override
                 public void onItemClicked(BaseViewHolder holder, int position) {
-                    Intent intent = new Intent(BusSearchActivity.this, BusRealTimeActivity.class);
-                    intent.putExtra("busName", lineListByLineNameBeanList.get(position).getName());
-                    intent.putExtra("lineId", lineListByLineNameBeanList.get(position).getId());
-                    intent.putExtra("fromStation", lineListByLineNameBeanList.get(position).getFromStation());
-                    intent.putExtra("toStation", lineListByLineNameBeanList.get(position).getToStation());
-                    intent.putExtra("beginTime", lineListByLineNameBeanList.get(position).getBeginTime());
-                    intent.putExtra("endTime", lineListByLineNameBeanList.get(position).getEndTime());
-                    intent.putExtra("price", lineListByLineNameBeanList.get(position).getPrice());
-                    startActivity(intent);
+                    ARouter.getInstance().build(ArouterUrl.bus_activity_realtime)
+                            .withString("busName", lineListByLineNameBeanList.get(position).getName())
+                            .withString("lineId", lineListByLineNameBeanList.get(position).getId())
+                            .withString("fromStation", lineListByLineNameBeanList.get(position).getFromStation())
+                            .withString("toStation", lineListByLineNameBeanList.get(position).getToStation())
+                            .withString("beginTime", lineListByLineNameBeanList.get(position).getBeginTime())
+                            .withString("endTime", lineListByLineNameBeanList.get(position).getEndTime())
+                            .withString("price", lineListByLineNameBeanList.get(position).getPrice())
+                            .navigation();
                 }
             });
             rlData.setAdapter(busLineNameAdapter);

@@ -7,14 +7,16 @@ import android.widget.EditText;
 
 import androidx.annotation.Nullable;
 
-import com.sim.bus.R;
-import com.sim.bus.ui.activity.BusRouteActivity;
-import com.sim.bus.ui.activity.BusSearchActivity;
+import com.alibaba.android.arouter.facade.annotation.Route;
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.sim.basicres.base.BaseFragment;
+import com.sim.basicres.constant.ArouterUrl;
+import com.sim.bus.R;
 
 /**
  * @author Sim --- 出行路线fragment
  */
+@Route(path = ArouterUrl.bus_fragment_route)
 public class BusRouteFragment extends BaseFragment {
 
     private EditText etStartStation, etEndStation;
@@ -48,15 +50,20 @@ public class BusRouteFragment extends BaseFragment {
     @Override
     public void onMultiClick(View view) {
         if (view == etStartStation) {
-            startActivityForResult(new Intent(getActivity(), BusSearchActivity.class).putExtra("searchType", RESULT_START_STATION), RESULT_START_STATION);
+//            startActivityForResult(new Intent(getActivity(), BusSearchActivity.class).putExtra(), );
+            ARouter.getInstance().build(ArouterUrl.bus_activity_search)
+                    .withInt("searchType", RESULT_START_STATION)
+                    .navigation(getActivity(), RESULT_START_STATION);
         } else if (view == etEndStation) {
-            startActivityForResult(new Intent(getActivity(), BusSearchActivity.class).putExtra("searchType", RESULT_END_STATION), RESULT_END_STATION);
+            ARouter.getInstance().build(ArouterUrl.bus_activity_search)
+                    .withInt("searchType", RESULT_END_STATION)
+                    .navigation(getActivity(), RESULT_END_STATION);
         } else if (view == btnRoute) {
             if (etStartStation.getText().length() > 0 && etEndStation.getText().length() > 0) {
-                Intent intent = new Intent(getActivity(), BusRouteActivity.class);
-                intent.putExtra("tvStartStation", etStartStation.getText().toString());
-                intent.putExtra("tvEndStation", etEndStation.getText().toString());
-                startActivity(intent);
+                ARouter.getInstance().build(ArouterUrl.bus_activity_route)
+                        .withString("tvStartStation", etStartStation.getText().toString())
+                        .withString("tvEndStation", etEndStation.getText().toString())
+                        .navigation();
             }
         } else {
             super.onMultiClick(view);

@@ -17,6 +17,11 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"//aar混淆文件名
         multiDexEnabled true
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [moduleName: project.getName()]
+            }
+        }
     }
     sourceSets{
         main{
@@ -44,6 +49,10 @@ dependencies {
     androidTestImplementation deps.junit.test
     androidTestImplementation deps.androidx.espresso
 
-    implementation project(':basicres')
+    implementation project(':library-basicres')
     implementation project(':library-sharedlibrary')
+    annotationProcessor deps.arouter.compiler
+    if (isRunAlone.toBoolean()) {
+        implementation project(':module-wangyi')
+    }
 }

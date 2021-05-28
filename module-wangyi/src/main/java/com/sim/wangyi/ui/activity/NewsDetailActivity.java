@@ -9,11 +9,13 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
-import com.sim.bean.User;
-import com.sim.bean.WangyiBean;
+import com.alibaba.android.arouter.facade.annotation.Route;
 import com.sim.basicres.base.BaseActivity;
+import com.sim.basicres.constant.ArouterUrl;
 import com.sim.basicres.utils.ToastUtil;
 import com.sim.basicres.views.TitleView;
+import com.sim.bean.User;
+import com.sim.bean.WangyiBean;
 import com.sim.wangyi.R;
 
 import java.util.List;
@@ -28,6 +30,7 @@ import cn.bmob.v3.listener.UpdateListener;
 /**
  * @author Sim --- 显示网易新闻的页面
  */
+@Route(path = ArouterUrl.wangyi_activity_detail)
 public class NewsDetailActivity extends BaseActivity {
 
     private TitleView titleView;

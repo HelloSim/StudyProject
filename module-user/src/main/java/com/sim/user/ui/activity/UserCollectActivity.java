@@ -1,23 +1,23 @@
 package com.sim.user.ui.activity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.sim.bean.User;
-import com.sim.bean.WangyiBean;
+import com.alibaba.android.arouter.facade.annotation.Route;
 import com.sim.basicres.base.BaseActivity;
 import com.sim.basicres.base.BaseAdapter;
 import com.sim.basicres.base.BaseViewHolder;
 import com.sim.basicres.callback.DialogInterface;
+import com.sim.basicres.constant.ArouterUrl;
 import com.sim.basicres.views.TitleView;
+import com.sim.bean.User;
+import com.sim.bean.WangyiBean;
 import com.sim.user.R;
 import com.sim.user.adapter.NewsAdapter;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,7 +30,8 @@ import cn.bmob.v3.listener.UpdateListener;
 /**
  * @author Sim --- 网易新闻的收藏页面
  */
-public class NewsCollectActivity extends BaseActivity {
+@Route(path = ArouterUrl.user_activity_collect)
+public class UserCollectActivity extends BaseActivity {
 
     private TitleView titleView;
     private RecyclerView newsRecyclerView;
@@ -78,14 +79,15 @@ public class NewsCollectActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-        newsRecyclerView.setLayoutManager(new LinearLayoutManager(NewsCollectActivity.this));
+        newsRecyclerView.setLayoutManager(new LinearLayoutManager(UserCollectActivity.this));
         newsAdapter = new NewsAdapter(this, collectionNewsBeanArrayList);
         newsAdapter.setOnItemClickListener(new BaseAdapter.OnItemClickListener() {
             @Override
             public void onItemClicked(BaseViewHolder holder, int position) {
-                Intent intent = new Intent(NewsCollectActivity.this, NewsDetailActivity.class);
-                intent.putExtra("news", (Serializable) newsAdapter.getData().get(position));
-                startActivity(intent);
+//                ARouter.getInstance()
+//                        .build(ArouterUrl.wangyi_activity_detail)
+//                        .withSerializable("news", newsAdapter.getData().get(position))
+//                        .navigation();
             }
         });
         newsAdapter.setOnItemLongClickListener(new BaseAdapter.OnItemLongClickListener() {

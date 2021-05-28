@@ -1,16 +1,13 @@
 package com.sim.traveltool;
 
-import android.app.Application;
 import android.content.Context;
 
 import androidx.multidex.MultiDex;
 
 import com.sim.basicres.base.BaseApplication;
 import com.sim.basicres.utils.CrashHandler;
-import com.sim.basicres.utils.LogUtil;
 import com.sim.http.APIFactory;
-import com.sim.sharedlibrary.base.AppConfig;
-import com.sim.sharedlibrary.base.IComponentApplication;
+import com.sim.sharedlibrary.base.ModuleLifecycleConfig;
 import com.tencent.bugly.Bugly;
 import com.tencent.bugly.beta.Beta;
 
@@ -22,7 +19,7 @@ import cn.jpush.android.api.JPushInterface;
  * @ time： 2021/5/25 16:13
  * @ description：
  */
-public class App extends BaseApplication implements IComponentApplication {
+public class App extends BaseApplication {
 
     @Override
     public void onCreate() {
@@ -36,7 +33,7 @@ public class App extends BaseApplication implements IComponentApplication {
 //        Beta.upgradeCheckPeriod = 1000 * 60;//设置升级检查周期为60s
 //        Beta.initDelay = 1000 * 5;//设置启动延迟为5s
 
-        initialize(this);
+        ModuleLifecycleConfig.getInstance().initModuleAhead(this);
 
         Bmob.initialize(getMyApplicationContext(), "62550b32bf5600010781ceeebc0e92ac");//Bmob初始化
 
@@ -44,26 +41,6 @@ public class App extends BaseApplication implements IComponentApplication {
         JPushInterface.init(getMyApplicationContext());//JPush初始化
 
         APIFactory.getInstance().init(getApplicationContext());
-    }
-
-    /**
-     * 这里其实就是反射拿到各个模块的Application，调用其中的initialize方法
-     *
-     * @param application
-     */
-    @Override
-    public void initialize(Application application) {
-        for (String cpnt : AppConfig.Components) {
-            try {
-                Class<?> clz = Class.forName(cpnt);
-                Object obj = clz.newInstance();
-                if (obj instanceof IComponentApplication) {
-                    ((IComponentApplication) obj).initialize(this);
-                }
-            } catch (Exception e) {
-                LogUtil.e(this.getClass(), e.getMessage());
-            }
-        }
     }
 
     @Override

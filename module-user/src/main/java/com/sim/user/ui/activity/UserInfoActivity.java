@@ -14,16 +14,19 @@ import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.sim.bean.User;
-import com.sim.basicres.AppHelper;
+import com.alibaba.android.arouter.facade.annotation.Route;
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.sim.basicres.base.BaseActivity;
 import com.sim.basicres.bean.EventMessage;
 import com.sim.basicres.callback.DialogInterface;
 import com.sim.basicres.callback.SuccessOrFailListener;
+import com.sim.basicres.constant.AppHelper;
+import com.sim.basicres.constant.ArouterUrl;
 import com.sim.basicres.utils.LogUtil;
 import com.sim.basicres.utils.SPUtil;
 import com.sim.basicres.utils.ToastUtil;
 import com.sim.basicres.views.TitleView;
+import com.sim.bean.User;
 import com.sim.user.R;
 
 import org.greenrobot.eventbus.EventBus;
@@ -35,6 +38,7 @@ import cn.bmob.v3.listener.UpdateListener;
 /**
  * @author Sim --- 显示用户信息的页面
  */
+@Route(path = ArouterUrl.user_activity_info)
 public class UserInfoActivity extends BaseActivity {
 
     private Context context;
@@ -42,15 +46,15 @@ public class UserInfoActivity extends BaseActivity {
     private TitleView titleView;
     private LinearLayout parent;
 
-    private RelativeLayout rlUserName,rlPassword,rlMobilePhoneNumber;
+    private RelativeLayout rlUserName, rlPassword, rlMobilePhoneNumber;
 
-    private TextView tvUserName,tvMobilePhoneNumber;
+    private TextView tvUserName, tvMobilePhoneNumber;
     private Button btnLogOut;
 
     private PopupWindow updateUserNamePopupWindow;//弹窗
     private View updateUserNameLayout;//布局
     private EditText etNewUserName;
-    private Button btnUserNameCancel,btnUserNameConfirm;
+    private Button btnUserNameCancel, btnUserNameConfirm;
 
     @Override
     protected int getLayoutRes() {
@@ -136,7 +140,7 @@ public class UserInfoActivity extends BaseActivity {
                 }
             });
         } else if (view == rlPassword) {
-            startActivity(new Intent(this, UserUpdatePasswordActivity.class));
+            ARouter.getInstance().build(ArouterUrl.user_activity_updatepws).navigation();
         } else if (view == rlMobilePhoneNumber) {
 
         } else {

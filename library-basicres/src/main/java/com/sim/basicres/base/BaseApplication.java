@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
 
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.sim.basicres.utils.LogUtil;
 
 /**
@@ -23,6 +24,18 @@ public class BaseApplication extends Application {
         isDebug = context.getApplicationInfo() != null && (context.getApplicationInfo().flags
                 & ApplicationInfo.FLAG_DEBUGGABLE) != 0;
         LogUtil.d(getClass(), isDebug ? "DeBug模式" : "Release版本");
+
+        if (getIsDebug()) {
+            ARouter.openLog();
+            ARouter.openDebug();
+        }
+        ARouter.init(this);
+    }
+
+    @Override
+    public void onTerminate() {
+        super.onTerminate();
+        ARouter.getInstance().destroy();
     }
 
     public static Context getMyApplicationContext() {

@@ -1,19 +1,17 @@
 package com.sim.user.ui.view;
 
 import android.content.Context;
-import android.content.Intent;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.sim.bean.User;
-import com.sim.basicres.AppHelper;
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.sim.basicres.bean.EventMessage;
+import com.sim.basicres.constant.AppHelper;
+import com.sim.basicres.constant.ArouterUrl;
 import com.sim.basicres.utils.ToastUtil;
+import com.sim.bean.User;
 import com.sim.user.R;
-import com.sim.user.ui.activity.NewsCollectActivity;
-import com.sim.user.ui.activity.UserInfoActivity;
-import com.sim.user.ui.activity.UserLogInActivity;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -26,6 +24,7 @@ import cn.bmob.v3.BmobUser;
  * @ time： 2021/5/25 14:30
  * @ description：
  */
+//@Route(path = ArouterUrl.user_view)
 public class UserView extends RelativeLayout {
 
     private Context context;
@@ -52,9 +51,9 @@ public class UserView extends RelativeLayout {
             @Override
             public void onClick(View v) {
                 if (user != null) {
-                    context.startActivity(new Intent(context, UserInfoActivity.class));
+                    ARouter.getInstance().build(ArouterUrl.user_activity_info).navigation();
                 } else {
-                    context.startActivity(new Intent(context, UserLogInActivity.class));
+                    ARouter.getInstance().build(ArouterUrl.user_activity_login).navigation();
                 }
             }
         });
@@ -62,7 +61,7 @@ public class UserView extends RelativeLayout {
             @Override
             public void onClick(View v) {
                 if (user != null) {
-                    context.startActivity(new Intent(context, NewsCollectActivity.class));
+                    ARouter.getInstance().build(ArouterUrl.user_activity_collect).navigation();
                 } else {
                     ToastUtil.toast(context, "未登录");
                 }

@@ -2,6 +2,8 @@ apply plugin: 'com.android.application'
 //apply from: 'tinker-support.gradle'
 
 android {
+    useLibrary 'org.apache.http.legacy'
+    resourcePrefix "app_"
     compileSdkVersion versions.compileSdkVersion
     buildToolsVersion versions.buildToolsVersion
     defaultConfig {
@@ -10,17 +12,22 @@ android {
         versionCode 28
         versionName "4.2.8"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        ndk {
-            abiFilters 'armeabi', 'arm64-v8a'//, 'x86', 'armeabi-v7a', 'x86_64'
-        }
+        consumerProguardFiles "consumer-rules.pro"//aar混淆文件名
         multiDexEnabled true
         javaCompileOptions {
             annotationProcessorOptions {
-                arguments = [ moduleName : project.getName() ]
+                arguments = [moduleName: project.getName()]
             }
         }
+        ndk {
+            abiFilters 'armeabi', 'arm64-v8a'//, 'x86', 'armeabi-v7a', 'x86_64'
+        }
     }
-    resourcePrefix "app_"
+//    applicationVariants.all { variant ->
+//        variant.outputs.all {
+//            outputFileName = "TravelTool${defaultConfig.versionName}.apk"
+//        }
+//    }
     signingConfigs {
         release {
             storeFile file('HelloSim.jks')
@@ -29,11 +36,6 @@ android {
             storePassword "yclyml0719"
         }
     }
-//    applicationVariants.all { variant ->
-//        variant.outputs.all {
-//            outputFileName = "TravelTool${defaultConfig.versionName}.apk"
-//        }
-//    }
     buildTypes {
         debug {
             buildConfigField("boolean", "LOG_DEBUG", "true")
@@ -51,6 +53,11 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+    //程序在编译的时候会检查lint，有任何错误提示会停止build，我们可以关闭这个开关
+    lintOptions {
+        abortOnError false//即使报错也不会停止打包
+        checkReleaseBuilds false//打包release版本的时候进行检测
+    }
 }
 
 dependencies {
@@ -58,15 +65,14 @@ dependencies {
     androidTestImplementation deps.junit.test
     androidTestImplementation deps.androidx.espresso
 
-    implementation project(':basicres')
+    implementation project(':library-basicres')
     implementation project(':library-sharedlibrary')
+    annotationProcessor deps.arouter.compiler
 
-    annotationProcessor 'com.alibaba:arouter-compiler:1.1.4'
-
-//    if (!isRunAlone.toBoolean()) {
+    if (!isRunAlone.toBoolean()) {
         implementation project(':module-wangyi')
         implementation project(':module-bus')
         implementation project(':module-record')
         implementation project(':module-user')
-//    }
+    }
 }

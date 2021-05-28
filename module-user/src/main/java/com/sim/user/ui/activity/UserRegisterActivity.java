@@ -8,14 +8,16 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.sim.bean.User;
+import com.alibaba.android.arouter.facade.annotation.Route;
 import com.sim.basicres.base.BaseActivity;
 import com.sim.basicres.callback.SuccessOrFailListener;
+import com.sim.basicres.constant.ArouterUrl;
 import com.sim.basicres.utils.LogUtil;
 import com.sim.basicres.utils.RegexUtil;
 import com.sim.basicres.utils.ToastUtil;
 import com.sim.basicres.views.SplitEditText;
 import com.sim.basicres.views.TitleView;
+import com.sim.bean.User;
 import com.sim.user.R;
 
 import cn.bmob.v3.BmobSMS;
@@ -28,6 +30,7 @@ import cn.bmob.v3.listener.UpdateListener;
 /**
  * @author Sim --- 用户注册页面
  */
+@Route(path = ArouterUrl.user_activity_register)
 public class UserRegisterActivity extends BaseActivity {
 
     private Context context;

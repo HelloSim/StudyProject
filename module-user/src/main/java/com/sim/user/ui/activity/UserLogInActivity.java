@@ -13,15 +13,18 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
-import com.sim.bean.User;
-import com.sim.basicres.AppHelper;
+import com.alibaba.android.arouter.facade.annotation.Route;
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.sim.basicres.base.BaseActivity;
 import com.sim.basicres.bean.EventMessage;
+import com.sim.basicres.constant.AppHelper;
+import com.sim.basicres.constant.ArouterUrl;
 import com.sim.basicres.utils.LogUtil;
 import com.sim.basicres.utils.RegexUtil;
 import com.sim.basicres.utils.SPUtil;
 import com.sim.basicres.utils.ToastUtil;
 import com.sim.basicres.views.TitleView;
+import com.sim.bean.User;
 import com.sim.user.R;
 
 import org.greenrobot.eventbus.EventBus;
@@ -35,6 +38,7 @@ import cn.bmob.v3.listener.QueryListener;
 /**
  * @author Sim --- 登陆页面
  */
+@Route(path = ArouterUrl.user_activity_login)
 public class UserLogInActivity extends BaseActivity {
 
     private Context context;
@@ -136,8 +140,7 @@ public class UserLogInActivity extends BaseActivity {
             }
         } else if (view == btnRegistered) {
             morePopupWindow.dismiss();
-            Intent intent = new Intent(this, UserRegisterActivity.class);
-            startActivity(intent);
+            ARouter.getInstance().build(ArouterUrl.user_activity_register).navigation();
         } else {
             super.onMultiClick(view);
         }

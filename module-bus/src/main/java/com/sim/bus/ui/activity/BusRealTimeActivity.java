@@ -9,15 +9,17 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.sim.bean.BusRealTimeBean;
-import com.sim.bean.BusRealTimeBusStopBean;
+import com.alibaba.android.arouter.facade.annotation.Route;
 import com.sim.basicres.base.BaseActivity;
+import com.sim.basicres.constant.ArouterUrl;
 import com.sim.basicres.utils.LogUtil;
 import com.sim.basicres.utils.ToastUtil;
 import com.sim.basicres.views.TitleView;
-import com.sim.http.APIFactory;
+import com.sim.bean.BusRealTimeBean;
+import com.sim.bean.BusRealTimeBusStopBean;
 import com.sim.bus.R;
 import com.sim.bus.adapter.BusStationListAdapter;
+import com.sim.http.APIFactory;
 
 import java.util.ArrayList;
 
@@ -26,6 +28,7 @@ import rx.Subscriber;
 /**
  * @author Sim --- 显示实时公交位置的页面
  */
+@Route(path = ArouterUrl.bus_activity_realtime)
 public class BusRealTimeActivity extends BaseActivity {
 
     private TitleView titleView;

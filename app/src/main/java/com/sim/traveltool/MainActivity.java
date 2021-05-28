@@ -13,11 +13,13 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.sim.bean.User;
-import com.sim.basicres.AppHelper;
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.sim.basicres.base.BaseActivity;
+import com.sim.basicres.constant.AppHelper;
+import com.sim.basicres.constant.ArouterUrl;
 import com.sim.basicres.utils.LogUtil;
 import com.sim.basicres.utils.SPUtil;
+import com.sim.bean.User;
 import com.sim.sharedlibrary.base.ServiceFactory;
 
 import cn.bmob.v3.BmobUser;
@@ -78,9 +80,12 @@ public class MainActivity extends BaseActivity {
 
         fragmentManager = getSupportFragmentManager();
         mFragmentTransaction = fragmentManager.beginTransaction();
-        wangyiFragment = ServiceFactory.getInstance().getWangyiService().getWangyiFragment();
-        busFragment = ServiceFactory.getInstance().getBusService().getBusFragment();
-        recordFragment = ServiceFactory.getInstance().getRecordService().getRecordFragment();
+//        wangyiFragment = ServiceFactory.getInstance().getWangyiService().getWangyiFragment();
+//        busFragment = ServiceFactory.getInstance().getBusService().getBusFragment();
+//        recordFragment = ServiceFactory.getInstance().getRecordService().getRecordFragment();
+        wangyiFragment = (Fragment) ARouter.getInstance().build(ArouterUrl.wangyi_fragment).navigation();
+        busFragment = (Fragment) ARouter.getInstance().build(ArouterUrl.bus_fragment).navigation();
+        recordFragment = (Fragment) ARouter.getInstance().build(ArouterUrl.record_fragment).navigation();
         mFragmentTransaction.add(R.id.frameLayout, wangyiFragment);
         mFragmentTransaction.add(R.id.frameLayout, busFragment);
         mFragmentTransaction.add(R.id.frameLayout, recordFragment);

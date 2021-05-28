@@ -1,9 +1,9 @@
 package com.sim.sharedlibrary.base;
 
-import com.sim.sharedlibrary.BusService;
-import com.sim.sharedlibrary.RecordService;
-import com.sim.sharedlibrary.UserService;
-import com.sim.sharedlibrary.WangyiService;
+import com.sim.sharedlibrary.moduleservice.BusService;
+import com.sim.sharedlibrary.moduleservice.RecordService;
+import com.sim.sharedlibrary.moduleservice.UserService;
+import com.sim.sharedlibrary.moduleservice.WangyiService;
 
 /**
  * @ author: Sim

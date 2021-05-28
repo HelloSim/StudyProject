@@ -10,7 +10,7 @@ import com.sim.bus.ui.fragment.BusFragment;
  * @ time： 2021/5/26 16:23
  * @ description：
  */
-public class BusService implements com.sim.sharedlibrary.BusService {
+public class BusService implements com.sim.sharedlibrary.moduleservice.BusService {
 
     @Override
     public Fragment getBusFragment() {

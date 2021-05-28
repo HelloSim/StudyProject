@@ -8,17 +8,20 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.sim.bean.BusLocationDesignatedBean;
-import com.sim.bean.BusRouteBean;
+import com.alibaba.android.arouter.facade.annotation.Route;
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.sim.basicres.base.BaseActivity;
 import com.sim.basicres.base.BaseAdapter;
 import com.sim.basicres.base.BaseViewHolder;
+import com.sim.basicres.constant.ArouterUrl;
 import com.sim.basicres.utils.LogUtil;
 import com.sim.basicres.utils.ToastUtil;
 import com.sim.basicres.views.TitleView;
-import com.sim.http.APIFactory;
+import com.sim.bean.BusLocationDesignatedBean;
+import com.sim.bean.BusRouteBean;
 import com.sim.bus.R;
 import com.sim.bus.adapter.BusRouteAdapter;
+import com.sim.http.APIFactory;
 
 import java.util.ArrayList;
 
@@ -27,6 +30,7 @@ import rx.Subscriber;
 /**
  * @author Sim --- 显示出行方案的页面
  */
+@Route(path = ArouterUrl.bus_activity_route)
 public class BusRouteActivity extends BaseActivity {
 
     private TitleView titleView;
@@ -80,13 +84,11 @@ public class BusRouteActivity extends BaseActivity {
         routeAdapter.setOnItemClickListener(new BaseAdapter.OnItemClickListener() {
             @Override
             public void onItemClicked(BaseViewHolder holder, int position) {
-                Intent intent = new Intent(BusRouteActivity.this, BusRouteDetailActivity.class);
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("data", routeDataList.get(position));
-                bundle.putString("tvStartLocation", tvStartLocation);
-                bundle.putString("tvEndLocation", tvEndLocation);
-                intent.putExtras(bundle);
-                startActivity(intent);
+                ARouter.getInstance().build(ArouterUrl.bus_activity_route_detail)
+                        .withSerializable("data", routeDataList.get(position))
+                        .withString("tvStartLocation", tvStartLocation)
+                        .withString("tvEndLocation", tvEndLocation)
+                        .navigation();
             }
         });
         rlLocationList.setAdapter(routeAdapter);

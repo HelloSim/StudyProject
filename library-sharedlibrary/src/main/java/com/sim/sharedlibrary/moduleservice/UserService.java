@@ -1,4 +1,4 @@
-package com.sim.sharedlibrary;
+package com.sim.sharedlibrary.moduleservice;
 
 
 import android.content.Context;

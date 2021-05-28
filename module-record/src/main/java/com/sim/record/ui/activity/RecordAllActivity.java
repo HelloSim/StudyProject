@@ -4,18 +4,20 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 
+import com.alibaba.android.arouter.facade.annotation.Route;
 import com.bin.david.form.core.SmartTable;
 import com.bin.david.form.data.CellInfo;
 import com.bin.david.form.data.format.bg.BaseCellBackgroundFormat;
 import com.bin.david.form.data.style.FontStyle;
 import com.bin.david.form.utils.DensityUtils;
 import com.haibin.calendarview.Calendar;
-import com.sim.bean.User;
 import com.sim.basicres.base.BaseActivity;
+import com.sim.basicres.constant.ArouterUrl;
 import com.sim.basicres.utils.LogUtil;
 import com.sim.basicres.utils.TimeUtil;
 import com.sim.basicres.views.TitleView;
 import com.sim.bean.RecordBean;
+import com.sim.bean.User;
 import com.sim.record.R;
 
 import java.util.ArrayList;
@@ -28,6 +30,7 @@ import cn.bmob.v3.listener.FindListener;
 /**
  * @author Sim --- 月打卡列表页面
  */
+@Route(path = ArouterUrl.record_activity_all)
 public class RecordAllActivity extends BaseActivity {
 
     private TitleView titleView;

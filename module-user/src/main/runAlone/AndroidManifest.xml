@@ -18,8 +18,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.sim.user.ui.activity.NewsCollectActivity" />
-        <activity android:name="com.sim.user.ui.activity.NewsDetailActivity" />
+        <activity android:name="com.sim.user.ui.activity.UserCollectActivity" />
         <activity android:name="com.sim.user.ui.activity.UserInfoActivity" />
         <activity android:name="com.sim.user.ui.activity.UserLogInActivity" />
         <activity android:name="com.sim.user.ui.activity.UserRegisterActivity" />
