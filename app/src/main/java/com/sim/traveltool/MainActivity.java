@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.sim.basicres.base.BaseActivity;
 import com.sim.basicres.constant.AppHelper;
@@ -29,6 +30,7 @@ import cn.bmob.v3.listener.FetchUserInfoListener;
 /**
  * @author Sim --- MainActivity
  */
+@Route(path = ArouterUrl.app_main)
 public class MainActivity extends BaseActivity {
 
     private LinearLayout left_bar;

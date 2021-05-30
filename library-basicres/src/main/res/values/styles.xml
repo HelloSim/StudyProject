@@ -1,12 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <!-- Base application theme. -->
-    <style name="common_APPTheme" parent="@style/Theme.AppCompat.NoActionBar">
+    <style name="common_APPTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimaryDark">@color/common_black</item>
+        <!--页面背景色-->
         <item name="android:windowBackground">@color/common_white</item>
+        <!--禁止多点误触-->
+        <item name="android:windowEnableSplitTouch">false</item>
+        <item name="android:splitMotionEvents">false</item>
+        <item name="android:windowDrawsSystemBarBackgrounds" tools:targetApi="lollipop">true</item>
         <item name="android:textColor">@color/common_black</item>
-        <item name="android:windowFullscreen">false</item>
-        <item name="android:windowNoTitle">true</item>
+        <!--关闭启动窗口-->
+        <item name="android:windowDisablePreview">true</item>
     </style>
 
     <!--MainActivity底部Navigation的RadioButton样式-->
