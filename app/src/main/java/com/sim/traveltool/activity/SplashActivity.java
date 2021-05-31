@@ -5,8 +5,9 @@ import android.os.Bundle;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.sim.basicres.base.BaseActivity;
 import com.sim.basicres.constant.ArouterUrl;
-import com.sim.basicres.views.particleView.ParticleView;
 import com.sim.traveltool.R;
+
+import me.wangyuwei.particleview.ParticleView;
 
 /**
  *  闪屏页

@@ -19,9 +19,10 @@ buildscript {
 
             'multidex'    : "com.android.support:multidex:1.0.3",
 
-            'gson'        : "com.google.code.gson:gson:2.8.5",
-
-            'recyclerview': "androidx.recyclerview:recyclerview:1.2.0-beta01",
+            'particleView': 'me.wangyuwei:ParticleView:1.0.4',//闪屏页粒子动画 https://github.com/JeasonWong/Particle
+            'bottombar'   : 'com.gauravk.bubblenavigation:bubblenavigation:1.0.7',//底部导航栏 https://github.com/gauravk95/bubble-navigation
+            'material'    : "com.google.android.material:material:1.2.1",
+            'recyclerview': "androidx.recyclerview:recyclerview:1.2.0-beta01",//recyclerview
 
             'glide'       : [
                     'glide'   : "com.github.bumptech.glide:glide:4.9.0",
@@ -30,7 +31,7 @@ buildscript {
 
             'eventbus'    : "org.greenrobot:eventbus:3.1.1",
 
-            'material'    : "com.google.android.material:material:1.2.1",
+            'gson'        : "com.google.code.gson:gson:2.8.5",
 
             'net'         : [
                     'retrofit' : "com.squareup.retrofit2:retrofit:2.4.0",
@@ -57,6 +58,7 @@ buildscript {
         google()
         jcenter()
         maven { url 'https://oss.sonatype.org/content/repositories/snapshots' }
+        maven { url 'https://dl.bintray.com/wangyuwei/maven' }//闪屏页粒子动画
     }
     dependencies {
         classpath "com.android.tools.build:gradle:3.4.0"

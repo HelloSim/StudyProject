@@ -5,17 +5,17 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <com.sim.basicres.views.particleView.ParticleView
+    <me.wangyuwei.particleview.ParticleView
         android:id="@+id/particleview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/common_colorPrimary"
-        pv:common_background_color="@color/common_colorPrimary"
-        pv:common_host_text="TravelTool"
-        pv:common_host_text_size="20sp"
-        pv:common_particle_text="java版"
-        pv:common_particle_text_size="15sp"
-        pv:common_spread_anim_time="1500"
-        pv:common_text_color="@color/common_white" />
+        pv:pv_background_color="@color/common_colorPrimary"
+        pv:pv_host_text="TravelTool"
+        pv:pv_host_text_size="20sp"
+        pv:pv_particle_text="java版"
+        pv:pv_particle_text_size="15sp"
+        pv:pv_spread_anim_time="1500"
+        pv:pv_text_color="@color/common_white" />
 
 </LinearLayout>

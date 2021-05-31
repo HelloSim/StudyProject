@@ -26,11 +26,11 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             app:bt_active="true"
-            app:bt_colorActive="#f44336"
-            app:bt_colorInactive="#e57373"
+            app:bt_colorActive="@color/common_bottombar_wangyi_bg_active"
+            app:bt_colorInactive="@color/common_bottombar_wangyi_bg_inactive"
             app:bt_icon="@mipmap/app_ic_wangyi"
             app:bt_shape="@drawable/app_transition_background_drawable_home"
-            app:bt_title="@string/wangyi" />
+            app:bt_title="@string/common_wangyi" />
 
         <com.gauravk.bubblenavigation.BubbleToggleView
             android:id="@+id/l_item_search"
@@ -38,33 +38,33 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             app:bt_badgeBackgroundColor="#4caf50"
-            app:bt_colorActive="#03a9f4"
-            app:bt_colorInactive="#64b5f6"
+            app:bt_colorActive="@color/common_bottombar_bus_bg_active"
+            app:bt_colorInactive="@color/common_bottombar_bus_bg_inactive"
             app:bt_icon="@mipmap/app_ic_bus"
             app:bt_shape="@drawable/app_transition_background_drawable_bus"
-            app:bt_title="@string/bus" />
+            app:bt_title="@string/common_bus" />
 
         <com.gauravk.bubblenavigation.BubbleToggleView
             android:id="@+id/l_item_profile_list"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            app:bt_colorActive="#607d8b"
-            app:bt_colorInactive="#90a4ae"
+            app:bt_colorActive="@color/common_bottombar_record_bg_active"
+            app:bt_colorInactive="@color/common_bottombar_record_bg_inactive"
             app:bt_icon="@mipmap/app_ic_record"
             app:bt_shape="@drawable/app_transition_background_drawable_record"
-            app:bt_title="@string/record" />
+            app:bt_title="@string/common_record" />
 
         <com.gauravk.bubblenavigation.BubbleToggleView
             android:id="@+id/l_item_notification"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            app:bt_colorActive="#4caf50"
-            app:bt_colorInactive="#81c784"
+            app:bt_colorActive="@color/common_bottombar_mine_bg_active"
+            app:bt_colorInactive="@color/common_bottombar_mine_bg_inactive"
             app:bt_icon="@mipmap/app_ic_mine"
             app:bt_shape="@drawable/app_transition_background_drawable_mine"
-            app:bt_title="@string/user" />
+            app:bt_title="@string/common_user" />
 
     </com.gauravk.bubblenavigation.BubbleNavigationLinearView>
 
