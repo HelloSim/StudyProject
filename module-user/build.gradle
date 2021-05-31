@@ -50,7 +50,6 @@ dependencies {
     androidTestImplementation deps.androidx.espresso
 
     implementation project(':library-basicres')
-    implementation project(':library-sharedlibrary')
     annotationProcessor deps.arouter.compiler
     if (isRunAlone.toBoolean()) {
         implementation project(':module-wangyi')

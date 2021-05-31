@@ -9,9 +9,7 @@ import com.sim.basicres.views.particleView.ParticleView;
 import com.sim.traveltool.R;
 
 /**
- * @Auther Sim
- * @Time 2021/5/30 20:14
- * @Description
+ *  闪屏页
  */
 public class SplashActivity extends BaseActivity {
 

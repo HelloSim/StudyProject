@@ -5,8 +5,6 @@ import android.widget.LinearLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.sim.user.ui.view.UserView;
-
 public class MainActivity extends AppCompatActivity {
 
     LinearLayout left;
@@ -16,6 +14,5 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.user_activity_main);
         left = findViewById(R.id.left);
-        left.addView(new UserView(this));
     }
 }

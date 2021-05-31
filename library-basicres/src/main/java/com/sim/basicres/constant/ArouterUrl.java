@@ -40,6 +40,7 @@ public class ArouterUrl {
      * user模块
      */
     public static final String user_view = "/user/view";
+    public static final String user_fragment = "/user/fragment";
     public static final String user_activity_login = "/user/activity/login";
     public static final String user_activity_info = "/user/activity/info";
     public static final String user_activity_register = "/user/activity/register";

@@ -1,4 +1,4 @@
 rootProject.name = "TravelTool"
 include  ':app', ':module-wangyi', ':module-bus', ':module-record', ':module-user',
-        ':library-basiclib', ':library-net', ':library-basicres', ':library-sharedlibrary'
+        ':library-basiclib', ':library-net', ':library-basicres'
 

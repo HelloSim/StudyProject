@@ -1,11 +1,11 @@
-package com.sim.user.ui.view;
+package com.sim.user.ui.fragment;
 
-import android.content.Context;
 import android.view.View;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
+import com.sim.basicres.base.BaseFragment;
 import com.sim.basicres.bean.EventMessage;
 import com.sim.basicres.constant.AppHelper;
 import com.sim.basicres.constant.ArouterUrl;
@@ -21,33 +21,37 @@ import cn.bmob.v3.BmobUser;
 
 /**
  * @ author: Sim
- * @ time： 2021/5/25 14:30
+ * @ time： 2021/5/31 15:39
  * @ description：
  */
-//@Route(path = ArouterUrl.user_view)
-public class UserView extends RelativeLayout {
-
-    private Context context;
+@Route(path = ArouterUrl.user_fragment)
+public class MineFragment extends BaseFragment {
 
     private User user;
 
     private TextView tvUserName;
 
-    public UserView(Context context) {
-        super(context);
-        this.context = context;
-        try {
-            user = BmobUser.getCurrentUser(User.class);
-        } catch (Exception e) {
-
-        }
-        EventBus.getDefault().register(this);
-        initView();
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 
-    public void initView() {
-        View.inflate(context, R.layout.user_view_left_bar, this);
-        findViewById(R.id.rl_user).setOnClickListener(new OnClickListener() {
+    @Override
+    protected int getLayoutRes() {
+        return R.layout.user_fragment_mine;
+    }
+
+    @Override
+    protected void bindViews(View view) {
+        user = BmobUser.getCurrentUser(User.class);
+        EventBus.getDefault().register(this);
+
+    }
+
+    @Override
+    protected void initView(View view) {
+        view.findViewById(R.id.rl_user).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (user != null) {
@@ -57,30 +61,30 @@ public class UserView extends RelativeLayout {
                 }
             }
         });
-        findViewById(R.id.rl_user_collect).setOnClickListener(new OnClickListener() {
+        view.findViewById(R.id.rl_user_collect).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (user != null) {
                     ARouter.getInstance().build(ArouterUrl.user_activity_collect).navigation();
                 } else {
-                    ToastUtil.toast(context, "未登录");
+                    ToastUtil.toast(getContext(), "未登录");
                 }
             }
         });
-        findViewById(R.id.rl_update_version).setOnClickListener(new OnClickListener() {
+        view.findViewById(R.id.rl_update_version).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ToastUtil.toast(context, "未开发");
+                ToastUtil.toast(getContext(), "未开发");
             }
         });
-        findViewById(R.id.rl_user_setting).setOnClickListener(new OnClickListener() {
+        view.findViewById(R.id.rl_user_setting).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ToastUtil.toast(context, "未开发");
+                ToastUtil.toast(getContext(), "未开发");
             }
         });
 
-        tvUserName = findViewById(R.id.tv_user_name);
+        tvUserName = view.findViewById(R.id.tv_user_name);
         if (user != null) {
             tvUserName.setText(user.getUsername());
         } else {
@@ -89,9 +93,7 @@ public class UserView extends RelativeLayout {
     }
 
     @Override
-    protected void onDetachedFromWindow() {
-        super.onDetachedFromWindow();
-        EventBus.getDefault().unregister(this);
+    protected void initData() {
     }
 
     /**
