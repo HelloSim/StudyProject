@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="common_particleView">
+        <attr name="common_host_text" format="string" />
+        <attr name="common_host_text_size" format="dimension" />
+        <attr name="common_particle_text" format="string" />
+        <attr name="common_particle_text_size" format="dimension" />
+        <attr name="common_text_color" format="color" />
+        <attr name="common_background_color" format="color" />
+        <attr name="common_text_anim_time" format="integer" />
+        <attr name="common_spread_anim_time" format="integer" />
+        <attr name="common_host_text_anim_time" format="integer" />
+    </declare-styleable>
+</resources>

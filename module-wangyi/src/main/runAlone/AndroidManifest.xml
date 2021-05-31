@@ -6,7 +6,7 @@
         android:name=".application.WangyiApplication"
         android:allowBackup="true"
         android:icon="@mipmap/common_ic_app_icon"
-        android:label="@string/wangyi"
+        android:label="@string/common_wangyi"
         android:roundIcon="@mipmap/common_ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/common_APPTheme"

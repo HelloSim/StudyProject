@@ -17,8 +17,6 @@ buildscript {
                     'espresso' : "androidx.test.espresso:espresso-core:3.3.0"
             ],
 
-            'particleView': "me.wangyuwei:ParticleView:1.0.4",//欢迎页动画效果库
-
             'multidex'    : "com.android.support:multidex:1.0.3",
 
             'gson'        : "com.google.code.gson:gson:2.8.5",
@@ -59,7 +57,6 @@ buildscript {
         google()
         jcenter()
         maven { url 'https://oss.sonatype.org/content/repositories/snapshots' }
-        maven { url 'https://dl.bintray.com/wangyuwei/maven' }////欢迎页动画效果库
     }
     dependencies {
         classpath "com.android.tools.build:gradle:3.4.0"
