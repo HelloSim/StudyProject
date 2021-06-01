@@ -1,6 +1,7 @@
 package com.sim.user.ui.fragment;
 
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
@@ -10,6 +11,7 @@ import com.sim.basicres.bean.EventMessage;
 import com.sim.basicres.constant.AppHelper;
 import com.sim.basicres.constant.ArouterUrl;
 import com.sim.basicres.utils.ToastUtil;
+import com.sim.basicres.views.TitleView;
 import com.sim.bean.User;
 import com.sim.user.R;
 
@@ -29,7 +31,9 @@ public class MineFragment extends BaseFragment {
 
     private User user;
 
+    private TitleView titleView;
     private TextView tvUserName;
+    private LinearLayout userLogin, userCollect, updateVersion, project, author;
 
     @Override
     public void onDestroy() {
@@ -47,43 +51,26 @@ public class MineFragment extends BaseFragment {
         user = BmobUser.getCurrentUser(User.class);
         EventBus.getDefault().register(this);
 
+        titleView = view.findViewById(R.id.titleView);
+        titleView.setRightClickListener(new TitleView.RightClickListener() {
+            @Override
+            public void onClick(View rightView) {
+                ToastUtil.toast(getContext(), "未开发");
+            }
+        });
+
+        tvUserName = view.findViewById(R.id.tv_user_name);
+
+        userLogin = view.findViewById(R.id.user_login);
+        userCollect = view.findViewById(R.id.user_collect);
+        updateVersion = view.findViewById(R.id.update_version);
+        project = view.findViewById(R.id.project);
+        author = view.findViewById(R.id.author);
+        setViewClick(userLogin, userCollect, updateVersion, project, author);
     }
 
     @Override
     protected void initView(View view) {
-        view.findViewById(R.id.rl_user).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (user != null) {
-                    ARouter.getInstance().build(ArouterUrl.user_activity_info).navigation();
-                } else {
-                    ARouter.getInstance().build(ArouterUrl.user_activity_login).navigation();
-                }
-            }
-        });
-        view.findViewById(R.id.rl_user_collect).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (user != null) {
-                    ARouter.getInstance().build(ArouterUrl.user_activity_collect).navigation();
-                } else {
-                    ToastUtil.toast(getContext(), "未登录");
-                }
-            }
-        });
-        view.findViewById(R.id.rl_update_version).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ToastUtil.toast(getContext(), "未开发");
-            }
-        });
-        view.findViewById(R.id.rl_user_setting).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ToastUtil.toast(getContext(), "未开发");
-            }
-        });
-
         tvUserName = view.findViewById(R.id.tv_user_name);
         if (user != null) {
             tvUserName.setText(user.getUsername());
@@ -94,6 +81,31 @@ public class MineFragment extends BaseFragment {
 
     @Override
     protected void initData() {
+    }
+
+    @Override
+    public void onMultiClick(View view) {
+        if (view == userLogin) {
+            if (user != null) {
+                ARouter.getInstance().build(ArouterUrl.user_activity_info).navigation();
+            } else {
+                ARouter.getInstance().build(ArouterUrl.user_activity_login).navigation();
+            }
+        } else if (view == userCollect) {
+            if (user != null) {
+                ARouter.getInstance().build(ArouterUrl.user_activity_collect).navigation();
+            } else {
+                ToastUtil.toast(getContext(), "未登录");
+            }
+        } else if (view == updateVersion) {
+            ToastUtil.toast(getContext(), "未开发");
+        } else if (view == project) {
+            ToastUtil.toast(getContext(), "未开发");
+        } else if (view == author) {
+            ToastUtil.toast(getContext(), "未开发");
+        } else {
+            super.onMultiClick(view);
+        }
     }
 
     /**

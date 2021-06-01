@@ -19,9 +19,8 @@
     <style name="common_textViewStyle">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:textSize">20sp</item>
+        <item name="android:textSize">14sp</item>
         <item name="android:textColor">@color/common_black</item>
-        <item name="android:gravity">center</item>
     </style>
 
     <!--    textView灰色小字体样式-->

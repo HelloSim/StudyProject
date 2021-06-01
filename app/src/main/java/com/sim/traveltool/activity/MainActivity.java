@@ -77,7 +77,7 @@ public class MainActivity extends BaseActivity {
     /**
      * 隐藏所有的fragment再显示需要的fragment
      *
-     * @param type 1:公交fragment     2：网易fragment    3：打卡fragment
+     * @param type
      */
     private void showFragment(int type) {
         mFragmentTransaction = fragmentManager.beginTransaction();

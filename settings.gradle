@@ -1,4 +1,11 @@
 rootProject.name = "TravelTool"
-include  ':app', ':module-wangyi', ':module-bus', ':module-record', ':module-user',
-        ':library-basiclib', ':library-net', ':library-basicres'
+include ':library-basiclib'
+include ':library-basicres'
+include ':library-net'
+
+include ':app'
+include ':module-wangyi'
+include ':module-bus'
+include ':module-record'
+include ':module-user'
 

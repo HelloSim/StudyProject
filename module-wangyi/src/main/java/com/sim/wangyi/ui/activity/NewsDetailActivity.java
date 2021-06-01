@@ -68,7 +68,7 @@ public class NewsDetailActivity extends BaseActivity {
                             public void done(BmobException e) {
                                 if (e == null) {
                                     collectionNewsBean = null;
-                                    titleView.setRightImage(R.mipmap.common_ic_collect_not);
+                                    titleView.setRightImage(R.mipmap.common_ic_collect_gray);
                                     isCollect = false;
                                 }
                             }
@@ -85,14 +85,14 @@ public class NewsDetailActivity extends BaseActivity {
                             public void done(String s, BmobException e) {
                                 if (e == null) {
                                     collectionNewsBean = bean;
-                                    titleView.setRightImage(R.mipmap.common_ic_collect_yes);
+                                    titleView.setRightImage(R.mipmap.common_ic_collect_black);
                                     isCollect = true;
                                 }
                             }
                         });
                     }
                 } else {
-                    titleView.setRightImage(R.mipmap.common_ic_collect_not);
+                    titleView.setRightImage(R.mipmap.common_ic_collect_gray);
                     collectionNewsBean = null;
                     isCollect = false;
                     ToastUtil.toast(NewsDetailActivity.this, "未登录！");
@@ -115,20 +115,20 @@ public class NewsDetailActivity extends BaseActivity {
                         isCollect = false;
                         for (WangyiBean.NewsBean bean : list) {
                             if (bean.getTitle().equals(news.getTitle())) {
-                                titleView.setRightImage(R.mipmap.common_ic_collect_yes);
+                                titleView.setRightImage(R.mipmap.common_ic_collect_black);
                                 collectionNewsBean = list.get(0);
                                 isCollect = true;
                             }
                         }
                     } else {
-                        titleView.setRightImage(R.mipmap.common_ic_collect_not);
+                        titleView.setRightImage(R.mipmap.common_ic_collect_gray);
                         collectionNewsBean = null;
                         isCollect = false;
                     }
                 }
             });
         } else {
-            titleView.setRightImage(R.mipmap.common_ic_collect_not);
+            titleView.setRightImage(R.mipmap.common_ic_collect_gray);
             collectionNewsBean = null;
             isCollect = false;
         }
@@ -137,9 +137,9 @@ public class NewsDetailActivity extends BaseActivity {
     @Override
     protected void initView() {
         if (isCollect && collectionNewsBean != null) {
-            titleView.setRightImage(R.mipmap.common_ic_collect_yes);
+            titleView.setRightImage(R.mipmap.common_ic_collect_black);
         } else {
-            titleView.setRightImage(R.mipmap.common_ic_collect_not);
+            titleView.setRightImage(R.mipmap.common_ic_collect_gray);
         }
         if (news != null) {
             //启用支持javascript
