@@ -1,6 +1,5 @@
 package com.sim.bus.ui.activity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
@@ -30,7 +29,7 @@ import rx.Subscriber;
 /**
  * @author Sim --- 显示出行方案的页面
  */
-@Route(path = ArouterUrl.bus_activity_route)
+@Route(path = ArouterUrl.Bus.bus_activity_route)
 public class BusRouteActivity extends BaseActivity {
 
     private TitleView titleView;
@@ -84,7 +83,7 @@ public class BusRouteActivity extends BaseActivity {
         routeAdapter.setOnItemClickListener(new BaseAdapter.OnItemClickListener() {
             @Override
             public void onItemClicked(BaseViewHolder holder, int position) {
-                ARouter.getInstance().build(ArouterUrl.bus_activity_route_detail)
+                ARouter.getInstance().build(ArouterUrl.Bus.bus_activity_route_detail)
                         .withSerializable("data", routeDataList.get(position))
                         .withString("tvStartLocation", tvStartLocation)
                         .withString("tvEndLocation", tvEndLocation)

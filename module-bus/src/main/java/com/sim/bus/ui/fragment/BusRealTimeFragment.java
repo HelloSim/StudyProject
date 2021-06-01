@@ -12,7 +12,7 @@ import com.sim.bus.R;
 /**
  * @author Sim --- 实时公交fragment
  */
-@Route(path = ArouterUrl.bus_fragment_realtime)
+@Route(path = ArouterUrl.Bus.bus_fragment_realtime)
 public class BusRealTimeFragment extends BaseFragment {
 
     private EditText etSearch;
@@ -40,7 +40,7 @@ public class BusRealTimeFragment extends BaseFragment {
     @Override
     public void onMultiClick(View view) {
         if (view == etSearch) {
-            ARouter.getInstance().build(ArouterUrl.bus_activity_search).withInt("searchType", 1000).navigation();
+            ARouter.getInstance().build(ArouterUrl.Bus.bus_activity_search).withInt("searchType", 1000).navigation();
         } else {
             super.onMultiClick(view);
         }

@@ -3,7 +3,7 @@ package com.sim.basicres.constant;
 /**
  * @ author: Sim
  * @ time： 2021/5/28 10:27
- * @ description：
+ * @ description：路由路径
  */
 public class ArouterUrl {
 
@@ -15,36 +15,51 @@ public class ArouterUrl {
     /**
      * wangyi模块
      */
-    public static final String wangyi_fragment = "/wangyi/fragment/main";
-    public static final String wangyi_activity_detail = "/wangyi/detail";
+    public static class Wangyi {
+        public static final String base = "/module_wangyi";
+
+        public static final String wangyi_fragment = base + "/fragment/main";
+        public static final String wangyi_activity_detail = base + "/detail";
+    }
 
     /**
      * bus模块
      */
-    public static final String bus_fragment = "/bus/fragment/main";
-    public static final String bus_fragment_realtime = "/bus/fragment/realtime";
-    public static final String bus_fragment_route = "/bus/fragment/route";
-    public static final String bus_fragment_station = "/bus/fragment/station";
-    public static final String bus_activity_search = "/bus/activity/search";
-    public static final String bus_activity_realtime = "/bus/activity/station";
-    public static final String bus_activity_route = "/bus/activity/route";
-    public static final String bus_activity_route_detail = "/bus/activity/route/detail";
+    public static class Bus {
+        public static final String base = "/module_bus";
+
+        public static final String bus_fragment = base + "/fragment/main";
+        public static final String bus_fragment_realtime = base + "/fragment/realtime";
+        public static final String bus_fragment_route = base + "/fragment/route";
+        public static final String bus_fragment_station = base + "/fragment/station";
+        public static final String bus_activity_search = base + "/activity/search";
+        public static final String bus_activity_realtime = base + "/activity/station";
+        public static final String bus_activity_route = base + "/activity/route";
+        public static final String bus_activity_route_detail = base + "/activity/route/detail";
+    }
 
     /**
      * recoed模块
      */
-    public static final String record_fragment = "/record/fragment/main";
-    public static final String record_activity_all = "/record/activity/all";
+    public static class Record {
+        public static final String base = "/module_record";
+
+        public static final String record_fragment = base + "/fragment/main";
+        public static final String record_activity_all = base + "/activity/all";
+    }
 
     /**
-     * user模块
+     * mine模块
      */
-    public static final String user_view = "/user/view";
-    public static final String user_fragment = "/user/fragment";
-    public static final String user_activity_login = "/user/activity/login";
-    public static final String user_activity_info = "/user/activity/info";
-    public static final String user_activity_register = "/user/activity/register";
-    public static final String user_activity_updatepws = "/user/activity/updatepwd";
-    public static final String user_activity_collect = "/user/activity/collect";
+    public static class Mine{
+        public static final String base = "/module_mine";
+
+        public static final String user_fragment = base +"/fragment";
+        public static final String user_activity_login = base +"/activity/login";
+        public static final String user_activity_info = base +"/activity/info";
+        public static final String user_activity_register = base +"/activity/register";
+        public static final String user_activity_updatepws = base +"/activity/updatepwd";
+        public static final String user_activity_collect = base +"/activity/collect";
+    }
 
 }

@@ -51,10 +51,10 @@ public class MainActivity extends BaseActivity {
     protected void initData() {
         requestPermission(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 0x001);
 
-        wangyiFragment = (Fragment) ARouter.getInstance().build(ArouterUrl.wangyi_fragment).navigation();
-        busFragment = (Fragment) ARouter.getInstance().build(ArouterUrl.bus_fragment).navigation();
-        recordFragment = (Fragment) ARouter.getInstance().build(ArouterUrl.record_fragment).navigation();
-        mineFragment = (Fragment) ARouter.getInstance().build(ArouterUrl.user_fragment).navigation();
+        wangyiFragment = (Fragment) ARouter.getInstance().build(ArouterUrl.Wangyi.wangyi_fragment).navigation();
+        busFragment = (Fragment) ARouter.getInstance().build(ArouterUrl.Bus.bus_fragment).navigation();
+        recordFragment = (Fragment) ARouter.getInstance().build(ArouterUrl.Record.record_fragment).navigation();
+        mineFragment = (Fragment) ARouter.getInstance().build(ArouterUrl.Mine.user_fragment).navigation();
     }
 
     @Override

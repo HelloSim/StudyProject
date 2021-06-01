@@ -34,7 +34,7 @@ import rx.Subscriber;
 /**
  * @author Sim --- 实时公交、出行线路站点的搜索页面
  */
-@Route(path = ArouterUrl.bus_activity_search)
+@Route(path = ArouterUrl.Bus.bus_activity_search)
 public class BusSearchActivity extends BaseActivity {
 
     private TitleView titleView;
@@ -88,7 +88,7 @@ public class BusSearchActivity extends BaseActivity {
             busLineNameAdapter.setOnItemClickListener(new BaseAdapter.OnItemClickListener() {
                 @Override
                 public void onItemClicked(BaseViewHolder holder, int position) {
-                    ARouter.getInstance().build(ArouterUrl.bus_activity_realtime)
+                    ARouter.getInstance().build(ArouterUrl.Bus.bus_activity_realtime)
                             .withString("busName", lineListByLineNameBeanList.get(position).getName())
                             .withString("lineId", lineListByLineNameBeanList.get(position).getId())
                             .withString("fromStation", lineListByLineNameBeanList.get(position).getFromStation())

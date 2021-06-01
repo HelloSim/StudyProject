@@ -26,7 +26,7 @@ import rx.Subscriber;
 /**
  * @author Sim --- “网易”Fragment
  */
-@Route(path = ArouterUrl.wangyi_fragment)
+@Route(path = ArouterUrl.Wangyi.wangyi_fragment)
 public class WangyiFragment extends BaseFragment {
 
     private RecyclerView newsRecyclerView;
@@ -69,7 +69,7 @@ public class WangyiFragment extends BaseFragment {
 //                intent.putExtra("news", (Serializable) newsAdapter.getData().get(position));
 //                startActivity(intent);
                 ARouter.getInstance()
-                        .build(ArouterUrl.wangyi_activity_detail)
+                        .build(ArouterUrl.Wangyi.wangyi_activity_detail)
                         .withSerializable("news", newsAdapter.getData().get(position))
                         .navigation();
             }

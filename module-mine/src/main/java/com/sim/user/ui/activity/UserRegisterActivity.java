@@ -30,7 +30,7 @@ import cn.bmob.v3.listener.UpdateListener;
 /**
  * @author Sim --- 用户注册页面
  */
-@Route(path = ArouterUrl.user_activity_register)
+@Route(path = ArouterUrl.Mine.user_activity_register)
 public class UserRegisterActivity extends BaseActivity {
 
     private Context context;

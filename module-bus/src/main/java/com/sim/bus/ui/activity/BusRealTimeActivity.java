@@ -28,7 +28,7 @@ import rx.Subscriber;
 /**
  * @author Sim --- 显示实时公交位置的页面
  */
-@Route(path = ArouterUrl.bus_activity_realtime)
+@Route(path = ArouterUrl.Bus.bus_activity_realtime)
 public class BusRealTimeActivity extends BaseActivity {
 
     private TitleView titleView;

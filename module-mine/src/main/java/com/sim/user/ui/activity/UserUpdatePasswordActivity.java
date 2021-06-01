@@ -32,7 +32,7 @@ import cn.bmob.v3.listener.UpdateListener;
 /**
  * @author Sim ---
  */
-@Route(path = ArouterUrl.user_activity_updatepws)
+@Route(path = ArouterUrl.Mine.user_activity_updatepws)
 public class UserUpdatePasswordActivity extends BaseActivity {
 
     private Context context;

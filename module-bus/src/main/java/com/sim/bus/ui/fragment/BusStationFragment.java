@@ -5,7 +5,6 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
-import com.alibaba.android.arouter.launcher.ARouter;
 import com.sim.basicres.base.BaseFragment;
 import com.sim.basicres.constant.ArouterUrl;
 import com.sim.bus.R;
@@ -13,7 +12,7 @@ import com.sim.bus.R;
 /**
  * @author Sim --- 站点查询fragment
  */
-@Route(path = ArouterUrl.bus_fragment_station)
+@Route(path = ArouterUrl.Bus.bus_fragment_station)
 public class BusStationFragment extends BaseFragment {
 
     private EditText tvStation;

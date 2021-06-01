@@ -48,7 +48,7 @@ import cn.bmob.v3.listener.UpdateListener;
 /**
  * @author Sim --- “打卡”Fragment
  */
-@Route(path = ArouterUrl.record_fragment)
+@Route(path = ArouterUrl.Record.record_fragment)
 public class RecordFragment extends BaseFragment implements CalendarView.OnMonthChangeListener,
         CalendarView.OnCalendarSelectListener {
 
@@ -145,7 +145,7 @@ public class RecordFragment extends BaseFragment implements CalendarView.OnMonth
         if (view == btnAllRecord) {
             morePopupWindow.dismiss();
             if (user != null) {
-                ARouter.getInstance().build(ArouterUrl.record_activity_all)
+                ARouter.getInstance().build(ArouterUrl.Record.record_activity_all)
                         .withSerializable("user", user)
                         .withSerializable("calendar", calendarView.getSelectedCalendar())
                         .navigation();

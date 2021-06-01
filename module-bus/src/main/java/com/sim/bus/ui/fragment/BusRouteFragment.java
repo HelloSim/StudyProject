@@ -16,7 +16,7 @@ import com.sim.bus.R;
 /**
  * @author Sim --- 出行路线fragment
  */
-@Route(path = ArouterUrl.bus_fragment_route)
+@Route(path = ArouterUrl.Bus.bus_fragment_route)
 public class BusRouteFragment extends BaseFragment {
 
     private EditText etStartStation, etEndStation;
@@ -51,16 +51,16 @@ public class BusRouteFragment extends BaseFragment {
     public void onMultiClick(View view) {
         if (view == etStartStation) {
 //            startActivityForResult(new Intent(getActivity(), BusSearchActivity.class).putExtra(), );
-            ARouter.getInstance().build(ArouterUrl.bus_activity_search)
+            ARouter.getInstance().build(ArouterUrl.Bus.bus_activity_search)
                     .withInt("searchType", RESULT_START_STATION)
                     .navigation(getActivity(), RESULT_START_STATION);
         } else if (view == etEndStation) {
-            ARouter.getInstance().build(ArouterUrl.bus_activity_search)
+            ARouter.getInstance().build(ArouterUrl.Bus.bus_activity_search)
                     .withInt("searchType", RESULT_END_STATION)
                     .navigation(getActivity(), RESULT_END_STATION);
         } else if (view == btnRoute) {
             if (etStartStation.getText().length() > 0 && etEndStation.getText().length() > 0) {
-                ARouter.getInstance().build(ArouterUrl.bus_activity_route)
+                ARouter.getInstance().build(ArouterUrl.Bus.bus_activity_route)
                         .withString("tvStartStation", etStartStation.getText().toString())
                         .withString("tvEndStation", etEndStation.getText().toString())
                         .navigation();

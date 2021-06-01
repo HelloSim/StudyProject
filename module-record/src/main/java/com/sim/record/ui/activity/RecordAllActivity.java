@@ -30,7 +30,7 @@ import cn.bmob.v3.listener.FindListener;
 /**
  * @author Sim --- 月打卡列表页面
  */
-@Route(path = ArouterUrl.record_activity_all)
+@Route(path = ArouterUrl.Record.record_activity_all)
 public class RecordAllActivity extends BaseActivity {
 
     private TitleView titleView;

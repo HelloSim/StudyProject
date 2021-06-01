@@ -1,6 +1,6 @@
 package com.sim.http.interceptor;
 
-import com.sim.BaseUrl;
+import com.sim.http.BaseUrl;
 
 import java.io.IOException;
 import java.util.List;
@@ -32,13 +32,13 @@ public class BaseUrlInterceptor implements Interceptor {
 
             HttpUrl baseURL = null;
             if ("wangyi".equals(urlname)) {
-                baseURL = HttpUrl.parse(BaseUrl.base_wangyi);
+                baseURL = HttpUrl.parse(BaseUrl.base_wangyi.base);
             } else if ("bus".equals(urlname)) {//根据头信息中配置的value,来匹配新的base_url地址
-                baseURL = HttpUrl.parse(BaseUrl.base_bus);
+                baseURL = HttpUrl.parse(BaseUrl.base_bus.base);
             } else if ("route".equals(urlname)) {
-                baseURL = HttpUrl.parse(BaseUrl.base_route);
+                baseURL = HttpUrl.parse(BaseUrl.base_route.base);
             } else if ("wanandroid".equals(urlname)) {
-                baseURL = HttpUrl.parse(BaseUrl.base_wanandroid);
+                baseURL = HttpUrl.parse(BaseUrl.base_wanandroid.base);
             }
 
             HttpUrl newHttpUrl = oldUrl.newBuilder()//重建新的HttpUrl，需要重新设置的url部分

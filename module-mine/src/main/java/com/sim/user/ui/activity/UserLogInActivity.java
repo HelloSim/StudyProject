@@ -37,7 +37,7 @@ import cn.bmob.v3.listener.QueryListener;
 /**
  * @author Sim --- 登陆页面
  */
-@Route(path = ArouterUrl.user_activity_login)
+@Route(path = ArouterUrl.Mine.user_activity_login)
 public class UserLogInActivity extends BaseActivity {
 
     private Context context;
@@ -139,7 +139,7 @@ public class UserLogInActivity extends BaseActivity {
             }
         } else if (view == btnRegistered) {
             morePopupWindow.dismiss();
-            ARouter.getInstance().build(ArouterUrl.user_activity_register).navigation();
+            ARouter.getInstance().build(ArouterUrl.Mine.user_activity_register).navigation();
         } else {
             super.onMultiClick(view);
         }

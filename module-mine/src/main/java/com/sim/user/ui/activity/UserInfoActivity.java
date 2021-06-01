@@ -37,7 +37,7 @@ import cn.bmob.v3.listener.UpdateListener;
 /**
  * @author Sim --- 显示用户信息的页面
  */
-@Route(path = ArouterUrl.user_activity_info)
+@Route(path = ArouterUrl.Mine.user_activity_info)
 public class UserInfoActivity extends BaseActivity {
 
     private Context context;
@@ -139,7 +139,7 @@ public class UserInfoActivity extends BaseActivity {
                 }
             });
         } else if (view == rlPassword) {
-            ARouter.getInstance().build(ArouterUrl.user_activity_updatepws).navigation();
+            ARouter.getInstance().build(ArouterUrl.Mine.user_activity_updatepws).navigation();
         } else if (view == rlMobilePhoneNumber) {
 
         } else {

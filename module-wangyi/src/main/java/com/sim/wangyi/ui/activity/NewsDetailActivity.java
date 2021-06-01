@@ -30,7 +30,7 @@ import cn.bmob.v3.listener.UpdateListener;
 /**
  * @author Sim --- 显示网易新闻的页面
  */
-@Route(path = ArouterUrl.wangyi_activity_detail)
+@Route(path = ArouterUrl.Wangyi.wangyi_activity_detail)
 public class NewsDetailActivity extends BaseActivity {
 
     private TitleView titleView;

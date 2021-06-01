@@ -30,7 +30,7 @@ import cn.bmob.v3.listener.UpdateListener;
 /**
  * @author Sim --- 网易新闻的收藏页面
  */
-@Route(path = ArouterUrl.user_activity_collect)
+@Route(path = ArouterUrl.Mine.user_activity_collect)
 public class UserCollectActivity extends BaseActivity {
 
     private TitleView titleView;

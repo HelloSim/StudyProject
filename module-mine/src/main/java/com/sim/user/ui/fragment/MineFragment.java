@@ -26,7 +26,7 @@ import cn.bmob.v3.BmobUser;
  * @ time： 2021/5/31 15:39
  * @ description：
  */
-@Route(path = ArouterUrl.user_fragment)
+@Route(path = ArouterUrl.Mine.user_fragment)
 public class MineFragment extends BaseFragment {
 
     private User user;
@@ -87,13 +87,13 @@ public class MineFragment extends BaseFragment {
     public void onMultiClick(View view) {
         if (view == userLogin) {
             if (user != null) {
-                ARouter.getInstance().build(ArouterUrl.user_activity_info).navigation();
+                ARouter.getInstance().build(ArouterUrl.Mine.user_activity_info).navigation();
             } else {
-                ARouter.getInstance().build(ArouterUrl.user_activity_login).navigation();
+                ARouter.getInstance().build(ArouterUrl.Mine.user_activity_login).navigation();
             }
         } else if (view == userCollect) {
             if (user != null) {
-                ARouter.getInstance().build(ArouterUrl.user_activity_collect).navigation();
+                ARouter.getInstance().build(ArouterUrl.Mine.user_activity_collect).navigation();
             } else {
                 ToastUtil.toast(getContext(), "未登录");
             }

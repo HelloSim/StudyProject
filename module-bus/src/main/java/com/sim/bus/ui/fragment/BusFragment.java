@@ -33,7 +33,7 @@ import rx.Subscriber;
 /**
  * @author Sim --- “首页”Fragment
  */
-@Route(path = ArouterUrl.bus_fragment)
+@Route(path = ArouterUrl.Bus.bus_fragment)
 public class BusFragment extends BaseFragment {
 
     private Banner banner;
@@ -100,17 +100,17 @@ public class BusFragment extends BaseFragment {
         switch (type) {
             default:
                 if (busRealTimeFragment == null) {
-                    busRealTimeFragment = (Fragment) ARouter.getInstance().build(ArouterUrl.bus_fragment_realtime).navigation();
+                    busRealTimeFragment = (Fragment) ARouter.getInstance().build(ArouterUrl.Bus.bus_fragment_realtime).navigation();
                 }
                 return busRealTimeFragment;
             case 1:
                 if (busRouteFragment == null) {
-                    busRouteFragment = (Fragment) ARouter.getInstance().build(ArouterUrl.bus_fragment_route).navigation();
+                    busRouteFragment = (Fragment) ARouter.getInstance().build(ArouterUrl.Bus.bus_fragment_route).navigation();
                 }
                 return busRouteFragment;
             case 2:
                 if (busStationFragment == null) {
-                    busStationFragment = (Fragment) ARouter.getInstance().build(ArouterUrl.bus_fragment_station).navigation();
+                    busStationFragment = (Fragment) ARouter.getInstance().build(ArouterUrl.Bus.bus_fragment_station).navigation();
                 }
                 return busStationFragment;
         }
