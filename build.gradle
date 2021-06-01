@@ -19,8 +19,9 @@ buildscript {
 
             'multidex'    : "com.android.support:multidex:1.0.3",
 
-            'particleView': 'me.wangyuwei:ParticleView:1.0.4',//闪屏页粒子动画 https://github.com/JeasonWong/Particle
-            'bottombar'   : 'com.gauravk.bubblenavigation:bubblenavigation:1.0.7',//底部导航栏 https://github.com/gauravk95/bubble-navigation
+            'particleView': "me.wangyuwei:ParticleView:1.0.4",//闪屏页粒子动画 https://github.com/JeasonWong/Particle
+            'bottombar'   : "com.gauravk.bubblenavigation:bubblenavigation:1.0.7",//底部导航栏 https://github.com/gauravk95/bubble-navigation
+            'banner'      : "com.youth.banner:banner:1.4.9",////轮播图
             'material'    : "com.google.android.material:material:1.2.1",
             'recyclerview': "androidx.recyclerview:recyclerview:1.2.0-beta01",//recyclerview
 
@@ -59,6 +60,7 @@ buildscript {
         jcenter()
         maven { url 'https://oss.sonatype.org/content/repositories/snapshots' }
         maven { url 'https://dl.bintray.com/wangyuwei/maven' }//闪屏页粒子动画
+        maven { url "https://s01.oss.sonatype.org/content/groups/public" }//轮播图
     }
     dependencies {
         classpath "com.android.tools.build:gradle:3.4.0"

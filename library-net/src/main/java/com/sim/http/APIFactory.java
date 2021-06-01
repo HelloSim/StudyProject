@@ -1,5 +1,6 @@
 package com.sim.http;
 
+import com.sim.bean.BannerRes;
 import com.sim.bean.BusLocationBean;
 import com.sim.bean.BusLocationDesignatedBean;
 import com.sim.bean.BusRealTimeBusStopBean;
@@ -32,6 +33,14 @@ public class APIFactory extends RetrofitUtil {
      */
     public void getWangYiNew(Subscriber<WangyiBean> subscriber, String page) {
         Observable observable = getApiService().getWangYiNews(page);
+        toSubscribe(observable, subscriber);
+    }
+
+    /**
+     * 轮播图图片获取
+     */
+    public void getBanner(Subscriber<BannerRes> subscriber) {
+        Observable observable = getApiService().getBanner();
         toSubscribe(observable, subscriber);
     }
 
@@ -73,7 +82,7 @@ public class APIFactory extends RetrofitUtil {
      * 起始位置和终点位置的位置信息请求
      *
      * @param subscriber
-     * @param keywords 搜索关键字
+     * @param keywords   搜索关键字
      */
     public void getLocation(Subscriber<BusLocationDesignatedBean> subscriber, String keywords) {
         Observable observable = getApiService().getLocation("", "all", "1", "10", "zh_cn", keywords);

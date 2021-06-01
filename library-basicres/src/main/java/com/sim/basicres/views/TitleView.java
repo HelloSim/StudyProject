@@ -69,7 +69,7 @@ public class TitleView extends RelativeLayout {
         titleTextView.setText(titleText);
         titleTextView.setTextColor(Color.WHITE);
         titleTextView.setTextSize(20);
-        titleTextView.setPadding(0, 30, 0, 30);
+        titleTextView.setPadding(0, 50, 0, 50);
         TextPaint tp = titleTextView.getPaint();
         tp.setFakeBoldText(true);
         titleTextView.setGravity(Gravity.CENTER);
@@ -80,7 +80,7 @@ public class TitleView extends RelativeLayout {
         if (showBack) {
             ivLeft = new ImageView(context);
             ivLeft.setBackgroundResource(leftImageSrc);
-            ivLeft.setPadding(40, 30, 40, 30);
+            ivLeft.setPadding(40, 50, 40, 50);
             mLeftParams = new LayoutParams(60, 60);
             mLeftParams.addRule(RelativeLayout.ALIGN_PARENT_LEFT, TRUE);
             mLeftParams.addRule(RelativeLayout.CENTER_VERTICAL, TRUE);
@@ -103,7 +103,7 @@ public class TitleView extends RelativeLayout {
         if (showIcon) {
             ivRight = new ImageView(context);
             ivRight.setBackgroundResource(rightImageSrc);
-            ivRight.setPadding(40, 30, 40, 30);
+            ivRight.setPadding(40, 50, 40, 50);
             mRightParams = new LayoutParams(80, 80);
             mRightParams.addRule(RelativeLayout.ALIGN_PARENT_RIGHT, TRUE);
             mRightParams.addRule(RelativeLayout.CENTER_VERTICAL, TRUE);

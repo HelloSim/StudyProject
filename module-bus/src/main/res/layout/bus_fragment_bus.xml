@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -11,43 +10,10 @@
         android:layout_height="wrap_content"
         app:common_title="出行" />
 
-    <FrameLayout
+    <com.youth.banner.Banner
+        android:id="@+id/banner"
         android:layout_width="match_parent"
-        android:layout_height="180dp">
-
-        <androidx.viewpager.widget.ViewPager
-            android:id="@+id/loopviewpager"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="25dp"
-            android:layout_gravity="bottom"
-            android:background="#33000000"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
-            <!-- 标题-->
-            <TextView
-                android:id="@+id/loop_dec"
-                style="@style/common_textViewStyleGray"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="10dp"
-                android:textColor="@android:color/white"
-                tools:text="标题" />
-            <!-- 小圆点-->
-            <LinearLayout
-                android:id="@+id/ll_dots_loop"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="10dp"
-                android:gravity="right"
-                android:orientation="horizontal"
-                android:padding="10dp" />
-
-        </LinearLayout>
-
-    </FrameLayout>
+        android:layout_height="200dp" />
 
     <LinearLayout
         android:layout_width="match_parent"

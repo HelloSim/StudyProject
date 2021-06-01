@@ -1,5 +1,6 @@
 package com.sim.http;
 
+import com.sim.bean.BannerRes;
 import com.sim.bean.BusLocationBean;
 import com.sim.bean.BusLocationDesignatedBean;
 import com.sim.bean.BusRealTimeBean;
@@ -18,9 +19,20 @@ import rx.Observable;
  */
 public interface ApiService {
 
+    /**
+     * 网易新闻
+     */
     @Headers({"host:wangyi"})
     @GET("/getWangYiNews")
     Observable<WangyiBean> getWangYiNews(@Query("page") String page);
+
+
+    /**
+     * 轮播图
+     */
+    @Headers({"host:wanandroid"})
+    @GET("banner/json")
+    Observable<BannerRes> getBanner();
 
 
     /**
