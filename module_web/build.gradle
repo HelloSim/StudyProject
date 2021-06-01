@@ -1,0 +1,56 @@
+if (isRunAlone.toBoolean()) {
+    apply plugin: 'com.android.application'
+} else {
+    apply plugin: 'com.android.library'
+}
+
+
+android {
+    useLibrary 'org.apache.http.legacy'
+    resourcePrefix "web_"
+    compileSdkVersion versions.compileSdkVersion
+    buildToolsVersion versions.buildToolsVersion
+
+    defaultConfig {
+        minSdkVersion versions.minSdkVersion
+        targetSdkVersion versions.targetSdkVersion
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"//aar混淆文件名
+        multiDexEnabled true
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [moduleName: project.getName()]
+            }
+        }
+        sourceSets{
+            main{
+                if (isRunAlone.toBoolean()){
+                    manifest.srcFile 'src/main/runAlone/AndroidManifest.xml'
+                }else {
+                    manifest.srcFile 'src/main/AndroidManifest.xml'
+                }
+            }
+        }
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+dependencies {
+    testImplementation deps.junit.junit
+    androidTestImplementation deps.junit.test
+    androidTestImplementation deps.androidx.espresso
+
+    implementation project(':library-basicres')
+    annotationProcessor deps.arouter.compiler
+}

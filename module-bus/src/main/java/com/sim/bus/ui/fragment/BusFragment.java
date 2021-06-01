@@ -155,7 +155,7 @@ public class BusFragment extends BaseFragment {
                 .setOnBannerListener(new OnBannerListener() {
                     @Override
                     public void OnBannerClick(int i) {
-                        ToastUtil.toast(getContext(), "点击了第" + i + 1 + "个");
+                        ToastUtil.toast(getContext(), "点击了第" + (i + 1) + "个");
                     }
                 })//点击监听事件
                 .start();

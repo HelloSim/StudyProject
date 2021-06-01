@@ -78,6 +78,12 @@
         <!-- 指定消失的动画xml -->
     </style>
 
+    <style name="common_dialog_animation" parent="@android:style/Animation.Dialog">
+        <item name="android:windowEnterAnimation">@anim/common_push_bottom_in</item>
+        <item name="android:windowExitAnimation">@anim/common_push_bottom_out</item>
+    </style>
+
+
 
     <!--    ShapeableImageView的shapeAppearanceOverlay属性样式-->
     <style name="common_circleImageStyle"><!-- 圆形图片 -->

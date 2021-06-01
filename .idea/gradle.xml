@@ -20,6 +20,7 @@
             <option value="$PROJECT_DIR$/module-mine" />
             <option value="$PROJECT_DIR$/module-record" />
             <option value="$PROJECT_DIR$/module-wangyi" />
+            <option value="$PROJECT_DIR$/module_web" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />
