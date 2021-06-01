@@ -2,7 +2,6 @@ package com.sim.user.ui.activity;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -58,7 +57,7 @@ public class UserInfoActivity extends BaseActivity {
 
     @Override
     protected int getLayoutRes() {
-        return R.layout.user_activity_info;
+        return R.layout.mine_activity_info;
     }
 
     @Override
@@ -91,7 +90,7 @@ public class UserInfoActivity extends BaseActivity {
         tvMobilePhoneNumber.setText(BmobUser.getCurrentUser(User.class).getMobilePhoneNumber());
 
         LayoutInflater inflater = (LayoutInflater) this.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
-        updateUserNameLayout = inflater.inflate(R.layout.user_view_popup_update_name, null);
+        updateUserNameLayout = inflater.inflate(R.layout.mine_view_popup_update_name, null);
         updateUserNamePopupWindow = showPopupWindow(updateUserNameLayout, 350, 230);
         etNewUserName = updateUserNameLayout.findViewById(R.id.et_new_user_name);
         btnUserNameCancel = updateUserNameLayout.findViewById(R.id.btn_user_name_cancel);

@@ -41,7 +41,7 @@ public class UserCollectActivity extends BaseActivity {
 
     @Override
     protected int getLayoutRes() {
-        return R.layout.user_activity_news_collect;
+        return R.layout.mine_activity_news_collect;
     }
 
     @Override

@@ -7,5 +7,5 @@ include ':app'
 include ':module-wangyi'
 include ':module-bus'
 include ':module-record'
-include ':module-user'
+include ':module-mine'
 

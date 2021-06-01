@@ -2,7 +2,6 @@ package com.sim.user.ui.activity;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.LayoutInflater;
@@ -56,7 +55,7 @@ public class UserLogInActivity extends BaseActivity {
 
     @Override
     protected int getLayoutRes() {
-        return R.layout.user_activity_login;
+        return R.layout.mine_activity_login;
     }
 
     @Override
@@ -96,7 +95,7 @@ public class UserLogInActivity extends BaseActivity {
     @Override
     protected void initView() {
         LayoutInflater inflater = (LayoutInflater) getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
-        moreLayout = inflater.inflate(R.layout.user_view_popup_login_more, null);
+        moreLayout = inflater.inflate(R.layout.mine_view_popup_login_more, null);
 
         morePopupWindow = showPopupWindow(moreLayout, 120, 70);
         btnRegistered = moreLayout.findViewById(R.id.btn_registered);

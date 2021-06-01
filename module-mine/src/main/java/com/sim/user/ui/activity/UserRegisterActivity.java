@@ -44,7 +44,7 @@ public class UserRegisterActivity extends BaseActivity {
 
     @Override
     protected int getLayoutRes() {
-        return R.layout.user_activity_register;
+        return R.layout.mine_activity_register;
     }
 
     @Override

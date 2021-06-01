@@ -17,13 +17,12 @@
             <option value="$PROJECT_DIR$/library-basicres" />
             <option value="$PROJECT_DIR$/library-net" />
             <option value="$PROJECT_DIR$/module-bus" />
+            <option value="$PROJECT_DIR$/module-mine" />
             <option value="$PROJECT_DIR$/module-record" />
-            <option value="$PROJECT_DIR$/module-user" />
             <option value="$PROJECT_DIR$/module-wangyi" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />
-        <option name="useQualifiedModuleNames" value="true" />
       </GradleProjectSettings>
     </option>
   </component>

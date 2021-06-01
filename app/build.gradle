@@ -72,6 +72,6 @@ dependencies {
         implementation project(':module-wangyi')
         implementation project(':module-bus')
         implementation project(':module-record')
-        implementation project(':module-user')
+        implementation project(':module-mine')
     }
 }

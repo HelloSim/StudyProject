@@ -12,7 +12,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.user_activity_main);
+        setContentView(R.layout.mine_activity_main);
         left = findViewById(R.id.left);
     }
 }

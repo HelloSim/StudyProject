@@ -49,7 +49,7 @@ public class UserUpdatePasswordActivity extends BaseActivity {
 
     @Override
     protected int getLayoutRes() {
-        return R.layout.user_activity_update_password;
+        return R.layout.mine_activity_update_password;
     }
 
     @Override
@@ -75,7 +75,7 @@ public class UserUpdatePasswordActivity extends BaseActivity {
     @Override
     protected void initView() {
         LayoutInflater inflater = (LayoutInflater) this.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
-        updatePasswordLayout = inflater.inflate(R.layout.user_view_popup_update_password, null);
+        updatePasswordLayout = inflater.inflate(R.layout.mine_view_popup_update_password, null);
         updatePasswordPopupWindow = showPopupWindow(updatePasswordLayout, 300, 330);
         etOldPassword = updatePasswordLayout.findViewById(R.id.et_old_password);
         etNewPassword = updatePasswordLayout.findViewById(R.id.et_new_password);
@@ -83,7 +83,7 @@ public class UserUpdatePasswordActivity extends BaseActivity {
         btnPasswordCancel = updatePasswordLayout.findViewById(R.id.btn_password_cancel);
         btnPasswordConfirm = updatePasswordLayout.findViewById(R.id.btn_password_confirm);
 
-        resetPasswordLayout = inflater.inflate(R.layout.user_view_popup_reset_password, null);
+        resetPasswordLayout = inflater.inflate(R.layout.mine_view_popup_reset_password, null);
         resetPasswordPopupWindow = showPopupWindow(resetPasswordLayout, 300, 260);
         etSMSCode = resetPasswordLayout.findViewById(R.id.et_SMSCode);
         etNewPasswordPhone = resetPasswordLayout.findViewById(R.id.et_new_password_phone);

@@ -38,7 +38,7 @@ public class NewsAdapter extends BaseAdapter<NewsAdapter.ViewHolder, WangyiBean.
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         return new ViewHolder(LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.user_recycler_view_item_news, parent, false));
+                .inflate(R.layout.mine_recycler_view_item_news, parent, false));
 //        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recycler_view_item_news, parent, false);
 //        View view1 = LayoutInflater.from(mContext).inflate(R.layout.home_fragment_gone_view_item, parent, false);
 //        return new ViewHolder(view);

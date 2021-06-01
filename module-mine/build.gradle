@@ -6,7 +6,7 @@ if (isRunAlone.toBoolean()) {
 
 android {
     useLibrary 'org.apache.http.legacy'
-    resourcePrefix "user_"
+    resourcePrefix "mine_"
     compileSdkVersion versions.compileSdkVersion
     buildToolsVersion versions.buildToolsVersion
     defaultConfig {
