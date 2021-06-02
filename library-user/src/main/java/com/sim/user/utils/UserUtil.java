@@ -3,7 +3,6 @@ package com.sim.user.utils;
 import android.util.Log;
 
 import com.sim.user.bean.NewsBean;
-import com.sim.user.callback.SuccessOrFailListener;
 
 import java.util.List;
 
@@ -74,7 +73,7 @@ public class UserUtil {
      * 向指定手机号码发送验证码短信
      */
     public void requestSMSCode(String phone, SuccessOrFailListener successOrFailListener) {
-        //TODO template 替换控制台设置的自定义短信模板名称；如果没有，则使用默认短信模板，默认模板名称为空字符串""。
+        //template 替换控制台设置的自定义短信模板名称；如果没有，则使用默认短信模板，默认模板名称为空字符串""。
         BmobSMS.requestSMSCode(phone, "", new QueryListener<Integer>() {
             @Override
             public void done(Integer integer, BmobException e) {
@@ -94,8 +93,8 @@ public class UserUtil {
      * @param successOrFailListener
      */
     public void requestSMSCode(SuccessOrFailListener successOrFailListener) {
-        // TODO template 如果是自定义短信模板，此处替换为你在控制台设置的自定义短信模板名称；
-        //  如果没有对应的自定义短信模板，则使用默认短信模板，模板名称为空字符串""。
+        //template 如果是自定义短信模板，此处替换为你在控制台设置的自定义短信模板名称；
+        //如果没有对应的自定义短信模板，则使用默认短信模板，模板名称为空字符串""。
         if (user.getMobilePhoneNumberVerified()) {
             BmobSMS.requestSMSCode(user.getMobilePhoneNumber(), "", new QueryListener<Integer>() {
                 @Override
@@ -135,7 +134,7 @@ public class UserUtil {
                         }
 
                         @Override
-                        public void fail(Object... values) {
+                        public void fail(String values) {
                             successOrFailListener.fail("验证码验证失败！");
                             user.delete(new UpdateListener() {
                                 @Override
@@ -172,6 +171,7 @@ public class UserUtil {
                     user.update(new UpdateListener() {
                         @Override
                         public void done(BmobException e) {
+                            fetchUserInfo();
                         }
                     });
                     successOrFailListener.success();
@@ -192,6 +192,7 @@ public class UserUtil {
             public void done(Object o, BmobException e) {
                 if (e == null) {
                     successOrFailListener.success();
+                    fetchUserInfo();
                 } else {
                     if (e.getMessage().contains("username or password incorrect")) {
                         successOrFailListener.fail("用户名或密码不正确！");
@@ -213,6 +214,7 @@ public class UserUtil {
             public void done(Object o, BmobException e) {
                 if (e == null) {
                     successOrFailListener.success();
+                    fetchUserInfo();
                 } else {
                     successOrFailListener.fail(e.getMessage());
                     Log.e(TAG, "登录出错---code:" + e.getErrorCode() + ";message:" + e.getMessage());
@@ -233,6 +235,7 @@ public class UserUtil {
             public void done(BmobException e) {
                 if (e == null) {
                     successOrFailListener.success();
+                    fetchUserInfo();
                 } else {
                     successOrFailListener.fail(e.getMessage());
                     Log.e(TAG, "修改用户邮箱信息失败---code:" + e.getErrorCode() + ";message:" + e.getMessage());
@@ -254,6 +257,7 @@ public class UserUtil {
             public void done(BmobException e) {
                 if (e == null) {
                     successOrFailListener.success();
+                    fetchUserInfo();
                 } else {
                     if (e.getMessage().contains("old password incorrect")) {
                         successOrFailListener.fail("密码错误！");
@@ -279,55 +283,12 @@ public class UserUtil {
             public void done(BmobException e) {
                 if (e == null) {
                     successOrFailListener.success();
+                    fetchUserInfo();
                 } else {
                     successOrFailListener.fail(e.getMessage());
                     Log.e(TAG, "验证码重置密码失败---code:" + e.getErrorCode() + ";message:" + e.getMessage());
                 }
             }
-        });
-    }
-
-
-    /**
-     * 获取用户收藏的所有NewsBean
-     *
-     * @param successOrFailListener
-     */
-    public void getNewsBean(SuccessOrFailListener successOrFailListener) {
-        BmobQuery<NewsBean> bmobQuery = new BmobQuery<>();
-        bmobQuery.addWhereEqualTo("user", user);
-        bmobQuery.findObjects(new FindListener<NewsBean>() {
-            @Override
-            public void done(List<NewsBean> list, BmobException e) {
-                if (e == null && list != null && list.size() > 0) {
-                    successOrFailListener.success(list);
-                } else if (e == null && (list == null || list.size() == 0)) {
-                    successOrFailListener.success();
-                } else {
-                    successOrFailListener.fail(e.getMessage());
-                }
-            }
-        });
-    }
-
-    /**
-     * 删除收藏的NewsBean
-     *
-     * @param bean
-     * @param successOrFailListener
-     */
-    public void deleteNewsBean(NewsBean bean, SuccessOrFailListener successOrFailListener) {
-        bean.setObjectId(bean.getObjectId());
-        bean.delete(new UpdateListener() {
-            @Override
-            public void done(BmobException e) {
-                if (e == null) {
-                    successOrFailListener.success();
-                } else {
-                    successOrFailListener.fail(e.getMessage());
-                }
-            }
-
         });
     }
 

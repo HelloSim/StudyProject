@@ -19,7 +19,7 @@ import com.sim.basicres.constant.ArouterUrl;
 import com.sim.basicres.utils.ToastUtil;
 import com.sim.basicres.views.TitleView;
 import com.sim.user.R;
-import com.sim.user.callback.SuccessOrFailListener;
+import com.sim.user.utils.SuccessOrFailListener;
 import com.sim.user.utils.UserUtil;
 
 /**
@@ -107,9 +107,8 @@ public class UserUpdatePasswordActivity extends BaseActivity {
                                 }
 
                                 @Override
-                                public void fail(Object... values) {
-                                    String s = (String) values[0];
-                                    ToastUtil.toast(context, s);
+                                public void fail(String values) {
+                                    ToastUtil.toast(context, values);
                                 }
                             });
                         }
@@ -132,8 +131,8 @@ public class UserUpdatePasswordActivity extends BaseActivity {
                         }
 
                         @Override
-                        public void fail(Object... values) {
-                            ToastUtil.toast(context, "修改失败：" + (String) values[0]);
+                        public void fail(String values) {
+                            ToastUtil.toast(context, "修改失败：" + values);
                         }
                     });
                 } else {
@@ -153,8 +152,8 @@ public class UserUpdatePasswordActivity extends BaseActivity {
                     }
 
                     @Override
-                    public void fail(Object... values) {
-                        ToastUtil.toast(context, "修改失败：" + (String) values[0]);
+                    public void fail(String values) {
+                        ToastUtil.toast(context, "修改失败：" + values);
                     }
                 });
             } else {

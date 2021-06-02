@@ -23,7 +23,7 @@ import com.sim.basicres.utils.SPUtil;
 import com.sim.basicres.utils.ToastUtil;
 import com.sim.basicres.views.TitleView;
 import com.sim.user.R;
-import com.sim.user.callback.SuccessOrFailListener;
+import com.sim.user.utils.SuccessOrFailListener;
 import com.sim.user.utils.UserUtil;
 
 import org.greenrobot.eventbus.EventBus;
@@ -115,8 +115,8 @@ public class UserLogInActivity extends BaseActivity {
                     }
 
                     @Override
-                    public void fail(Object... values) {
-                        ToastUtil.toast(context, "登录失败：" + (String) values[0]);
+                    public void fail(String values) {
+                        ToastUtil.toast(context, "登录失败：" + values);
                     }
                 });
             } else {
@@ -138,8 +138,8 @@ public class UserLogInActivity extends BaseActivity {
                 }
 
                 @Override
-                public void fail(Object... values) {
-                    ToastUtil.toast(context, "发送失败：" + (String) values[0]);
+                public void fail(String values) {
+                    ToastUtil.toast(context, "发送失败：" + values);
                 }
             });
             new TimeCount(60000, 1000).start();
@@ -154,8 +154,8 @@ public class UserLogInActivity extends BaseActivity {
                     }
 
                     @Override
-                    public void fail(Object... values) {
-                        ToastUtil.toast(context, "登录失败：" + (String) values[0]);
+                    public void fail(String values) {
+                        ToastUtil.toast(context, "登录失败：" + values);
                     }
                 });
             } else {

@@ -16,7 +16,7 @@ import com.sim.basicres.utils.ToastUtil;
 import com.sim.basicres.views.SplitEditText;
 import com.sim.basicres.views.TitleView;
 import com.sim.user.R;
-import com.sim.user.callback.SuccessOrFailListener;
+import com.sim.user.utils.SuccessOrFailListener;
 import com.sim.user.utils.UserUtil;
 
 /**
@@ -74,15 +74,15 @@ public class UserRegisterActivity extends BaseActivity {
                 return;
             }
             new TimeCount(60000, 1000).start();
-            UserUtil.getInstance().requestSMSCode(etMobilePhoneNumber.getText().toString(), new com.sim.user.callback.SuccessOrFailListener() {
+            UserUtil.getInstance().requestSMSCode(etMobilePhoneNumber.getText().toString(), new SuccessOrFailListener() {
                 @Override
                 public void success(Object... values) {
 
                 }
 
                 @Override
-                public void fail(Object... values) {
-                    ToastUtil.toast(UserRegisterActivity.this, "发送失败：" + (String) values[0]);
+                public void fail(String values) {
+                    ToastUtil.toast(UserRegisterActivity.this, "发送失败：" + values);
                 }
             });
         } else if (view == btnRegistered) {
@@ -106,8 +106,8 @@ public class UserRegisterActivity extends BaseActivity {
                         }
 
                         @Override
-                        public void fail(Object... values) {
-                            ToastUtil.toast(UserRegisterActivity.this, "注册失败：" + (String) values[0]);
+                        public void fail(String values) {
+                            ToastUtil.toast(UserRegisterActivity.this, "注册失败：" + values);
                         }
                     });
         } else {

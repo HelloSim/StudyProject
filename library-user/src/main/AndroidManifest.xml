@@ -15,4 +15,11 @@
     <!--允许读取手机状态 用于创建BmobInstallation-->
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
 
+    <application>
+        <!--bmob-->
+        <provider
+            android:name="cn.bmob.v3.util.BmobContentProvider"
+            android:authorities="com.sim.traveltool.BmobContentProvider" />
+    </application>
+
 </manifest>

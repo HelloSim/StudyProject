@@ -7,7 +7,7 @@ import androidx.multidex.MultiDex;
 import com.sim.basicres.base.BaseApplication;
 import com.sim.basicres.utils.CrashHandler;
 import com.sim.http.APIFactory;
-import com.sim.user.application.UserApplication;
+import com.sim.user.utils.BmobInit;
 import com.tencent.bugly.Bugly;
 import com.tencent.bugly.beta.Beta;
 
@@ -32,7 +32,7 @@ public class App extends BaseApplication {
 //        Beta.upgradeCheckPeriod = 1000 * 60;//设置升级检查周期为60s
 //        Beta.initDelay = 1000 * 5;//设置启动延迟为5s
 
-        UserApplication.init(getApplicationContext());
+        BmobInit.init(getApplicationContext());
 
         JPushInterface.setDebugMode(getIsDebug());//JPush设置DebugMode
         JPushInterface.init(getMyApplicationContext());//JPush初始化

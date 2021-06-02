@@ -3,7 +3,7 @@
     package="com.sim.user">
 
     <application
-        android:name=".application.UserApplication"
+        android:name=".utils.BmobInit"
         android:allowBackup="true"
         android:icon="@mipmap/common_ic_app_icon"
         android:label="@string/common_user"

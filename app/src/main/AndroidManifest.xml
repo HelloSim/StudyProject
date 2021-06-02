@@ -62,12 +62,6 @@
         </provider>
 
 
-        <!--bmob-->
-        <provider
-            android:name="cn.bmob.v3.util.BmobContentProvider"
-            android:authorities="com.sim.traveltool.BmobContentProvider" />
-
-
         <!--极光推送jPush-->
         <!-- Required SDK 核心功能-->
         <!-- 可配置 android:process 参数将 PushService 放在其他进程中 -->

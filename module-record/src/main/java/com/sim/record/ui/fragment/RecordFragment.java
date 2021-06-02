@@ -17,17 +17,32 @@ import com.haibin.calendarview.Calendar;
 import com.haibin.calendarview.CalendarView;
 import com.sim.basicres.base.BaseFragment;
 import com.sim.basicres.bean.EventMessage;
+import com.sim.basicres.callback.SuccessOrFailListener;
+import com.sim.basicres.constant.AppHelper;
 import com.sim.basicres.constant.ArouterUrl;
+import com.sim.basicres.utils.LogUtil;
+import com.sim.basicres.utils.SPUtil;
+import com.sim.basicres.utils.TimeUtil;
 import com.sim.basicres.utils.ToastUtil;
 import com.sim.basicres.views.TitleView;
 import com.sim.record.R;
-import com.sim.record.bean.RecordBean;
+import com.sim.user.bean.RecordBean;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
+
+import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.BmobUser;
+import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.FetchUserInfoListener;
+import cn.bmob.v3.listener.FindListener;
+import cn.bmob.v3.listener.SaveListener;
+import cn.bmob.v3.listener.UpdateListener;
 
 /**
  * @author Sim --- “打卡”Fragment
@@ -44,7 +59,7 @@ public class RecordFragment extends BaseFragment implements CalendarView.OnMonth
     private TextView tvRecordTimeStart, tvRecordTimeEnd;
     private Button btnRecord;
 
-    private BmobUser user;//已登录的用户信息
+    private User user;//已登录的用户信息
     private RecordBean recordBean;//当天的打卡数据
 
     //更多弹窗、添加备忘弹窗
@@ -93,18 +108,18 @@ public class RecordFragment extends BaseFragment implements CalendarView.OnMonth
     @Override
     protected void initView(View view) {
         tvNowMonth.setText(calendarView.getSelectedCalendar().getYear() + "-" + calendarView.getSelectedCalendar().getMonth());
-//        if (SPUtil.contains(getContext(), AppHelper.userSpName, AppHelper.userSpStateKey)
-//                && ((boolean) SPUtil.get(getContext(), AppHelper.userSpName, AppHelper.userSpStateKey, false))
-//                && BmobUser.isLogin()) {
-//            user = BmobUser.getCurrentUser(BmobUser.class);
-//        }
-//        if (user == null) {
-//            tvRecordTimeStart.setText("未打卡");
-//            tvRecordTimeEnd.setText("未打卡");
-//            btnRecord.setText("未登录");
-//        } else {
-//            showInfo(calendarView.getSelectedCalendar());
-//        }
+        if (SPUtil.contains(getContext(), AppHelper.userSpName, AppHelper.userSpStateKey)
+                && ((boolean) SPUtil.get(getContext(), AppHelper.userSpName, AppHelper.userSpStateKey, false))
+                && BmobUser.isLogin()) {
+            user = BmobUser.getCurrentUser(User.class);
+        }
+        if (user == null) {
+            tvRecordTimeStart.setText("未打卡");
+            tvRecordTimeEnd.setText("未打卡");
+            btnRecord.setText("未登录");
+        } else {
+            showInfo(calendarView.getSelectedCalendar());
+        }
 
         LayoutInflater inflater = (LayoutInflater) getActivity().getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
         moreLayout = inflater.inflate(R.layout.record_view_popup_record_more, null);
@@ -146,59 +161,59 @@ public class RecordFragment extends BaseFragment implements CalendarView.OnMonth
         } else if (view == btnCancel) {
             otherPopupWindow.dismiss();
         } else if (view == btnConfirm) {
-//            otherPopupWindow.dismiss();
-//            if (user != null) {
-//                query(user, getYMD(calendarView.getSelectedCalendar()), new SuccessOrFailListener() {
-//                    @Override
-//                    public void success(Object... values) {
-//                        List<RecordBean> list = (List<RecordBean>) values[0];
-//                        if (list != null && list.size() > 0) {
-//                            RecordBean newRecordBean = new RecordBean(list.get(0).getUser(), list.get(0).getDate(), list.get(0).getYearAndMonth(), list.get(0).getStartTime(), list.get(0).getEndTime(), etOther.getText().toString());
-//                            newRecordBean.update(list.get(0).getObjectId(), new UpdateListener() {
-//                                @Override
-//                                public void done(BmobException e) {
-//                                    if (e == null) {
-//                                    } else {
-//                                        ToastUtil.toast(getContext(), "添加备忘失败！");
-//                                        LogUtil.d(getClass(), "修改指定日期备忘出错：" + e.getMessage());
-//                                    }
-//                                }
-//                            });
-//                        } else {
-//                            RecordBean newRecordBean = new RecordBean(user, getYMD(calendarView.getSelectedCalendar()), getYM(calendarView.getSelectedCalendar()), null, null, etOther.getText().toString());
-//                            newRecordBean.save(new SaveListener<String>() {
-//                                @Override
-//                                public void done(String s, BmobException e) {
-//                                    if (e == null) {
-//                                        showInfo(calendarView.getSelectedCalendar());
-//                                    } else {
-//                                        ToastUtil.toast(getContext(), "添加备忘失败！");
-//                                        LogUtil.d(getClass(), "添加指定日期备忘出错：" + e.getMessage());
-//                                    }
-//                                }
-//                            });
-//                        }
-//                    }
-//
-//                    @Override
-//                    public void fail(Object... values) {
-//                        LogUtil.e(getClass(), "修改指定日期备忘出错！");
-//                    }
-//                });
-//            } else {
-//                ToastUtil.toast(getContext(), "未登录");
-//            }
+            otherPopupWindow.dismiss();
+            if (user != null) {
+                query(user, getYMD(calendarView.getSelectedCalendar()), new SuccessOrFailListener() {
+                    @Override
+                    public void success(Object... values) {
+                        List<RecordBean> list = (List<RecordBean>) values[0];
+                        if (list != null && list.size() > 0) {
+                            RecordBean newRecordBean = new RecordBean(list.get(0).getUser(), list.get(0).getDate(), list.get(0).getYearAndMonth(), list.get(0).getStartTime(), list.get(0).getEndTime(), etOther.getText().toString());
+                            newRecordBean.update(list.get(0).getObjectId(), new UpdateListener() {
+                                @Override
+                                public void done(BmobException e) {
+                                    if (e == null) {
+                                    } else {
+                                        ToastUtil.toast(getContext(), "添加备忘失败！");
+                                        LogUtil.d(getClass(), "修改指定日期备忘出错：" + e.getMessage());
+                                    }
+                                }
+                            });
+                        } else {
+                            RecordBean newRecordBean = new RecordBean(user, getYMD(calendarView.getSelectedCalendar()), getYM(calendarView.getSelectedCalendar()), null, null, etOther.getText().toString());
+                            newRecordBean.save(new SaveListener<String>() {
+                                @Override
+                                public void done(String s, BmobException e) {
+                                    if (e == null) {
+                                        showInfo(calendarView.getSelectedCalendar());
+                                    } else {
+                                        ToastUtil.toast(getContext(), "添加备忘失败！");
+                                        LogUtil.d(getClass(), "添加指定日期备忘出错：" + e.getMessage());
+                                    }
+                                }
+                            });
+                        }
+                    }
+
+                    @Override
+                    public void fail(Object... values) {
+                        LogUtil.e(getClass(), "修改指定日期备忘出错！");
+                    }
+                });
+            } else {
+                ToastUtil.toast(getContext(), "未登录");
+            }
         } else if (view == btnRecord) {
             if (user != null) {
                 if (calendarView.getSelectedCalendar().isCurrentDay()) {//是否当天
                     if (btnRecord.getText().equals("上班打卡")) {//上班卡
                         if (tvRecordTimeStart.getText().equals("未打卡")) {//未打上班卡
-//                            record(1);
+                            record(1);
                         } else {//已打上班卡
                             showDialog(null, "更新打卡记录！", "确认", "取消", new com.sim.basicres.callback.DialogInterface() {
                                 @Override
                                 public void sureOnClick() {
-//                                    record(1);
+                                    record(1);
                                 }
 
                                 @Override
@@ -209,12 +224,12 @@ public class RecordFragment extends BaseFragment implements CalendarView.OnMonth
                         }
                     } else {//下班卡
                         if (tvRecordTimeEnd.getText().equals("未打卡")) {//未打下班卡
-//                            record(2);
+                            record(2);
                         } else {//已打下班卡
                             showDialog(null, "更新打卡记录！", "确认", "取消", new com.sim.basicres.callback.DialogInterface() {
                                 @Override
                                 public void sureOnClick() {
-//                                    record(2);
+                                    record(2);
                                 }
 
                                 @Override
@@ -265,56 +280,57 @@ public class RecordFragment extends BaseFragment implements CalendarView.OnMonth
      * 根据数据进行显示
      */
     private void showInfo(Calendar calendar) {
-//        if (user != null) {
-//            query(user, getYMD(calendar), new SuccessOrFailListener() {
-//                @Override
-//                public void success(Object... values) {
-//                    ArrayList<RecordBean> list = (ArrayList<RecordBean>) values[0];
-//                    if (list != null && list.size() > 0) {
-//                        RecordBean selectedRecordBean = list.get(0);
-//                        if (calendar.isCurrentDay()) {
-//                            recordBean = selectedRecordBean;
-//                        }
-//                        tvRecordTimeStart.setText((selectedRecordBean.getStartTime() == null || selectedRecordBean.getStartTime().length() == 0) ? "未打卡" : selectedRecordBean.getStartTime());
-//                        tvRecordTimeEnd.setText((selectedRecordBean.getEndTime() == null || selectedRecordBean.getEndTime().length() == 0) ? "未打卡" : selectedRecordBean.getEndTime());
-//                        tvRecordTimeStart.setTextColor(selectedRecordBean.isLate() ? Color.RED : Color.BLACK);
-//                        tvRecordTimeEnd.setTextColor(selectedRecordBean.isLeaveEarly() ? Color.RED : Color.BLACK);
-//                        if (TimeUtil.getHour() >= 14) {
-//                            btnRecord.setText("下班打卡");
-//                        } else {
-//                            btnRecord.setText("上班打卡");
-//                        }
-//                        if (!tvRecordTimeEnd.getText().equals("未打卡")) {
-//                            btnRecord.setText("下班打卡");
-//                        }
-//                        if (!tvRecordTimeStart.getText().equals("未打卡")) {//是否已打上班卡
-//                            btnRecord.setText("下班打卡");
-//                        }
-//                    } else {
-//                        tvRecordTimeStart.setText("未打卡");
-//                        tvRecordTimeEnd.setText("未打卡");
-//                        tvRecordTimeStart.setTextColor(Color.BLACK);
-//                        tvRecordTimeEnd.setTextColor(Color.BLACK);
-//                        if (TimeUtil.getHour() >= 14) {
-//                            btnRecord.setText("下班打卡");
-//                        } else {
-//                            btnRecord.setText("上班打卡");
-//                        }
-//                    }
-//                }
-//
-//                @Override
-//                public void fail(Object... values) {
-//                    LogUtil.d(getClass(), "查询选中日期数据失败！");
-//                }
-//            });
-//        } else {
-//            tvRecordTimeStart.setText("未打卡");
-//            tvRecordTimeEnd.setText("未打卡");
-//            tvRecordTimeStart.setTextColor(Color.BLACK);
-//            tvRecordTimeEnd.setTextColor(Color.BLACK);
-//            btnRecord.setText("未登录");
-//        }
+        if (user != null) {
+            query(user, getYMD(calendar), new SuccessOrFailListener() {
+                @Override
+                public void success(Object... values) {
+                    ArrayList<RecordBean> list = (ArrayList<RecordBean>) values[0];
+                    if (list != null && list.size() > 0) {
+                        RecordBean selectedRecordBean = list.get(0);
+                        if (calendar.isCurrentDay()) {
+                            recordBean = selectedRecordBean;
+                        }
+                        tvRecordTimeStart.setText((selectedRecordBean.getStartTime() == null || selectedRecordBean.getStartTime().length() == 0) ? "未打卡" : selectedRecordBean.getStartTime());
+                        tvRecordTimeEnd.setText((selectedRecordBean.getEndTime() == null || selectedRecordBean.getEndTime().length() == 0) ? "未打卡" : selectedRecordBean.getEndTime());
+                        tvRecordTimeStart.setTextColor(selectedRecordBean.isLate() ? Color.RED : Color.BLACK);
+                        tvRecordTimeEnd.setTextColor(selectedRecordBean.isLeaveEarly() ? Color.RED : Color.BLACK);
+                        if (TimeUtil.getHour() >= 14) {
+                            btnRecord.setText("下班打卡");
+                        } else {
+                            btnRecord.setText("上班打卡");
+                        }
+                        if (!tvRecordTimeEnd.getText().equals("未打卡")) {
+                            btnRecord.setText("下班打卡");
+                        }
+                        if (!tvRecordTimeStart.getText().equals("未打卡")) {//是否已打上班卡
+                            btnRecord.setText("下班打卡");
+                        }
+                    } else {
+                        tvRecordTimeStart.setText("未打卡");
+                        tvRecordTimeEnd.setText("未打卡");
+                        tvRecordTimeStart.setTextColor(Color.BLACK);
+                        tvRecordTimeEnd.setTextColor(Color.BLACK);
+                        if (TimeUtil.getHour() >= 14) {
+                            btnRecord.setText("下班打卡");
+                        } else {
+                            btnRecord.setText("上班打卡");
+                        }
+                    }
+                }
+
+                @Override
+                public void fail(Object... values) {
+                    LogUtil.d(getClass(), "查询选中日期数据失败！");
+                }
+            });
+        } else {
+            tvRecordTimeStart.setText("未打卡");
+            tvRecordTimeEnd.setText("未打卡");
+            tvRecordTimeStart.setTextColor(Color.BLACK);
+            tvRecordTimeEnd.setTextColor(Color.BLACK);
+            btnRecord.setText("未登录");
+        }
+
     }
 
     /**
@@ -322,87 +338,87 @@ public class RecordFragment extends BaseFragment implements CalendarView.OnMonth
      *
      * @param type 1:上班卡 2:下班卡
      */
-//    private void record(int type) {
-//        if (user != null) {
-//            query(user, getYMD(calendarView.getSelectedCalendar()), new SuccessOrFailListener() {
-//                @Override
-//                public void success(Object... values) {
-//                    ArrayList<RecordBean> list = (ArrayList<RecordBean>) values[0];
-//                    if (list != null && list.size() > 0) {
-//                        recordBean = list.get(0);
-//                    }
-//                }
-//
-//                @Override
-//                public void fail(Object... values) {
-//                    LogUtil.d(getClass(), "查询选中日期数据失败！");
-//                }
-//            });
-//            if (recordBean != null) {//已有当天数据
-//                if (type == 1) {//修改当天数据（上班）
-//                    String startTime = new SimpleDateFormat("HH:mm").format(System.currentTimeMillis());
-//                    RecordBean newRecordBean = new RecordBean(user, getYMD(calendarView.getSelectedCalendar()), getYM(calendarView.getSelectedCalendar()), startTime, recordBean.getEndTime(), recordBean.getOther());
-//                    newRecordBean.update(recordBean.getObjectId(), new UpdateListener() {
-//                        @Override
-//                        public void done(BmobException e) {
-//                            if (e == null) {
-//                                showInfo(calendarView.getSelectedCalendar());
-//                            } else {
-//                                ToastUtil.toast(getContext(), "打卡失败！");
-//                                LogUtil.d(getClass(), "修改上班打卡时间失败：" + e.getMessage());
-//                            }
-//                        }
-//                    });
-//                } else {//修改当天数据（下班）
-//                    String endTime = new SimpleDateFormat("HH:mm").format(System.currentTimeMillis());
-//                    RecordBean newRecordBean = new RecordBean(user, getYMD(calendarView.getSelectedCalendar()), getYM(calendarView.getSelectedCalendar()), recordBean.getStartTime(), endTime, recordBean.getOther());
-//                    newRecordBean.update(recordBean.getObjectId(), new UpdateListener() {
-//                        @Override
-//                        public void done(BmobException e) {
-//                            if (e == null) {
-//                                showInfo(calendarView.getSelectedCalendar());
-//                            } else {
-//                                ToastUtil.toast(getContext(), "打卡失败！");
-//                                LogUtil.d(getClass(), "修改下班打卡时间出错：" + e.getMessage());
-//                            }
-//                        }
-//                    });
-//                }
-//            } else {//没有当天数据
-//                if (type == 1) {//插入当天数据（上班）
-//                    String startTime = new SimpleDateFormat("HH:mm").format(System.currentTimeMillis());
-//                    RecordBean newRecordBean = new RecordBean(user, getYMD(calendarView.getSelectedCalendar()), getYM(calendarView.getSelectedCalendar()), startTime, null, null);
-//                    newRecordBean.save(new SaveListener<String>() {
-//                        @Override
-//                        public void done(String s, BmobException e) {
-//                            if (e == null) {
-//                                showInfo(calendarView.getSelectedCalendar());
-//                            } else {
-//                                ToastUtil.toast(getContext(), "打卡失败！");
-//                                LogUtil.d(getClass(), "插入上班时间数据出错：" + e.getMessage());
-//                            }
-//                        }
-//                    });
-//                } else {//插入当天数据（下班）
-//                    String endTime = new SimpleDateFormat("HH:mm").format(System.currentTimeMillis());
-//                    RecordBean newRecordBean = new RecordBean(user, getYMD(calendarView.getSelectedCalendar()), getYM(calendarView.getSelectedCalendar()), null, endTime, null);
-//                    newRecordBean.save(new SaveListener<String>() {
-//                        @Override
-//                        public void done(String s, BmobException e) {
-//                            if (e == null) {
-//                                showInfo(calendarView.getSelectedCalendar());
-//                            } else {
-//                                ToastUtil.toast(getContext(), "打卡失败！");
-//                                LogUtil.d(getClass(), "插入下班时间数据出错：" + e.getMessage());
-//                            }
-//                        }
-//                    });
-//                }
-//            }
-//        } else {
-//            ToastUtil.toast(getContext(), "未登录");
-//        }
-//    }
+    private void record(int type) {
+        if (user != null) {
+            query(user, getYMD(calendarView.getSelectedCalendar()), new SuccessOrFailListener() {
+                @Override
+                public void success(Object... values) {
+                    ArrayList<RecordBean> list = (ArrayList<RecordBean>) values[0];
+                    if (list != null && list.size() > 0) {
+                        recordBean = list.get(0);
+                    }
+                }
+
+                @Override
+                public void fail(Object... values) {
+                    LogUtil.d(getClass(), "查询选中日期数据失败！");
+                }
+            });
+            if (recordBean != null) {//已有当天数据
+                if (type == 1) {//修改当天数据（上班）
+                    String startTime = new SimpleDateFormat("HH:mm").format(System.currentTimeMillis());
+                    RecordBean newRecordBean = new RecordBean(user, getYMD(calendarView.getSelectedCalendar()), getYM(calendarView.getSelectedCalendar()), startTime, recordBean.getEndTime(), recordBean.getOther());
+                    newRecordBean.update(recordBean.getObjectId(), new UpdateListener() {
+                        @Override
+                        public void done(BmobException e) {
+                            if (e == null) {
+                                showInfo(calendarView.getSelectedCalendar());
+                            } else {
+                                ToastUtil.toast(getContext(), "打卡失败！");
+                                LogUtil.d(getClass(), "修改上班打卡时间失败：" + e.getMessage());
+                            }
+                        }
+                    });
+                } else {//修改当天数据（下班）
+                    String endTime = new SimpleDateFormat("HH:mm").format(System.currentTimeMillis());
+                    RecordBean newRecordBean = new RecordBean(user, getYMD(calendarView.getSelectedCalendar()), getYM(calendarView.getSelectedCalendar()), recordBean.getStartTime(), endTime, recordBean.getOther());
+                    newRecordBean.update(recordBean.getObjectId(), new UpdateListener() {
+                        @Override
+                        public void done(BmobException e) {
+                            if (e == null) {
+                                showInfo(calendarView.getSelectedCalendar());
+                            } else {
+                                ToastUtil.toast(getContext(), "打卡失败！");
+                                LogUtil.d(getClass(), "修改下班打卡时间出错：" + e.getMessage());
+                            }
+                        }
+                    });
+                }
+            } else {//没有当天数据
+                if (type == 1) {//插入当天数据（上班）
+                    String startTime = new SimpleDateFormat("HH:mm").format(System.currentTimeMillis());
+                    RecordBean newRecordBean = new RecordBean(user, getYMD(calendarView.getSelectedCalendar()), getYM(calendarView.getSelectedCalendar()), startTime, null, null);
+                    newRecordBean.save(new SaveListener<String>() {
+                        @Override
+                        public void done(String s, BmobException e) {
+                            if (e == null) {
+                                showInfo(calendarView.getSelectedCalendar());
+                            } else {
+                                ToastUtil.toast(getContext(), "打卡失败！");
+                                LogUtil.d(getClass(), "插入上班时间数据出错：" + e.getMessage());
+                            }
+                        }
+                    });
+                } else {//插入当天数据（下班）
+                    String endTime = new SimpleDateFormat("HH:mm").format(System.currentTimeMillis());
+                    RecordBean newRecordBean = new RecordBean(user, getYMD(calendarView.getSelectedCalendar()), getYM(calendarView.getSelectedCalendar()), null, endTime, null);
+                    newRecordBean.save(new SaveListener<String>() {
+                        @Override
+                        public void done(String s, BmobException e) {
+                            if (e == null) {
+                                showInfo(calendarView.getSelectedCalendar());
+                            } else {
+                                ToastUtil.toast(getContext(), "打卡失败！");
+                                LogUtil.d(getClass(), "插入下班时间数据出错：" + e.getMessage());
+                            }
+                        }
+                    });
+                }
+            }
+        } else {
+            ToastUtil.toast(getContext(), "未登录");
+        }
+    }
 
     /**
      * 获取年月日
@@ -430,21 +446,37 @@ public class RecordFragment extends BaseFragment implements CalendarView.OnMonth
      * @param date
      * @param successOrFailListener
      */
-//    public void query(User user, String date, SuccessOrFailListener successOrFailListener) {
-//        BmobQuery<RecordBean> bmobQuery = new BmobQuery<RecordBean>();
-//        bmobQuery.addWhereEqualTo("user", user);
-//        bmobQuery.addWhereEqualTo("date", date);
-//        bmobQuery.findObjects(new FindListener<RecordBean>() {
-//            @Override
-//            public void done(List<RecordBean> list, BmobException e) {
-//                if (e == null) {
-//                    successOrFailListener.success(list);
-//                } else {
-//                    successOrFailListener.fail(e.getMessage());
-//                }
-//            }
-//        });
-//    }
+    public void query(User user, String date, SuccessOrFailListener successOrFailListener) {
+        BmobQuery<RecordBean> bmobQuery = new BmobQuery<RecordBean>();
+        bmobQuery.addWhereEqualTo("user", user);
+        bmobQuery.addWhereEqualTo("date", date);
+        bmobQuery.findObjects(new FindListener<RecordBean>() {
+            @Override
+            public void done(List<RecordBean> list, BmobException e) {
+                if (e == null) {
+                    successOrFailListener.success(list);
+                } else {
+                    successOrFailListener.fail(e.getMessage());
+                }
+            }
+        });
+    }
+
+    /**
+     * 获取控制台最新JSON数据，不同步到缓存中
+     */
+    private void fetchUserJsonInfo() {
+        BmobUser.fetchUserJsonInfo(new FetchUserInfoListener<String>() {
+            @Override
+            public void done(String json, BmobException e) {
+                if (e == null) {
+                    LogUtil.e(getClass(), "更新用户本地缓存信息成功");
+                } else {
+                    LogUtil.e(getClass(), "更新用户本地缓存信息失败---code:" + e.getErrorCode() + ";message:" + e.getMessage());
+                }
+            }
+        });
+    }
 
     /**
      * 接收消息事件
@@ -453,19 +485,19 @@ public class RecordFragment extends BaseFragment implements CalendarView.OnMonth
      */
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onMessageEvent(EventMessage eventMessage) {
-//        if (eventMessage.type == AppHelper.USER_IsLogIn) {
-//            user = BmobUser.getCurrentUser(User.class);
-//            User.fetchUserInfo();
-//            showInfo(calendarView.getSelectedCalendar());
-//        } else if (eventMessage.type == AppHelper.USER_noLogIn) {
-//            user = null;
-//            recordBean = null;
-//            tvRecordTimeStart.setText("未打卡");
-//            tvRecordTimeEnd.setText("未打卡");
-//            tvRecordTimeStart.setTextColor(Color.BLACK);
-//            tvRecordTimeEnd.setTextColor(Color.BLACK);
-//            btnRecord.setText("未登录");
-//        }
+        if (eventMessage.type == AppHelper.USER_IsLogIn) {
+            user = BmobUser.getCurrentUser(User.class);
+            User.fetchUserInfo();
+            showInfo(calendarView.getSelectedCalendar());
+        } else if (eventMessage.type == AppHelper.USER_noLogIn) {
+            user = null;
+            recordBean = null;
+            tvRecordTimeStart.setText("未打卡");
+            tvRecordTimeEnd.setText("未打卡");
+            tvRecordTimeStart.setTextColor(Color.BLACK);
+            tvRecordTimeEnd.setTextColor(Color.BLACK);
+            btnRecord.setText("未登录");
+        }
     }
 
 }

@@ -18,7 +18,8 @@ import com.sim.basicres.views.TitleView;
 import com.sim.user.R;
 import com.sim.user.adapter.NewsAdapter;
 import com.sim.user.bean.NewsBean;
-import com.sim.user.callback.SuccessOrFailListener;
+import com.sim.user.utils.NewsUtil;
+import com.sim.user.utils.SuccessOrFailListener;
 import com.sim.user.utils.UserUtil;
 
 import java.util.ArrayList;
@@ -56,7 +57,7 @@ public class UserCollectActivity extends BaseActivity {
     @Override
     protected void initData() {
         if (UserUtil.getInstance().isLogin()) {
-            UserUtil.getInstance().getNewsBean(new SuccessOrFailListener() {
+            NewsUtil.getNewsBean(new SuccessOrFailListener() {
                 @Override
                 public void success(Object... values) {
                     if (values != null) {
@@ -66,8 +67,8 @@ public class UserCollectActivity extends BaseActivity {
                 }
 
                 @Override
-                public void fail(Object... values) {
-                    ToastUtil.toast(UserCollectActivity.this, (String) values[0]);
+                public void fail(String values) {
+                    ToastUtil.toast(UserCollectActivity.this, values);
                 }
             });
         } else {
@@ -94,7 +95,7 @@ public class UserCollectActivity extends BaseActivity {
                 showDialog(null, "取消收藏", "确认", "取消", new DialogInterface() {
                     @Override
                     public void sureOnClick() {
-                        UserUtil.getInstance().deleteNewsBean(collectionNewsBeanArrayList.get(position), new SuccessOrFailListener() {
+                        NewsUtil.deleteNewsBean(collectionNewsBeanArrayList.get(position), new SuccessOrFailListener() {
                             @Override
                             public void success(Object... values) {
                                 collectionNewsBeanArrayList.remove(position);
@@ -102,7 +103,7 @@ public class UserCollectActivity extends BaseActivity {
                             }
 
                             @Override
-                            public void fail(Object... values) {
+                            public void fail(String values) {
 
                             }
                         });
