@@ -27,6 +27,7 @@ import com.sim.basicres.utils.ToastUtil;
 import com.sim.basicres.views.TitleView;
 import com.sim.record.R;
 import com.sim.user.bean.RecordBean;
+import com.sim.user.bean.User;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -39,7 +40,6 @@ import java.util.List;
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.exception.BmobException;
-import cn.bmob.v3.listener.FetchUserInfoListener;
 import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.SaveListener;
 import cn.bmob.v3.listener.UpdateListener;
@@ -59,7 +59,7 @@ public class RecordFragment extends BaseFragment implements CalendarView.OnMonth
     private TextView tvRecordTimeStart, tvRecordTimeEnd;
     private Button btnRecord;
 
-    private User user;//已登录的用户信息
+    private BmobUser user;//已登录的用户信息
     private RecordBean recordBean;//当天的打卡数据
 
     //更多弹窗、添加备忘弹窗
@@ -446,7 +446,7 @@ public class RecordFragment extends BaseFragment implements CalendarView.OnMonth
      * @param date
      * @param successOrFailListener
      */
-    public void query(User user, String date, SuccessOrFailListener successOrFailListener) {
+    public void query(BmobUser user, String date, SuccessOrFailListener successOrFailListener) {
         BmobQuery<RecordBean> bmobQuery = new BmobQuery<RecordBean>();
         bmobQuery.addWhereEqualTo("user", user);
         bmobQuery.addWhereEqualTo("date", date);
@@ -463,22 +463,6 @@ public class RecordFragment extends BaseFragment implements CalendarView.OnMonth
     }
 
     /**
-     * 获取控制台最新JSON数据，不同步到缓存中
-     */
-    private void fetchUserJsonInfo() {
-        BmobUser.fetchUserJsonInfo(new FetchUserInfoListener<String>() {
-            @Override
-            public void done(String json, BmobException e) {
-                if (e == null) {
-                    LogUtil.e(getClass(), "更新用户本地缓存信息成功");
-                } else {
-                    LogUtil.e(getClass(), "更新用户本地缓存信息失败---code:" + e.getErrorCode() + ";message:" + e.getMessage());
-                }
-            }
-        });
-    }
-
-    /**
      * 接收消息事件
      *
      * @param eventMessage
@@ -486,8 +470,7 @@ public class RecordFragment extends BaseFragment implements CalendarView.OnMonth
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onMessageEvent(EventMessage eventMessage) {
         if (eventMessage.type == AppHelper.USER_IsLogIn) {
-            user = BmobUser.getCurrentUser(User.class);
-            User.fetchUserInfo();
+            user = BmobUser.getCurrentUser(BmobUser.class);
             showInfo(calendarView.getSelectedCalendar());
         } else if (eventMessage.type == AppHelper.USER_noLogIn) {
             user = null;
@@ -499,5 +482,6 @@ public class RecordFragment extends BaseFragment implements CalendarView.OnMonth
             btnRecord.setText("未登录");
         }
     }
+
 
 }

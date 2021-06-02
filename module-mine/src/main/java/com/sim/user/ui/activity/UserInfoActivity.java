@@ -24,8 +24,8 @@ import com.sim.basicres.utils.SPUtil;
 import com.sim.basicres.utils.ToastUtil;
 import com.sim.basicres.views.TitleView;
 import com.sim.user.R;
+import com.sim.user.bean.User;
 import com.sim.user.utils.SuccessOrFailListener;
-import com.sim.user.utils.UserUtil;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -83,8 +83,8 @@ public class UserInfoActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-        tvUserName.setText(UserUtil.getInstance().getUser().getUsername());
-        tvMobilePhoneNumber.setText(UserUtil.getInstance().getUser().getMobilePhoneNumber());
+        tvUserName.setText(User.getInstance().getUsername());
+        tvMobilePhoneNumber.setText(User.getInstance().getMobilePhoneNumber());
 
         LayoutInflater inflater = (LayoutInflater) this.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
         updateUserNameLayout = inflater.inflate(R.layout.mine_view_popup_update_name, null);
@@ -92,7 +92,7 @@ public class UserInfoActivity extends BaseActivity {
         etNewUserName = updateUserNameLayout.findViewById(R.id.et_new_user_name);
         btnUserNameCancel = updateUserNameLayout.findViewById(R.id.btn_user_name_cancel);
         btnUserNameConfirm = updateUserNameLayout.findViewById(R.id.btn_user_name_confirm);
-        etNewUserName.setText(UserUtil.getInstance().getUser().getUsername());
+        etNewUserName.setText(User.getInstance().getUsername());
         setViewClick(btnUserNameCancel, btnUserNameConfirm);
     }
 
@@ -117,15 +117,15 @@ public class UserInfoActivity extends BaseActivity {
         } else if (view == rlUserName) {
             updateUserNamePopupWindow.showAtLocation(parent, Gravity.CENTER, 0, 0);
         } else if (view == btnUserNameCancel) {
-            etNewUserName.setText(UserUtil.getInstance().getUser().getUsername());
+            etNewUserName.setText(User.getInstance().getUsername());
             updateUserNamePopupWindow.dismiss();
         } else if (view == btnUserNameConfirm) {
-            UserUtil.getInstance().updateUserInfo(etNewUserName.getText().toString(), new SuccessOrFailListener() {
+            User.getInstance().updateUserInfo(etNewUserName.getText().toString(), new SuccessOrFailListener() {
                 @Override
                 public void success(Object... values) {
                     updateUserNamePopupWindow.dismiss();
-                    tvUserName.setText(UserUtil.getInstance().getUser().getUsername());
-                    etNewUserName.setText(UserUtil.getInstance().getUser().getUsername());
+                    tvUserName.setText(User.getInstance().getUsername());
+                    etNewUserName.setText(User.getInstance().getUsername());
                     EventBus.getDefault().post(new EventMessage(AppHelper.USER_IsLogIn));
                 }
 
@@ -134,7 +134,7 @@ public class UserInfoActivity extends BaseActivity {
                     ToastUtil.toast(context, "修改失败:" + values);
                 }
             });
-            UserUtil.getInstance().fetchUserInfo();
+            User.getInstance().fetchUserInfo();
         } else if (view == rlPassword) {
             ARouter.getInstance().build(ArouterUrl.Mine.user_activity_updatepws).navigation();
         } else if (view == rlMobilePhoneNumber) {

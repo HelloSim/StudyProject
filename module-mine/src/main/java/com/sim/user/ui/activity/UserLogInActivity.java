@@ -23,8 +23,8 @@ import com.sim.basicres.utils.SPUtil;
 import com.sim.basicres.utils.ToastUtil;
 import com.sim.basicres.views.TitleView;
 import com.sim.user.R;
+import com.sim.user.bean.User;
 import com.sim.user.utils.SuccessOrFailListener;
-import com.sim.user.utils.UserUtil;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -106,7 +106,7 @@ public class UserLogInActivity extends BaseActivity {
             llLoginBySMSCode.setVisibility(View.GONE);
         } else if (view == btnLogIn) {
             if (etMobilePhoneNumber.getText().toString().length() > 0 && etPassword.getText().toString().length() > 0) {
-                UserUtil.getInstance().loginByAccount(etMobilePhoneNumber.getText().toString(), etPassword.getText().toString(), new SuccessOrFailListener() {
+                User.getInstance().loginByAccount(etMobilePhoneNumber.getText().toString(), etPassword.getText().toString(), new SuccessOrFailListener() {
                     @Override
                     public void success(Object... values) {
                         EventBus.getDefault().post(new EventMessage(AppHelper.USER_IsLogIn));
@@ -131,7 +131,7 @@ public class UserLogInActivity extends BaseActivity {
                 ToastUtil.toast(context, "请输入正确的手机号码！");
                 return;
             }
-            UserUtil.getInstance().requestSMSCode(etMobilePhoneNumber2.getText().toString(), new SuccessOrFailListener() {
+            User.getInstance().requestSMSCode(etMobilePhoneNumber2.getText().toString(), new SuccessOrFailListener() {
                 @Override
                 public void success(Object... values) {
                     ToastUtil.toast(context, "发送验证码成功！");
@@ -145,7 +145,7 @@ public class UserLogInActivity extends BaseActivity {
             new TimeCount(60000, 1000).start();
         } else if (view == btnLogIn2) {
             if (etMobilePhoneNumber2.getText().toString().length() > 0 && etSMSCode.getText().toString().length() > 0) {
-                UserUtil.getInstance().loginBySMSCode(etMobilePhoneNumber2.getText().toString(), etSMSCode.getText().toString(), new SuccessOrFailListener() {
+                User.getInstance().loginBySMSCode(etMobilePhoneNumber2.getText().toString(), etSMSCode.getText().toString(), new SuccessOrFailListener() {
                     @Override
                     public void success(Object... values) {
                         EventBus.getDefault().post(new EventMessage(AppHelper.USER_IsLogIn));

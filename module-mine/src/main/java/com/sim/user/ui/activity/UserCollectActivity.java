@@ -18,9 +18,8 @@ import com.sim.basicres.views.TitleView;
 import com.sim.user.R;
 import com.sim.user.adapter.NewsAdapter;
 import com.sim.user.bean.NewsBean;
-import com.sim.user.utils.NewsUtil;
+import com.sim.user.bean.User;
 import com.sim.user.utils.SuccessOrFailListener;
-import com.sim.user.utils.UserUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,8 +55,8 @@ public class UserCollectActivity extends BaseActivity {
 
     @Override
     protected void initData() {
-        if (UserUtil.getInstance().isLogin()) {
-            NewsUtil.getNewsBean(new SuccessOrFailListener() {
+        if (User.getInstance().isLogin()) {
+            NewsBean.getNewsBean(new SuccessOrFailListener() {
                 @Override
                 public void success(Object... values) {
                     if (values != null) {
@@ -95,7 +94,7 @@ public class UserCollectActivity extends BaseActivity {
                 showDialog(null, "取消收藏", "确认", "取消", new DialogInterface() {
                     @Override
                     public void sureOnClick() {
-                        NewsUtil.deleteNewsBean(collectionNewsBeanArrayList.get(position), new SuccessOrFailListener() {
+                        NewsBean.deleteNewsBean(collectionNewsBeanArrayList.get(position), new SuccessOrFailListener() {
                             @Override
                             public void success(Object... values) {
                                 collectionNewsBeanArrayList.remove(position);

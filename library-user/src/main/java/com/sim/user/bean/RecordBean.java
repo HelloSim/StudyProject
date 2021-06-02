@@ -8,13 +8,14 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+import cn.bmob.v3.BmobObject;
 import cn.bmob.v3.BmobUser;
 
 /**
  * @author Sim --- 新的插入数据库的打卡记录实体
  */
 @SmartTable(name = "打卡详情")
-public class RecordBean {
+public class RecordBean extends BmobObject {
 
     // 仅在客户端使用，不希望被gson序列化提交到后端云，用transient修饰
 

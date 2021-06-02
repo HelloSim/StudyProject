@@ -16,8 +16,8 @@ import com.sim.basicres.utils.ToastUtil;
 import com.sim.basicres.views.SplitEditText;
 import com.sim.basicres.views.TitleView;
 import com.sim.user.R;
+import com.sim.user.bean.User;
 import com.sim.user.utils.SuccessOrFailListener;
-import com.sim.user.utils.UserUtil;
 
 /**
  * @author Sim --- 用户注册页面
@@ -74,7 +74,7 @@ public class UserRegisterActivity extends BaseActivity {
                 return;
             }
             new TimeCount(60000, 1000).start();
-            UserUtil.getInstance().requestSMSCode(etMobilePhoneNumber.getText().toString(), new SuccessOrFailListener() {
+            User.getInstance().requestSMSCode(etMobilePhoneNumber.getText().toString(), new SuccessOrFailListener() {
                 @Override
                 public void success(Object... values) {
 
@@ -98,7 +98,7 @@ public class UserRegisterActivity extends BaseActivity {
                 ToastUtil.toast(context, "请输入正确的手机号码！");
                 return;
             }
-            UserUtil.getInstance().registerUser(etMobilePhoneNumber.getText().toString(), etSMSCode.getText().toString(),
+            User.getInstance().registerUser(etMobilePhoneNumber.getText().toString(), etSMSCode.getText().toString(),
                     etPassword.getText().toString(), etUserName.getText().toString(), new SuccessOrFailListener() {
                         @Override
                         public void success(Object... values) {
