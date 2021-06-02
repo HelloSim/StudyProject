@@ -3,7 +3,6 @@
     package="com.sim.wangyi">
 
     <application>
-        <activity android:name=".ui.activity.NewsDetailActivity" />
     </application>
 
 </manifest>

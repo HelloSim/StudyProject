@@ -100,9 +100,15 @@ public class MineFragment extends BaseFragment {
         } else if (view == updateVersion) {
             ToastUtil.toast(getContext(), "未开发");
         } else if (view == project) {
-            ToastUtil.toast(getContext(), "未开发");
+            ARouter.getInstance()
+                    .build(ArouterUrl.Web.web_activity)
+                    .withSerializable("webUrl", "https://github.com/HelloSim/TravelTool")
+                    .navigation();
         } else if (view == author) {
-            ToastUtil.toast(getContext(), "未开发");
+            ARouter.getInstance()
+                    .build(ArouterUrl.Web.web_activity)
+                    .withSerializable("webUrl", "https://github.com/HelloSim")
+                    .navigation();
         } else {
             super.onMultiClick(view);
         }

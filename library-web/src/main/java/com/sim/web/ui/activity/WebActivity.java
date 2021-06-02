@@ -10,15 +10,19 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.alibaba.android.arouter.facade.annotation.Route;
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.just.agentweb.AgentWeb;
 import com.just.agentweb.DefaultWebClient;
 import com.just.agentweb.WebChromeClient;
 import com.just.agentweb.WebViewClient;
 import com.sim.basicres.base.BaseActivity;
+import com.sim.basicres.constant.ArouterUrl;
 import com.sim.web.R;
 import com.sim.web.ui.view.WebDialogFg;
 import com.sim.web.ui.view.WebLayout;
 
+@Route(path = ArouterUrl.Web.web_activity)
 public class WebActivity extends BaseActivity {
 
     private TextView tvTitle;
@@ -26,7 +30,6 @@ public class WebActivity extends BaseActivity {
     private RelativeLayout rlMore;
     private RelativeLayout rlClose;
 
-    private String title;
     private String webUrl;
 
     @Override
@@ -36,14 +39,10 @@ public class WebActivity extends BaseActivity {
 
     @Override
     protected void bindViews(Bundle savedInstanceState) {
+        ARouter.getInstance().inject(this);
         webUrl = getIntent().getStringExtra("webUrl");
-        title = getIntent().getStringExtra("title");
 
         tvTitle = findViewById(R.id.tvTitle);
-        if (!title.isEmpty()) {
-            tvTitle.setText(title);
-        }
-
         parent = findViewById(R.id.parent);
         rlMore = findViewById(R.id.rlMore);
         rlClose = findViewById(R.id.rlClose);
@@ -91,6 +90,9 @@ public class WebActivity extends BaseActivity {
         @Override
         public void onReceivedTitle(WebView view, String title) {
             super.onReceivedTitle(view, title);
+            if (!title.isEmpty()) {
+                tvTitle.setText(title);
+            }
         }
     };
 

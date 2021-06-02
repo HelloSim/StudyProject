@@ -65,12 +65,9 @@ public class WangyiFragment extends BaseFragment {
         newsAdapter.setOnItemClickListener(new BaseAdapter.OnItemClickListener() {
             @Override
             public void onItemClicked(BaseViewHolder holder, int position) {
-//                Intent intent = new Intent(getActivity(), NewsDetailActivity.class);
-//                intent.putExtra("news", (Serializable) newsAdapter.getData().get(position));
-//                startActivity(intent);
                 ARouter.getInstance()
-                        .build(ArouterUrl.Wangyi.wangyi_activity_detail)
-                        .withSerializable("news", newsAdapter.getData().get(position))
+                        .build(ArouterUrl.Web.web_activity)
+                        .withSerializable("webUrl", newsAdapter.getData().get(position).getPath())
                         .navigation();
             }
         });

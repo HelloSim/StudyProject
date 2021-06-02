@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.sim.basicres.base.BaseActivity;
 import com.sim.basicres.base.BaseAdapter;
 import com.sim.basicres.base.BaseViewHolder;
@@ -84,10 +85,10 @@ public class UserCollectActivity extends BaseActivity {
         newsAdapter.setOnItemClickListener(new BaseAdapter.OnItemClickListener() {
             @Override
             public void onItemClicked(BaseViewHolder holder, int position) {
-//                ARouter.getInstance()
-//                        .build(ArouterUrl.wangyi_activity_detail)
-//                        .withSerializable("news", newsAdapter.getData().get(position))
-//                        .navigation();
+                ARouter.getInstance()
+                        .build(ArouterUrl.Web.web_activity)
+                        .withSerializable("webUrl", newsAdapter.getData().get(position).getPath())
+                        .navigation();
             }
         });
         newsAdapter.setOnItemLongClickListener(new BaseAdapter.OnItemLongClickListener() {

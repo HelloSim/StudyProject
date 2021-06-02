@@ -20,6 +20,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.sim.basicres.R;
 import com.sim.basicres.callback.DialogInterface;
 import com.sim.basicres.callback.OnMultiClickListener;
@@ -96,6 +97,7 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(getLayoutRes());
+        ARouter.getInstance().inject(this);
         bindViews(savedInstanceState);
         initData();
         initView();

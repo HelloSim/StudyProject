@@ -9,4 +9,4 @@ include ':module-bus'
 include ':module-record'
 include ':module-mine'
 
-include ':module_web'
+include ':library-web'

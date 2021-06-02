@@ -1,9 +1,4 @@
-if (isRunAlone.toBoolean()) {
-    apply plugin: 'com.android.application'
-} else {
-    apply plugin: 'com.android.library'
-}
-
+apply plugin: 'com.android.library'
 
 android {
     useLibrary 'org.apache.http.legacy'
@@ -22,15 +17,6 @@ android {
         javaCompileOptions {
             annotationProcessorOptions {
                 arguments = [moduleName: project.getName()]
-            }
-        }
-        sourceSets{
-            main{
-                if (isRunAlone.toBoolean()){
-                    manifest.srcFile 'src/main/runAlone/AndroidManifest.xml'
-                }else {
-                    manifest.srcFile 'src/main/AndroidManifest.xml'
-                }
             }
         }
     }

@@ -51,4 +51,7 @@ dependencies {
 
     implementation project(':library-basicres')
     annotationProcessor deps.arouter.compiler
+    if (isRunAlone.toBoolean()) {
+        implementation project(':library-web')
+    }
 }

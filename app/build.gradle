@@ -67,6 +67,7 @@ dependencies {
 
     implementation project(':library-basicres')
     annotationProcessor deps.arouter.compiler
+    implementation project(':library-web')
 
     if (!isRunAlone.toBoolean()) {
         implementation project(':module-wangyi')
