@@ -15,19 +15,12 @@ import android.widget.RelativeLayout;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.sim.basicres.base.BaseActivity;
 import com.sim.basicres.callback.DialogInterface;
-import com.sim.basicres.callback.SuccessOrFailListener;
 import com.sim.basicres.constant.ArouterUrl;
-import com.sim.basicres.utils.LogUtil;
 import com.sim.basicres.utils.ToastUtil;
 import com.sim.basicres.views.TitleView;
-import com.sim.bean.User;
 import com.sim.user.R;
-
-import cn.bmob.v3.BmobSMS;
-import cn.bmob.v3.BmobUser;
-import cn.bmob.v3.exception.BmobException;
-import cn.bmob.v3.listener.QueryListener;
-import cn.bmob.v3.listener.UpdateListener;
+import com.sim.user.callback.SuccessOrFailListener;
+import com.sim.user.utils.UserUtil;
 
 /**
  * @author Sim ---
@@ -106,22 +99,19 @@ public class UserUpdatePasswordActivity extends BaseActivity {
                     new DialogInterface() {
                         @Override
                         public void sureOnClick() {
-                            if (BmobUser.getCurrentUser(User.class).getMobilePhoneNumberVerified()) {
-                                requestSMSCode(new SuccessOrFailListener() {
-                                    @Override
-                                    public void success(Object... values) {
-                                        ToastUtil.toast(context, "发送验证码成功！");
-                                        resetPasswordPopupWindow.showAtLocation(parent, Gravity.CENTER, 0, 0);
-                                    }
+                            UserUtil.getInstance().requestSMSCode(new SuccessOrFailListener() {
+                                @Override
+                                public void success(Object... values) {
+                                    ToastUtil.toast(context, "发送验证码成功！");
+                                    resetPasswordPopupWindow.showAtLocation(parent, Gravity.CENTER, 0, 0);
+                                }
 
-                                    @Override
-                                    public void fail(Object... values) {
-                                        ToastUtil.toast(context, "发送验证码失败！");
-                                    }
-                                });
-                            } else {
-                                ToastUtil.toast(context, "手机号码未验证");
-                            }
+                                @Override
+                                public void fail(Object... values) {
+                                    String s = (String) values[0];
+                                    ToastUtil.toast(context, s);
+                                }
+                            });
                         }
 
                         @Override
@@ -135,20 +125,15 @@ public class UserUpdatePasswordActivity extends BaseActivity {
             updatePasswordPopupWindow.dismiss();
             if (etOldPassword.getText().length() > 0 && etNewPassword.getText().length() > 0 && etNewPasswordAgain.getText().length() > 0) {
                 if (etNewPassword.getText().toString().equals(etNewPasswordAgain.getText().toString())) {
-                    updatePassword(etOldPassword.getText().toString(), etNewPassword.getText().toString(), new SuccessOrFailListener() {
+                    UserUtil.getInstance().updatePassword(etOldPassword.getText().toString(), etNewPassword.getText().toString(), new SuccessOrFailListener() {
                         @Override
                         public void success(Object... values) {
-                            User.fetchUserInfo();
+                            UserUtil.getInstance().fetchUserInfo();
                         }
 
                         @Override
                         public void fail(Object... values) {
-                            BmobException e = (BmobException) values[0];
-                            if (e.getMessage().contains("old password incorrect")) {
-                                ToastUtil.toast(context, "密码错误！");
-                            } else {
-                                ToastUtil.toast(context, "修改失败！");
-                            }
+                            ToastUtil.toast(context, "修改失败：" + (String) values[0]);
                         }
                     });
                 } else {
@@ -161,7 +146,7 @@ public class UserUpdatePasswordActivity extends BaseActivity {
             resetPasswordPopupWindow.dismiss();
         } else if (view == btnPasswordPhoneConfirm) {
             if (etNewPasswordPhone.getText().length() > 0) {
-                resetPasswordBySMSCode(etSMSCode.getText().toString(), etNewPasswordPhone.getText().toString(), new SuccessOrFailListener() {
+                UserUtil.getInstance().resetPasswordBySMSCode(etSMSCode.getText().toString(), etNewPasswordPhone.getText().toString(), new SuccessOrFailListener() {
                     @Override
                     public void success(Object... values) {
                         resetPasswordPopupWindow.dismiss();
@@ -169,7 +154,7 @@ public class UserUpdatePasswordActivity extends BaseActivity {
 
                     @Override
                     public void fail(Object... values) {
-                        ToastUtil.toast(context, "修改失败！");
+                        ToastUtil.toast(context, "修改失败：" + (String) values[0]);
                     }
                 });
             } else {
@@ -178,70 +163,6 @@ public class UserUpdatePasswordActivity extends BaseActivity {
         } else {
             super.onMultiClick(view);
         }
-    }
-
-    /**
-     * 提供旧密码修改密码
-     *
-     * @param oldPassword
-     * @param newPassword
-     * @param successOrFailListener
-     */
-    private void updatePassword(String oldPassword, String newPassword, SuccessOrFailListener successOrFailListener) {
-        BmobUser.updateCurrentUserPassword(oldPassword, newPassword, new UpdateListener() {
-            @Override
-            public void done(BmobException e) {
-                if (e == null) {
-                    successOrFailListener.success();
-                } else {
-                    successOrFailListener.fail(e);
-                    LogUtil.e(getClass(), "修改用户信息失败---code:" + e.getErrorCode() + ";message:" + e.getMessage());
-                }
-            }
-        });
-    }
-
-    /**
-     * 发送短信验证码
-     *
-     * @param successOrFailListener
-     */
-    private void requestSMSCode(SuccessOrFailListener successOrFailListener) {
-        /**
-         * TODO template 如果是自定义短信模板，此处替换为你在控制台设置的自定义短信模板名称；如果没有对应的自定义短信模板，则使用默认短信模板，模板名称为空字符串""。
-         */
-        BmobSMS.requestSMSCode(BmobUser.getCurrentUser(User.class).getMobilePhoneNumber(), "", new QueryListener<Integer>() {
-            @Override
-            public void done(Integer smsId, BmobException e) {
-                if (e == null) {
-                    successOrFailListener.success();
-                } else {
-                    successOrFailListener.fail();
-                    LogUtil.e(getClass(), "发送验证码失败---code:" + e.getErrorCode() + ";message:" + e.getMessage());
-                }
-            }
-        });
-    }
-
-    /**
-     * 验证码修改密码
-     *
-     * @param code
-     * @param newPassword
-     * @param successOrFailListener
-     */
-    private void resetPasswordBySMSCode(String code, String newPassword, SuccessOrFailListener successOrFailListener) {
-        BmobUser.resetPasswordBySMSCode(code, newPassword, new UpdateListener() {
-            @Override
-            public void done(BmobException e) {
-                if (e == null) {
-                    successOrFailListener.success();
-                } else {
-                    successOrFailListener.fail(e);
-                    LogUtil.e(getClass(), "验证码重置密码失败---code:" + e.getErrorCode() + ";message:" + e.getMessage());
-                }
-            }
-        });
     }
 
 }

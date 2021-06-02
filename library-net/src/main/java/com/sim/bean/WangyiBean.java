@@ -3,8 +3,6 @@ package com.sim.bean;
 import java.io.Serializable;
 import java.util.List;
 
-import cn.bmob.v3.BmobObject;
-
 /**
  * @author Sim --- 网易新闻返回的数据bean类
  */
@@ -43,7 +41,7 @@ public class WangyiBean implements Serializable {
         this.result = result;
     }
 
-    public static class NewsBean extends BmobObject implements Serializable {
+    public static class NewsBean  implements Serializable {
 
         /**
          * path : https://news.163.com/19/0308/05/E9NLBIT30001875O.html
@@ -52,19 +50,10 @@ public class WangyiBean implements Serializable {
          * passtime : 2019-03-08 10:00:35
          */
 
-        private User user;//用户
         private String path;
         private String image;
         private String title;
         private String passtime;
-
-        public User getUser() {
-            return user;
-        }
-
-        public void setUser(User user) {
-            this.user = user;
-        }
 
         public String getPath() {
             return path;

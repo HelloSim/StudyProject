@@ -13,20 +13,16 @@ import com.sim.basicres.base.BaseAdapter;
 import com.sim.basicres.base.BaseViewHolder;
 import com.sim.basicres.callback.DialogInterface;
 import com.sim.basicres.constant.ArouterUrl;
+import com.sim.basicres.utils.ToastUtil;
 import com.sim.basicres.views.TitleView;
-import com.sim.bean.User;
-import com.sim.bean.WangyiBean;
 import com.sim.user.R;
 import com.sim.user.adapter.NewsAdapter;
+import com.sim.user.bean.NewsBean;
+import com.sim.user.callback.SuccessOrFailListener;
+import com.sim.user.utils.UserUtil;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import cn.bmob.v3.BmobQuery;
-import cn.bmob.v3.BmobUser;
-import cn.bmob.v3.exception.BmobException;
-import cn.bmob.v3.listener.FindListener;
-import cn.bmob.v3.listener.UpdateListener;
 
 /**
  * @author Sim --- 网易新闻的收藏页面
@@ -37,7 +33,7 @@ public class UserCollectActivity extends BaseActivity {
     private TitleView titleView;
     private RecyclerView newsRecyclerView;
 
-    private ArrayList<WangyiBean.NewsBean> collectionNewsBeanArrayList = new ArrayList<>();
+    private ArrayList<NewsBean> collectionNewsBeanArrayList = new ArrayList<>();
     private NewsAdapter newsAdapter;
 
     @Override
@@ -59,18 +55,19 @@ public class UserCollectActivity extends BaseActivity {
 
     @Override
     protected void initData() {
-        if (BmobUser.isLogin()) {
-            BmobQuery<WangyiBean.NewsBean> bmobQuery = new BmobQuery<>();
-            bmobQuery.addWhereEqualTo("user", BmobUser.getCurrentUser(User.class));
-            bmobQuery.findObjects(new FindListener<WangyiBean.NewsBean>() {
+        if (UserUtil.getInstance().isLogin()) {
+            UserUtil.getInstance().getNewsBean(new SuccessOrFailListener() {
                 @Override
-                public void done(List<WangyiBean.NewsBean> list, BmobException e) {
-                    if (e == null && list != null && list.size() > 0) {
-                        for (WangyiBean.NewsBean bean : list) {
-                            collectionNewsBeanArrayList.add(bean);
-                            newsAdapter.notifyDataSetChanged();
-                        }
+                public void success(Object... values) {
+                    if (values != null) {
+                        collectionNewsBeanArrayList.addAll((List<NewsBean>) values[0]);
+                        newsAdapter.notifyDataSetChanged();
                     }
+                }
+
+                @Override
+                public void fail(Object... values) {
+                    ToastUtil.toast(UserCollectActivity.this, (String) values[0]);
                 }
             });
         } else {
@@ -97,17 +94,17 @@ public class UserCollectActivity extends BaseActivity {
                 showDialog(null, "取消收藏", "确认", "取消", new DialogInterface() {
                     @Override
                     public void sureOnClick() {
-                        WangyiBean.NewsBean bean = new WangyiBean.NewsBean();
-                        bean.setObjectId(collectionNewsBeanArrayList.get(position).getObjectId());
-                        bean.delete(new UpdateListener() {
+                        UserUtil.getInstance().deleteNewsBean(collectionNewsBeanArrayList.get(position), new SuccessOrFailListener() {
                             @Override
-                            public void done(BmobException e) {
-                                if (e == null) {
-                                    collectionNewsBeanArrayList.remove(position);
-                                    newsAdapter.notifyDataSetChanged();
-                                }
+                            public void success(Object... values) {
+                                collectionNewsBeanArrayList.remove(position);
+                                newsAdapter.notifyDataSetChanged();
                             }
 
+                            @Override
+                            public void fail(Object... values) {
+
+                            }
                         });
                     }
 

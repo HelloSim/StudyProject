@@ -18,21 +18,18 @@ import com.alibaba.android.arouter.launcher.ARouter;
 import com.sim.basicres.base.BaseActivity;
 import com.sim.basicres.bean.EventMessage;
 import com.sim.basicres.callback.DialogInterface;
-import com.sim.basicres.callback.SuccessOrFailListener;
 import com.sim.basicres.constant.AppHelper;
 import com.sim.basicres.constant.ArouterUrl;
-import com.sim.basicres.utils.LogUtil;
 import com.sim.basicres.utils.SPUtil;
 import com.sim.basicres.utils.ToastUtil;
 import com.sim.basicres.views.TitleView;
-import com.sim.bean.User;
 import com.sim.user.R;
+import com.sim.user.callback.SuccessOrFailListener;
+import com.sim.user.utils.UserUtil;
 
 import org.greenrobot.eventbus.EventBus;
 
 import cn.bmob.v3.BmobUser;
-import cn.bmob.v3.exception.BmobException;
-import cn.bmob.v3.listener.UpdateListener;
 
 /**
  * @author Sim --- 显示用户信息的页面
@@ -86,8 +83,8 @@ public class UserInfoActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-        tvUserName.setText(BmobUser.getCurrentUser(User.class).getUsername());
-        tvMobilePhoneNumber.setText(BmobUser.getCurrentUser(User.class).getMobilePhoneNumber());
+        tvUserName.setText(UserUtil.getInstance().getUser().getUsername());
+        tvMobilePhoneNumber.setText(UserUtil.getInstance().getUser().getMobilePhoneNumber());
 
         LayoutInflater inflater = (LayoutInflater) this.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
         updateUserNameLayout = inflater.inflate(R.layout.mine_view_popup_update_name, null);
@@ -95,7 +92,7 @@ public class UserInfoActivity extends BaseActivity {
         etNewUserName = updateUserNameLayout.findViewById(R.id.et_new_user_name);
         btnUserNameCancel = updateUserNameLayout.findViewById(R.id.btn_user_name_cancel);
         btnUserNameConfirm = updateUserNameLayout.findViewById(R.id.btn_user_name_confirm);
-        etNewUserName.setText(BmobUser.getCurrentUser(User.class).getUsername());
+        etNewUserName.setText(UserUtil.getInstance().getUser().getUsername());
         setViewClick(btnUserNameCancel, btnUserNameConfirm);
     }
 
@@ -120,24 +117,24 @@ public class UserInfoActivity extends BaseActivity {
         } else if (view == rlUserName) {
             updateUserNamePopupWindow.showAtLocation(parent, Gravity.CENTER, 0, 0);
         } else if (view == btnUserNameCancel) {
-            etNewUserName.setText(BmobUser.getCurrentUser(User.class).getUsername());
+            etNewUserName.setText(UserUtil.getInstance().getUser().getUsername());
             updateUserNamePopupWindow.dismiss();
         } else if (view == btnUserNameConfirm) {
-            User.fetchUserInfo();
-            updateUserInfo(etNewUserName.getText().toString(), new SuccessOrFailListener() {
+            UserUtil.getInstance().updateUserInfo(etNewUserName.getText().toString(), new SuccessOrFailListener() {
                 @Override
                 public void success(Object... values) {
                     updateUserNamePopupWindow.dismiss();
-                    tvUserName.setText(BmobUser.getCurrentUser(User.class).getUsername());
-                    etNewUserName.setText(BmobUser.getCurrentUser(User.class).getUsername());
+                    tvUserName.setText(UserUtil.getInstance().getUser().getUsername());
+                    etNewUserName.setText(UserUtil.getInstance().getUser().getUsername());
                     EventBus.getDefault().post(new EventMessage(AppHelper.USER_IsLogIn));
                 }
 
                 @Override
                 public void fail(Object... values) {
-                    ToastUtil.toast(context, "修改失败！");
+                    ToastUtil.toast(context, "修改失败:" + (String) values[0]);
                 }
             });
+            UserUtil.getInstance().fetchUserInfo();
         } else if (view == rlPassword) {
             ARouter.getInstance().build(ArouterUrl.Mine.user_activity_updatepws).navigation();
         } else if (view == rlMobilePhoneNumber) {
@@ -145,27 +142,6 @@ public class UserInfoActivity extends BaseActivity {
         } else {
             super.onMultiClick(view);
         }
-    }
-
-    /**
-     * 修改邮箱
-     *
-     * @param userName
-     */
-    private void updateUserInfo(String userName, SuccessOrFailListener successOrFailListener) {
-        User user = BmobUser.getCurrentUser(User.class);
-        user.setUsername(userName);
-        user.update(new UpdateListener() {
-            @Override
-            public void done(BmobException e) {
-                if (e == null) {
-                    successOrFailListener.success();
-                } else {
-                    successOrFailListener.fail();
-                    LogUtil.e(getClass(), "修改用户信息失败---code:" + e.getErrorCode() + ";message:" + e.getMessage());
-                }
-            }
-        });
     }
 
 }

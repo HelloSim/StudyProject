@@ -30,5 +30,6 @@ android {
 dependencies {
     api project(':library-basiclib')
     api project(':library-net')
+    api project(':library-user')
     annotationProcessor deps.arouter.compiler
 }

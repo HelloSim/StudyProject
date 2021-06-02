@@ -1,7 +1,6 @@
 package com.sim.wangyi;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 
 import androidx.fragment.app.Fragment;
@@ -12,14 +11,11 @@ import com.sim.basicres.base.BaseActivity;
 import com.sim.basicres.bean.EventMessage;
 import com.sim.basicres.constant.AppHelper;
 import com.sim.basicres.utils.SPUtil;
-import com.sim.bean.User;
 import com.sim.wangyi.ui.fragment.WangyiFragment;
 
 import org.greenrobot.eventbus.EventBus;
 
 import cn.bmob.v3.BmobUser;
-import cn.bmob.v3.exception.BmobException;
-import cn.bmob.v3.listener.LogInListener;
 
 public class MainActivity extends BaseActivity {
 
@@ -41,18 +37,18 @@ public class MainActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 if (!isLogig) {
-                    BmobUser.loginByAccount("HelloSim", "123", new LogInListener<User>() {
-                        @Override
-                        public void done(User user, BmobException e) {
-                            if (e == null) {
-                                Log.d("Sim", "done: " + "登录成功");
-                                isLogig = true;
-                                EventBus.getDefault().post(new EventMessage(2001));
-                            } else {
-                                Log.e("Sim", "登录出错---code:" + e.getErrorCode() + ";message:" + e.getMessage());
-                            }
-                        }
-                    });
+//                    BmobUser.loginByAccount("HelloSim", "123", new LogInListener<User>() {
+//                        @Override
+//                        public void done(User user, BmobException e) {
+//                            if (e == null) {
+//                                Log.d("Sim", "done: " + "登录成功");
+//                                isLogig = true;
+//                                EventBus.getDefault().post(new EventMessage(2001));
+//                            } else {
+//                                Log.e("Sim", "登录出错---code:" + e.getErrorCode() + ";message:" + e.getMessage());
+//                            }
+//                        }
+//                    });
                 } else {
                     BmobUser.logOut();
                     isLogig = false;

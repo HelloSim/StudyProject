@@ -11,18 +11,18 @@ import androidx.annotation.NonNull;
 
 import com.bumptech.glide.Glide;
 import com.google.android.material.imageview.ShapeableImageView;
-import com.sim.bean.WangyiBean;
 import com.sim.basicres.base.BaseAdapter;
 import com.sim.basicres.base.BaseViewHolder;
 import com.sim.user.R;
+import com.sim.user.bean.NewsBean;
 
 import java.util.ArrayList;
 
-public class NewsAdapter extends BaseAdapter<NewsAdapter.ViewHolder, WangyiBean.NewsBean> {
+public class NewsAdapter extends BaseAdapter<NewsAdapter.ViewHolder, NewsBean> {
 
     private Context mContext;
 
-    public NewsAdapter(Context context, ArrayList<WangyiBean.NewsBean> news) {
+    public NewsAdapter(Context context, ArrayList<NewsBean> news) {
         super(news);
         this.mContext = context;
     }
@@ -52,7 +52,7 @@ public class NewsAdapter extends BaseAdapter<NewsAdapter.ViewHolder, WangyiBean.
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        WangyiBean.NewsBean resultBean = getItem(position);
+        NewsBean resultBean = getItem(position);
         Glide.with(mContext)
                 .load(resultBean.getImage())
                 .into(holder.newsImage);

@@ -1,3 +1,4 @@
+include ':library-user'
 rootProject.name = "TravelTool"
 include ':library-basiclib'
 include ':library-basicres'

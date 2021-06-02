@@ -1,4 +1,4 @@
-package com.sim.bean;
+package com.sim.record.bean;
 
 import com.bin.david.form.annotation.SmartColumn;
 import com.bin.david.form.annotation.SmartTable;
@@ -8,17 +8,17 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-import cn.bmob.v3.BmobObject;
+import cn.bmob.v3.BmobUser;
 
 /**
  * @author Sim --- 新的插入数据库的打卡记录实体
  */
 @SmartTable(name = "打卡详情")
-public class RecordBean extends BmobObject {
+public class RecordBean {
 
     // 仅在客户端使用，不希望被gson序列化提交到后端云，用transient修饰
 
-    private User user;//打卡人
+    private BmobUser user;//打卡人
     @SmartColumn(id = 1, name = "日期", fixed = true)
     private String date;//日期 2020-12-31
     private String yearAndMonth;//年月
@@ -42,7 +42,7 @@ public class RecordBean extends BmobObject {
 //        this.setACL(bmobACL);
     }
 
-    public RecordBean(User user, String date, String yearAndMonth, String startTime, String endTime, String other) {
+    public RecordBean(BmobUser user, String date, String yearAndMonth, String startTime, String endTime, String other) {
         this.user = user;
         this.date = date;
         this.yearAndMonth = yearAndMonth;
@@ -111,11 +111,11 @@ public class RecordBean extends BmobObject {
         }
     }
 
-    public User getUser() {
+    public BmobUser getUser() {
         return user;
     }
 
-    public void setUsername(User user) {
+    public void setUsername(BmobUser user) {
         this.user = user;
     }
 
