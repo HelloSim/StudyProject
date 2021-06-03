@@ -5,9 +5,7 @@ import android.content.Context;
 import cn.bmob.v3.Bmob;
 
 /**
- * @ author: Sim
- * @ time： 2021/6/2 10:55
- * @ description：
+ * 这里注意：实现前一定要调用这个初始化。否则会崩
  */
 public class BmobInit {
 

@@ -17,7 +17,8 @@ import com.sim.basicres.views.SplitEditText;
 import com.sim.basicres.views.TitleView;
 import com.sim.user.R;
 import com.sim.user.bean.User;
-import com.sim.user.utils.SuccessOrFailListener;
+import com.sim.user.utils.SMSUtil;
+import com.sim.user.utils.CallBack;
 
 /**
  * @author Sim --- 用户注册页面
@@ -73,11 +74,10 @@ public class UserRegisterActivity extends BaseActivity {
                 ToastUtil.toast(context, "请输入正确的手机号码！");
                 return;
             }
-            new TimeCount(60000, 1000).start();
-            User.getInstance().requestSMSCode(etMobilePhoneNumber.getText().toString(), new SuccessOrFailListener() {
+            SMSUtil.requestSMSCode(etMobilePhoneNumber.getText().toString(), new CallBack() {
                 @Override
                 public void success(Object... values) {
-
+                    ToastUtil.toast(context, "发送验证码成功！");
                 }
 
                 @Override
@@ -85,6 +85,7 @@ public class UserRegisterActivity extends BaseActivity {
                     ToastUtil.toast(UserRegisterActivity.this, "发送失败：" + values);
                 }
             });
+            new TimeCount(60000, 1000).start();
         } else if (view == btnRegistered) {
             if (etUserName.getText().toString().length() <= 0) {
                 ToastUtil.toast(context, "用户名不能为空！");
@@ -98,8 +99,8 @@ public class UserRegisterActivity extends BaseActivity {
                 ToastUtil.toast(context, "请输入正确的手机号码！");
                 return;
             }
-            User.getInstance().registerUser(etMobilePhoneNumber.getText().toString(), etSMSCode.getText().toString(),
-                    etPassword.getText().toString(), etUserName.getText().toString(), new SuccessOrFailListener() {
+            User.registerUser(etMobilePhoneNumber.getText().toString(), etSMSCode.getText().toString(),
+                    etPassword.getText().toString(), etUserName.getText().toString(), new CallBack() {
                         @Override
                         public void success(Object... values) {
                             ToastUtil.toast(UserRegisterActivity.this, "注册成功");

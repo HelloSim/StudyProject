@@ -7,26 +7,14 @@ import android.widget.TextView;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.sim.basicres.base.BaseFragment;
-import com.sim.basicres.bean.EventMessage;
-import com.sim.basicres.constant.AppHelper;
 import com.sim.basicres.constant.ArouterUrl;
 import com.sim.basicres.utils.ToastUtil;
 import com.sim.basicres.views.TitleView;
 import com.sim.user.R;
+import com.sim.user.bean.User;
 
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
-
-/**
- * @ author: Sim
- * @ time： 2021/5/31 15:39
- * @ description：
- */
 @Route(path = ArouterUrl.Mine.user_fragment)
 public class MineFragment extends BaseFragment {
-
-    private boolean isLogin = false;
 
     private TitleView titleView;
     private TextView tvUserName;
@@ -39,8 +27,6 @@ public class MineFragment extends BaseFragment {
 
     @Override
     protected void bindViews(View view) {
-        EventBus.getDefault().register(this);
-
         titleView = view.findViewById(R.id.titleView);
         titleView.setRightClickListener(new TitleView.RightClickListener() {
             @Override
@@ -61,9 +47,8 @@ public class MineFragment extends BaseFragment {
 
     @Override
     protected void initView(View view) {
-        isLogin = UserUtil.getInstance().isLogin();
-        if (isLogin) {
-            tvUserName.setText(UserUtil.getInstance().getUser().getUsername());
+        if (User.isLogin()) {
+            tvUserName.setText(User.getUsername());
         } else {
             tvUserName.setText("用户登录");
         }
@@ -76,9 +61,8 @@ public class MineFragment extends BaseFragment {
     @Override
     public void onResume() {
         super.onResume();
-        isLogin = UserUtil.getInstance().isLogin();
-        if (isLogin) {
-            tvUserName.setText(UserUtil.getInstance().getUser().getUsername());
+        if (User.isLogin()) {
+            tvUserName.setText(User.getUsername());
         } else {
             tvUserName.setText("用户登录");
         }
@@ -87,19 +71,18 @@ public class MineFragment extends BaseFragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        EventBus.getDefault().unregister(this);
     }
 
     @Override
     public void onMultiClick(View view) {
         if (view == userLogin) {
-            if (isLogin) {
+            if (User.isLogin()) {
                 ARouter.getInstance().build(ArouterUrl.Mine.user_activity_info).navigation();
             } else {
                 ARouter.getInstance().build(ArouterUrl.Mine.user_activity_login).navigation();
             }
         } else if (view == userCollect) {
-            if (isLogin) {
+            if (User.isLogin()) {
                 ARouter.getInstance().build(ArouterUrl.Mine.user_activity_collect).navigation();
             } else {
                 ToastUtil.toast(getContext(), "未登录");
@@ -118,23 +101,6 @@ public class MineFragment extends BaseFragment {
                     .navigation();
         } else {
             super.onMultiClick(view);
-        }
-    }
-
-    /**
-     * 接收消息事件
-     *
-     * @param eventMessage
-     */
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onMessageEvent(EventMessage eventMessage) {
-        if (eventMessage.type == AppHelper.USER_IsLogIn || eventMessage.type == AppHelper.USER_noLogIn) {
-            isLogin = UserUtil.getInstance().isLogin();
-            if (isLogin) {
-                tvUserName.setText(UserUtil.getInstance().getUser().getUsername());
-            } else {
-                tvUserName.setText("用户登录");
-            }
         }
     }
 

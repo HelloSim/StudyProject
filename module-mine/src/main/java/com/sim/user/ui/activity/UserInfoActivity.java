@@ -20,20 +20,14 @@ import com.sim.basicres.bean.EventMessage;
 import com.sim.basicres.callback.DialogInterface;
 import com.sim.basicres.constant.AppHelper;
 import com.sim.basicres.constant.ArouterUrl;
-import com.sim.basicres.utils.SPUtil;
 import com.sim.basicres.utils.ToastUtil;
 import com.sim.basicres.views.TitleView;
 import com.sim.user.R;
 import com.sim.user.bean.User;
-import com.sim.user.utils.SuccessOrFailListener;
+import com.sim.user.utils.CallBack;
 
 import org.greenrobot.eventbus.EventBus;
 
-import cn.bmob.v3.BmobUser;
-
-/**
- * @author Sim --- 显示用户信息的页面
- */
 @Route(path = ArouterUrl.Mine.user_activity_info)
 public class UserInfoActivity extends BaseActivity {
 
@@ -83,8 +77,8 @@ public class UserInfoActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-        tvUserName.setText(User.getInstance().getUsername());
-        tvMobilePhoneNumber.setText(User.getInstance().getMobilePhoneNumber());
+        tvUserName.setText(User.getUsername());
+        tvMobilePhoneNumber.setText(User.getMobilePhoneNumber());
 
         LayoutInflater inflater = (LayoutInflater) this.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
         updateUserNameLayout = inflater.inflate(R.layout.mine_view_popup_update_name, null);
@@ -92,7 +86,7 @@ public class UserInfoActivity extends BaseActivity {
         etNewUserName = updateUserNameLayout.findViewById(R.id.et_new_user_name);
         btnUserNameCancel = updateUserNameLayout.findViewById(R.id.btn_user_name_cancel);
         btnUserNameConfirm = updateUserNameLayout.findViewById(R.id.btn_user_name_confirm);
-        etNewUserName.setText(User.getInstance().getUsername());
+        etNewUserName.setText(User.getUsername());
         setViewClick(btnUserNameCancel, btnUserNameConfirm);
     }
 
@@ -103,9 +97,8 @@ public class UserInfoActivity extends BaseActivity {
                     new DialogInterface() {
                         @Override
                         public void sureOnClick() {
-                            BmobUser.logOut();
+                            User.logout();
                             EventBus.getDefault().post(new EventMessage(AppHelper.USER_noLogIn));
-                            SPUtil.put(context, AppHelper.userSpName, AppHelper.userSpStateKey, false);
                             finish();
                         }
 
@@ -117,16 +110,15 @@ public class UserInfoActivity extends BaseActivity {
         } else if (view == rlUserName) {
             updateUserNamePopupWindow.showAtLocation(parent, Gravity.CENTER, 0, 0);
         } else if (view == btnUserNameCancel) {
-            etNewUserName.setText(User.getInstance().getUsername());
+            etNewUserName.setText(User.getUsername());
             updateUserNamePopupWindow.dismiss();
         } else if (view == btnUserNameConfirm) {
-            User.getInstance().updateUserInfo(etNewUserName.getText().toString(), new SuccessOrFailListener() {
+            User.updateUserInfo(etNewUserName.getText().toString(), new CallBack() {
                 @Override
                 public void success(Object... values) {
                     updateUserNamePopupWindow.dismiss();
-                    tvUserName.setText(User.getInstance().getUsername());
-                    etNewUserName.setText(User.getInstance().getUsername());
-                    EventBus.getDefault().post(new EventMessage(AppHelper.USER_IsLogIn));
+                    tvUserName.setText(User.getUsername());
+                    etNewUserName.setText(User.getUsername());
                 }
 
                 @Override
@@ -134,7 +126,6 @@ public class UserInfoActivity extends BaseActivity {
                     ToastUtil.toast(context, "修改失败:" + values);
                 }
             });
-            User.getInstance().fetchUserInfo();
         } else if (view == rlPassword) {
             ARouter.getInstance().build(ArouterUrl.Mine.user_activity_updatepws).navigation();
         } else if (view == rlMobilePhoneNumber) {

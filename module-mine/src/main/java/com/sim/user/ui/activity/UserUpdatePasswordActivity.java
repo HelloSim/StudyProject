@@ -19,8 +19,9 @@ import com.sim.basicres.constant.ArouterUrl;
 import com.sim.basicres.utils.ToastUtil;
 import com.sim.basicres.views.TitleView;
 import com.sim.user.R;
-import com.sim.user.utils.SuccessOrFailListener;
-import com.sim.user.utils.UserUtil;
+import com.sim.user.bean.User;
+import com.sim.user.utils.SMSUtil;
+import com.sim.user.utils.CallBack;
 
 /**
  * @author Sim ---
@@ -99,7 +100,7 @@ public class UserUpdatePasswordActivity extends BaseActivity {
                     new DialogInterface() {
                         @Override
                         public void sureOnClick() {
-                            UserUtil.getInstance().requestSMSCode(new SuccessOrFailListener() {
+                            SMSUtil.requestSMSCode(new CallBack() {
                                 @Override
                                 public void success(Object... values) {
                                     ToastUtil.toast(context, "发送验证码成功！");
@@ -108,7 +109,7 @@ public class UserUpdatePasswordActivity extends BaseActivity {
 
                                 @Override
                                 public void fail(String values) {
-                                    ToastUtil.toast(context, values);
+                                    ToastUtil.toast(context, "发送失败：" + values);
                                 }
                             });
                         }
@@ -121,13 +122,13 @@ public class UserUpdatePasswordActivity extends BaseActivity {
         } else if (view == btnPasswordCancel) {
             updatePasswordPopupWindow.dismiss();
         } else if (view == btnPasswordConfirm) {
-            updatePasswordPopupWindow.dismiss();
             if (etOldPassword.getText().length() > 0 && etNewPassword.getText().length() > 0 && etNewPasswordAgain.getText().length() > 0) {
                 if (etNewPassword.getText().toString().equals(etNewPasswordAgain.getText().toString())) {
-                    UserUtil.getInstance().updatePassword(etOldPassword.getText().toString(), etNewPassword.getText().toString(), new SuccessOrFailListener() {
+                    User.updatePassword(etOldPassword.getText().toString(), etNewPassword.getText().toString(), new CallBack() {
                         @Override
                         public void success(Object... values) {
-                            UserUtil.getInstance().fetchUserInfo();
+                            updatePasswordPopupWindow.dismiss();
+                            ToastUtil.toast(context,"修改成功！");
                         }
 
                         @Override
@@ -145,10 +146,11 @@ public class UserUpdatePasswordActivity extends BaseActivity {
             resetPasswordPopupWindow.dismiss();
         } else if (view == btnPasswordPhoneConfirm) {
             if (etNewPasswordPhone.getText().length() > 0) {
-                UserUtil.getInstance().resetPasswordBySMSCode(etSMSCode.getText().toString(), etNewPasswordPhone.getText().toString(), new SuccessOrFailListener() {
+                User.resetPasswordBySMSCode(etSMSCode.getText().toString(), etNewPasswordPhone.getText().toString(), new CallBack() {
                     @Override
                     public void success(Object... values) {
                         resetPasswordPopupWindow.dismiss();
+                        ToastUtil.toast(context,"修改成功！");
                     }
 
                     @Override

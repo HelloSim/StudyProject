@@ -1,5 +1,6 @@
 package com.sim.user.ui.activity;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
 
@@ -19,7 +20,7 @@ import com.sim.user.R;
 import com.sim.user.adapter.NewsAdapter;
 import com.sim.user.bean.NewsBean;
 import com.sim.user.bean.User;
-import com.sim.user.utils.SuccessOrFailListener;
+import com.sim.user.utils.CallBack;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +30,8 @@ import java.util.List;
  */
 @Route(path = ArouterUrl.Mine.user_activity_collect)
 public class UserCollectActivity extends BaseActivity {
+
+    private Context context;
 
     private TitleView titleView;
     private RecyclerView newsRecyclerView;
@@ -55,8 +58,9 @@ public class UserCollectActivity extends BaseActivity {
 
     @Override
     protected void initData() {
-        if (User.getInstance().isLogin()) {
-            NewsBean.getNewsBean(new SuccessOrFailListener() {
+        context = this;
+        if (User.isLogin()) {
+            NewsBean.Util.getNewsBean(new CallBack() {
                 @Override
                 public void success(Object... values) {
                     if (values != null) {
@@ -67,7 +71,7 @@ public class UserCollectActivity extends BaseActivity {
 
                 @Override
                 public void fail(String values) {
-                    ToastUtil.toast(UserCollectActivity.this, values);
+                    ToastUtil.toast(context, "获取收藏失败：" + values);
                 }
             });
         } else {
@@ -77,7 +81,7 @@ public class UserCollectActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-        newsRecyclerView.setLayoutManager(new LinearLayoutManager(UserCollectActivity.this));
+        newsRecyclerView.setLayoutManager(new LinearLayoutManager(context));
         newsAdapter = new NewsAdapter(this, collectionNewsBeanArrayList);
         newsAdapter.setOnItemClickListener(new BaseAdapter.OnItemClickListener() {
             @Override
@@ -94,7 +98,7 @@ public class UserCollectActivity extends BaseActivity {
                 showDialog(null, "取消收藏", "确认", "取消", new DialogInterface() {
                     @Override
                     public void sureOnClick() {
-                        NewsBean.deleteNewsBean(collectionNewsBeanArrayList.get(position), new SuccessOrFailListener() {
+                        NewsBean.Util.deleteNewsBean(collectionNewsBeanArrayList.get(position), new CallBack() {
                             @Override
                             public void success(Object... values) {
                                 collectionNewsBeanArrayList.remove(position);
@@ -103,7 +107,7 @@ public class UserCollectActivity extends BaseActivity {
 
                             @Override
                             public void fail(String values) {
-
+                                ToastUtil.toast(context,"删除收藏失败：" + values);
                             }
                         });
                     }

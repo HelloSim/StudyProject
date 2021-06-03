@@ -1,21 +1,32 @@
 package com.sim.user.bean;
 
+import android.util.Log;
+
 import com.bin.david.form.annotation.SmartColumn;
 import com.bin.david.form.annotation.SmartTable;
+import com.sim.user.utils.CallBack;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import cn.bmob.v3.BmobObject;
+import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.BmobUser;
+import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.FindListener;
+import cn.bmob.v3.listener.SaveListener;
+import cn.bmob.v3.listener.UpdateListener;
 
 /**
  * @author Sim --- 新的插入数据库的打卡记录实体
  */
 @SmartTable(name = "打卡详情")
 public class RecordBean extends BmobObject {
+
+    private static final String TAG = "【【【Sim_" + RecordBean.class.getSimpleName() + "】】】";
 
     // 仅在客户端使用，不希望被gson序列化提交到后端云，用transient修饰
 
@@ -34,90 +45,8 @@ public class RecordBean extends BmobObject {
     @SmartColumn(id = 5, name = "备忘")
     private String other;//其他
 
-    public RecordBean(String date) {
-        this.date = date;
-        this.week = getWeek(date);
-//        BmobACL bmobACL = new BmobACL();
-//        bmobACL.setWriteAccess(user, true);//设置此帖子为当前用户可写
-//        bmobACL.setReadAccess(user, true);//设置此帖子为某种角色可读
-//        this.setACL(bmobACL);
-    }
-
-    public RecordBean(BmobUser user, String date, String yearAndMonth, String startTime, String endTime, String other) {
-        this.user = user;
-        this.date = date;
-        this.yearAndMonth = yearAndMonth;
-        this.week = getWeek(date);
-        this.startTime = startTime;
-        this.endTime = endTime;
-        this.week = getWeek(date);
-        if (startTime != null && startTime.length() > 0) {
-            String[] split = startTime.split(":");
-            if (split != null && split.length != 0) {
-                int hours = Integer.parseInt(split[0]);
-                int minute = Integer.parseInt(split[1]);
-                this.isLate = hours > 9 || (hours == 9 && minute > 30);
-            }
-        }
-        if (endTime != null && endTime.length() > 0) {
-            String[] split = endTime.split(":");
-            if (split != null && split.length != 0) {
-                int hours = Integer.parseInt(split[0]);
-                int minute = Integer.parseInt(split[1]);
-                this.isLeaveEarly = hours < 18 || (hours == 18 && minute < 30);
-            }
-        }
-        this.other = other;
-//        BmobACL bmobACL = new BmobACL();
-//        bmobACL.setWriteAccess(user, true);//设置为当前用户可写
-//        bmobACL.setReadAccess(user, true);//设置为当前用户可读
-//        this.setACL(bmobACL);
-    }
-
-
-    /**
-     * 判断日期是周几
-     *
-     * @param dates 参数举例  String dates="2018-11-11";
-     * @return
-     */
-    public static String getWeek(String dates) {
-        Calendar calendar = Calendar.getInstance();
-        SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd");
-        Date d = null;
-        try {
-            d = f.parse(dates);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        calendar.setTime(d);
-        String s;
-        switch (calendar.get(Calendar.DAY_OF_WEEK) - 1) {
-            case 1:
-                return "星期一";
-            case 2:
-                return "星期二";
-            case 3:
-                return "星期三";
-            case 4:
-                return "星期四";
-            case 5:
-                return "星期五";
-            case 6:
-                return "星期六";
-            case 0:
-                return "星期日";
-            default:
-                return "";
-        }
-    }
-
     public BmobUser getUser() {
         return user;
-    }
-
-    public void setUsername(BmobUser user) {
-        this.user = user;
     }
 
     public String getDate() {
@@ -196,6 +125,224 @@ public class RecordBean extends BmobObject {
                 ", isLeaveEarly=" + isLeaveEarly +
                 ", other='" + other + '\'' +
                 '}';
+    }
+
+    public RecordBean(String date) {
+        this.user = BmobUser.getCurrentUser(BmobUser.class);
+        this.date = date;
+        this.week = getWeek(date);
+    }
+
+    public RecordBean(String date, String startTime, String endTime, String other) {
+        this.user = BmobUser.getCurrentUser(BmobUser.class);
+        this.date = date;
+        this.yearAndMonth = getYM(date);
+        this.week = getWeek(date);
+        this.startTime = startTime;
+        this.endTime = endTime;
+        if (startTime != null && startTime.length() > 0) {
+            this.isLate = isLate(startTime);
+        }
+        if (endTime != null && endTime.length() > 0) {
+            this.isLeaveEarly = isLeaveEarly(endTime);
+        }
+        this.other = other;
+    }
+
+
+    /**
+     * 查询指定用户和年月日数据
+     *
+     * @param date
+     * @param callBack
+     */
+    public static void queryForDay(String date, CallBack callBack) {
+        BmobQuery<RecordBean> bmobQuery = new BmobQuery<RecordBean>();
+        bmobQuery.addWhereEqualTo("user", BmobUser.getCurrentUser(BmobUser.class));
+        bmobQuery.addWhereEqualTo("date", date);
+        bmobQuery.findObjects(new FindListener<RecordBean>() {
+            @Override
+            public void done(List<RecordBean> list, BmobException e) {
+                if (e == null) {
+                    callBack.success(list);
+                } else {
+                    callBack.fail(e.getMessage());
+                    Log.e(TAG, "done: ");
+                    Log.e(TAG, "查询指定用户和年月日数据error：" + e.getMessage());
+                }
+            }
+        });
+    }
+
+    /**
+     * 查询指定用户和年月数据
+     *
+     * @param yearAndMonth
+     * @param callBack
+     */
+    public static void queryForMonth(String yearAndMonth, CallBack callBack) {
+        BmobQuery<RecordBean> bmobQuery = new BmobQuery<>();
+        bmobQuery.addWhereEqualTo("user", BmobUser.getCurrentUser(BmobUser.class));
+        bmobQuery.addWhereEqualTo("yearAndMonth", yearAndMonth);
+        bmobQuery.findObjects(new FindListener<RecordBean>() {
+            @Override
+            public void done(List<RecordBean> list, BmobException e) {
+                if (e == null) {
+                    callBack.success(list);
+                } else {
+                    callBack.fail(e.getMessage());
+                    Log.e(TAG, "查询指定用户和年月数据error：" + e.getMessage());
+                }
+            }
+        });
+    }
+
+    public static void saveBean(String date, String startTime, String endTime, String other, CallBack callBack) {
+        RecordBean bean = new RecordBean(date, startTime, endTime, other);
+        bean.save(new SaveListener<String>() {
+            @Override
+            public void done(String s, BmobException e) {
+                if (e == null) {
+                    callBack.success();
+                } else {
+                    callBack.fail(e.getMessage());
+                    Log.e(TAG, "保存打卡数据error：" + e.getMessage());
+                }
+            }
+        });
+    }
+
+    public static void updateBean(String date, String startTime, String endTime, String other, CallBack callBack) {
+        queryForDay(date, new CallBack() {
+            @Override
+            public void success(Object... values) {
+                List<RecordBean> list = (List<RecordBean>) values[0];
+                if (list != null && list.size() > 0) {
+                    if (startTime != null) {
+                        list.get(0).startTime = startTime;
+                        list.get(0).isLate = isLate(startTime);
+                    }
+                    if (endTime != null) {
+                        list.get(0).endTime = endTime;
+                        list.get(0).isLeaveEarly = isLeaveEarly(endTime);
+                    }
+                    if (other != null) {
+                        list.get(0).other = other;
+                    }
+                    list.get(0).update(BmobUser.getCurrentUser(BmobUser.class).getObjectId(), new UpdateListener() {
+                        @Override
+                        public void done(BmobException e) {
+                            if (e == null) {
+                                callBack.success();
+                            } else {
+                                callBack.fail(e.getMessage());
+                                Log.e(TAG, "修改打卡数据error：" + e.getLocalizedMessage());
+                            }
+                        }
+                    });
+                } else {
+                    saveBean(date, startTime, endTime, other, callBack);
+                }
+            }
+
+            @Override
+            public void fail(String values) {
+
+            }
+        });
+    }
+
+
+    /**
+     * 判断日期是周几
+     *
+     * @param dates 参数举例  String dates="2018-11-11";
+     * @return
+     */
+    private static String getWeek(String dates) {
+        Calendar calendar = Calendar.getInstance();
+        SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd");
+        Date d = null;
+        try {
+            d = f.parse(dates);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        calendar.setTime(d);
+        String s;
+        switch (calendar.get(Calendar.DAY_OF_WEEK) - 1) {
+            case 1:
+                return "星期一";
+            case 2:
+                return "星期二";
+            case 3:
+                return "星期三";
+            case 4:
+                return "星期四";
+            case 5:
+                return "星期五";
+            case 6:
+                return "星期六";
+            case 0:
+                return "星期日";
+            default:
+                return "";
+        }
+    }
+
+    /**
+     * 获取年月
+     *
+     * @param date 2021-6-3
+     */
+    private static String getYM(String date) {
+        String[] array = date.split("-");
+        System.out.println(array.toString());
+        return "" + array[0] + array[1];
+    }
+
+    /**
+     * 判断是否迟到
+     *
+     * @param startTime
+     * @return
+     */
+    private static boolean isLate(String startTime) {
+        int hours, minute;
+        if (startTime != null && startTime.length() > 0) {
+            String[] split = startTime.split(":");
+            if (split != null && split.length != 0) {
+                hours = Integer.parseInt(split[0]);
+                minute = Integer.parseInt(split[1]);
+                return hours > 9 || (hours == 9 && minute > 30);
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * 判断是否早退
+     *
+     * @param endTime
+     * @return
+     */
+    private static boolean isLeaveEarly(String endTime) {
+        int hours, minute;
+        if (endTime != null && endTime.length() > 0) {
+            String[] split = endTime.split(":");
+            if (split != null && split.length != 0) {
+                hours = Integer.parseInt(split[0]);
+                minute = Integer.parseInt(split[1]);
+                return hours < 18 || (hours == 18 && minute < 30);
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
     }
 
 }

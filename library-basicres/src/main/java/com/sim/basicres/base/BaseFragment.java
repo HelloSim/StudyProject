@@ -272,4 +272,40 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
         dialogBuilder.build().show();
     }
 
+
+    /**
+     * dialog显示
+     *
+     * @param title           标题
+     * @param message         提示信息
+     * @param dialogInterface 点击事件监听
+     */
+    public void showDialog(String title, String message, final DialogInterface dialogInterface) {
+        DialogBuilder dialogBuilder;
+        dialogBuilder = new DialogBuilder(getContext());
+        if (title != null) {
+            dialogBuilder.title(title);
+        }
+        if (message != null) {
+            dialogBuilder.message(message);
+        }
+        dialogBuilder.sureText("确认");
+        dialogBuilder.cancelText("取消");
+        if (dialogInterface != null) {
+            dialogBuilder.setSureOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dialogInterface.sureOnClick();
+                }
+            });
+            dialogBuilder.setCancelOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dialogInterface.cancelOnClick();
+                }
+            });
+        }
+        dialogBuilder.build().show();
+    }
+
 }
