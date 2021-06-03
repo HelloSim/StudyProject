@@ -7,7 +7,7 @@ import androidx.multidex.MultiDex;
 import com.sim.basicres.base.BaseApplication;
 import com.sim.basicres.utils.CrashHandler;
 import com.sim.http.APIFactory;
-import com.sim.user.utils.BmobInit;
+import com.sim.mine.utils.BmobInit;
 import com.tencent.bugly.Bugly;
 import com.tencent.bugly.beta.Beta;
 

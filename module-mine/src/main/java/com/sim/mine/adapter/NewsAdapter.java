@@ -1,4 +1,4 @@
-package com.sim.user.adapter;
+package com.sim.mine.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -13,8 +13,8 @@ import com.bumptech.glide.Glide;
 import com.google.android.material.imageview.ShapeableImageView;
 import com.sim.basicres.base.BaseAdapter;
 import com.sim.basicres.base.BaseViewHolder;
-import com.sim.user.R;
-import com.sim.user.bean.NewsBean;
+import com.sim.mine.R;
+import com.sim.mine.bean.NewsBean;
 
 import java.util.ArrayList;
 

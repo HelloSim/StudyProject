@@ -1,9 +1,9 @@
-package com.sim.user.bean;
+package com.sim.mine.bean;
 
 import android.util.Log;
 
-import com.sim.user.utils.SMSUtil;
-import com.sim.user.utils.CallBack;
+import com.sim.mine.utils.SMSUtil;
+import com.sim.mine.utils.CallBack;
 
 import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.exception.BmobException;

@@ -1,4 +1,4 @@
-package com.sim.user.ui.fragment;
+package com.sim.mine.ui.fragment;
 
 import android.view.View;
 import android.widget.LinearLayout;
@@ -10,8 +10,8 @@ import com.sim.basicres.base.BaseFragment;
 import com.sim.basicres.constant.ArouterUrl;
 import com.sim.basicres.utils.ToastUtil;
 import com.sim.basicres.views.TitleView;
-import com.sim.user.R;
-import com.sim.user.bean.User;
+import com.sim.mine.R;
+import com.sim.mine.bean.User;
 
 @Route(path = ArouterUrl.Mine.user_fragment)
 public class MineFragment extends BaseFragment {

@@ -1,27 +1,21 @@
-package com.sim.user.application;
-
-import android.app.Application;
+package com.sim.mine.application;
 
 import com.sim.basicres.base.BaseApplication;
 import com.sim.http.APIFactory;
+import com.sim.mine.utils.BmobInit;
 
 /**
  * @ author: Sim
  * @ time： 2021/5/26 16:37
  * @ description：
  */
-public class UserApplication extends BaseApplication {
-
-    private static Application application;
-
-    public static Application getApplication() {
-        return application;
-    }
+public class MineApplication extends BaseApplication {
 
     @Override
     public void onCreate() {
         super.onCreate();
         APIFactory.getInstance().init(this);
+        BmobInit.init(getApplicationContext());
     }
 
 }

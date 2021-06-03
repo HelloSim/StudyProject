@@ -1,8 +1,8 @@
-package com.sim.user.utils;
+package com.sim.mine.utils;
 
 import android.util.Log;
 
-import com.sim.user.bean.User;
+import com.sim.mine.bean.User;
 
 import cn.bmob.v3.BmobSMS;
 import cn.bmob.v3.BmobUser;

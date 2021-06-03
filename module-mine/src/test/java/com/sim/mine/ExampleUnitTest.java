@@ -1,4 +1,4 @@
-package com.sim.user;
+package com.sim.mine;
 
 import org.junit.Test;
 

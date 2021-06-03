@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.sim.user">
+    package="com.sim.mine">
 
     <application
-        android:name=".utils.BmobInit"
+        android:name="com.sim.mine.application.MineApplication"
         android:allowBackup="true"
         android:icon="@mipmap/common_ic_app_icon"
         android:label="@string/common_user"
@@ -11,18 +11,18 @@
         android:supportsRtl="true"
         android:theme="@style/common_APPTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".MainActivity">
+        <activity android:name="com.sim.mine.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.sim.user.ui.activity.UserCollectActivity" />
-        <activity android:name="com.sim.user.ui.activity.UserInfoActivity" />
-        <activity android:name="com.sim.user.ui.activity.UserLogInActivity" />
-        <activity android:name="com.sim.user.ui.activity.UserRegisterActivity" />
-        <activity android:name="com.sim.user.ui.activity.UserUpdatePasswordActivity" />
+        <activity android:name="com.sim.mine.ui.activity.UserCollectActivity" />
+        <activity android:name="com.sim.mine.ui.activity.UserInfoActivity" />
+        <activity android:name="com.sim.mine.ui.activity.UserLogInActivity" />
+        <activity android:name="com.sim.mine.ui.activity.UserRegisterActivity" />
+        <activity android:name="com.sim.mine.ui.activity.UserUpdatePasswordActivity" />
 
     </application>
 

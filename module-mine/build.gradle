@@ -53,5 +53,6 @@ dependencies {
     annotationProcessor deps.arouter.compiler
     if (isRunAlone.toBoolean()) {
         implementation project(':library-web')
+        implementation project(':library-user')
     }
 }

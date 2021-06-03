@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.sim.user">
+    package="com.sim.mine">
 
     <application>
         <activity android:name=".ui.activity.UserLogInActivity"/>

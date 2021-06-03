@@ -22,9 +22,9 @@ import com.sim.basicres.utils.TimeUtil;
 import com.sim.basicres.utils.ToastUtil;
 import com.sim.basicres.views.TitleView;
 import com.sim.record.R;
-import com.sim.user.bean.RecordBean;
-import com.sim.user.bean.User;
-import com.sim.user.utils.CallBack;
+import com.sim.mine.bean.RecordBean;
+import com.sim.mine.bean.User;
+import com.sim.mine.utils.CallBack;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;

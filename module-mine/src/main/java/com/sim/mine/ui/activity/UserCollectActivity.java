@@ -1,4 +1,4 @@
-package com.sim.user.ui.activity;
+package com.sim.mine.ui.activity;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -16,11 +16,11 @@ import com.sim.basicres.callback.DialogInterface;
 import com.sim.basicres.constant.ArouterUrl;
 import com.sim.basicres.utils.ToastUtil;
 import com.sim.basicres.views.TitleView;
-import com.sim.user.R;
-import com.sim.user.adapter.NewsAdapter;
-import com.sim.user.bean.NewsBean;
-import com.sim.user.bean.User;
-import com.sim.user.utils.CallBack;
+import com.sim.mine.R;
+import com.sim.mine.adapter.NewsAdapter;
+import com.sim.mine.bean.NewsBean;
+import com.sim.mine.bean.User;
+import com.sim.mine.utils.CallBack;
 
 import java.util.ArrayList;
 import java.util.List;

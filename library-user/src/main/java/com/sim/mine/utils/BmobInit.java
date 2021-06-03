@@ -1,4 +1,4 @@
-package com.sim.user.utils;
+package com.sim.mine.utils;
 
 import android.content.Context;
 

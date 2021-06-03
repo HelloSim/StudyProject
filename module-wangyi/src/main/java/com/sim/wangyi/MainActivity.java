@@ -65,7 +65,6 @@ public class MainActivity extends BaseActivity {
         SPUtil.put(MainActivity.this, AppHelper.userSpName, AppHelper.userSpStateKey, true);
         if (wangyiFragment == null) {
             wangyiFragment = new WangyiFragment();
-//            wangyiFragment = (Fragment) ARouter.getInstance().build(ArouterUrl.wangyi_fragment).navigation();
             mFragmentTransaction.add(R.id.frameLayout, wangyiFragment);
         } else {
             mFragmentTransaction.show(wangyiFragment);

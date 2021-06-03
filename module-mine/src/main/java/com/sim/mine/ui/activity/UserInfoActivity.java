@@ -1,4 +1,4 @@
-package com.sim.user.ui.activity;
+package com.sim.mine.ui.activity;
 
 import android.app.Activity;
 import android.content.Context;
@@ -22,9 +22,9 @@ import com.sim.basicres.constant.AppHelper;
 import com.sim.basicres.constant.ArouterUrl;
 import com.sim.basicres.utils.ToastUtil;
 import com.sim.basicres.views.TitleView;
-import com.sim.user.R;
-import com.sim.user.bean.User;
-import com.sim.user.utils.CallBack;
+import com.sim.mine.R;
+import com.sim.mine.bean.User;
+import com.sim.mine.utils.CallBack;
 
 import org.greenrobot.eventbus.EventBus;
 

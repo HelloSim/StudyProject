@@ -1,4 +1,4 @@
-package com.sim.user.utils;
+package com.sim.mine.utils;
 
 /**
  * @author Sim --- 自定义 成功/失败 回调接口
