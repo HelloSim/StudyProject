@@ -18,11 +18,12 @@ import com.sim.basicres.R;
  */
 public class TitleView extends RelativeLayout {
 
+    private Context context;
     // 定义组件
     private ImageView ivLeft, ivRight;
     private TextView titleTextView;
 
-    private boolean showLeft, showRight;
+    private boolean showLeft = false, showRight = false;
     private String titleText;// 文字
     private int leftImageSrc, rightImageSrc;// 左右两个ImageView的资源
 
@@ -36,8 +37,9 @@ public class TitleView extends RelativeLayout {
 
     public TitleView(Context context, AttributeSet attrs) {
         super(context, attrs);
+        this.context = context;
         initVariable(context, attrs);
-        initView(context, showLeft, showRight);
+        initView(context);
     }
 
     /**
@@ -62,14 +64,13 @@ public class TitleView extends RelativeLayout {
      *
      * @param context
      */
-    private void initView(Context context, boolean showBack, boolean showIcon) {
-        setBackgroundColor(Color.BLACK);
-
+    private void initView(Context context) {
+        setBackgroundColor(Color.parseColor("#00CCCC"));
         titleTextView = new TextView(context);
         titleTextView.setText(titleText);
         titleTextView.setTextColor(Color.WHITE);
         titleTextView.setTextSize(20);
-        titleTextView.setPadding(0, 50, 0, 50);
+        titleTextView.setPadding(0, 30, 0, 30);
         TextPaint tp = titleTextView.getPaint();
         tp.setFakeBoldText(true);
         titleTextView.setGravity(Gravity.CENTER);
@@ -77,11 +78,11 @@ public class TitleView extends RelativeLayout {
         mTitlepParams.addRule(RelativeLayout.CENTER_IN_PARENT, TRUE);
         addView(titleTextView, mTitlepParams);
 
-        if (showBack) {
+        if (showLeft) {
             ivLeft = new ImageView(context);
             ivLeft.setBackgroundResource(leftImageSrc);
-            ivLeft.setPadding(40, 50, 40, 50);
-            mLeftParams = new LayoutParams(60, 60);
+            ivLeft.setPadding(40, 30, 40, 30);
+            mLeftParams = new LayoutParams(40, 40);
             mLeftParams.addRule(RelativeLayout.ALIGN_PARENT_LEFT, TRUE);
             mLeftParams.addRule(RelativeLayout.CENTER_VERTICAL, TRUE);
             mLeftParams.setMargins(30, 10, 10, 10);
@@ -100,11 +101,11 @@ public class TitleView extends RelativeLayout {
             });
         }
 
-        if (showIcon) {
+        if (showRight) {
             ivRight = new ImageView(context);
             ivRight.setBackgroundResource(rightImageSrc);
-            ivRight.setPadding(40, 50, 40, 50);
-            mRightParams = new LayoutParams(80, 80);
+            ivRight.setPadding(40, 30, 40, 30);
+            mRightParams = new LayoutParams(50, 50);
             mRightParams.addRule(RelativeLayout.ALIGN_PARENT_RIGHT, TRUE);
             mRightParams.addRule(RelativeLayout.CENTER_VERTICAL, TRUE);
             mRightParams.setMargins(10, 10, 30, 10);

@@ -4,6 +4,7 @@
     <color name="common_colorPrimaryDark">#00574B</color>
     <color name="common_colorAccent">#36C1BC</color>
 
+    <color name="common_main">#00CCCC</color>
     <color name="common_transparent">#00000000</color><!-- 黑色透明-->
     <color name="common_translucent">#80000000</color><!-- 黑色半透明-->
     <color name="common_white">#FFFFFF</color>
