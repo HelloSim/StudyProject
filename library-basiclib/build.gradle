@@ -38,6 +38,7 @@ dependencies {
     api deps.bottombar//底部导航
     api deps.banner//轮播图
     api deps.web//webview
+    api deps.constraintlayout//圆形图片控件
     api 'androidx.legacy:legacy-support-v4:1.0.0'//下拉刷新控件
     api 'com.haibin:calendarview:3.4.6' //日历
 

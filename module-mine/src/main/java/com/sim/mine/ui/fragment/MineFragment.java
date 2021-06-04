@@ -2,6 +2,7 @@ package com.sim.mine.ui.fragment;
 
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
@@ -10,14 +11,17 @@ import com.sim.basicres.base.BaseFragment;
 import com.sim.basicres.constant.ArouterUrl;
 import com.sim.basicres.utils.ToastUtil;
 import com.sim.basicres.views.TitleView;
+import com.sim.basicres.views.WaveView;
 import com.sim.mine.R;
 import com.sim.mine.bean.User;
 
 @Route(path = ArouterUrl.Mine.user_fragment)
 public class MineFragment extends BaseFragment {
 
+    private WaveView waveview;
+    private LinearLayout llHead;
     private TitleView titleView;
-    private TextView tvUserName;
+    private TextView tvUserName, tvId;
     private LinearLayout userLogin, userCollect, updateVersion, project, author;
 
     @Override
@@ -35,7 +39,11 @@ public class MineFragment extends BaseFragment {
             }
         });
 
+        llHead = view.findViewById(R.id.llHead);
+        waveview = view.findViewById(R.id.waveview);
+
         tvUserName = view.findViewById(R.id.tv_user_name);
+        tvId = view.findViewById(R.id.tvId);
 
         userLogin = view.findViewById(R.id.user_login);
         userCollect = view.findViewById(R.id.user_collect);
@@ -47,10 +55,17 @@ public class MineFragment extends BaseFragment {
 
     @Override
     protected void initView(View view) {
+        RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) llHead.getLayoutParams();
+        waveview.setOnWaveAnimationListener(y -> {
+            layoutParams.setMargins(0, (int) y, 0, 0);
+            llHead.setLayoutParams(layoutParams);
+        });
         if (User.isLogin()) {
             tvUserName.setText(User.getUsername());
+            tvId.setText("ID:" + User.getMobilePhoneNumber());
         } else {
             tvUserName.setText("用户登录");
+            tvId.setText("");
         }
     }
 
@@ -63,8 +78,10 @@ public class MineFragment extends BaseFragment {
         super.onResume();
         if (User.isLogin()) {
             tvUserName.setText(User.getUsername());
+            tvId.setText("ID:" + User.getMobilePhoneNumber());
         } else {
             tvUserName.setText("用户登录");
+            tvId.setText("");
         }
     }
 

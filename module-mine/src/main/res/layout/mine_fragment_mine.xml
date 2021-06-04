@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -13,38 +14,80 @@
         app:common_showRight="true"
         app:common_title="我的" />
 
-    <LinearLayout
-        android:id="@+id/user_login"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="120dp"
-        android:layout_marginTop="10dp"
-        android:background="@drawable/common_card_shape_white"
-        android:gravity="center_vertical"
-        android:padding="20dp">
+        android:layout_height="wrap_content">
 
-        <com.sim.basicres.views.CustomImageView.CustomImageView
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            app:common_src="@mipmap/mine_photo"
-            app:common_type="circle" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="130dp"
+            android:background="@color/black" />
 
-        <TextView
-            android:id="@+id/tv_user_name"
-            style="@style/common_textViewStyle"
-            android:layout_width="0dp"
-            android:layout_marginLeft="20dp"
-            android:layout_weight="1"
-            android:gravity="left"
-            android:text="用户登录"
-            android:textSize="18sp"
-            android:textStyle="bold" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="130dp"
+            android:paddingTop="40dp">
 
-        <ImageView
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:src="@mipmap/common_ic_to_right_gray" />
+            <LinearLayout
+                android:id="@+id/llHead"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingLeft="20dp">
 
-    </LinearLayout>
+                <androidx.constraintlayout.utils.widget.ImageFilterButton
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center"
+                    android:background="@mipmap/mine_photo"
+                    app:roundPercent="1" />
+
+                <LinearLayout
+                    android:id="@+id/user_login"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical"
+                    android:paddingLeft="10dp">
+
+                    <TextView
+                        android:id="@+id/tv_user_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/white"
+                        android:textSize="16sp"
+                        tools:text="昵称" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/tvId"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="#E6E2E2"
+                            android:textSize="12sp"
+                            tools:text="ID:123" />
+
+
+                    </LinearLayout>
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <com.sim.basicres.views.WaveView
+                android:id="@+id/waveview"
+                android:layout_width="match_parent"
+                android:layout_height="15dp"
+                android:layout_alignParentBottom="true" />
+
+        </RelativeLayout>
+
+    </RelativeLayout>
 
     <LinearLayout
         android:id="@+id/user_collect"
