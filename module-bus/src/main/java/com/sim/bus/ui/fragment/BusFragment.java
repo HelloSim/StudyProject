@@ -31,7 +31,7 @@ import java.util.Objects;
 import rx.Subscriber;
 
 /**
- * @author Sim --- “首页”Fragment
+ * 公交Fragment
  */
 @Route(path = ArouterUrl.Bus.bus_fragment)
 public class BusFragment extends BaseFragment {

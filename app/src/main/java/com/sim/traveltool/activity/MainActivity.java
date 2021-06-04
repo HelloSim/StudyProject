@@ -18,9 +18,6 @@ import com.sim.basicres.base.BaseActivity;
 import com.sim.basicres.constant.ArouterUrl;
 import com.sim.traveltool.R;
 
-/**
- * @author Sim --- MainActivity
- */
 @Route(path = ArouterUrl.app_main)
 public class MainActivity extends BaseActivity {
 

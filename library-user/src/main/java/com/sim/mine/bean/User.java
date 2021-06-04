@@ -12,11 +12,6 @@ import cn.bmob.v3.listener.LogInListener;
 import cn.bmob.v3.listener.SaveListener;
 import cn.bmob.v3.listener.UpdateListener;
 
-/**
- * @ author: Sim
- * @ time： 2021/6/3 10:18
- * @ description：
- */
 public class User {
 
     private static final String TAG = "【【【Sim_" + User.class.getSimpleName() + "】】】";

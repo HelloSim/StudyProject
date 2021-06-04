@@ -16,7 +16,7 @@ import com.sim.bus.R;
 import java.util.ArrayList;
 
 /**
- * @author Sim --- 终点位置搜索界面的RecyclerView适配器
+ * 终点位置搜索界面的RecyclerView适配器
  */
 public class BusStationNameAdapter extends BaseAdapter<BusStationNameAdapter.ViewHolder, BusLocationBean.TipsBean> {
 

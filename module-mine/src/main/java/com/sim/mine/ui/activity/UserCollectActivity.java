@@ -25,9 +25,7 @@ import com.sim.mine.utils.CallBack;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * @author Sim --- 网易新闻的收藏页面
- */
+
 @Route(path = ArouterUrl.Mine.user_activity_collect)
 public class UserCollectActivity extends BaseActivity {
 

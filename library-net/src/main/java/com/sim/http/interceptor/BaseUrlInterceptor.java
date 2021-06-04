@@ -11,9 +11,7 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 /**
- * @ author: Sim
- * @ time： 2021/5/19 9:58
- * @ description： baseUrl拦截器：处理多baseUrl
+ * @author Sim --- baseUrl拦截器：处理多baseUrl
  */
 public class BaseUrlInterceptor implements Interceptor {
 

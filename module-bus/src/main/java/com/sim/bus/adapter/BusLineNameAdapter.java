@@ -16,7 +16,7 @@ import com.sim.basicres.base.BaseViewHolder;
 import java.util.List;
 
 /**
- * @author Sim --- 实时公交搜索界面的RecyclerView适配器
+ * 实时公交搜索界面的RecyclerView适配器
  */
 public class BusLineNameAdapter extends BaseAdapter<BusLineNameAdapter.ViewHolder, BusRealTimeLineBean.DataBean> {
 

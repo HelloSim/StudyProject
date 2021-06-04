@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @author Sim --- 出行方案界面的RecyclerView适配器
+ * 出行方案界面的RecyclerView适配器
  */
 public class BusRouteAdapter extends BaseAdapter<BusRouteAdapter.ViewHolder, BusRouteBean.RouteBean.TransitsBean> {
 

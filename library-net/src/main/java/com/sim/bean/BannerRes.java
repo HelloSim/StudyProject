@@ -1,9 +1,11 @@
 package com.sim.bean;
 
-
 import java.io.Serializable;
 import java.util.List;
 
+/**
+ * 导航图实体bean类
+ */
 public class BannerRes {
 
     /**

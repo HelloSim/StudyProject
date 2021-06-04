@@ -11,11 +11,6 @@ import androidx.annotation.Nullable;
 import com.just.agentweb.IWebLayout;
 import com.sim.web.R;
 
-/**
- * Created by zlx on 2020/9/24 14:11
- * Email: 1170762202@qq.com
- * Description:
- */
 public class WebLayout implements IWebLayout {
 
     private WebView mWebView = null;

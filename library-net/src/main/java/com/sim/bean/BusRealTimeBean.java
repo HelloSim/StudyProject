@@ -3,7 +3,7 @@ package com.sim.bean;
 import java.util.List;
 
 /**
- * @author Sim --- 实时公交数据bean类
+ * 实时公交数据bean类
  */
 public class BusRealTimeBean {
 

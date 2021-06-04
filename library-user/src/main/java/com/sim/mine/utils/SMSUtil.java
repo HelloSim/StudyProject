@@ -10,11 +10,6 @@ import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.QueryListener;
 import cn.bmob.v3.listener.UpdateListener;
 
-/**
- * @ author: Sim
- * @ time： 2021/6/3 10:28
- * @ description：
- */
 public class SMSUtil {
 
     private static final String TAG = "【【【Sim】】】" + SMSUtil.class.getSimpleName();

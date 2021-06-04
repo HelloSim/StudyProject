@@ -3,7 +3,7 @@ package com.sim.bean;
 import java.util.List;
 
 /**
- * @author Sim --- 位置请求返回的实体类
+ * 位置请求返回的实体类
  */
 public class BusLocationDesignatedBean {
 

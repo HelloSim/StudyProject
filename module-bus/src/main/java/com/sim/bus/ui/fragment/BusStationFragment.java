@@ -10,7 +10,7 @@ import com.sim.basicres.constant.ArouterUrl;
 import com.sim.bus.R;
 
 /**
- * @author Sim --- 站点查询fragment
+ * 站点查询fragment
  */
 @Route(path = ArouterUrl.Bus.bus_fragment_station)
 public class BusStationFragment extends BaseFragment {

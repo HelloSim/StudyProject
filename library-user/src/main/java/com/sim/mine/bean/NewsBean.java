@@ -15,7 +15,7 @@ import cn.bmob.v3.listener.SaveListener;
 import cn.bmob.v3.listener.UpdateListener;
 
 /**
- * @author Sim --- 收藏实体类
+ * 收藏实体类
  */
 public class NewsBean extends BmobObject {
 

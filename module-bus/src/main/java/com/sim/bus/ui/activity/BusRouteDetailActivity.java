@@ -16,7 +16,7 @@ import com.sim.bus.R;
 import com.sim.bus.adapter.BusRouteDetailAdapter;
 
 /**
- * @author Sim --- 出行路线的详细方式
+ * 出行路线的详细方式
  */
 @Route(path = ArouterUrl.Bus.bus_activity_route_detail)
 public class BusRouteDetailActivity extends BaseActivity {

@@ -14,9 +14,7 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 /**
- * @ author: Sim
- * @ time： 2021/5/19 9:59
- * @ description：缓存拦截器
+ * @author Sim --- 缓存拦截器
  */
 public class MyCacheInterceptor implements Interceptor {
 

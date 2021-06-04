@@ -10,7 +10,7 @@ import com.sim.basicres.constant.ArouterUrl;
 import com.sim.bus.R;
 
 /**
- * @author Sim --- 实时公交fragment
+ * 实时公交fragment
  */
 @Route(path = ArouterUrl.Bus.bus_fragment_realtime)
 public class BusRealTimeFragment extends BaseFragment {

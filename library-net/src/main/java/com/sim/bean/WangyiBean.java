@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
- * @author Sim --- 网易新闻返回的数据bean类
+ * 网易新闻返回的数据bean类
  */
 public class WangyiBean implements Serializable {
     /**

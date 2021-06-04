@@ -18,9 +18,6 @@ import com.sim.bus.R;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * @author Sim ---
- */
 public class BusRouteDetailBusStationAdapter extends BaseAdapter<BusRouteDetailBusStationAdapter.ViewHolder,
         BusRouteBean.RouteBean.TransitsBean.SegmentsBean.BusBean.BuslinesBean> {
 

@@ -29,9 +29,6 @@ import com.sim.mine.utils.CallBack;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
-/**
- * @author Sim --- “打卡”Fragment
- */
 @Route(path = ArouterUrl.Record.record_fragment)
 public class RecordFragment extends BaseFragment implements CalendarView.OnMonthChangeListener, CalendarView.OnCalendarSelectListener {
 

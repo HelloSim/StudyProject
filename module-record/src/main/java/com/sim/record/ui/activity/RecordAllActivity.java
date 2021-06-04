@@ -24,9 +24,6 @@ import com.sim.mine.utils.CallBack;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * @author Sim --- 月打卡列表页面
- */
 @Route(path = ArouterUrl.Record.record_activity_all)
 public class RecordAllActivity extends BaseActivity {
 

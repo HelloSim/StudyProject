@@ -24,7 +24,6 @@ import com.sim.web.R;
 
 public class WebDialogFg extends DialogFragment implements View.OnClickListener {
 
-    //    private TextView tvOpen;
     private ImageView ivCollect;
     private ImageView ivOpen;
     private LinearLayout llCancel;

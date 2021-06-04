@@ -20,9 +20,6 @@ import com.sim.mine.bean.User;
 import com.sim.mine.utils.SMSUtil;
 import com.sim.mine.utils.CallBack;
 
-/**
- * @author Sim --- 用户注册页面
- */
 @Route(path = ArouterUrl.Mine.user_activity_register)
 public class UserRegisterActivity extends BaseActivity {
 

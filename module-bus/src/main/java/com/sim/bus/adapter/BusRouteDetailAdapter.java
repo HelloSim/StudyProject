@@ -19,7 +19,7 @@ import com.sim.bus.R;
 import java.util.List;
 
 /**
- * @author Sim --- 出行路线的详细方式页面的适配器
+ * 出行路线的详细方式页面的适配器
  */
 public class BusRouteDetailAdapter extends BaseAdapter<BusRouteDetailAdapter.ViewHolder,
         BusRouteBean.RouteBean.TransitsBean.SegmentsBean> {

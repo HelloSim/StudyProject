@@ -13,11 +13,6 @@ import com.tencent.bugly.beta.Beta;
 
 import cn.jpush.android.api.JPushInterface;
 
-/**
- * @ author: Sim
- * @ time： 2021/5/25 16:13
- * @ description：
- */
 public class App extends BaseApplication {
 
     @Override

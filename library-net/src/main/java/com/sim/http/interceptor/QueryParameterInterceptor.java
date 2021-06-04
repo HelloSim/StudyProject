@@ -8,9 +8,7 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 /**
- * @ author: Sim
- * @ time： 2021/5/19 10:09
- * @ description：公共参数拦截器：添加公共参数
+ * @author Sim --- 公共参数拦截器：添加公共参数
  */
 public class QueryParameterInterceptor implements Interceptor {
 

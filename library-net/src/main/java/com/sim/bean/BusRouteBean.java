@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
- * @author Sim ---- 出行路线搜索返回的数据bean类
+ * 出行路线搜索返回的数据bean类
  */
 public class BusRouteBean implements Serializable {
 

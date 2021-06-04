@@ -23,9 +23,6 @@ import java.util.ArrayList;
 
 import rx.Subscriber;
 
-/**
- * @author Sim --- “网易”Fragment
- */
 @Route(path = ArouterUrl.Wangyi.wangyi_fragment)
 public class WangyiFragment extends BaseFragment {
 

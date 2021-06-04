@@ -3,7 +3,7 @@ package com.sim.bean;
 import java.util.List;
 
 /**
- * @author Sim --- 位置搜索返回的数据bean类
+ * 位置搜索返回的数据bean类
  */
 public class BusLocationBean {
 

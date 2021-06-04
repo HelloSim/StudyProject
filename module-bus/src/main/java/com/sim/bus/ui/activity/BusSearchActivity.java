@@ -32,7 +32,7 @@ import java.util.ArrayList;
 import rx.Subscriber;
 
 /**
- * @author Sim --- 实时公交、出行线路站点的搜索页面
+ * 实时公交、出行线路站点的搜索页面
  */
 @Route(path = ArouterUrl.Bus.bus_activity_search)
 public class BusSearchActivity extends BaseActivity {

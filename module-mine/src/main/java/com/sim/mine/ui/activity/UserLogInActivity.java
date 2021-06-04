@@ -29,9 +29,7 @@ import com.sim.mine.utils.CallBack;
 
 import org.greenrobot.eventbus.EventBus;
 
-/**
- * @author Sim --- 登陆页面
- */
+
 @Route(path = ArouterUrl.Mine.user_activity_login)
 public class UserLogInActivity extends BaseActivity {
 

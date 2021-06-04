@@ -23,9 +23,6 @@ import com.sim.mine.bean.User;
 import com.sim.mine.utils.SMSUtil;
 import com.sim.mine.utils.CallBack;
 
-/**
- * @author Sim ---
- */
 @Route(path = ArouterUrl.Mine.user_activity_updatepws)
 public class UserUpdatePasswordActivity extends BaseActivity {
 

@@ -7,9 +7,7 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 /**
- * @ author: Sim
- * @ time： 2021/5/19 10:06
- * @ description：头部拦截器
+ * @author Sim --- 头部拦截器
  */
 public class HeaderInterceptor implements Interceptor {
 

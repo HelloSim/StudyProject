@@ -21,7 +21,7 @@ import cn.bmob.v3.listener.SaveListener;
 import cn.bmob.v3.listener.UpdateListener;
 
 /**
- * @author Sim --- 新的插入数据库的打卡记录实体
+ * 新的插入数据库的打卡记录实体
  */
 @SmartTable(name = "打卡详情")
 public class RecordBean extends BmobObject {

@@ -7,28 +7,18 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.sim.basicres.base.BaseActivity;
-import com.sim.basicres.bean.EventMessage;
-import com.sim.basicres.constant.AppHelper;
-import com.sim.basicres.utils.SPUtil;
+import com.sim.basicres.utils.ToastUtil;
+import com.sim.mine.bean.User;
+import com.sim.mine.utils.CallBack;
 import com.sim.record.ui.fragment.RecordFragment;
 
-import org.greenrobot.eventbus.EventBus;
-
-import cn.bmob.v3.BmobUser;
-
-/**
- * @ author: Sim
- * @ time： 2021/5/24 16:12
- * @ description：
- */
+//这里单独跑时，要把user模块的AndroidManifest的BmobContentProvider的authorities修改为com.sim.record.BmobContentProvider
 public class MainActivity extends BaseActivity {
 
     private FragmentManager mFragmentManager;
     private FragmentTransaction mFragmentTransaction;
 
     private RecordFragment recordFragment;
-
-    private boolean isLogig = false;
 
     @Override
     protected int getLayoutRes() {
@@ -40,23 +30,36 @@ public class MainActivity extends BaseActivity {
         findViewById(R.id.btn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!isLogig) {
-//                    BmobUser.loginByAccount("HelloSim", "123", new LogInListener<User>() {
-//                        @Override
-//                        public void done(User user, BmobException e) {
-//                            if (e == null) {
-//                                Log.d("Sim", "done: " + "登录成功");
-//                                isLogig = true;
-//                                EventBus.getDefault().post(new EventMessage(2001));
-//                            } else {
-//                                Log.e("Sim", "登录出错---code:" + e.getErrorCode() + ";message:" + e.getMessage());
-//                            }
-//                        }
-//                    });
+                if (!User.isLogin()) {
+                    User.loginByAccount("HelloSim", "123", new CallBack() {
+                        @Override
+                        public void success(Object... values) {
+                            ToastUtil.toast(MainActivity.this, "登录成功！");
+                            mFragmentManager = getSupportFragmentManager();
+                            mFragmentTransaction = mFragmentManager.beginTransaction();
+                            mFragmentTransaction.hide(recordFragment);
+                            recordFragment = null;
+                            recordFragment = new RecordFragment();
+                            mFragmentTransaction.add(R.id.frameLayout, recordFragment);
+                            mFragmentTransaction.show(recordFragment);
+                            mFragmentTransaction.commit();
+                        }
+
+                        @Override
+                        public void fail(String values) {
+                            ToastUtil.toast(MainActivity.this, "登录失败：" + values);
+                            mFragmentManager = getSupportFragmentManager();
+                            mFragmentTransaction = mFragmentManager.beginTransaction();
+                            mFragmentTransaction.hide(recordFragment);
+                            recordFragment = null;
+                            recordFragment = new RecordFragment();
+                            mFragmentTransaction.add(R.id.frameLayout, recordFragment);
+                            mFragmentTransaction.show(recordFragment);
+                            mFragmentTransaction.commit();
+                        }
+                    });
                 } else {
-                    BmobUser.logOut();
-                    isLogig = false;
-                    EventBus.getDefault().post(new EventMessage(2002));
+                    User.logout();
                 }
             }
         });
@@ -66,7 +69,6 @@ public class MainActivity extends BaseActivity {
     protected void initView() {
         mFragmentManager = getSupportFragmentManager();
         mFragmentTransaction = mFragmentManager.beginTransaction();
-        SPUtil.put(MainActivity.this, AppHelper.userSpName, AppHelper.userSpStateKey, true);
         if (recordFragment == null) {
             recordFragment = new RecordFragment();
             mFragmentTransaction.add(R.id.frameLayout, recordFragment);

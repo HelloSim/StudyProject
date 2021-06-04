@@ -27,7 +27,7 @@ import java.util.ArrayList;
 import rx.Subscriber;
 
 /**
- * @author Sim --- 显示出行方案的页面
+ * 示出行方案的页面
  */
 @Route(path = ArouterUrl.Bus.bus_activity_route)
 public class BusRouteActivity extends BaseActivity {
