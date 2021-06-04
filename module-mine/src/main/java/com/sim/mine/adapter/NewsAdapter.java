@@ -70,7 +70,7 @@ public class NewsAdapter extends BaseAdapter<NewsAdapter.ViewHolder, NewsBean> {
             public boolean onLongClick(View v) {
                 if (getOnItemLongClickListener() != null)
                     getOnItemLongClickListener().onItemLongClicked(holder, position);
-                return false;
+                return true;
             }
         });
     }

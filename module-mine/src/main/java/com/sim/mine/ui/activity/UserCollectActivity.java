@@ -96,7 +96,7 @@ public class UserCollectActivity extends BaseActivity {
                 showDialog(null, "取消收藏", "确认", "取消", new DialogInterface() {
                     @Override
                     public void sureOnClick() {
-                        NewsBean.Util.deleteNewsBean(collectionNewsBeanArrayList.get(position), new CallBack() {
+                        NewsBean.Util.deleteNewsBean(collectionNewsBeanArrayList.get(position).getTitle(), new CallBack() {
                             @Override
                             public void success(Object... values) {
                                 collectionNewsBeanArrayList.remove(position);
@@ -105,7 +105,7 @@ public class UserCollectActivity extends BaseActivity {
 
                             @Override
                             public void fail(String values) {
-                                ToastUtil.toast(context,"删除收藏失败：" + values);
+                                ToastUtil.toast(context, "删除收藏失败：" + values);
                             }
                         });
                     }

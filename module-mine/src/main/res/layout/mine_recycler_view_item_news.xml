@@ -28,15 +28,26 @@
             android:id="@+id/news_title"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
+            android:layout_marginTop="10dp"
             android:layout_weight="1"
             android:textStyle="bold"
             tools:text="科恩起诉特朗普集团：拖欠我190万美元法律费用" />
 
-        <TextView
-            android:id="@+id/news_time"
-            style="@style/common_textViewStyleGray"
-            android:layout_marginBottom="10dp"
-            tools:text="2019-03-08 10:00:35" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/news_time"
+                style="@style/common_textViewStyleGray"
+                android:layout_weight="1"
+                android:gravity="left"
+                tools:text="2019-03-08 10:00:35" />
+
+        </LinearLayout>
 
     </LinearLayout>
 

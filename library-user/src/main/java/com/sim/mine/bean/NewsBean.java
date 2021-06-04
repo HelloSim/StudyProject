@@ -110,12 +110,40 @@ public class NewsBean extends BmobObject {
         }
 
         /**
+         * 查询指定用户title数据
+         *
+         * @param title
+         * @param callBack
+         */
+        public static void getNewsBean(String title, CallBack callBack) {
+            if (!User.isLogin())
+                callBack.fail("未登录");
+            BmobQuery<NewsBean> bmobQuery = new BmobQuery<>();
+            bmobQuery.addWhereEqualTo("user", BmobUser.getCurrentUser(BmobUser.class));
+            bmobQuery.addWhereEqualTo("title", title);
+            bmobQuery.findObjects(new FindListener<NewsBean>() {
+                @Override
+                public void done(List<NewsBean> list, BmobException e) {
+                    if (e == null && list != null && list.size() > 0) {
+                        callBack.success(list);
+                    } else if (e == null && (list == null || list.size() == 0)) {
+                        callBack.success(null);
+                    } else {
+                        callBack.fail(e.getMessage());
+                        Log.e(TAG, "查询指定用户title数据error：" + e.getMessage());
+                    }
+                }
+            });
+        }
+
+        /**
          * 收藏NewsBean
          *
          * @param bean
          * @param callBack
          */
         public static void saveNewsBean(NewsBean bean, CallBack callBack) {
+            bean.setUser(BmobUser.getCurrentUser(BmobUser.class));
             bean.save(new SaveListener<String>() {
                 @Override
                 public void done(String s, BmobException e) {
@@ -132,27 +160,38 @@ public class NewsBean extends BmobObject {
         /**
          * 删除收藏的NewsBean
          *
-         * @param bean
+         * @param title
          * @param callBack
          */
-        public static void deleteNewsBean(NewsBean bean, CallBack callBack) {
-            if (bean.getObjectId() != null) {
-                bean.setObjectId(bean.getObjectId());
-                bean.delete(new UpdateListener() {
-                    @Override
-                    public void done(BmobException e) {
-                        if (e == null) {
-                            callBack.success();
-                        } else {
-                            callBack.fail(e.getMessage());
-                            Log.e(TAG, "删除收藏error：" + e.getMessage());
-                        }
+        public static void deleteNewsBean(String title, CallBack callBack) {
+            if (!User.isLogin())
+                callBack.fail("未登录");
+            BmobQuery<NewsBean> bmobQuery = new BmobQuery<>();
+            bmobQuery.addWhereEqualTo("user", BmobUser.getCurrentUser(BmobUser.class));
+            bmobQuery.addWhereEqualTo("title", title);
+            bmobQuery.findObjects(new FindListener<NewsBean>() {
+                @Override
+                public void done(List<NewsBean> list, BmobException e) {
+                    if (e == null && list != null && list.size() > 0) {
+                        list.get(0).delete(new UpdateListener() {
+                            @Override
+                            public void done(BmobException e) {
+                                if (e == null) {
+                                    callBack.success();
+                                } else {
+                                    callBack.fail(e.getMessage());
+                                    Log.e(TAG, "删除收藏error：" + e.getMessage());
+                                }
+                            }
+                        });
+                    } else if (e == null && (list == null || list.size() == 0)) {
+                        callBack.success(null);
+                    } else {
+                        callBack.fail(e.getMessage());
+                        Log.e(TAG, "查询指定用户title数据error：" + e.getMessage());
                     }
-
-                });
-            } else {
-                callBack.fail("删除出错");
-            }
+                }
+            });
         }
     }
 

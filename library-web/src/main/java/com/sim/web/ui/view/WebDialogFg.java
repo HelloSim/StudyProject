@@ -24,7 +24,6 @@ import com.sim.web.R;
 
 public class WebDialogFg extends DialogFragment implements View.OnClickListener {
 
-    private ImageView ivCollect;
     private ImageView ivOpen;
     private LinearLayout llCancel;
     private RelativeLayout parent;
@@ -44,11 +43,9 @@ public class WebDialogFg extends DialogFragment implements View.OnClickListener 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.web_fg, container, false);
-        ivCollect = rootView.findViewById(R.id.ivCollect);
         ivOpen = rootView.findViewById(R.id.ivOpen);
         llCancel = rootView.findViewById(R.id.llCancel);
         parent = rootView.findViewById(R.id.parent);
-        ivCollect.setOnClickListener(this);
         ivOpen.setOnClickListener(this);
         llCancel.setOnClickListener(this);
         parent.setOnClickListener(this);
@@ -84,9 +81,7 @@ public class WebDialogFg extends DialogFragment implements View.OnClickListener 
 
     @Override
     public void onClick(View view) {
-        if (view.getId() == R.id.ivCollect) {
-
-        } else if (view.getId() == R.id.ivOpen) {
+        if (view.getId() == R.id.ivOpen) {
             if (!TextUtils.isEmpty(url) && (url.startsWith("http") || url.startsWith("https"))) {
                 Intent i = new Intent(Intent.ACTION_VIEW);
                 i.setData(Uri.parse(url));
