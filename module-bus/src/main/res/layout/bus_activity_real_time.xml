@@ -10,8 +10,8 @@
         android:id="@+id/titleView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:common_leftImageSrc="@mipmap/common_ic_to_left"
-        app:common_rightImageSrc="@drawable/common_refresh_bg"
+        app:common_leftImageSrc="@mipmap/common_ic_to_left_white"
+        app:common_rightImageSrc="@drawable/bus_refresh_bg"
         app:common_showLeft="true"
         app:common_showRight="true"
         app:common_title="实时公交搜索" />

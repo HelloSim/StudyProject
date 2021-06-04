@@ -63,7 +63,7 @@ public class WebDialogFg extends DialogFragment implements View.OnClickListener 
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.setCancelable(true);
         dialog.setCanceledOnTouchOutside(true); //点击边际可消失
-        dialog.getWindow().setWindowAnimations(R.style.common_dialog_animation);
+        dialog.getWindow().setWindowAnimations(R.style.common_web_dialog_animation);
 //        dialog.getWindow().setLayout(100, ViewGroup.LayoutParams.WRAP_CONTENT);
         //width & height
 //        dialog.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT,

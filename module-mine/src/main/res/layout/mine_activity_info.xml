@@ -5,14 +5,14 @@
     android:id="@+id/parent"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@mipmap/common_login_bg"
+    android:background="@mipmap/mine_login_bg"
     android:orientation="vertical">
 
     <com.sim.basicres.views.TitleView
         android:id="@+id/titleView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:common_leftImageSrc="@mipmap/common_ic_to_left"
+        app:common_leftImageSrc="@mipmap/common_ic_to_left_white"
         app:common_showLeft="true"
         app:common_title="用户信息" />
 
@@ -21,7 +21,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="200dp"
-        android:background="@drawable/common_card_shape_gray"
+        android:background="@drawable/common_card_shape_white"
         android:padding="20dp">
 
         <TextView
@@ -43,7 +43,7 @@
             android:layout_height="15dp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:src="@mipmap/common_ic_to_right" />
+            android:src="@mipmap/common_ic_to_right_gray" />
 
     </RelativeLayout>
 
@@ -51,7 +51,7 @@
         android:id="@+id/rl_password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/common_card_shape_gray"
+        android:background="@drawable/common_card_shape_white"
         android:padding="20dp">
 
         <TextView
@@ -73,7 +73,7 @@
             android:layout_height="15dp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:src="@mipmap/common_ic_to_right" />
+            android:src="@mipmap/common_ic_to_right_gray" />
 
     </RelativeLayout>
 
@@ -81,7 +81,7 @@
         android:id="@+id/rl_user_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/common_card_shape_gray"
+        android:background="@drawable/common_card_shape_white"
         android:padding="20dp">
 
         <TextView
@@ -103,7 +103,7 @@
             android:layout_height="15dp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:src="@mipmap/common_ic_to_right" />
+            android:src="@mipmap/common_ic_to_right_gray" />
 
     </RelativeLayout>
 

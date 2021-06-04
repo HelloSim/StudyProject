@@ -20,7 +20,7 @@
         <ImageView
             android:layout_width="25dp"
             android:layout_height="25dp"
-            android:src="@mipmap/common_ic_bus_route_start" />
+            android:src="@mipmap/bus_ic_bus_route_start" />
 
         <TextView
             android:id="@+id/tv_item_start"
@@ -45,7 +45,7 @@
         <ImageView
             android:layout_width="25dp"
             android:layout_height="25dp"
-            android:src="@mipmap/common_ic_bus_walk" />
+            android:src="@mipmap/bus_ic_bus_walk" />
 
         <TextView
             android:id="@+id/tv_item_walk"
@@ -80,7 +80,7 @@
                 <ImageView
                     android:layout_width="25dp"
                     android:layout_height="25dp"
-                    android:src="@mipmap/common_ic_bus" />
+                    android:src="@mipmap/bus_ic_bus" />
 
                 <TextView
                     android:id="@+id/tv_item_bus"
@@ -115,7 +115,7 @@
         <ImageView
             android:layout_width="25dp"
             android:layout_height="25dp"
-            android:src="@mipmap/common_ic_bus_route_end" />
+            android:src="@mipmap/bus_ic_bus_route_end" />
 
         <TextView
             android:id="@+id/tv_item_end"

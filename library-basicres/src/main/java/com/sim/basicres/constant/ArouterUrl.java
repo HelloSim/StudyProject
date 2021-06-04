@@ -8,10 +8,13 @@ package com.sim.basicres.constant;
 public class ArouterUrl {
 
     /**
-     * mainActivity
+     * app主模块
      */
     public static final String app_main = "/app/main";
 
+    /**
+     * web模块
+     */
     public static class Web{
         public static final String base = "/module_web";
 
@@ -25,7 +28,6 @@ public class ArouterUrl {
         public static final String base = "/module_wangyi";
 
         public static final String wangyi_fragment = base + "/fragment/main";
-//        public static final String wangyi_activity_detail = base + "/detail";
     }
 
     /**

@@ -14,7 +14,7 @@
         android:id="@+id/iv_search"
         android:layout_width="30dp"
         android:layout_height="30dp"
-        android:src="@mipmap/common_ic_search" />
+        android:src="@mipmap/common_ic_search_white" />
 
     <TextView
         android:id="@+id/tv_location_name"

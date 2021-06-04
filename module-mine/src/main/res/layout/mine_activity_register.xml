@@ -3,13 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@mipmap/common_login_bg">
+    android:background="@mipmap/mine_login_bg">
 
     <com.sim.basicres.views.TitleView
         android:id="@+id/titleView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:common_leftImageSrc="@mipmap/common_ic_to_left"
+        app:common_leftImageSrc="@mipmap/common_ic_to_left_white"
         app:common_showLeft="true"
         app:common_title="注册" />
 
