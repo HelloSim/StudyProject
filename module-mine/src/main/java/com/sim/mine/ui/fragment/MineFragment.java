@@ -13,7 +13,7 @@ import com.sim.basicres.utils.ToastUtil;
 import com.sim.basicres.views.TitleView;
 import com.sim.basicres.views.WaveView;
 import com.sim.mine.R;
-import com.sim.mine.bean.User;
+import com.sim.user.bean.User;
 
 @Route(path = ArouterUrl.Mine.user_fragment)
 public class MineFragment extends BaseFragment {

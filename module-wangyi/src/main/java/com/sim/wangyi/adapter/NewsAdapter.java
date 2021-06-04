@@ -17,8 +17,8 @@ import com.sim.basicres.base.BaseAdapter;
 import com.sim.basicres.base.BaseViewHolder;
 import com.sim.basicres.utils.ToastUtil;
 import com.sim.bean.WangyiBean;
-import com.sim.mine.bean.NewsBean;
-import com.sim.mine.utils.CallBack;
+import com.sim.user.bean.NewsBean;
+import com.sim.user.utils.CallBack;
 import com.sim.wangyi.R;
 
 import java.util.ArrayList;

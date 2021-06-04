@@ -4,7 +4,7 @@ import android.app.Application;
 
 import com.sim.basicres.base.BaseApplication;
 import com.sim.http.APIFactory;
-import com.sim.mine.utils.BmobInit;
+import com.sim.user.utils.BmobInit;
 
 public class RecordApplication extends BaseApplication {
 

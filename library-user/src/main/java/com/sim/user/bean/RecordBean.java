@@ -1,10 +1,10 @@
-package com.sim.mine.bean;
+package com.sim.user.bean;
 
 import android.util.Log;
 
 import com.bin.david.form.annotation.SmartColumn;
 import com.bin.david.form.annotation.SmartTable;
-import com.sim.mine.utils.CallBack;
+import com.sim.user.utils.CallBack;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

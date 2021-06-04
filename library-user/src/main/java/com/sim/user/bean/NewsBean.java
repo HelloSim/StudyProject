@@ -1,8 +1,8 @@
-package com.sim.mine.bean;
+package com.sim.user.bean;
 
 import android.util.Log;
 
-import com.sim.mine.utils.CallBack;
+import com.sim.user.utils.CallBack;
 
 import java.util.List;
 

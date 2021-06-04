@@ -8,8 +8,8 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.sim.basicres.base.BaseActivity;
 import com.sim.basicres.utils.ToastUtil;
-import com.sim.mine.bean.User;
-import com.sim.mine.utils.CallBack;
+import com.sim.user.bean.User;
+import com.sim.user.utils.CallBack;
 import com.sim.record.ui.fragment.RecordFragment;
 
 //这里单独跑时，要把user模块的AndroidManifest的BmobContentProvider的authorities修改为com.sim.record.BmobContentProvider

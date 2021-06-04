@@ -23,9 +23,9 @@ import com.sim.basicres.utils.SPUtil;
 import com.sim.basicres.utils.ToastUtil;
 import com.sim.basicres.views.TitleView;
 import com.sim.mine.R;
-import com.sim.mine.bean.User;
-import com.sim.mine.utils.SMSUtil;
-import com.sim.mine.utils.CallBack;
+import com.sim.user.bean.User;
+import com.sim.user.utils.SMSUtil;
+import com.sim.user.utils.CallBack;
 
 import org.greenrobot.eventbus.EventBus;
 

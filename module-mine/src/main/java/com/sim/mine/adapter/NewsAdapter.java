@@ -14,7 +14,7 @@ import com.google.android.material.imageview.ShapeableImageView;
 import com.sim.basicres.base.BaseAdapter;
 import com.sim.basicres.base.BaseViewHolder;
 import com.sim.mine.R;
-import com.sim.mine.bean.NewsBean;
+import com.sim.user.bean.NewsBean;
 
 import java.util.ArrayList;
 
