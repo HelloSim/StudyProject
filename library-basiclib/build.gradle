@@ -36,6 +36,7 @@ dependencies {
     api deps.material//TabLayout
     api deps.particleView//粒子动画
     api deps.bottombar//底部导航
+    api deps.tablayout
     api deps.banner//轮播图
     api deps.web//webview
     api deps.constraintlayout//圆形图片控件

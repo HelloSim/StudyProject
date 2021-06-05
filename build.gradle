@@ -19,14 +19,20 @@ buildscript {
 
             'multidex'        : "com.android.support:multidex:1.0.3",
 
-            'particleView'    : "me.wangyuwei:ParticleView:1.0.4",//闪屏页粒子动画 https://github.com/JeasonWong/Particle
-            'bottombar'       : "com.gauravk.bubblenavigation:bubblenavigation:1.0.7",//底部导航栏 https://github.com/gauravk95/bubble-navigation
-            'banner'          : "com.youth.banner:banner:1.4.9",////轮播图
             'material'        : "com.google.android.material:material:1.2.1",
+
             'recyclerview'    : "androidx.recyclerview:recyclerview:1.2.0-beta01",//recyclerview
             'constraintlayout': "androidx.constraintlayout:constraintlayout:2.0.1",//圆形图片
 
-            'web'             : "com.just.agentweb:agentweb-androidx:4.1.4",//web
+            'particleView'    : "me.wangyuwei:ParticleView:1.0.4",
+
+            'bottombar'       : "com.gauravk.bubblenavigation:bubblenavigation:1.0.7",
+
+            'tablayout'       : "com.github.hackware1993:MagicIndicator:1.7.0",
+
+            'banner'          : "com.youth.banner:banner:1.4.9",
+
+            'web'             : "com.just.agentweb:agentweb-androidx:4.1.4",
 
             'glide'           : [
                     'glide'   : "com.github.bumptech.glide:glide:4.9.0",

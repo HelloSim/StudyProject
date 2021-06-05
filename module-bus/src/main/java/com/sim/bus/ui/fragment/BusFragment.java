@@ -1,6 +1,7 @@
 package com.sim.bus.ui.fragment;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -11,12 +12,12 @@ import androidx.viewpager.widget.ViewPager;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.bumptech.glide.Glide;
-import com.google.android.material.tabs.TabLayout;
 import com.sim.basicres.base.BaseFragment;
 import com.sim.basicres.constant.ArouterUrl;
 import com.sim.basicres.utils.ToastUtil;
 import com.sim.bean.BannerRes;
 import com.sim.bus.R;
+import com.sim.bus.adapter.ColorFlipPagerTitleView;
 import com.sim.http.APIFactory;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
@@ -24,9 +25,18 @@ import com.youth.banner.Transformer;
 import com.youth.banner.listener.OnBannerListener;
 import com.youth.banner.loader.ImageLoader;
 
+import net.lucode.hackware.magicindicator.MagicIndicator;
+import net.lucode.hackware.magicindicator.ViewPagerHelper;
+import net.lucode.hackware.magicindicator.buildins.commonnavigator.CommonNavigator;
+import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.CommonNavigatorAdapter;
+import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IPagerIndicator;
+import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IPagerTitleView;
+import net.lucode.hackware.magicindicator.buildins.commonnavigator.indicators.LinePagerIndicator;
+import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.SimplePagerTitleView;
+
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
 
 import rx.Subscriber;
 
@@ -36,14 +46,16 @@ import rx.Subscriber;
 @Route(path = ArouterUrl.Bus.bus_fragment)
 public class BusFragment extends BaseFragment {
 
+    //轮播图模块
     private Banner banner;
-    //放图片地址的集合
-    private BannerRes bannerRes;
+    private BannerRes bannerRes;//放图片地址的集合
     private ArrayList<String> list_path = new ArrayList<>();
 
     //导航栏模块
-    private TabLayout tabLayout;
-    private ViewPager viewPager;
+    private MagicIndicator magicIndicator;
+    private ViewPager mViewPager;
+    private static final String[] CHANNELS = new String[]{"实时公交", "出行路线", "站点查询"};
+    private List<String> titleDatas = Arrays.asList(CHANNELS);
 
     private Fragment busRealTimeFragment, busRouteFragment, busStationFragment;
 
@@ -55,65 +67,19 @@ public class BusFragment extends BaseFragment {
     @Override
     protected void bindViews(View view) {
         banner = view.findViewById(R.id.banner);
-        tabLayout = view.findViewById(R.id.tab_layout);
-        viewPager = view.findViewById(R.id.view_pager);
+        magicIndicator = view.findViewById(R.id.magic_indicator);
+        mViewPager = view.findViewById(R.id.view_pager);
     }
 
     @Override
     protected void initView(View view) {
-        List<String> titleDatas = new ArrayList<>();
-        titleDatas.add("实时公交");
-        titleDatas.add("出行路线");
-        titleDatas.add("站点查询");
-
-        viewPager.setAdapter(new FragmentPagerAdapter(getFragmentManager()) {
-            @Override
-            public Fragment getItem(int position) {
-                return Objects.requireNonNull(showFragment(position));
-            }
-
-            @Override
-            public int getCount() {
-                return titleDatas.size();
-            }
-
-            @Override
-            public CharSequence getPageTitle(int position) {
-                return titleDatas.get(position);
-            }
-        });
-        tabLayout.setupWithViewPager(viewPager);
         getBanner();
+        initMagicIndicator();
     }
 
     @Override
     protected void initData() {
 
-    }
-
-    /**
-     * 隐藏所有的fragment再显示需要的fragment
-     *
-     * @param type 0:实时公交fragment     1：出行路线fragment    2：站点查询fragment
-     */
-    private Fragment showFragment(int type) {
-        switch (type) {
-            default:
-                if (busRealTimeFragment == null) {
-                    busRealTimeFragment = (Fragment) ARouter.getInstance().build(ArouterUrl.Bus.bus_fragment_realtime).navigation();
-                }
-                return busRealTimeFragment;
-            case 1:
-                if (busRouteFragment == null) {
-                    busRouteFragment = (Fragment) ARouter.getInstance().build(ArouterUrl.Bus.bus_fragment_route).navigation();
-                }
-                return busRouteFragment;
-            case 2:
-                if (busStationFragment == null) {
-                    busStationFragment = (Fragment) ARouter.getInstance().build(ArouterUrl.Bus.bus_fragment_station).navigation();
-                }
-                return busStationFragment;
-        }
     }
 
     private void getBanner() {
@@ -123,7 +89,26 @@ public class BusFragment extends BaseFragment {
                 for (BannerRes.DataBean dataBean : bannerRes.getData()) {
                     list_path.add(dataBean.getImagePath());
                 }
-                playBanner(banner, list_path);
+                banner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR)//设置内置样式，共有六种
+                        .setIndicatorGravity(BannerConfig.RIGHT)//设置指示器的位置，小点点，左中右。
+                        .setBannerAnimation(Transformer.ForegroundToBackground)//设置轮播的动画效果，内含多种特效
+                        .setDelayTime(5000)//设置轮播间隔时间
+                        .isAutoPlay(true)//设置是否为自动轮播，默认是“true”
+                        .setImages(list_path)//设置图片网址或地址的集合
+                        .setImageLoader(new ImageLoader() {
+                            @Override
+                            public void displayImage(Context context, Object o, ImageView imageView) {
+                                Glide.with(context).load((String) o).into(imageView);
+                            }
+                        })//设置图片加载器
+                        // banner.setBannerTitles(list_title);//设置轮播图的标题集合
+                        .setOnBannerListener(new OnBannerListener() {
+                            @Override
+                            public void OnBannerClick(int i) {
+                                ToastUtil.toast(getContext(), "点击了第" + (i + 1) + "个");
+                            }
+                        })//点击监听事件
+                        .start();
             }
 
             @Override
@@ -138,27 +123,75 @@ public class BusFragment extends BaseFragment {
         });
     }
 
-    private void playBanner(Banner banner, ArrayList<String> urls) {
-        banner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR)//设置内置样式，共有六种
-                .setIndicatorGravity(BannerConfig.RIGHT)//设置指示器的位置，小点点，左中右。
-                .setBannerAnimation(Transformer.ForegroundToBackground)//设置轮播的动画效果，内含多种特效
-                .setDelayTime(5000)//设置轮播间隔时间
-                .isAutoPlay(true)//设置是否为自动轮播，默认是“true”
-                .setImages(urls)//设置图片网址或地址的集合
-                .setImageLoader(new ImageLoader() {
+    private void initMagicIndicator() {
+        mViewPager.setAdapter(new FragmentPagerAdapter(getFragmentManager()) {
+            @Override
+            public Fragment getItem(int position) {
+                switch (position) {
+                    default:
+                        if (busRealTimeFragment == null) {
+                            busRealTimeFragment = (Fragment) ARouter.getInstance().build(ArouterUrl.Bus.bus_fragment_realtime).navigation();
+                        }
+                        return busRealTimeFragment;
+                    case 1:
+                        if (busRouteFragment == null) {
+                            busRouteFragment = (Fragment) ARouter.getInstance().build(ArouterUrl.Bus.bus_fragment_route).navigation();
+                        }
+                        return busRouteFragment;
+                    case 2:
+                        if (busStationFragment == null) {
+                            busStationFragment = (Fragment) ARouter.getInstance().build(ArouterUrl.Bus.bus_fragment_station).navigation();
+                        }
+                        return busStationFragment;
+                }
+            }
+
+            @Override
+            public int getCount() {
+                return titleDatas == null ? 0 : titleDatas.size();
+            }
+
+            @Override
+            public CharSequence getPageTitle(int position) {
+                return titleDatas.get(position);
+            }
+        });
+
+        magicIndicator.setBackgroundColor(Color.LTGRAY);
+        CommonNavigator commonNavigator = new CommonNavigator(getContext());
+        commonNavigator.setAdjustMode(true);
+        commonNavigator.setAdapter(new CommonNavigatorAdapter() {
+            @Override
+            public int getCount() {
+                return titleDatas == null ? 0 : titleDatas.size();
+            }
+
+            @Override
+            public IPagerTitleView getTitleView(Context context, final int index) {
+                SimplePagerTitleView simplePagerTitleView = new ColorFlipPagerTitleView(context);
+                simplePagerTitleView.setText(titleDatas.get(index));
+                simplePagerTitleView.setNormalColor(Color.parseColor("#9e9e9e"));
+                simplePagerTitleView.setSelectedColor(Color.parseColor("#40c4ff"));
+                simplePagerTitleView.setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public void displayImage(Context context, Object o, ImageView imageView) {
-                        Glide.with(context).load((String) o).into(imageView);
+                    public void onClick(View v) {
+                        mViewPager.setCurrentItem(index);
                     }
-                })//设置图片加载器
-                // banner.setBannerTitles(list_title);//设置轮播图的标题集合
-                .setOnBannerListener(new OnBannerListener() {
-                    @Override
-                    public void OnBannerClick(int i) {
-                        ToastUtil.toast(getContext(), "点击了第" + (i + 1) + "个");
-                    }
-                })//点击监听事件
-                .start();
+                });
+                return simplePagerTitleView;
+            }
+
+            @Override
+            public IPagerIndicator getIndicator(Context context) {
+                LinePagerIndicator indicator = new LinePagerIndicator(context);
+                float lineHeight = 5;
+                indicator.setLineHeight(lineHeight);
+                indicator.setColors(Color.parseColor("#40c4ff"));
+                return indicator;
+            }
+        });
+        magicIndicator.setNavigator(commonNavigator);
+        ViewPagerHelper.bind(magicIndicator, mViewPager);
     }
 
 }
