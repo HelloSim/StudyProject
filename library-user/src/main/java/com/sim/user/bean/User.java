@@ -46,6 +46,7 @@ public class User {
 
     public static void logout() {
         BmobUser.logOut();
+        fetchUserInfo();
     }
 
     /**

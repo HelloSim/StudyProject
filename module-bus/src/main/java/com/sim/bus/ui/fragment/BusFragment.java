@@ -15,7 +15,7 @@ import com.bumptech.glide.Glide;
 import com.sim.basicres.base.BaseFragment;
 import com.sim.basicres.constant.ArouterUrl;
 import com.sim.basicres.utils.ToastUtil;
-import com.sim.bean.BannerRes;
+import com.sim.bean.BannerBean;
 import com.sim.bus.R;
 import com.sim.bus.adapter.ColorFlipPagerTitleView;
 import com.sim.http.APIFactory;
@@ -48,7 +48,7 @@ public class BusFragment extends BaseFragment {
 
     //轮播图模块
     private Banner banner;
-    private BannerRes bannerRes;//放图片地址的集合
+    private BannerBean bannerRes;//放图片地址的集合
     private ArrayList<String> list_path = new ArrayList<>();
 
     //导航栏模块
@@ -83,10 +83,10 @@ public class BusFragment extends BaseFragment {
     }
 
     private void getBanner() {
-        APIFactory.getInstance().getBanner(new Subscriber<BannerRes>() {
+        APIFactory.getInstance().getBanner(new Subscriber<BannerBean>() {
             @Override
             public void onCompleted() {
-                for (BannerRes.DataBean dataBean : bannerRes.getData()) {
+                for (BannerBean.DataBean dataBean : bannerRes.getData()) {
                     list_path.add(dataBean.getImagePath());
                 }
                 banner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR)//设置内置样式，共有六种
@@ -117,7 +117,7 @@ public class BusFragment extends BaseFragment {
             }
 
             @Override
-            public void onNext(BannerRes b) {
+            public void onNext(BannerBean b) {
                 bannerRes = b;
             }
         });

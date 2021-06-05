@@ -1,6 +1,6 @@
 package com.sim.http;
 
-import com.sim.bean.BannerRes;
+import com.sim.bean.BannerBean;
 import com.sim.bean.BusLocationBean;
 import com.sim.bean.BusLocationDesignatedBean;
 import com.sim.bean.BusRealTimeBean;
@@ -32,7 +32,7 @@ public interface ApiService {
      */
     @Headers({"host:wanandroid"})
     @GET(BaseUrl.base_wanandroid.getBanner)
-    Observable<BannerRes> getBanner();
+    Observable<BannerBean> getBanner();
 
 
     /**

@@ -51,6 +51,7 @@ public class WangyiFragment extends BaseFragment {
     @Override
     protected void initData() {
         getWangYiNew();
+        refreshLayout.setRefreshing(true);
     }
 
     //初始化RecyclerView

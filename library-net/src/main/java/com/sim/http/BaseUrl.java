@@ -35,6 +35,7 @@ public class BaseUrl {
         public static final String base = "https://www.wanandroid.com";
 
         public static final String getBanner = "/banner/json";
+        public static final String getPublicAuthor = "/wxarticle/chapters/json";
     }
 
 

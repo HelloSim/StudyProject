@@ -36,12 +36,17 @@ dependencies {
     api deps.material//TabLayout
     api deps.particleView//粒子动画
     api deps.bottombar//底部导航
-    api deps.tablayout
+    api deps.tablayout//tablayout
     api deps.banner//轮播图
     api deps.web//webview
+    api deps.loadsir
+    api deps.lottie
     api deps.constraintlayout//圆形图片控件
     api 'androidx.legacy:legacy-support-v4:1.0.0'//下拉刷新控件
     api 'com.haibin:calendarview:3.4.6' //日历
+
+    api 'com.scwang.smart:refresh-layout-kernel:2.0.1'      //核心必须依赖
+    api 'com.scwang.smart:refresh-header-two-level:2.0.1'   //二级刷新头
 
     //bugly
     api 'com.tencent.bugly:crashreport_upgrade:1.4.5'

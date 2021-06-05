@@ -1,6 +1,6 @@
 package com.sim.http;
 
-import com.sim.bean.BannerRes;
+import com.sim.bean.BannerBean;
 import com.sim.bean.BusLocationBean;
 import com.sim.bean.BusLocationDesignatedBean;
 import com.sim.bean.BusRealTimeBusStopBean;
@@ -39,7 +39,7 @@ public class APIFactory extends RetrofitUtil {
     /**
      * 轮播图图片获取
      */
-    public void getBanner(Subscriber<BannerRes> subscriber) {
+    public void getBanner(Subscriber<BannerBean> subscriber) {
         Observable observable = getApiService().getBanner();
         toSubscribe(observable, subscriber);
     }

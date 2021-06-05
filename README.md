@@ -47,3 +47,6 @@ jitpack仓库：https://jitpack.io/#huangyanbin/smartTable
 
 //WebView
 [agentweb](https://github.com/Justson/AgentWeb)
+
+//加载反馈页管理框架
+[loadsir](com.kingja.loadsir:loadsir:1.3.8)

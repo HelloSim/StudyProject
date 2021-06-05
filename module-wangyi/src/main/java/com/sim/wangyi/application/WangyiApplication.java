@@ -4,6 +4,7 @@ import android.app.Application;
 
 import com.sim.basicres.base.BaseApplication;
 import com.sim.http.APIFactory;
+import com.sim.user.utils.BmobInit;
 
 public class WangyiApplication extends BaseApplication {
 
@@ -17,6 +18,7 @@ public class WangyiApplication extends BaseApplication {
     public void onCreate() {
         super.onCreate();
         APIFactory.getInstance().init(this);
+        BmobInit.init(getApplicationContext());
     }
 
 }
