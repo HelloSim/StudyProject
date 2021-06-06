@@ -69,8 +69,8 @@ public class TitleView extends RelativeLayout {
         titleTextView = new TextView(context);
         titleTextView.setText(titleText);
         titleTextView.setTextColor(Color.WHITE);
-        titleTextView.setTextSize(20);
-        titleTextView.setPadding(0, 30, 0, 30);
+        titleTextView.setTextSize(22);
+        titleTextView.setPadding(0, 50, 0, 50);
         TextPaint tp = titleTextView.getPaint();
         tp.setFakeBoldText(true);
         titleTextView.setGravity(Gravity.CENTER);
@@ -81,7 +81,7 @@ public class TitleView extends RelativeLayout {
         if (showLeft) {
             ivLeft = new ImageView(context);
             ivLeft.setBackgroundResource(leftImageSrc);
-            ivLeft.setPadding(40, 30, 40, 30);
+            ivLeft.setPadding(40, 50, 40, 50);
             mLeftParams = new LayoutParams(40, 40);
             mLeftParams.addRule(RelativeLayout.ALIGN_PARENT_LEFT, TRUE);
             mLeftParams.addRule(RelativeLayout.CENTER_VERTICAL, TRUE);
@@ -104,11 +104,11 @@ public class TitleView extends RelativeLayout {
         if (showRight) {
             ivRight = new ImageView(context);
             ivRight.setBackgroundResource(rightImageSrc);
-            ivRight.setPadding(40, 30, 40, 30);
-            mRightParams = new LayoutParams(50, 50);
+            ivRight.setPadding(40, 50, 40, 50);
+            mRightParams = new LayoutParams(60, 60);
             mRightParams.addRule(RelativeLayout.ALIGN_PARENT_RIGHT, TRUE);
             mRightParams.addRule(RelativeLayout.CENTER_VERTICAL, TRUE);
-            mRightParams.setMargins(10, 10, 30, 10);
+            mRightParams.setMargins(10, 10, 40, 10);
             addView(ivRight, mRightParams);
             ivRight.setOnClickListener(new OnClickListener() {
                 @Override

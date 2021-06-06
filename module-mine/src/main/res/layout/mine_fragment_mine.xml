@@ -10,7 +10,7 @@
         android:id="@+id/titleView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:common_rightImageSrc="@mipmap/mine_ic_setting_white"
+        app:common_rightImageSrc="@mipmap/common_ic_setting_white"
         app:common_showRight="true"
         app:common_title="我的" />
 
