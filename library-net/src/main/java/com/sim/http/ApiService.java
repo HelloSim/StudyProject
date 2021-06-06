@@ -7,6 +7,8 @@ import com.sim.bean.BusRealTimeBean;
 import com.sim.bean.BusRealTimeBusStopBean;
 import com.sim.bean.BusRealTimeLineBean;
 import com.sim.bean.BusRouteBean;
+import com.sim.bean.PublicArticleBean;
+import com.sim.bean.PublicAuthorBean;
 import com.sim.bean.WangyiBean;
 
 import retrofit2.http.GET;
@@ -33,6 +35,20 @@ public interface ApiService {
     @Headers({"host:wanandroid"})
     @GET(BaseUrl.base_wanandroid.getBanner)
     Observable<BannerBean> getBanner();
+
+    /**
+     * 公众号列表
+     */
+    @Headers({"host:wanandroid"})
+    @GET(BaseUrl.base_wanandroid.getPublicAuthor)
+    Observable<PublicAuthorBean> getPublicAuthor();
+
+    /**
+     * 获取指定公众号文章列表
+     */
+    @Headers({"host:wanandroid"})
+    @GET(BaseUrl.base_wanandroid.getPublicArticle)
+    Observable<PublicArticleBean> getPublicArticle();
 
 
     /**

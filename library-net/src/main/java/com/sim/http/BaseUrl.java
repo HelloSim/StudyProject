@@ -36,6 +36,7 @@ public class BaseUrl {
 
         public static final String getBanner = "/banner/json";
         public static final String getPublicAuthor = "/wxarticle/chapters/json";
+        public static final String getPublicArticle = "/wxarticle/list/408/1/json";
     }
 
 

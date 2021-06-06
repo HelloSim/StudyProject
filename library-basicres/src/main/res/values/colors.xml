@@ -15,10 +15,12 @@
 
     <color name="common_bottombar_wangyi_bg_active">#f44336</color>
     <color name="common_bottombar_wangyi_bg_inactive">#e57373</color>
+    <color name="common_bottombar_public_bg_active">#4caf50</color>
+    <color name="common_bottombar_public_bg_inactive">#81c784</color>
     <color name="common_bottombar_bus_bg_active">#03a9f4</color>
     <color name="common_bottombar_bus_bg_inactive">#64b5f6</color>
     <color name="common_bottombar_record_bg_active">#607d8b</color>
     <color name="common_bottombar_record_bg_inactive">#90a4ae</color>
-    <color name="common_bottombar_mine_bg_active">#4caf50</color>
-    <color name="common_bottombar_mine_bg_inactive">#81c784</color>
+    <color name="common_bottombar_mine_bg_active">#8600FF</color>
+    <color name="common_bottombar_mine_bg_inactive">#B15BFF</color>
 </resources>

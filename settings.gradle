@@ -11,3 +11,4 @@ include ':module-record'
 include ':module-mine'
 
 include ':library-web'
+include ':module-apublic'

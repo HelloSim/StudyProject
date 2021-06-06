@@ -15,7 +15,7 @@ public class ArouterUrl {
     /**
      * web模块
      */
-    public static class Web{
+    public static class Web {
         public static final String base = "/module_web";
 
         public static final String web_activity = base + "/activity";
@@ -28,6 +28,15 @@ public class ArouterUrl {
         public static final String base = "/module_wangyi";
 
         public static final String wangyi_fragment = base + "/fragment/main";
+    }
+
+    /**
+     * public模块
+     */
+    public static class Public {
+        public static final String base = "/module_public";
+
+        public static final String public_fragment = base + "/fragment/main";
     }
 
     /**
@@ -59,15 +68,15 @@ public class ArouterUrl {
     /**
      * mine模块
      */
-    public static class Mine{
+    public static class Mine {
         public static final String base = "/module_mine";
 
-        public static final String user_fragment = base +"/fragment";
-        public static final String user_activity_login = base +"/activity/login";
-        public static final String user_activity_info = base +"/activity/info";
-        public static final String user_activity_register = base +"/activity/register";
-        public static final String user_activity_updatepws = base +"/activity/updatepwd";
-        public static final String user_activity_collect = base +"/activity/collect";
+        public static final String user_fragment = base + "/fragment";
+        public static final String user_activity_login = base + "/activity/login";
+        public static final String user_activity_info = base + "/activity/info";
+        public static final String user_activity_register = base + "/activity/register";
+        public static final String user_activity_updatepws = base + "/activity/updatepwd";
+        public static final String user_activity_collect = base + "/activity/collect";
     }
 
 }

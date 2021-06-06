@@ -7,6 +7,7 @@ import com.sim.http.interceptor.BaseUrlInterceptor;
 import com.sim.http.interceptor.HeaderInterceptor;
 import com.sim.http.interceptor.MyCacheInterceptor;
 import com.sim.http.interceptor.QueryParameterInterceptor;
+import com.sim.http.interceptor.WanAndroidInterceptor;
 
 import java.io.File;
 import java.util.concurrent.TimeUnit;
@@ -33,11 +34,18 @@ public class RetrofitUtil {
     private static OkHttpClient okHttpClient = null;
     private ApiService apiService;
 
+    private WanAndroidInterceptor wanAndroidInterceptor = new WanAndroidInterceptor("408", "1");
+
     public void init(Context context) {
         this.mContext = context;
         initOKHttp();
         initRetrofit();
         getApiService();
+    }
+
+    public void setWanAndroidInterceptorParameter(String id, String page) {
+        wanAndroidInterceptor.setId(id);
+        wanAndroidInterceptor.setPage(page);
     }
 
     /**
@@ -76,6 +84,7 @@ public class RetrofitUtil {
                 .addInterceptor(new BaseUrlInterceptor())//baseUrl拦截器
                 .addInterceptor(new HeaderInterceptor())//头部拦截器
                 .addInterceptor(new QueryParameterInterceptor())//公共参数拦截器
+                .addInterceptor(wanAndroidInterceptor)
                 .addInterceptor(loggingInterceptor);//设置 Debug Log 模式
         okHttpClient = builder.build();
     }

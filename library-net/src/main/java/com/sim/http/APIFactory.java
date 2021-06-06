@@ -7,6 +7,8 @@ import com.sim.bean.BusRealTimeBusStopBean;
 import com.sim.bean.BusRealTimeBean;
 import com.sim.bean.BusRealTimeLineBean;
 import com.sim.bean.BusRouteBean;
+import com.sim.bean.PublicArticleBean;
+import com.sim.bean.PublicAuthorBean;
 import com.sim.bean.WangyiBean;
 
 import rx.Observable;
@@ -41,6 +43,19 @@ public class APIFactory extends RetrofitUtil {
      */
     public void getBanner(Subscriber<BannerBean> subscriber) {
         Observable observable = getApiService().getBanner();
+        toSubscribe(observable, subscriber);
+    }
+
+    /**
+     * 公众号获取
+     */
+    public void getPublicAuthor(Subscriber<PublicAuthorBean> subscriber) {
+        Observable observable = getApiService().getPublicAuthor();
+        toSubscribe(observable, subscriber);
+    }
+
+    public void getPublicArticle(Subscriber<PublicArticleBean> subscriber) {
+        Observable observable = getApiService().getPublicArticle();
         toSubscribe(observable, subscriber);
     }
 

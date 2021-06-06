@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="common_public">公众号</string>
+    <string name="common_apublic">公众号</string>
     <string name="common_wangyi">网易</string>
     <string name="common_bus">出行</string>
     <string name="common_record">打卡</string>

@@ -23,7 +23,7 @@ public class MainActivity extends BaseActivity {
 
     private BubbleNavigationLinearView bubbleNavigationLinearView;
 
-    private Fragment busFragment, wangyiFragment, recordFragment, mineFragment;
+    private Fragment busFragment, publicFragment, wangyiFragment, recordFragment, mineFragment;
     private FragmentManager fragmentManager;
     private FragmentTransaction mFragmentTransaction;
 
@@ -49,6 +49,7 @@ public class MainActivity extends BaseActivity {
         requestPermission(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 0x001);
 
         wangyiFragment = (Fragment) ARouter.getInstance().build(ArouterUrl.Wangyi.wangyi_fragment).navigation();
+        publicFragment = (Fragment) ARouter.getInstance().build(ArouterUrl.Public.public_fragment).navigation();
         busFragment = (Fragment) ARouter.getInstance().build(ArouterUrl.Bus.bus_fragment).navigation();
         recordFragment = (Fragment) ARouter.getInstance().build(ArouterUrl.Record.record_fragment).navigation();
         mineFragment = (Fragment) ARouter.getInstance().build(ArouterUrl.Mine.user_fragment).navigation();
@@ -60,11 +61,13 @@ public class MainActivity extends BaseActivity {
         mFragmentTransaction = fragmentManager.beginTransaction();
 
         mFragmentTransaction.add(R.id.frameLayout, wangyiFragment);
+        mFragmentTransaction.add(R.id.frameLayout, publicFragment);
         mFragmentTransaction.add(R.id.frameLayout, busFragment);
         mFragmentTransaction.add(R.id.frameLayout, recordFragment);
         mFragmentTransaction.add(R.id.frameLayout, mineFragment);
 
         mFragmentTransaction.hide(busFragment);
+        mFragmentTransaction.hide(publicFragment);
         mFragmentTransaction.hide(recordFragment);
         mFragmentTransaction.hide(mineFragment);
 
@@ -81,6 +84,9 @@ public class MainActivity extends BaseActivity {
         if (busFragment != null) {
             mFragmentTransaction.hide(busFragment);
         }
+        if (publicFragment != null) {
+            mFragmentTransaction.hide(publicFragment);
+        }
         if (wangyiFragment != null) {
             mFragmentTransaction.hide(wangyiFragment);
         }
@@ -95,12 +101,15 @@ public class MainActivity extends BaseActivity {
                 mFragmentTransaction.show(wangyiFragment);
                 break;
             case 1:
-                mFragmentTransaction.show(busFragment);
+                mFragmentTransaction.show(publicFragment);
                 break;
             case 2:
-                mFragmentTransaction.show(recordFragment);
+                mFragmentTransaction.show(busFragment);
                 break;
             case 3:
+                mFragmentTransaction.show(recordFragment);
+                break;
+            case 4:
                 mFragmentTransaction.show(mineFragment);
                 break;
         }

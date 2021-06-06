@@ -71,6 +71,7 @@ dependencies {
 
     if (!isRunAlone.toBoolean()) {
         implementation project(':module-wangyi')
+        implementation project(':module-apublic')
         implementation project(':module-bus')
         implementation project(':module-record')
         implementation project(':module-mine')
