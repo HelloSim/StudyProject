@@ -77,8 +77,8 @@ public class UserInfoActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-        tvUserName.setText(User.getUsername());
-        tvMobilePhoneNumber.setText(User.getMobilePhoneNumber());
+        tvUserName.setText(User.userName());
+        tvMobilePhoneNumber.setText(User.mobilePhoneNumber());
 
         LayoutInflater inflater = (LayoutInflater) this.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
         updateUserNameLayout = inflater.inflate(R.layout.mine_view_popup_update_name, null);
@@ -86,7 +86,7 @@ public class UserInfoActivity extends BaseActivity {
         etNewUserName = updateUserNameLayout.findViewById(R.id.et_new_user_name);
         btnUserNameCancel = updateUserNameLayout.findViewById(R.id.btn_user_name_cancel);
         btnUserNameConfirm = updateUserNameLayout.findViewById(R.id.btn_user_name_confirm);
-        etNewUserName.setText(User.getUsername());
+        etNewUserName.setText(User.userName());
         setViewClick(btnUserNameCancel, btnUserNameConfirm);
     }
 
@@ -110,15 +110,15 @@ public class UserInfoActivity extends BaseActivity {
         } else if (view == rlUserName) {
             updateUserNamePopupWindow.showAtLocation(parent, Gravity.CENTER, 0, 0);
         } else if (view == btnUserNameCancel) {
-            etNewUserName.setText(User.getUsername());
+            etNewUserName.setText(User.userName());
             updateUserNamePopupWindow.dismiss();
         } else if (view == btnUserNameConfirm) {
             User.updateUserInfo(etNewUserName.getText().toString(), new CallBack() {
                 @Override
                 public void success(Object... values) {
                     updateUserNamePopupWindow.dismiss();
-                    tvUserName.setText(User.getUsername());
-                    etNewUserName.setText(User.getUsername());
+                    tvUserName.setText(User.userName());
+                    etNewUserName.setText(User.userName());
                 }
 
                 @Override

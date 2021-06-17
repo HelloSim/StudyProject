@@ -11,7 +11,6 @@ import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.FindListener;
-import cn.bmob.v3.listener.SaveListener;
 import cn.bmob.v3.listener.UpdateListener;
 
 /**
@@ -78,7 +77,11 @@ public class NewsBean extends BmobObject {
                 '}';
     }
 
+    public NewsBean() {
+    }
+
     public NewsBean(String path, String image, String title, String passtime) {
+        this.user = User.getCurrentUser(User.class);
         this.path = path;
         this.image = image;
         this.title = title;
@@ -93,13 +96,13 @@ public class NewsBean extends BmobObject {
          */
         public static void getNewsBean(CallBack callBack) {
             BmobQuery<NewsBean> bmobQuery = new BmobQuery<>();
-            bmobQuery.addWhereEqualTo("user", BmobUser.getCurrentUser(BmobUser.class));
+            bmobQuery.addWhereEqualTo("user", User.getCurrentUser(User.class));
             bmobQuery.findObjects(new FindListener<NewsBean>() {
                 @Override
                 public void done(List<NewsBean> list, BmobException e) {
                     if (e == null && list != null && list.size() > 0) {
                         callBack.success(list);
-                    } else if (e == null && (list == null || list.size() == 0)) {
+                    } else if (e == null) {
                         callBack.success();
                     } else {
                         callBack.fail(e.getMessage());
@@ -119,39 +122,18 @@ public class NewsBean extends BmobObject {
             if (!User.isLogin())
                 callBack.fail("未登录");
             BmobQuery<NewsBean> bmobQuery = new BmobQuery<>();
-            bmobQuery.addWhereEqualTo("user", BmobUser.getCurrentUser(BmobUser.class));
+            bmobQuery.addWhereEqualTo("user", User.getCurrentUser(User.class));
             bmobQuery.addWhereEqualTo("title", title);
             bmobQuery.findObjects(new FindListener<NewsBean>() {
                 @Override
                 public void done(List<NewsBean> list, BmobException e) {
                     if (e == null && list != null && list.size() > 0) {
-                        callBack.success(list);
-                    } else if (e == null && (list == null || list.size() == 0)) {
-                        callBack.success(null);
+                        callBack.success();
+                    } else if (e == null) {
+                        callBack.fail("no data");
                     } else {
                         callBack.fail(e.getMessage());
                         Log.e(TAG, "查询指定用户title数据error：" + e.getMessage());
-                    }
-                }
-            });
-        }
-
-        /**
-         * 收藏NewsBean
-         *
-         * @param bean
-         * @param callBack
-         */
-        public static void saveNewsBean(NewsBean bean, CallBack callBack) {
-            bean.setUser(BmobUser.getCurrentUser(BmobUser.class));
-            bean.save(new SaveListener<String>() {
-                @Override
-                public void done(String s, BmobException e) {
-                    if (e == null) {
-                        callBack.success();
-                    } else {
-                        callBack.fail(e.getMessage());
-                        Log.e(TAG, "收藏error：" + e.getMessage());
                     }
                 }
             });
@@ -167,13 +149,15 @@ public class NewsBean extends BmobObject {
             if (!User.isLogin())
                 callBack.fail("未登录");
             BmobQuery<NewsBean> bmobQuery = new BmobQuery<>();
-            bmobQuery.addWhereEqualTo("user", BmobUser.getCurrentUser(BmobUser.class));
+            bmobQuery.addWhereEqualTo("user", User.getCurrentUser(User.class));
             bmobQuery.addWhereEqualTo("title", title);
             bmobQuery.findObjects(new FindListener<NewsBean>() {
                 @Override
                 public void done(List<NewsBean> list, BmobException e) {
                     if (e == null && list != null && list.size() > 0) {
-                        list.get(0).delete(new UpdateListener() {
+                        NewsBean newsBean = new NewsBean();
+                        newsBean.setObjectId(list.get(0).getObjectId());
+                        newsBean.delete(new UpdateListener() {
                             @Override
                             public void done(BmobException e) {
                                 if (e == null) {
@@ -184,7 +168,7 @@ public class NewsBean extends BmobObject {
                                 }
                             }
                         });
-                    } else if (e == null && (list == null || list.size() == 0)) {
+                    } else if (e == null) {
                         callBack.success(null);
                     } else {
                         callBack.fail(e.getMessage());

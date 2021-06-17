@@ -127,6 +127,9 @@ public class RecordBean extends BmobObject {
                 '}';
     }
 
+    private RecordBean() {
+    }
+
     public RecordBean(String date) {
         this.user = BmobUser.getCurrentUser(BmobUser.class);
         this.date = date;
@@ -218,18 +221,27 @@ public class RecordBean extends BmobObject {
             public void success(Object... values) {
                 List<RecordBean> list = (List<RecordBean>) values[0];
                 if (list != null && list.size() > 0) {
+                    RecordBean recordBean = new RecordBean();
                     if (startTime != null) {
-                        list.get(0).startTime = startTime;
-                        list.get(0).isLate = isLate(startTime);
+                        recordBean.startTime = startTime;
+                        recordBean.isLate = isLate(startTime);
+                    } else {
+                        recordBean.startTime = list.get(0).startTime;
+                        recordBean.isLate = list.get(0).isLate;
                     }
                     if (endTime != null) {
-                        list.get(0).endTime = endTime;
-                        list.get(0).isLeaveEarly = isLeaveEarly(endTime);
+                        recordBean.endTime = endTime;
+                        recordBean.isLeaveEarly = isLeaveEarly(endTime);
+                    } else {
+                        recordBean.endTime = list.get(0).endTime;
+                        recordBean.isLeaveEarly = list.get(0).isLeaveEarly;
                     }
                     if (other != null) {
-                        list.get(0).other = other;
+                        recordBean.other = other;
+                    } else {
+                        recordBean.other = list.get(0).other;
                     }
-                    list.get(0).update(BmobUser.getCurrentUser(BmobUser.class).getObjectId(), new UpdateListener() {
+                    recordBean.update(list.get(0).getObjectId(), new UpdateListener() {
                         @Override
                         public void done(BmobException e) {
                             if (e == null) {
@@ -247,7 +259,7 @@ public class RecordBean extends BmobObject {
 
             @Override
             public void fail(String values) {
-
+                callBack.fail(values);
             }
         });
     }

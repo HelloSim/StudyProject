@@ -12,40 +12,36 @@ import cn.bmob.v3.listener.LogInListener;
 import cn.bmob.v3.listener.SaveListener;
 import cn.bmob.v3.listener.UpdateListener;
 
-public class User {
+public class User extends BmobUser {
 
     private static final String TAG = "【【【Sim_" + User.class.getSimpleName() + "】】】";
 
-    public static String getUsername() {
-        return BmobUser.getCurrentUser(BmobUser.class).getUsername();
+    public static String sessionToken() {
+        return User.getCurrentUser(User.class).getSessionToken();
     }
 
-    public static String getEmail() {
-        return BmobUser.getCurrentUser(BmobUser.class).getEmail();
+    public static String userName() {
+        return User.getCurrentUser(User.class).getUsername();
     }
 
-    public static Boolean getEmailVerified() {
-        return BmobUser.getCurrentUser(BmobUser.class).getEmailVerified();
+    public static String email() {
+        return User.getCurrentUser(User.class).getEmail();
     }
 
-    public static String getSessionToken() {
-        return BmobUser.getCurrentUser(BmobUser.class).getSessionToken();
+    public static boolean emailVerified() {
+        return User.getCurrentUser(User.class).getEmailVerified();
     }
 
-    public static String getMobilePhoneNumber() {
-        return BmobUser.getCurrentUser(BmobUser.class).getMobilePhoneNumber();
+    public static String mobilePhoneNumber() {
+        return User.getCurrentUser(User.class).getMobilePhoneNumber();
     }
 
-    public static Boolean getMobilePhoneNumberVerified() {
-        return BmobUser.getCurrentUser(BmobUser.class).getMobilePhoneNumberVerified();
-    }
-
-    public static boolean isLogin() {
-        return BmobUser.isLogin();
+    public static boolean mobilePhoneNumberVerified() {
+        return User.getCurrentUser(User.class).getMobilePhoneNumberVerified();
     }
 
     public static void logout() {
-        BmobUser.logOut();
+        logOut();
         fetchUserInfo();
     }
 
@@ -75,11 +71,11 @@ public class User {
      * @param callBack
      */
     public static void registerUser(String mobilePhoneNumber, String code, String password, String username, CallBack callBack) {
-        BmobUser bmobUser = new BmobUser();
-        if (username != null) bmobUser.setUsername(username);
-        if (password != null) bmobUser.setPassword(password);
-        if (mobilePhoneNumber != null) bmobUser.setMobilePhoneNumber(mobilePhoneNumber);
-        bmobUser.signUp(new SaveListener<BmobUser>() {
+        User user = User.getCurrentUser(User.class);
+        if (username != null) user.setUsername(username);
+        if (password != null) user.setPassword(password);
+        if (mobilePhoneNumber != null) user.setMobilePhoneNumber(mobilePhoneNumber);
+        user.signUp(new SaveListener<BmobUser>() {
             @Override
             public void done(BmobUser user, BmobException e) {
                 if (e == null) {
@@ -118,7 +114,7 @@ public class User {
      * @param callBack
      */
     public static void loginByAccount(String phoneNum, String password, CallBack callBack) {
-        BmobUser.loginByAccount(phoneNum, password, new LogInListener<Object>() {
+        loginByAccount(phoneNum, password, new LogInListener<Object>() {
             @Override
             public void done(Object o, BmobException e) {
                 if (e == null) {
@@ -144,7 +140,7 @@ public class User {
      * @param callBack
      */
     public static void loginBySMSCode(String phone, String code, CallBack callBack) {
-        BmobUser.signOrLoginByMobilePhone(phone, code, new LogInListener<Object>() {
+        signOrLoginByMobilePhone(phone, code, new LogInListener<Object>() {
             @Override
             public void done(Object o, BmobException e) {
                 if (e == null) {
@@ -166,7 +162,7 @@ public class User {
      * @param callBack
      */
     public static void updatePassword(String oldPassword, String newPassword, CallBack callBack) {
-        BmobUser.updateCurrentUserPassword(oldPassword, newPassword, new UpdateListener() {
+        User.getCurrentUser(User.class).updateCurrentUserPassword(oldPassword, newPassword, new UpdateListener() {
             @Override
             public void done(BmobException e) {
                 if (e == null) {
@@ -192,7 +188,7 @@ public class User {
      * @param callBack
      */
     public static void resetPasswordBySMSCode(String code, String newPassword, CallBack callBack) {
-        BmobUser.resetPasswordBySMSCode(code, newPassword, new UpdateListener() {
+        User.getCurrentUser(User.class).resetPasswordBySMSCode(code, newPassword, new UpdateListener() {
             @Override
             public void done(BmobException e) {
                 if (e == null) {
@@ -213,9 +209,9 @@ public class User {
      * @param callBack
      */
     public static void updateUserInfo(String userName, CallBack callBack) {
-        BmobUser bmobUser = BmobUser.getCurrentUser(BmobUser.class);
-        bmobUser.setUsername(userName);
-        bmobUser.update(new UpdateListener() {
+        User user = User.getCurrentUser(User.class);
+        user.setUsername(userName);
+        user.update(new UpdateListener() {
             @Override
             public void done(BmobException e) {
                 if (e == null) {

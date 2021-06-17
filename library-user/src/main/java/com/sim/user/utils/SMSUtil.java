@@ -2,8 +2,6 @@ package com.sim.user.utils;
 
 import android.util.Log;
 
-import com.sim.user.bean.User;
-
 import cn.bmob.v3.BmobSMS;
 import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.exception.BmobException;
@@ -17,7 +15,7 @@ public class SMSUtil {
     /**
      * 向指定手机号码发送验证码短信
      *
-     * @param phone                 指定号码
+     * @param phone    指定号码
      * @param callBack 结果监听
      */
     public static void requestSMSCode(String phone, CallBack callBack) {
@@ -38,14 +36,14 @@ public class SMSUtil {
     /**
      * 向用户绑定的手机号码发送短信验证码
      *
-     * @param user                  指定User
      * @param callBack 结果监听
      */
     public static void requestSMSCode(CallBack callBack) {
         //template 如果是自定义短信模板，此处替换为你在控制台设置的自定义短信模板名称；
         //如果没有对应的自定义短信模板，则使用默认短信模板，模板名称为空字符串""。
-        if (User.getMobilePhoneNumberVerified()) {
-            BmobSMS.requestSMSCode(User.getMobilePhoneNumber(), "", new QueryListener<Integer>() {
+        BmobUser user = BmobUser.getCurrentUser(BmobUser.class);
+        if (user.getMobilePhoneNumberVerified()) {
+            BmobSMS.requestSMSCode(user.getMobilePhoneNumber(), "", new QueryListener<Integer>() {
                 @Override
                 public void done(Integer smsId, BmobException e) {
                     if (e == null) {

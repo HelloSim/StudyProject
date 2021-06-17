@@ -18,11 +18,14 @@ import com.sim.basicres.base.BaseViewHolder;
 import com.sim.basicres.utils.ToastUtil;
 import com.sim.bean.WangyiBean;
 import com.sim.user.bean.NewsBean;
+import com.sim.user.bean.User;
 import com.sim.user.utils.CallBack;
 import com.sim.wangyi.R;
 
 import java.util.ArrayList;
-import java.util.List;
+
+import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.SaveListener;
 
 public class NewsAdapter extends BaseAdapter<NewsAdapter.ViewHolder, WangyiBean.NewsBean> {
 
@@ -67,12 +70,7 @@ public class NewsAdapter extends BaseAdapter<NewsAdapter.ViewHolder, WangyiBean.
         NewsBean.Util.getNewsBean(resultBean.getTitle(), new CallBack() {
             @Override
             public void success(Object... values) {
-                List<NewsBean> list = (List<NewsBean>) values[0];
-                if (list.size() > 0) {
-                    holder.collect.setImageResource(R.mipmap.common_ic_collect_red);
-                } else {
-                    holder.collect.setImageResource(R.mipmap.common_ic_collect_gray);
-                }
+                holder.collect.setImageResource(R.mipmap.common_ic_collect_red);
             }
 
             @Override
@@ -82,6 +80,10 @@ public class NewsAdapter extends BaseAdapter<NewsAdapter.ViewHolder, WangyiBean.
         });
 
         holder.collect.setOnClickListener(v -> {
+            if (!User.isLogin()){
+                ToastUtil.toast(mContext,"未登录！");
+                return;
+            }
             if ((holder.collect.getDrawable().getCurrent().getConstantState())
                     .equals(ContextCompat.getDrawable(mContext, R.mipmap.common_ic_collect_red).getConstantState())) {
                 NewsBean.Util.deleteNewsBean(getData().get(position).getTitle(), new CallBack() {
@@ -97,15 +99,15 @@ public class NewsAdapter extends BaseAdapter<NewsAdapter.ViewHolder, WangyiBean.
                 });
             } else {
                 NewsBean newsBean = new NewsBean(resultBean.getPath(), resultBean.getImage(), resultBean.getTitle(), resultBean.getPasstime());
-                NewsBean.Util.saveNewsBean(newsBean, new CallBack() {
+                newsBean.save(new SaveListener<String>() {
                     @Override
-                    public void success(Object... values) {
-                        holder.collect.setImageResource(R.mipmap.common_ic_collect_red);
-                    }
+                    public void done(String s, BmobException e) {
+                        if (e == null) {
+                            holder.collect.setImageResource(R.mipmap.common_ic_collect_red);
+                        } else {
+                            ToastUtil.toast(mContext, "收藏失败：" + e.getMessage());
 
-                    @Override
-                    public void fail(String values) {
-                        ToastUtil.toast(mContext, "收藏失败：" + values);
+                        }
                     }
                 });
             }

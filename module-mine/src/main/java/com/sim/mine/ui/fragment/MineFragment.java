@@ -61,8 +61,8 @@ public class MineFragment extends BaseFragment {
             llHead.setLayoutParams(layoutParams);
         });
         if (User.isLogin()) {
-            tvUserName.setText(User.getUsername());
-            tvId.setText("ID:" + User.getMobilePhoneNumber());
+            tvUserName.setText(User.userName());
+            tvId.setText("ID:" + User.mobilePhoneNumber());
         } else {
             tvUserName.setText("用户登录");
             tvId.setText("");
@@ -77,8 +77,8 @@ public class MineFragment extends BaseFragment {
     public void onResume() {
         super.onResume();
         if (User.isLogin()) {
-            tvUserName.setText(User.getUsername());
-            tvId.setText("ID:" + User.getMobilePhoneNumber());
+            tvUserName.setText(User.userName());
+            tvId.setText("ID:" + User.mobilePhoneNumber());
         } else {
             tvUserName.setText("用户登录");
             tvId.setText("");
