@@ -27,7 +27,7 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void bindViews(Bundle savedInstanceState) {
-        findViewById(R.id.btn).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.btn_in).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (!User.isLogin()) {
@@ -58,15 +58,28 @@ public class MainActivity extends BaseActivity {
                             mFragmentTransaction.commit();
                         }
                     });
-                } else {
-                    User.logout();
                 }
+            }
+        });
+        findViewById(R.id.btn_out).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (User.isLogin()) User.logout();
+                mFragmentManager = getSupportFragmentManager();
+                mFragmentTransaction = mFragmentManager.beginTransaction();
+                mFragmentTransaction.hide(recordFragment);
+                recordFragment = null;
+                recordFragment = new RecordFragment();
+                mFragmentTransaction.add(R.id.frameLayout, recordFragment);
+                mFragmentTransaction.show(recordFragment);
+                mFragmentTransaction.commit();
             }
         });
     }
 
     @Override
     protected void initView() {
+        User.logout();
         mFragmentManager = getSupportFragmentManager();
         mFragmentTransaction = mFragmentManager.beginTransaction();
         if (recordFragment == null) {

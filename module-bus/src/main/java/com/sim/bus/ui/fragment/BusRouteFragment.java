@@ -7,6 +7,8 @@ import android.widget.EditText;
 
 import androidx.annotation.Nullable;
 
+import com.alibaba.android.arouter.core.LogisticsCenter;
+import com.alibaba.android.arouter.facade.Postcard;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.sim.basicres.base.BaseFragment;
@@ -51,13 +53,19 @@ public class BusRouteFragment extends BaseFragment {
     public void onMultiClick(View view) {
         if (view == etStartStation) {
 //            startActivityForResult(new Intent(getActivity(), BusSearchActivity.class).putExtra(), );
-            ARouter.getInstance().build(ArouterUrl.Bus.bus_activity_search)
-                    .withInt("searchType", RESULT_START_STATION)
-                    .navigation(getActivity(), RESULT_START_STATION);
+            Postcard postcard = ARouter.getInstance().build(ArouterUrl.Bus.bus_activity_search)
+                    .withInt("searchType", RESULT_START_STATION);
+            LogisticsCenter.completion(postcard);
+            Intent intent = new Intent(getActivity(), postcard.getDestination());
+            intent.putExtras(postcard.getExtras());
+            startActivityForResult(intent, RESULT_START_STATION);
         } else if (view == etEndStation) {
-            ARouter.getInstance().build(ArouterUrl.Bus.bus_activity_search)
-                    .withInt("searchType", RESULT_END_STATION)
-                    .navigation(getActivity(), RESULT_END_STATION);
+            Postcard postcard =  ARouter.getInstance().build(ArouterUrl.Bus.bus_activity_search)
+                    .withInt("searchType", RESULT_END_STATION);
+            LogisticsCenter.completion(postcard);
+            Intent intent = new Intent(getActivity(), postcard.getDestination());
+            intent.putExtras(postcard.getExtras());
+            startActivityForResult(intent, RESULT_END_STATION);
         } else if (view == btnRoute) {
             if (etStartStation.getText().length() > 0 && etEndStation.getText().length() > 0) {
                 ARouter.getInstance().build(ArouterUrl.Bus.bus_activity_route)

@@ -3,7 +3,7 @@
 
     <!-- Base application theme. -->
     <style name="common_APPTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="colorPrimaryDark">@color/common_black</item>
+        <item name="colorPrimaryDark">@color/common_main</item>
         <!--页面背景色-->
         <item name="android:windowBackground">@color/common_white</item>
         <!--禁止多点误触-->

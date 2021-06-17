@@ -119,16 +119,20 @@ public class NewsBean extends BmobObject {
          * @param callBack
          */
         public static void getNewsBean(String title, CallBack callBack) {
-            if (!User.isLogin())
+            if (!User.isLogin()) {
                 callBack.fail("未登录");
+                return;
+            }
             BmobQuery<NewsBean> bmobQuery = new BmobQuery<>();
             bmobQuery.addWhereEqualTo("user", User.getCurrentUser(User.class));
-            bmobQuery.addWhereEqualTo("title", title);
             bmobQuery.findObjects(new FindListener<NewsBean>() {
                 @Override
                 public void done(List<NewsBean> list, BmobException e) {
                     if (e == null && list != null && list.size() > 0) {
-                        callBack.success();
+                        for (NewsBean newsBean : list) {
+                            if (newsBean.getTitle().equals(title)) callBack.success();
+                            else callBack.fail("no data");
+                        }
                     } else if (e == null) {
                         callBack.fail("no data");
                     } else {

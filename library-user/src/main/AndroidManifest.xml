@@ -14,7 +14,7 @@
         <!--bmob-->
         <provider
             android:name="cn.bmob.v3.util.BmobContentProvider"
-            android:authorities="com.sim.traveltool.BmobContentProvider" />
+            android:authorities="${applicationId}.BmobContentProvider" />
     </application>
 
 </manifest>

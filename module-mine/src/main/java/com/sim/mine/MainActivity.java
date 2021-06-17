@@ -8,6 +8,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.sim.basicres.base.BaseActivity;
 import com.sim.mine.ui.fragment.MineFragment;
+import com.sim.user.bean.User;
 
 //这里单独跑时，要把user模块的AndroidManifest的BmobContentProvider的authorities修改为com.sim.mine.BmobContentProvider
 public class MainActivity extends BaseActivity {
@@ -29,6 +30,7 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void initView() {
+        User.logout();
         mFragmentManager = getSupportFragmentManager();
         mFragmentTransaction = mFragmentManager.beginTransaction();
         if (mineFragment == null) {

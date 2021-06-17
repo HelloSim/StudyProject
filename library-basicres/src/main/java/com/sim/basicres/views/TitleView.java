@@ -65,12 +65,12 @@ public class TitleView extends RelativeLayout {
      * @param context
      */
     private void initView(Context context) {
-        setBackgroundColor(Color.parseColor("#00CCCC"));
+        setBackgroundColor(getResources().getColor(R.color.common_main));
         titleTextView = new TextView(context);
         titleTextView.setText(titleText);
         titleTextView.setTextColor(Color.WHITE);
         titleTextView.setTextSize(22);
-        titleTextView.setPadding(0, 50, 0, 50);
+        titleTextView.setPadding(0, 10, 0, 10);
         TextPaint tp = titleTextView.getPaint();
         tp.setFakeBoldText(true);
         titleTextView.setGravity(Gravity.CENTER);

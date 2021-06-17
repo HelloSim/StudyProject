@@ -67,6 +67,7 @@ public class NewsAdapter extends BaseAdapter<NewsAdapter.ViewHolder, WangyiBean.
                 .into(holder.newsImage);
         holder.newsTitle.setText(resultBean.getTitle());
         holder.newsTime.setText(resultBean.getPasstime());
+        holder.collect.setImageResource(R.mipmap.common_ic_collect_gray);
         NewsBean.Util.getNewsBean(resultBean.getTitle(), new CallBack() {
             @Override
             public void success(Object... values) {
@@ -75,7 +76,6 @@ public class NewsAdapter extends BaseAdapter<NewsAdapter.ViewHolder, WangyiBean.
 
             @Override
             public void fail(String values) {
-                holder.collect.setImageResource(R.mipmap.common_ic_collect_gray);
             }
         });
 
@@ -119,7 +119,6 @@ public class NewsAdapter extends BaseAdapter<NewsAdapter.ViewHolder, WangyiBean.
     }
 
     public class ViewHolder extends BaseViewHolder {
-
         LinearLayout parent;
         ShapeableImageView newsImage;
         TextView newsTitle;
@@ -138,7 +137,6 @@ public class NewsAdapter extends BaseAdapter<NewsAdapter.ViewHolder, WangyiBean.
             newsTime = findViewById(R.id.news_time);
             collect = findViewById(R.id.iv_collect);
         }
-
     }
 
 }

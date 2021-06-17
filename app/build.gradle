@@ -9,8 +9,8 @@ android {
     defaultConfig {
         minSdkVersion versions.minSdkVersion
         targetSdkVersion versions.targetSdkVersion
-        versionCode 28
-        versionName "4.2.8"
+        versionCode 29
+        versionName "5.0.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"//aar混淆文件名
         multiDexEnabled true

@@ -157,7 +157,7 @@ public class BusFragment extends BaseFragment {
             }
         });
 
-        magicIndicator.setBackgroundColor(Color.LTGRAY);
+        magicIndicator.setBackgroundColor(Color.WHITE);
         CommonNavigator commonNavigator = new CommonNavigator(getContext());
         commonNavigator.setAdjustMode(true);
         commonNavigator.setAdapter(new CommonNavigatorAdapter() {

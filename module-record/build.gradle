@@ -10,6 +10,9 @@ android {
     compileSdkVersion versions.compileSdkVersion
     buildToolsVersion versions.buildToolsVersion
     defaultConfig {
+        if (isRunAlone.toBoolean()) {
+            applicationId "com.sim.record"
+        }
         minSdkVersion versions.minSdkVersion
         targetSdkVersion versions.targetSdkVersion
         versionCode 1
