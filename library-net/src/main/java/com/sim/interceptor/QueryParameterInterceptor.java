@@ -1,4 +1,4 @@
-package com.sim.http.interceptor;
+package com.sim.interceptor;
 
 import java.io.IOException;
 

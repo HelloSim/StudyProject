@@ -69,9 +69,7 @@ public class BusRouteActivity extends BaseActivity {
     protected void initData() {
         tvStartLocation = getIntent().getStringExtra("tvStartStation");
         tvEndLocation = getIntent().getStringExtra("tvEndStation");
-        getLocation(true, tvStartLocation);
-        getLocation(false, tvEndLocation);
-
+        getLocation(false, tvStartLocation);
     }
 
     @Override
@@ -96,25 +94,28 @@ public class BusRouteActivity extends BaseActivity {
     /**
      * 起始位置和终点位置的位置信息请求
      *
-     * @param isStart
+     * @param isEnd
      * @param location
      */
-    private void getLocation(boolean isStart, String location) {
+    private void getLocation(boolean isEnd, String location) {
         APIFactory.getInstance().getLocation(new Subscriber<BusLocationDesignatedBean>() {
             @Override
             public void onCompleted() {
-                if (isStart) {//起点
+                if (!isEnd) {//起点
                     startLocationList.addAll(busLocationDesignatedDataBean.getPois());
                     origin = String.valueOf(startLocationList.get(0).getLocation());
+                    getLocation(true, tvEndLocation);
                 } else {//终点
                     endLocationList.addAll(busLocationDesignatedDataBean.getPois());
                     destination = String.valueOf(endLocationList.get(0).getLocation());
                 }
-                if (origin != null && destination != null) {
-                    getRoute(origin, destination);
-                } else {
-                    ToastUtil.toast(BusRouteActivity.this, "请求不到位置信息！");
-                    finish();
+                if (isEnd){
+                    if (origin != null && destination != null) {
+                        getRoute(origin, destination);
+                    } else {
+                        ToastUtil.toast(BusRouteActivity.this, "请求不到位置信息！");
+                        finish();
+                    }
                 }
             }
 

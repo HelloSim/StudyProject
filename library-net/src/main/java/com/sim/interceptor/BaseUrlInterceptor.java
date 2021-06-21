@@ -1,6 +1,6 @@
-package com.sim.http.interceptor;
+package com.sim.interceptor;
 
-import com.sim.http.BaseUrl;
+import com.sim.constant.BaseUrl;
 
 import java.io.IOException;
 import java.util.List;

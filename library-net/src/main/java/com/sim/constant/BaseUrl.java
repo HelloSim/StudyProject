@@ -1,4 +1,4 @@
-package com.sim.http;
+package com.sim.constant;
 
 /**
  * @author Sim --- api

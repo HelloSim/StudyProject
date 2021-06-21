@@ -1,4 +1,4 @@
-package com.sim.http;
+package com.sim.error;
 
 /**
  * @author Sim --- 自定义异常处理

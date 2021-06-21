@@ -2,6 +2,9 @@ package com.sim.bean;
 
 import java.util.List;
 
+/**
+ * 公众号文章实体类
+ */
 public class PublicArticleBean {
 
     /**

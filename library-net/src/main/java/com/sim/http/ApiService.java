@@ -10,6 +10,7 @@ import com.sim.bean.BusRouteBean;
 import com.sim.bean.PublicArticleBean;
 import com.sim.bean.PublicAuthorBean;
 import com.sim.bean.WangyiBean;
+import com.sim.constant.BaseUrl;
 
 import retrofit2.http.GET;
 import retrofit2.http.Headers;

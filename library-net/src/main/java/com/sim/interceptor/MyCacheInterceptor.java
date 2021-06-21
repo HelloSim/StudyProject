@@ -1,4 +1,4 @@
-package com.sim.http.interceptor;
+package com.sim.interceptor;
 
 import android.annotation.SuppressLint;
 import android.content.Context;

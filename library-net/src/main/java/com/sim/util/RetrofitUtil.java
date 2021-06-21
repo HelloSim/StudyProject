@@ -1,13 +1,20 @@
-package com.sim.http;
+package com.sim.util;
 
 import android.content.Context;
 import android.os.Environment;
 
-import com.sim.http.interceptor.BaseUrlInterceptor;
-import com.sim.http.interceptor.HeaderInterceptor;
-import com.sim.http.interceptor.MyCacheInterceptor;
-import com.sim.http.interceptor.QueryParameterInterceptor;
-import com.sim.http.interceptor.WanAndroidInterceptor;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.sim.http.ApiService;
+import com.sim.adapter.DoubleDefault0Adapter;
+import com.sim.adapter.IntegerDefault0Adapter;
+import com.sim.adapter.LongDefault0Adapter;
+import com.sim.adapter.StringDefault0Adapter;
+import com.sim.interceptor.BaseUrlInterceptor;
+import com.sim.interceptor.HeaderInterceptor;
+import com.sim.interceptor.MyCacheInterceptor;
+import com.sim.interceptor.QueryParameterInterceptor;
+import com.sim.interceptor.WanAndroidInterceptor;
 
 import java.io.File;
 import java.util.concurrent.TimeUnit;
@@ -96,9 +103,34 @@ public class RetrofitUtil {
         retrofit = new Retrofit.Builder()
                 .baseUrl("https://api.apiopen.top")
                 .client(okHttpClient)
-                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create(buildGson()))
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .build();
+    }
+
+    /**
+     * 增加后台返回""和"null"的处理
+     * 1.int=>0
+     * 2.double=>0.00
+     * 3.long=>0L
+     *
+     * @return
+     */
+    static Gson gson = null;
+
+    public static Gson buildGson() {
+        if (gson == null) {
+            gson = new GsonBuilder()
+                    .registerTypeAdapter(Integer.class, new IntegerDefault0Adapter())
+                    .registerTypeAdapter(int.class, new IntegerDefault0Adapter())
+                    .registerTypeAdapter(Double.class, new DoubleDefault0Adapter())
+                    .registerTypeAdapter(double.class, new DoubleDefault0Adapter())
+                    .registerTypeAdapter(Long.class, new LongDefault0Adapter())
+                    .registerTypeAdapter(long.class, new LongDefault0Adapter())
+                    .registerTypeAdapter(String.class,new StringDefault0Adapter())
+                    .create();
+        }
+        return gson;
     }
 
     public ApiService getApiService() {
