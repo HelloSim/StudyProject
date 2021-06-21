@@ -31,6 +31,9 @@ public class APIFactory extends RetrofitUtil {
         private static final APIFactory INSTANCE = new APIFactory();
     }
 
+
+
+    //***********************************网易新闻部分*********************************************
     /**
      * NewsData的网络请求
      */
@@ -39,14 +42,9 @@ public class APIFactory extends RetrofitUtil {
         toSubscribe(observable, subscriber);
     }
 
-    /**
-     * 轮播图图片获取
-     */
-    public void getBanner(Subscriber<BannerBean> subscriber) {
-        Observable observable = getApiService().getBanner();
-        toSubscribe(observable, subscriber);
-    }
 
+
+    //***********************************公众号部分*********************************************
     /**
      * 公众号获取
      */
@@ -60,7 +58,17 @@ public class APIFactory extends RetrofitUtil {
         toSubscribe(observable, subscriber);
     }
 
+    /**
+     * 轮播图图片获取
+     */
+    public void getBanner(Subscriber<BannerBean> subscriber) {
+        Observable observable = getApiService().getBanner();
+        toSubscribe(observable, subscriber);
+    }
 
+
+
+    //***********************************实时公交部分*********************************************
     /**
      * 实时公交路线查询
      */
@@ -86,6 +94,8 @@ public class APIFactory extends RetrofitUtil {
     }
 
 
+
+    //***********************************出行规划部分*********************************************
     /**
      * 搜索位置的网络请求
      */

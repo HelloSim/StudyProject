@@ -23,22 +23,25 @@ import rx.Observable;
 public interface ApiService {
 
     /**
-     * 网易新闻
+     * 获取网易新闻列表
      */
     @Headers({"host:wangyi"})
     @GET(BaseUrl.base_wangyi.getNews)
     Observable<WangyiBean> getWangYiNews(@Query("page") String page);
 
 
+
+
+
     /**
-     * 轮播图
+     * 获取轮播图列表
      */
     @Headers({"host:wanandroid"})
     @GET(BaseUrl.base_wanandroid.getBanner)
     Observable<BannerBean> getBanner();
 
     /**
-     * 公众号列表
+     * 获取公众号列表
      */
     @Headers({"host:wanandroid"})
     @GET(BaseUrl.base_wanandroid.getPublicAuthor)
@@ -50,6 +53,9 @@ public interface ApiService {
     @Headers({"host:wanandroid"})
     @GET(BaseUrl.base_wanandroid.getPublicArticle)
     Observable<PublicArticleBean> getPublicArticle();
+
+
+
 
 
     /**
@@ -75,8 +81,11 @@ public interface ApiService {
                                                  @Query("fromStation") String fromStation);
 
 
+
+
+
     /**
-     * 搜索位置的网络请求
+     * 搜索位置 输入提示的请求
      */
     @Headers({"host:route"})
     @GET(BaseUrl.base_route.getStartOrEndLocation)
@@ -93,7 +102,7 @@ public interface ApiService {
             @Query("language") String language, @Query("keywords") String keywords);
 
     /**
-     * 出行方案的网络请求
+     * 公交路径规划的网络请求
      */
     @Headers({"host:route"})
     @GET(BaseUrl.base_route.getRoute)
