@@ -71,96 +71,36 @@
         <item name="android:maxLength">20</item>
     </style>
 
-    <style name="common_mypopwindow_anim_style">
-        <item name="android:windowEnterAnimation">@anim/common_popshow_bottom</item>
-        <!-- 指定显示的动画xml -->
-        <item name="android:windowExitAnimation">@anim/common_pophide_bottom</item>
-        <!-- 指定消失的动画xml -->
+    <!--popwindow显示隐藏动画-->
+    <style name="common_popwindow_anim_style">
+        <item name="android:windowEnterAnimation">@anim/common_popshow_bottom</item><!-- 指定显示的动画xml -->
+        <item name="android:windowExitAnimation">@anim/common_pophide_bottom</item><!-- 指定消失的动画xml -->
     </style>
 
-    <style name="common_web_dialog_animation" parent="@android:style/Animation.Dialog">
-        <item name="android:windowEnterAnimation">@anim/common_webdialog_bottom_in</item>
-        <item name="android:windowExitAnimation">@anim/common_webdialog_bottom_out</item>
-    </style>
-
-
-
-    <!--    ShapeableImageView的shapeAppearanceOverlay属性样式-->
-    <style name="common_circleImageStyle"><!-- 圆形图片 -->
-        <item name="cornerFamily">rounded</item>
-        <item name="cornerSize">50%</item>
-    </style>
-
-    <style name="common_roundedCornerImageStyle"><!-- 圆角图片 -->
-        <item name="cornerFamily">rounded</item>
-        <item name="cornerSize">15dp</item>
-    </style>
-
-    <style name="common_cutImageStyle"><!-- 切角图片 -->
-        <item name="cornerFamily">cut</item>
-        <item name="cornerSize">15dp</item>
-    </style>
-
-    <style name="common_diamondImageStyle"><!-- 菱形图片 -->
-        <item name="cornerFamily">cut</item>
-        <item name="cornerSize">50%</item>
-    </style>
-
-    <style name="common_topLeftRoundImageStyle"><!-- 左上角90度扇形图片 -->
-        <item name="cornerFamilyTopLeft">rounded</item>
-        <item name="cornerSizeTopLeft">100%</item>
-    </style>
-
-    <style name="common_rocketImageStyle"><!-- 火箭头图片 -->
-        <item name="cornerFamilyTopLeft">rounded</item>
-        <item name="cornerFamilyTopRight">rounded</item>
-        <item name="cornerSizeTopLeft">70%</item>
-        <item name="cornerSizeTopRight">70%</item>
-    </style>
-
-    <style name="common_waterImageStyle"><!-- 水滴 -->
-        <item name="cornerFamilyBottomLeft">rounded</item>
-        <item name="cornerFamilyBottomRight">rounded</item>
-        <item name="cornerFamilyTopLeft">rounded</item>
-        <item name="cornerFamilyTopRight">rounded</item>
-        <item name="cornerSizeBottomLeft">25dp</item>
-        <item name="cornerSizeBottomRight">25dp</item>
-        <item name="cornerSizeTopLeft">70%</item>
-        <item name="cornerSizeTopRight">70%</item>
-    </style>
-
-    <style name="common_leafImageStyle"><!-- 叶子图片 -->
-        <item name="cornerFamilyTopLeft">rounded</item>
-        <item name="cornerFamilyBottomRight">rounded</item>
-        <item name="cornerSizeTopLeft">50%</item>
-        <item name="cornerSizeBottomRight">50%</item>
-    </style>
-
-    <style name="common_tipImageStyle"><!-- tip图片 -->
-        <item name="cornerFamilyTopLeft">rounded</item>
-        <item name="cornerSizeTopLeft">50%</item>
-
-        <item name="cornerFamilyBottomLeft">rounded</item>
-        <item name="cornerSizeBottomLeft">50%</item>
-
-        <item name="cornerFamilyTopRight">cut</item>
-        <item name="cornerSizeTopRight">50%</item>
-
-        <item name="cornerFamilyBottomRight">cut</item>
-        <item name="cornerSizeBottomRight">50%</item>
-    </style>
-
+    <!--自定义dialog样式-->
     <style name="common_customDialog" parent="android:style/Theme.Dialog">
-        <item name="android:windowBackground">@android:color/transparent</item><!--你的layout背景颜色及和透明程度-->
+        <item name="android:windowBackground">@android:color/transparent
+        </item><!--你的layout背景颜色及和透明程度-->
         <item name="android:windowNoTitle">true</item><!--是否去除标题 -->
         <item name="android:windowFrame">@null</item><!--是否去除边框-->
         <item name="android:windowIsFloating">true</item><!--是否浮现在activity之上-->
         <item name="android:backgroundDimEnabled">true</item><!--屏幕其他地方是否模糊变黑-->
     </style>
 
-    <style name="common_popwindow_anim_style">
-        <item name="android:windowEnterAnimation">@anim/common_popshow_bottom</item><!-- 指定显示的动画xml -->
-        <item name="android:windowExitAnimation">@anim/common_pophide_bottom</item><!-- 指定消失的动画xml -->
+    <!--自定义dialog动画-->
+    <style name="common_web_dialog_animation" parent="@android:style/Animation.Dialog">
+        <item name="android:windowEnterAnimation">@anim/common_webdialog_bottom_in</item>
+        <item name="android:windowExitAnimation">@anim/common_webdialog_bottom_out</item>
+    </style>
+
+    <!--ShapeableImageView的shapeAppearanceOverlay属性样式-->
+    <style name="common_circleImageStyle"><!-- 圆形图片 -->
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item>
+    </style>
+    <style name="common_roundedCornerImageStyle"><!-- 圆角图片 -->
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">15dp</item>
     </style>
 
 </resources>

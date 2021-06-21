@@ -5,6 +5,8 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.constraintlayout.utils.widget.ImageFilterButton;
+
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.sim.basicres.base.BaseFragment;
@@ -20,6 +22,7 @@ public class MineFragment extends BaseFragment {
 
     private WaveView waveview;
     private LinearLayout llHead;
+    private ImageFilterButton avatar;
     private TitleView titleView;
     private TextView tvUserName, tvId;
     private LinearLayout userLogin, userCollect, updateVersion, project, author;
@@ -42,6 +45,7 @@ public class MineFragment extends BaseFragment {
         llHead = view.findViewById(R.id.llHead);
         waveview = view.findViewById(R.id.waveview);
 
+        avatar = view.findViewById(R.id.avatar);
         tvUserName = view.findViewById(R.id.tv_user_name);
         tvId = view.findViewById(R.id.tvId);
 
@@ -50,7 +54,7 @@ public class MineFragment extends BaseFragment {
         updateVersion = view.findViewById(R.id.update_version);
         project = view.findViewById(R.id.project);
         author = view.findViewById(R.id.author);
-        setViewClick(userLogin, userCollect, updateVersion, project, author);
+        setViewClick(avatar, userLogin, userCollect, updateVersion, project, author);
     }
 
     @Override
@@ -92,7 +96,9 @@ public class MineFragment extends BaseFragment {
 
     @Override
     public void onMultiClick(View view) {
-        if (view == userLogin) {
+        if (view == avatar) {
+
+        } else if (view == userLogin) {
             if (User.isLogin()) {
                 ARouter.getInstance().build(ArouterUrl.Mine.user_activity_info).navigation();
             } else {
