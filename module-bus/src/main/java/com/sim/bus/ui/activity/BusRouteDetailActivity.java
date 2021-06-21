@@ -11,7 +11,7 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.sim.basicres.base.BaseActivity;
 import com.sim.basicres.constant.ArouterUrl;
 import com.sim.basicres.views.TitleView;
-import com.sim.bean.BusRouteBean;
+import com.sim.bean.RoutesBean;
 import com.sim.bus.R;
 import com.sim.bus.adapter.BusRouteDetailAdapter;
 
@@ -28,7 +28,7 @@ public class BusRouteDetailActivity extends BaseActivity {
 
     private String tvStartLocation,//起点位置
             tvEndLocation;//终点位置
-    private BusRouteBean.RouteBean.TransitsBean data;//出行方式详细数据
+    private RoutesBean.RouteBean.TransitsBean data;//出行方式详细数据
     private StringBuffer busRoute = new StringBuffer();
     private BusRouteDetailAdapter busRouteDetailAdapter;
 
@@ -55,8 +55,8 @@ public class BusRouteDetailActivity extends BaseActivity {
     protected void initData() {
         tvStartLocation = getIntent().getStringExtra("tvStartLocation");
         tvEndLocation = getIntent().getStringExtra("tvEndLocation");
-        data = (BusRouteBean.RouteBean.TransitsBean) getIntent().getSerializableExtra("data");
-        for (BusRouteBean.RouteBean.TransitsBean.SegmentsBean segmentsBean : data.getSegments()) {
+        data = (RoutesBean.RouteBean.TransitsBean) getIntent().getSerializableExtra("data");
+        for (RoutesBean.RouteBean.TransitsBean.SegmentsBean segmentsBean : data.getSegments()) {
             if (segmentsBean.getBus().getBuslines() != null && segmentsBean.getBus().getBuslines().size() > 0) {
                 if (busRoute.length() > 0) {
                     busRoute.append(" > ");

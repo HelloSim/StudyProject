@@ -20,7 +20,7 @@ import com.sim.basicres.constant.ArouterUrl;
 import com.sim.basicres.utils.LogUtil;
 import com.sim.basicres.utils.ToastUtil;
 import com.sim.basicres.views.TitleView;
-import com.sim.bean.BusLocationBean;
+import com.sim.bean.RouteLocationBean;
 import com.sim.bean.BusRealTimeLineBean;
 import com.sim.bus.R;
 import com.sim.bus.adapter.BusLineNameAdapter;
@@ -45,7 +45,7 @@ public class BusSearchActivity extends BaseActivity {
     private int searchType;
 
     private BusStationNameAdapter stationNameAdapter;
-    private ArrayList<BusLocationBean.TipsBean> startLocationDataBeanList = new ArrayList<>();
+    private ArrayList<RouteLocationBean.TipsBean> startLocationDataBeanList = new ArrayList<>();
 
     private ArrayList<BusRealTimeLineBean.DataBean> lineListByLineNameBeanList = new ArrayList<>();
     private BusLineNameAdapter busLineNameAdapter;
@@ -200,7 +200,7 @@ public class BusSearchActivity extends BaseActivity {
      */
     public void getStartLocation(String keywords) {
         startLocationDataBeanList.clear();
-        APIFactory.getInstance().getStartOrEndLocation(new Subscriber<BusLocationBean>() {
+        APIFactory.getInstance().getStartOrEndLocation(new Subscriber<RouteLocationBean>() {
             @Override
             public void onCompleted() {
                 stationNameAdapter.notifyDataSetChanged();
@@ -214,7 +214,7 @@ public class BusSearchActivity extends BaseActivity {
             }
 
             @Override
-            public void onNext(BusLocationBean busLocationDataBean) {
+            public void onNext(RouteLocationBean busLocationDataBean) {
                 startLocationDataBeanList.addAll(busLocationDataBean.getTips());
             }
         }, keywords);

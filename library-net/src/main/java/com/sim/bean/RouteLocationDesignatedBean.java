@@ -5,7 +5,7 @@ import java.util.List;
 /**
  * 位置请求返回的实体类
  */
-public class BusLocationDesignatedBean {
+public class RouteLocationDesignatedBean {
 
     /**
      * status : 1

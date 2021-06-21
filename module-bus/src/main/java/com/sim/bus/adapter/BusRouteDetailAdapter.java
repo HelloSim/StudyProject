@@ -11,7 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.sim.bean.BusRouteBean;
+import com.sim.bean.RoutesBean;
 import com.sim.basicres.base.BaseAdapter;
 import com.sim.basicres.base.BaseViewHolder;
 import com.sim.bus.R;
@@ -22,14 +22,14 @@ import java.util.List;
  * 出行路线的详细方式页面的适配器
  */
 public class BusRouteDetailAdapter extends BaseAdapter<BusRouteDetailAdapter.ViewHolder,
-        BusRouteBean.RouteBean.TransitsBean.SegmentsBean> {
+        RoutesBean.RouteBean.TransitsBean.SegmentsBean> {
 
     private Context mContext;
     private String tvStartLocation;//起点位置
     private String tvEndLocation;//终点位置
 
     public BusRouteDetailAdapter(Context mContext, String tvStartLocation, String tvEndLocation,
-                                 List<BusRouteBean.RouteBean.TransitsBean.SegmentsBean> segmentsBeanList) {
+                                 List<RoutesBean.RouteBean.TransitsBean.SegmentsBean> segmentsBeanList) {
         super(segmentsBeanList);
         this.mContext = mContext;
         this.tvStartLocation = tvStartLocation;
@@ -53,7 +53,7 @@ public class BusRouteDetailAdapter extends BaseAdapter<BusRouteDetailAdapter.Vie
             holder.tv_item_end.setText(tvEndLocation);
             holder.ll_item_end.setVisibility(View.VISIBLE);
         }
-        BusRouteBean.RouteBean.TransitsBean.SegmentsBean segmentsBean = getItem(position);
+        RoutesBean.RouteBean.TransitsBean.SegmentsBean segmentsBean = getItem(position);
         if (segmentsBean.getWalking() != null) {
             if (segmentsBean.getWalking().getSteps().get(segmentsBean.getWalking().getSteps().size() - 1).getAssistant_action() != null &&
                     !segmentsBean.getWalking().getSteps().get(segmentsBean.getWalking().getSteps().size() - 1).getAssistant_action().toString().equals("[]")) {

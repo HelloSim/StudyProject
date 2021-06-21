@@ -16,8 +16,8 @@ import com.sim.basicres.constant.ArouterUrl;
 import com.sim.basicres.utils.LogUtil;
 import com.sim.basicres.utils.ToastUtil;
 import com.sim.basicres.views.TitleView;
-import com.sim.bean.BusLocationDesignatedBean;
-import com.sim.bean.BusRouteBean;
+import com.sim.bean.RouteLocationDesignatedBean;
+import com.sim.bean.RoutesBean;
 import com.sim.bus.R;
 import com.sim.bus.adapter.BusRouteAdapter;
 import com.sim.http.APIFactory;
@@ -41,10 +41,10 @@ public class BusRouteActivity extends BaseActivity {
             origin,//用作请求的起始位置
             destination;//用作请求的终点位置
 
-    private BusLocationDesignatedBean busLocationDesignatedDataBean;
-    private ArrayList<BusRouteBean.RouteBean.TransitsBean> routeDataList = new ArrayList<>();
-    private ArrayList<BusLocationDesignatedBean.PoisBean> startLocationList = new ArrayList<>();
-    private ArrayList<BusLocationDesignatedBean.PoisBean> endLocationList = new ArrayList<>();
+    private RouteLocationDesignatedBean busLocationDesignatedDataBean;
+    private ArrayList<RoutesBean.RouteBean.TransitsBean> routeDataList = new ArrayList<>();
+    private ArrayList<RouteLocationDesignatedBean.PoisBean> startLocationList = new ArrayList<>();
+    private ArrayList<RouteLocationDesignatedBean.PoisBean> endLocationList = new ArrayList<>();
     private BusRouteAdapter routeAdapter;
 
     @Override
@@ -98,7 +98,7 @@ public class BusRouteActivity extends BaseActivity {
      * @param location
      */
     private void getLocation(boolean isEnd, String location) {
-        APIFactory.getInstance().getLocation(new Subscriber<BusLocationDesignatedBean>() {
+        APIFactory.getInstance().getLocation(new Subscriber<RouteLocationDesignatedBean>() {
             @Override
             public void onCompleted() {
                 if (!isEnd) {//起点
@@ -127,7 +127,7 @@ public class BusRouteActivity extends BaseActivity {
             }
 
             @Override
-            public void onNext(BusLocationDesignatedBean dataBean) {
+            public void onNext(RouteLocationDesignatedBean dataBean) {
                 busLocationDesignatedDataBean = dataBean;
             }
         }, location);
@@ -140,7 +140,7 @@ public class BusRouteActivity extends BaseActivity {
      * @param destination
      */
     private void getRoute(String origin, String destination) {
-        APIFactory.getInstance().getRoute(new Subscriber<BusRouteBean>() {
+        APIFactory.getInstance().getRoute(new Subscriber<RoutesBean>() {
             @Override
             public void onCompleted() {
                 if (routeDataList == null || routeDataList.size() == 0) {
@@ -158,7 +158,7 @@ public class BusRouteActivity extends BaseActivity {
             }
 
             @Override
-            public void onNext(BusRouteBean dataBean) {
+            public void onNext(RoutesBean dataBean) {
                 routeDataList.addAll(dataBean.getRoute().getTransits());
             }
         }, origin, destination);

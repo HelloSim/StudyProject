@@ -1,12 +1,12 @@
 package com.sim.http;
 
 import com.sim.bean.BannerBean;
-import com.sim.bean.BusLocationBean;
-import com.sim.bean.BusLocationDesignatedBean;
+import com.sim.bean.RouteLocationBean;
+import com.sim.bean.RouteLocationDesignatedBean;
 import com.sim.bean.BusRealTimeBean;
 import com.sim.bean.BusRealTimeBusStopBean;
 import com.sim.bean.BusRealTimeLineBean;
-import com.sim.bean.BusRouteBean;
+import com.sim.bean.RoutesBean;
 import com.sim.bean.PublicArticleBean;
 import com.sim.bean.PublicAuthorBean;
 import com.sim.bean.WangyiBean;
@@ -80,14 +80,14 @@ public interface ApiService {
      */
     @Headers({"host:route"})
     @GET(BaseUrl.base_route.getStartOrEndLocation)
-    Observable<BusLocationBean> getStartOrEndLocation(@Query("citylimit") String citylimit, @Query("keywords") String keywords);
+    Observable<RouteLocationBean> getStartOrEndLocation(@Query("citylimit") String citylimit, @Query("keywords") String keywords);
 
     /**
      * 起始位置和终点位置的位置信息请求
      */
     @Headers({"host:route"})
     @GET(BaseUrl.base_route.getLocation)
-    Observable<BusLocationDesignatedBean> getLocation(
+    Observable<RouteLocationDesignatedBean> getLocation(
             @Query("children") String children, @Query("extensions") String extensions,
             @Query("page") String page, @Query("offset") String offset,
             @Query("language") String language, @Query("keywords") String keywords);
@@ -97,7 +97,7 @@ public interface ApiService {
      */
     @Headers({"host:route"})
     @GET(BaseUrl.base_route.getRoute)
-    Observable<BusRouteBean> getRoute(
+    Observable<RoutesBean> getRoute(
             @Query("origin") String origin, @Query("destination") String destination,
             @Query("strategy") String strategy, @Query("nightflag") String nightflag,
             @Query("extensions") String extensions);

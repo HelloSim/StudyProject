@@ -1,12 +1,12 @@
 package com.sim.http;
 
 import com.sim.bean.BannerBean;
-import com.sim.bean.BusLocationBean;
-import com.sim.bean.BusLocationDesignatedBean;
+import com.sim.bean.RouteLocationBean;
+import com.sim.bean.RouteLocationDesignatedBean;
 import com.sim.bean.BusRealTimeBusStopBean;
 import com.sim.bean.BusRealTimeBean;
 import com.sim.bean.BusRealTimeLineBean;
-import com.sim.bean.BusRouteBean;
+import com.sim.bean.RoutesBean;
 import com.sim.bean.PublicArticleBean;
 import com.sim.bean.PublicAuthorBean;
 import com.sim.bean.WangyiBean;
@@ -89,7 +89,7 @@ public class APIFactory extends RetrofitUtil {
     /**
      * 搜索位置的网络请求
      */
-    public void getStartOrEndLocation(Subscriber<BusLocationBean> subscriber, String keywords) {
+    public void getStartOrEndLocation(Subscriber<RouteLocationBean> subscriber, String keywords) {
         Observable observable = getApiService().getStartOrEndLocation("false", keywords);
         toSubscribe(observable, subscriber);
     }
@@ -100,7 +100,7 @@ public class APIFactory extends RetrofitUtil {
      * @param subscriber
      * @param keywords   搜索关键字
      */
-    public void getLocation(Subscriber<BusLocationDesignatedBean> subscriber, String keywords) {
+    public void getLocation(Subscriber<RouteLocationDesignatedBean> subscriber, String keywords) {
         Observable observable = getApiService().getLocation("", "all", "1", "10", "zh_cn", keywords);
         toSubscribe(observable, subscriber);
     }
@@ -112,7 +112,7 @@ public class APIFactory extends RetrofitUtil {
      * @param origin      起点
      * @param destination 终点
      */
-    public void getRoute(Subscriber<BusRouteBean> subscriber, String origin, String destination) {
+    public void getRoute(Subscriber<RoutesBean> subscriber, String origin, String destination) {
         Observable observable = getApiService().getRoute(origin, destination, "珠海", "0", "");
         toSubscribe(observable, subscriber);
     }

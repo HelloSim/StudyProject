@@ -8,7 +8,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 
-import com.sim.bean.BusLocationBean;
+import com.sim.bean.RouteLocationBean;
 import com.sim.basicres.base.BaseAdapter;
 import com.sim.basicres.base.BaseViewHolder;
 import com.sim.bus.R;
@@ -18,9 +18,9 @@ import java.util.ArrayList;
 /**
  * 终点位置搜索界面的RecyclerView适配器
  */
-public class BusStationNameAdapter extends BaseAdapter<BusStationNameAdapter.ViewHolder, BusLocationBean.TipsBean> {
+public class BusStationNameAdapter extends BaseAdapter<BusStationNameAdapter.ViewHolder, RouteLocationBean.TipsBean> {
 
-    public BusStationNameAdapter(ArrayList<BusLocationBean.TipsBean> startStationDataList) {
+    public BusStationNameAdapter(ArrayList<RouteLocationBean.TipsBean> startStationDataList) {
         super(startStationDataList);
     }
 
@@ -33,7 +33,7 @@ public class BusStationNameAdapter extends BaseAdapter<BusStationNameAdapter.Vie
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        BusLocationBean.TipsBean tipsBean = getItem(position);
+        RouteLocationBean.TipsBean tipsBean = getItem(position);
         if (tipsBean != null)
             holder.tvLocationName.setText(String.valueOf(tipsBean.getName()));
         holder.parent.setOnClickListener(new View.OnClickListener() {

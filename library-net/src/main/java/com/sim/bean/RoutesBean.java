@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * 出行路线搜索返回的数据bean类
  */
-public class BusRouteBean implements Serializable {
+public class RoutesBean implements Serializable {
 
     /**
      * status : 1
