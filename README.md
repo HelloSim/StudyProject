@@ -8,14 +8,21 @@ https://www.jiguang.cn/accounts/login/form
 https://www.bmob.cn/login
 类文档：http://docs.bmob.cn/data/Android/i_doc/doc/index.html
 
+
+
 ### 网易新闻 API
 https://api.apiopen.top/api.html
 
-### 出行方案 API
-https://lbs.amap.com/api/webservice/guide/api/direction
-
 ### 玩Android API
 https://www.wanandroid.com/blog/show/2
+
+### 出行方案 高德 API
+#### 输入提示：
+https://lbs.amap.com/api/webservice/guide/api/inputtips
+#### 关键字搜索：
+https://lbs.amap.com/api/webservice/guide/api/search
+#### 公交路径规划：
+https://lbs.amap.com/api/webservice/guide/api/direction
 
 
 
